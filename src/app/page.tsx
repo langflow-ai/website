@@ -1,5 +1,5 @@
 import Page from "@/components/layout/page";
-import Template from "@/components/pages/home/Template";
+import Template from "@/components/pages/Home/Template";
 
 export default function Home() {
   return (

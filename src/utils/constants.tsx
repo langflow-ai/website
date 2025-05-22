@@ -2,9 +2,9 @@ import Github from "@/components/icons/github/Github";
 import Discord from "@/components/icons/discord/Discord";
 import Twitter from "@/components/icons/Twitter/Twitter";
 import Youtube from "@/components/icons/youtube/Youtube";
-import CloudPlatform from "@/components/pages/home/Notebook/CloudPlatform";
-import Langflow from "@/components/pages/home/Notebook/Langflow";
-import Signup from "@/components/pages/home/Notebook/Signup";
+import CloudPlatform from "@/components/pages/Home/Notebook/CloudPlatform";
+import Langflow from "@/components/pages/Home/Notebook/Langflow";
+import Signup from "@/components/pages/Home/Notebook/Signup";
 // Import all logo components
 import FyxtLogo from "@/components/ui/icons/Fyxt";
 import SurveyHub from "@/components/ui/icons/SurveyHub";
