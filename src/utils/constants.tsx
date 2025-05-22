@@ -159,7 +159,7 @@ const HERO_CONTENT = {
       link: "https://astra.datastax.com/signup?type=langflow",
     },
     secondary: {
-      label: "Stars on GitHub",
+      label: "Star on GitHub",
       link: "https://github.com/langflow-ai/langflow",
     },
   },
