@@ -18,7 +18,10 @@ const Notebook = () => {
       </div>
       <div className={`row ${styles.row}`}>
         {CARDS.map(({ text, Component, background, image }, idx) => (
-          <div key={idx} className="col-12 col-lg-6 col-xl-4">
+          <div
+            key={idx}
+            className={`col-12 col-lg-6 col-xl-4 ${styles.margin}`}
+          >
             <Card
               className={background ? styles.background : undefined}
               text={text}
