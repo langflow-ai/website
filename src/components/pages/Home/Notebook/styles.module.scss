@@ -49,3 +49,10 @@
     overflow: hidden;
     height: 100%;
 }
+.margin {
+    @include media-breakpoint-down(mlg) {
+        &:not(:last-child) {
+          margin-bottom: var(--spacer-3);
+        }
+      }    
+}
