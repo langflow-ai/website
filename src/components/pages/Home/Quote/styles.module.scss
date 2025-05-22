@@ -1,5 +1,5 @@
-@import "/src/styles/variables";
-@import "~bootstrap/scss/mixins";
+@import '/src/styles/variables';
+@import '~bootstrap/scss/mixins';
 
 .testimonialSection {
   color: var(--primary-white);
@@ -7,23 +7,29 @@
   padding-bottom: 85px;
   height: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.row {
-  gap: 48px;
   justify-content: space-between;
+  align-items: center;
   @include media-breakpoint-down(xl) {
-    gap: var(--spacer-5);
+    flex-direction: column;
+    gap: var(--spacer-6);
   }
 }
+
 .quote {
   font-family: var(--font-body);
   font-size: 36px;
   font-weight: 200;
   line-height: 1.2em;
   letter-spacing: 0;
+  margin: 0;
+  padding: 0;
+  max-width: 826px;
+  width: 100%;
+  @include media-breakpoint-down(xxll) {
+    max-width: 616px;
+  }
   @include media-breakpoint-down(xl) {
+    max-width: 100%;
     text-align: center;
   }
   @include media-breakpoint-down(lg) {
@@ -60,7 +66,9 @@
   }
 }
 .author {
-  margin-left: 24px;
+  max-width: 260px;
+  width: 100%;
+  margin-left: 15px;
   @include media-breakpoint-down(lg) {
     margin-left: 0px;
     text-align: center;
@@ -90,8 +98,9 @@
   font-family: var(--font-body);
   font-size: 20px;
   font-weight: 200;
-  line-height: 140%;
+  line-height: 24px;
   letter-spacing: -0.2px;
+  white-space: nowrap;
   @include media-breakpoint-down(lg) {
     font-size: 16px;
   }

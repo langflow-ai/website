@@ -29,7 +29,7 @@ const LogosSlider: FC<Props> = ({
   ));
 
   return (
-    <div className={`row ${styles.logos} ${isMobile ? styles.logos_isMobile : ''} ${!isMobile ? 'container-wide' : ''} ${className ?? ""}`}>
+    <div className={`row ${styles.logos} ${isMobile ? styles.logos_isMobile : 'container-wide'} ${className ?? ""}`}>
       <div className="col-lg-12" style={{ padding: 0 }}>
         {useSlider ? (
           <Slider
