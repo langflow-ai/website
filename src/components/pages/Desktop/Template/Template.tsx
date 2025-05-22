@@ -12,7 +12,7 @@ import styles from "./styles.module.scss";
 const Template: FC<PropsWithChildren> = () => {
   return (
     <section className={styles.template}>
-      <div className="container container-wide h-100">
+      <div className={`container h-100 ${styles.container}`}>
         <div className="row h-100">
           <div className="col">
             <div className={styles.content}>
@@ -20,7 +20,10 @@ const Template: FC<PropsWithChildren> = () => {
                 <PrizeBadge />
               </div>
               <div className={styles.title}>
-                <Display size={700} className="text-white text-center">
+                <Display
+                  size={700}
+                  className={`${styles.text} text-white text-center`}
+                >
                   {"Langflow Desktop is Here!"}
                 </Display>
                 <Display
