@@ -1,0 +1,61 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.logos {
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+
+  .slider {
+    --slider-height: calc(1.0625rem + (12px * 2) + (1.3px * 2));
+
+    @include media-breakpoint-up(lg) {
+      --slider-height: calc(2rem + (var(--spacer-3) * 2) + (1.3px * 2));
+    }
+  }
+}
+
+.logo {
+  box-shadow: 0px 4.5px 18px -6.75px rgba(152, 244, 254, 0.70) inset;
+  border: 0.75px solid rgba(152, 244, 254, 0.35);
+  box-sizing: content-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacer-2);
+  padding: 12px 18px;
+  border-radius: 75px;
+  position: relative;
+  background: var(--primary-black);
+
+  > img {
+    width: 1.0625rem;
+    height: 1.0625rem;
+  }
+
+  figcaption {
+    color: var(--primary-white);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.2em;
+    text-align: left;
+    text-wrap: nowrap;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: var(--spacer-2) var(--spacer-3);
+
+    > img {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    figcaption {
+      font-size: 1.25rem;
+    }
+
+  }
+  @include media-breakpoint-down(lg) {
+    margin: 1rem 0 1rem;
+  };
+}

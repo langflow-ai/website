@@ -1,0 +1,383 @@
+/*! purgecss start ignore */
+.mktoForm {
+  padding: 0;
+  width: 100% !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 9px;
+
+  .mktoOffset,
+  .mktoGutter {
+    display: none !important;
+  }
+
+  .mktoClear {
+    clear: none !important;
+  }
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-repeat: no-repeat;
+    padding-top: 5px !important;
+    background-position: right 30px center;
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='10' viewBox='0 0 16 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 1.5L8 6.5L1.19249e-08 1.5L0 0.5L8 5.5L16 0.5L16 1.5Z' fill='black'/%3E%3Cpath d='M16 4.5L8 9.5L1.19249e-08 4.5L0 3.5L8 8.5L16 3.5L16 4.5Z' fill='black'/%3E%3C/svg%3E%0A");
+  }
+
+  .mktoFormCol:not(:has(.mktoHtmlText)),
+  .mktoFieldWrap:not(:has(.mktoHtmlText)),
+  .mktoField {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    float: none !important;
+    margin: 0 !important;
+    width: 100% !important;
+    input[type="checkbox"] {
+      width: fit-content !important;
+    }
+    a {
+      text-decoration-skip-ink: none;
+      text-decoration: underline;
+      color: var(--primary-black) !important;
+    }
+  }
+
+  .mktoCheckboxWrap {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .mktoButtonRow {
+    order: 6;
+  }
+
+  .mktoFormRow {
+    clear: none !important;
+    font-size: 0;
+    order: 5;
+    flex: 1 1 100%;
+
+    &:has(.mktoPlaceholder),
+    &:empty {
+      display: none;
+    }
+
+    &:has(input[type="hidden"]) {
+      display: none;
+    }
+
+    &:has(input[type="email"], input[name="Email"]) {
+      order: 1;
+
+      input {
+        nav-index: 1;
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      &:has(
+          input[name="FirstName"],
+          input[name="LastName"],
+          input[name="Title"],
+          input[name="Company"]
+        ) {
+        order: 2;
+        flex: 1 1 calc(50% - 1rem);
+
+        input {
+          nav-index: 2;
+        }
+      }
+
+      &:has(input[name="Title"], input[name="Company"]) {
+        order: 5;
+      }
+    }
+  }
+
+  .mktoFieldWrap,
+  .mktoFieldWrap.mktoRequiredField {
+    .mktoLabel,
+    label.mktoLabel {
+      color: var(--primary-white);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      line-height: 1.43em;
+      margin-bottom: 2px;
+      display: flex;
+      flex-direction: row-reverse;
+      width: fit-content !important;
+
+      .mktoAsterix {
+        margin-right: 0.5em;
+      }
+
+      * {
+        color: inherit !important;
+        font: inherit !important;
+      }
+
+      span {
+        color: var(--primary-white);
+      }
+
+      &#LblInterestedinmeetingNVIDIADataStax__c {
+        span {
+          text-decoration: none !important;
+        }
+        b {
+          font-weight: 600 !important;
+        }
+      }
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    input[type="search"],
+    input[type="url"],
+    textarea.mktoField,
+    select.mktoField,
+    select,
+    textarea {
+      background-color: black;
+      border-radius: 6px;
+      border: 1px solid #52525b;
+      color: var(--primary-white);
+      font-family: var(--font-inter);
+      color: #999999;
+      font-size: 14px !important;
+      line-height: 1.5;
+      outline-offset: 0;
+      padding: 0.5rem 0.75rem;
+      width: 100% !important;
+      height: 2.75em;
+
+      // @include placeholder {
+      //   color: transparent;
+      // }
+
+      &:focus,
+      &:focus-visible {
+        outline: none !important;
+        border-color: #0099ff;
+      }
+
+      &:disabled {
+        background: var(--interface-light-gray-100);
+        border-color: var(--interface-light-gray-100);
+      }
+    }
+
+    textarea.mktoField,
+    textarea {
+      height: auto !important;
+    }
+  }
+
+  .mktoCheckboxList {
+    width: 20px !important;
+    margin-top: 8px;
+  }
+
+  .downloadButton {
+    background: linear-gradient(
+      to right,
+      rgb(134, 239, 172),
+      rgb(59, 130, 246)
+    );
+    border-radius: 6px;
+    box-shadow: rgba(134, 239, 172, 0.3) 0px 0px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 24px;
+    a {
+      text-decoration: none;
+      color: white;
+    }
+
+    &:focus,
+    &:focus-visible {
+      outline: none !important;
+    }
+  }
+
+  .mktoButtonRow,
+  .mktoButtonRow .mktoButtonWrap {
+    margin: 0 !important;
+    display: flex;
+    width: 100%;
+
+    button[type="submit"] {
+      background: linear-gradient(
+        to right,
+        rgb(134, 239, 172),
+        rgb(59, 130, 246)
+      ) !important;
+      background-color: var(--primary-black) !important;
+      font-size: 14px !important;
+      font-family: var(--font-inter) !important;
+      font-weight: 600;
+    }
+
+    .mktoButton {
+      align-items: center;
+      appearance: none;
+      background: var(--primary-black);
+      border: none;
+      border-radius: 6px;
+      color: var(--primary-black);
+      display: inline-flex;
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 600;
+      height: 50px;
+      justify-content: center;
+      letter-spacing: 0.06em;
+      line-height: 1rem;
+      outline: none;
+      padding: calc(1.125rem - 1px) var(--spacer-3) calc(1rem - 1px);
+      text-transform: uppercase;
+      width: 100%;
+      margin-bottom: var(--spacer-2);
+
+      &:hover:not(:disabled) {
+        background: var(--interface-purple-500);
+        box-shadow: 0px 4px 0px rgba(var(--primary-black-rgb), 0.15);
+        color: var(--primary-black) !important;
+        opacity: 0.8 !important;
+      }
+
+      &:focus:not(:disabled),
+      &:focus-visible:not(:disabled) {
+        background: var(interface-purple-300);
+        color: var(--primary-black) !important;
+      }
+
+      &:active:not(:disabled) {
+        background: var(--interface-purple-500);
+        box-shadow: none;
+        color: var(--primary-white);
+      }
+
+      &:disabled {
+        background: var(--interface-light-gray-400);
+        color: var(--interface-dark-gray-300);
+      }
+
+      @include media-breakpoint-up(lg) {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .mktoFormRow + .mktoButtonRow {
+    margin-top: 1rem !important;
+  }
+
+  .mktoLabel:has(+ div + .mktoCheckboxList),
+  .mktoHtmlText {
+    font-family: var(--font-body) !important;
+    font-size: 0.875rem !important;
+    font-weight: 400;
+    line-height: 1.125rem;
+    width: 100% !important;
+
+    div {
+      font-size: 0.875rem !important;
+      color: var(--primary-white) !important;
+    }
+
+    a {
+      text-decoration-skip-ink: none;
+      color: var(--interface-blue-500) !important;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    * {
+      color: inherit !important;
+      font: inherit !important;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  .mktoFieldWrap {
+    &:has(.mktoLabel):has(.mktoCheckboxList) {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+  }
+
+  .mktoError {
+    left: 0 !important;
+    right: auto !important;
+    top: 70px;
+
+    .mktoErrorArrow {
+      background-color: var(--interface-red-500) !important;
+      border: 1px solid var(--interface-red-500) !important;
+    }
+
+    .mktoErrorMsg {
+      background: var(--interface-red-500) !important;
+      border: 0 !important;
+      border-radius: 4px !important;
+      box-shadow: none !important;
+      color: var(--primary-white);
+      font-family: var(--font-inter) !important;
+      font-size: 0.875rem !important;
+      font-weight: 500 !important;
+      line-height: 21px !important;
+      padding: 0.875rem !important;
+      text-shadow: none !important;
+    }
+  }
+
+  .mktoFieldDescriptor.hide {
+    display: block !important;
+  }
+}
+
+#demandbase-autocomplete .ui-widget {
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: var(--primary-white);
+  overflow: hidden;
+
+  .ui-menu .ui-menu-item {
+    color: var(--primary-black);
+    padding: var(--spacer-1) var(--spacer-2);
+    background: none;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+
+    &::before {
+      content: none;
+    }
+
+    &:hover {
+      background: var(--interface-light-gray-100);
+    }
+
+    > div {
+      border: none;
+      background: none;
+    }
+  }
+}
+/*! purgecss end ignore */

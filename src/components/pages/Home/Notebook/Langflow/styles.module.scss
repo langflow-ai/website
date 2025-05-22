@@ -1,0 +1,80 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modes {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    width: 320px;
+    height: 88px;
+    padding: 0px 32px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px;
+    border: 1px solid var(--zinc-zinc-600, #52525B);
+}
+.hover {
+    border-radius: 20px;
+    border: 1px solid var(--Neon-Fuchsia, #FF3276);
+    box-shadow: 0px 0px 80px 32px rgba(255, 50, 118, 0.30), 0px 0px 20px 0px rgba(255, 50, 118, 0.40);
+    transition: all 250ms ease-in-out;
+}
+
+.mask {
+    position: absolute;
+    right: 25%;
+    z-index: -1;
+}
+.code {
+    position: absolute;
+    left: 33%;
+    z-index: 1;
+}
+.script {
+    position: absolute;
+    left: 23%;
+    z-index: 0;
+}
+.animate {
+  transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
+  transition-delay: 0.2s; 
+  animation: dissolve 250ms ease-in-out;
+}
+.code_container {
+    animation: dissolve 250ms ease-in-out;
+    animation-delay: 0.2s;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition-delay: 0.2s; 
+}
+
+.cloud_container {
+    animation: dissolve 250ms ease-in-out;
+    animation-delay: 0.5s;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition-delay: 0.5s; 
+}
+
+@keyframes dissolve {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes scale-up {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }

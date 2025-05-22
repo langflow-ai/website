@@ -1,0 +1,193 @@
+"use client";
+
+// Dependencies
+import Image from "next/image";
+import { useRef, useState } from "react";
+import Link from "next/link";
+
+// Components
+import Badge from "@/components/ui/Header/Badge";
+import Display from "@/components/ui/Display";
+
+// Utils
+import { LIST, SOCIALS } from "@/utils/constants";
+
+// Assests
+import Logo from "../../../../public/assests/logo.png";
+
+// Styles
+import styles from "./styles.module.scss";
+import DownArrow from "@/components/icons/downArrow/DownArrow";
+
+const Header = () => {
+  const [isActive, setIsActive] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const leaveTimeout = useRef<any>(null);
+
+  const toggleMenu = () => {
+    setIsActive(!isActive);
+  };
+
+  const handleDownload = (url: string, filename: string) => {
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) throw new Error("File not found");
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      })
+      .catch((error) => {
+        console.error("Download failed:", error);
+        alert("File is currently unavailable. Please try again later.");
+      });
+  };
+
+  return (
+    <section className={styles.header}>
+      <div className={styles.container}>
+        {isActive && (
+          <div className={styles.drawer}>
+            <div className={styles.drawerContent}>
+              {LIST.map((item) => (
+                <div key={item.title}>
+                  <div className={styles.drawerItem}>
+                    <Display
+                      tagName="div"
+                      className={styles.drawerItem_heading}
+                      size={100}
+                    >
+                      {item.title}
+                    </Display>
+
+                    {item.comingSoon && <Badge />}
+                  </div>
+                  <div>
+                    {item.subTabs && (
+                      <div className={styles.drawerSubItemContainer}>
+                        {item.subTabs.map((sub) => (
+                          <div key={sub.title} className={styles.drawerSubItem}>
+                            <Display size={100}>{sub?.title}</Display>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        <div className={styles.left}>
+          <Link href={"/"}>
+            <Image
+              src={Logo}
+              alt="Langflow Logo"
+              width={123}
+              height={24}
+              className={styles.left_img}
+            />
+          </Link>
+          <nav className={styles.nav}>
+            {LIST.map((item, index) => {
+              const isHovered = hoveredIndex === index;
+              return (
+                <div
+                  key={item.title}
+                  className={styles.navItem}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => {
+                    clearTimeout(leaveTimeout.current);
+                    leaveTimeout.current = setTimeout(
+                      () => setHoveredIndex(null),
+                      200,
+                    );
+                  }}
+                >
+                  {item?.link ? (
+                    <Link href={item.link}>
+                      <Display size={100} className={styles.drawerItem_heading}>
+                        {item.title}
+                      </Display>
+                    </Link>
+                  ) : (
+                    <Display size={100} className={styles.drawerItem_heading}>
+                      {item.title}
+                    </Display>
+                  )}
+
+                  {item?.subTabs && <DownArrow />}
+                  {item?.comingSoon && <Badge />}
+
+                  {item?.subTabs && isHovered && (
+                    <div
+                      className={styles.dropdown}
+                      onMouseEnter={() => clearTimeout(leaveTimeout.current)}
+                      onMouseLeave={() => {
+                        leaveTimeout.current = setTimeout(
+                          () => setHoveredIndex(null),
+                          200,
+                        );
+                      }}
+                    >
+                      {item.subTabs.map((sub) => (
+                        <>
+                          {sub.download ? (
+                            <a
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleDownload(sub.url, sub.title);
+                              }}
+                              download="brandkit.zip"
+                              className={styles.downloadLink}
+                            >
+                              {sub.icon}
+                              <Display size={100}>{sub.title}</Display>
+                            </a>
+                          ) : (
+                            <Link key={sub.title} href={sub.url}>
+                              {sub.icon}
+                              {sub.title}
+                            </Link>
+                          )}
+                        </>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
+        </div>
+        <div className={styles.right}>
+          {SOCIALS?.map((s, index) => (
+            <div key={index}>
+              <Link href={s.url} target="_blank">
+                <div className={styles.social}>
+                  {s.icon}
+                  <Display size={100}>{s.count}</Display>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+        <div
+          className={`${styles.menuButton} ${isActive ? styles.active : ""}`}
+          onClick={toggleMenu}
+        >
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Header;

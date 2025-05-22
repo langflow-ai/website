@@ -1,0 +1,112 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.platform_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;   
+  gap: var(--spacer-2);
+  position: relative;
+
+  &_platform {
+    display: flex;
+    padding: 24px;
+    min-width: 88px;
+    min-height: 88px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    border: 1.25px solid var(--zinc-zinc-400, #52525B);
+    background: var(--zinc-zinc-50, #09090B);
+    opacity: 1;
+    transition: border 250ms ease-in-out, box-shadow 250ms ease-in-out;
+  }
+
+  &_onHover {
+    border: 1px solid var(--zinc-zinc-400, #52525B);
+    box-shadow: 0px 8px 40px -7px rgba(82, 82, 91, 0.70) inset;
+    transition: border 250ms ease-in-out, box-shadow 250ms ease-in-out;
+  }
+  .tag {
+    position: absolute;
+    opacity: 0;
+    animation-duration: 500ms;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+  }
+
+  .tag:nth-child(1) {
+    bottom: 150%;
+    left:0;
+    animation-name: dissolveTop;
+    svg{
+        position: absolute;
+        bottom: 24%;
+        left: 104%;
+    }
+  }
+
+  .tag:nth-child(2) {
+    bottom: 150%;
+    right: 10%;
+    animation-name: dissolveTop;
+    svg{
+        position: absolute;
+        bottom: -127%;
+        left: -64%;
+    }
+  }
+
+  .tag:nth-child(3) {
+    bottom: -81%;
+    left: 14%;
+    animation-name: dissolveBottom;
+    svg{
+        position: absolute;
+        bottom: 45%;
+        left: 100%;
+    }
+  }
+
+  .tag:nth-child(4) {
+    bottom: -81%;
+    right: 3%;
+    animation-name: dissolveBottom;
+    svg{
+        position: absolute;
+        top: 38%;
+        right: 103%;    
+    }
+  }
+@keyframes dissolve {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes dissolveTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dissolveBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+}
+
+

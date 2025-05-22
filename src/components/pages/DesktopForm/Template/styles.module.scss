@@ -1,0 +1,41 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.template {
+  background-image: url("https://framerusercontent.com/images/8bKKgoZVqgsfLRek309Lmht8M.jpg?scale-down-to=2048");
+  display: flex;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-color: var(--primary-black);
+  width: 100%;
+  flex-direction: column;
+  gap: 60px;
+  overflow-y: scroll;
+  background-size: cover; 
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 94px;
+}
+
+.form {
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  h4 {
+    font-size: 40px !important;
+  }
+  @include media-breakpoint-down(md) {
+    h4 {
+      font-size: 32px !important;
+    }
+  }
+}

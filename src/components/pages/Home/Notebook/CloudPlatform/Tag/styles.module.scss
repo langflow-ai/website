@@ -1,0 +1,19 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.tag {
+    display: flex;
+    padding: 4px 10px;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 6px;
+    border: 0.5px solid var(--Terminal-Green, #9BFEAA);
+    background: var(--background, #000);
+    box-shadow: 0px 0px 50px 0px rgba(155, 254, 170, 0.50);
+    color: var(--Terminal-Green, #9BFEAA);
+    text-align: center;
+    font-family: var(--font-inter);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 150%; /* 24px */
+}

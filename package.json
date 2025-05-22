@@ -1,0 +1,42 @@
+{
+  "name": "langflow",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "^20.x"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.2",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.11.3",
+    "interweave": "^13.1.1",
+    "lodash": "^4.17.21",
+    "next": "14.2.25",
+    "react": "^18.3.1",
+    "react-compare-slider": "^3.1.0",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-slick": "^0.23.13",
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.15",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import": "^2.29.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.1.0",
+    "sass": "^1.69.5",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,26 @@
+.topbar {
+  height: 56px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #3e64fe, #083a98);
+  gap: 16px;
+}
+
+.textContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  a {
+    text-decoration: underline;
+    color: var(--primary-white) !important;
+    font-family: var(--font-sf) !important;
+    font-size: 15px !important;
+  } 
+}
+
+.text {
+  color: var(--primary-white) !important;
+  font-family: var(--font-sf) !important;
+  font-size: 15px !important;
+}

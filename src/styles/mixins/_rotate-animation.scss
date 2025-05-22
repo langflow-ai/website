@@ -1,0 +1,9 @@
+@mixin rotate-animation($name, $variable) {
+  @keyframes #{$name} {
+    @for $i from 0 through 100 {
+      #{$i * 1%} {
+        #{$variable}: $i * 3.6deg;
+      }
+    }
+  }
+}

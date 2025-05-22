@@ -1,0 +1,95 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.footer {
+  background: #000;
+  padding: 24px 32px;
+  color: var(--primary-white);
+}
+
+.container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.innerContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  &_font {
+    font-family: var(--font-inter);
+    font-size: 14px !important;
+  }
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  margin-left: 40px;
+  gap: 32px;
+  a {
+    text-decoration: none;
+    color: var(--primary-white);
+  }
+}
+
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  h6 {
+    font-weight: 500;
+  }
+
+  &:hover .dropdown {
+    display: block;
+  }
+}
+
+.dropdown {
+  height: 100px;
+  overflow: scroll;
+  display: none;
+  position: absolute;
+  top: 23px;
+  background: #111;
+  padding: 10px;
+  border-radius: 4px;
+
+  a {
+    display: block;
+    padding: 5px 10px;
+    color: var(--primary-white);
+  }
+}
+
+.right {
+  display: flex;
+  gap: 15px;
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  h6 {
+    font-weight: 500;
+    color: var(--primary-white);
+  }
+}
+
+.copyright {
+  display: flex;
+  justify-content: flex-start;
+
+  @include media-breakpoint-down(md) {
+    padding-left: 0px;
+  }
+}

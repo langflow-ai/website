@@ -1,0 +1,72 @@
+@use "sass:map";
+
+$gradients: (
+  "primary": (
+    var(--2023-primary-purple) 0%,
+    var(--2023-interface-red) 50%,
+    var(--2023-interface-yellow) 100%,
+  ),
+  "astra": (
+    var(--2023-interface-dark-gray-600) 0%,
+    var(--2023-primary-purple) 100%,
+  ),
+  "dse": (
+    var(--2023-interface-dark-gray-600) 0%,
+    var(--2023-interface-fuchsia) 100%,
+  ),
+  "luna": (
+    var(--2023-interface-dark-gray-600) 0%,
+    var(--2023-interface-red) 100%,
+  ),
+  "gray": (
+    var(--2023-primary-black) 0%,
+    var(--2023-interface-dark-gray-600) 66%,
+    var(--2023-interface-dark-gray-500) 100%,
+  ),
+  "purple": (
+    var(--2023-primary-purple) 0%,
+    var(--2023-interface-fuchsia) 100%,
+  ),
+  "purple-red": (
+    var(--2023-primary-purple) 0%,
+    var(--2023-interface-red) 100%,
+  ),
+  "orange": (
+    var(--2023-interface-red) 0%,
+    var(--2023-interface-yellow) 100%,
+  ),
+  "orange-fuchsia": (
+    var(--2023-primary-orange) 0%,
+    var(--2023-interface-fuchsia) 100%,
+  ),
+  "pink-blue": (
+    var(--2023-interface-pink-500) 0%,
+    var(--2023-interface-blue-1000) 100%,
+  ),
+  "red-purple": (
+    #e1335e 0%,
+    #6b1c96 100%,
+  ),
+  "purple-neon-pink": (
+    var(--2023-primary-purple) 0%,
+    var(--2023-interface-neon-pink) 100%,
+  ),
+  "neon-pink-purple": (
+    var(--2023-interface-neon-pink) 0%,
+    var(--2023-primary-purple) 100%,
+  ),
+);
+
+@mixin gradient-background-variants($suffixes: "", $angle: 90deg) {
+  @each $name, $colors in $gradients {
+    @each $suffix in $suffixes {
+      &-#{$name}#{$suffix} {
+        background: linear-gradient($angle, $colors);
+      }
+    }
+  }
+}
+
+@mixin gradient-background($variant, $angle: 90deg) {
+  background: linear-gradient($angle, map.get($gradients, $variant));
+}

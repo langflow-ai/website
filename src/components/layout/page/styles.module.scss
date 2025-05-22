@@ -1,0 +1,22 @@
+.container {
+  /* Ensure the container takes full height and allows scrolling */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensures it stays on top of other elements */
+  background-color: white; /* Make sure the header has a background */
+  /* Optional: you can add shadow or other styles */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Add spacing below the header */
+.main {
+  padding-top: 60px; /* Adjust based on the header's height */
+}

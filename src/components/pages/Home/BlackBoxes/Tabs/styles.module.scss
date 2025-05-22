@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 16px;
+  color: var(--primary-white);
+  font-family: var(--font-inter);
+  width: 100%;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tabs {
+  display: flex;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--interface-dark-gray-650);
+  background: var(--interface-dark-gray-950);
+}
+
+.tab {
+  padding: 16px;
+  border-radius: 8px;
+  background: transparent;
+  box-shadow:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.1),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 0;
+  color: var(--interface-solid-light-gray-700);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 150%;
+  height: 34px;
+}
+
+.active {
+  background: var(--primary-white);
+  color: var(--primary-black);
+}

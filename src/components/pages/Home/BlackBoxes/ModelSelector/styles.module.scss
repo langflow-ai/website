@@ -1,0 +1,93 @@
+.modelContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 16px;
+  color: var(--primary-white);
+  font-family: var(--font-inter);
+  width: 100%;
+}
+
+.modelTitle {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.modelDropdown {
+  display: flex;
+  height: 40px;
+  padding: 8px 12px 8px 8px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 6px;
+  border: 1px solid var(--interface-dark-gray-650);
+  background: var(--primary-black);
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+}
+
+.selected {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  padding: 0px 4px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--primary-black);
+  font-family: "JetBrains Mono";
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 20px;
+  border-radius: 3px;
+  background: var(--primary-white);
+  font-family: var(--font-jetbrains);
+}
+
+.name {
+  color: var(--primary-white);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0px;
+}
+
+.dropdownList {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--primary-black);
+  border-radius: var(--1, 6px);
+  border: 1px solid var(--interface-dark-gray-650);
+  box-shadow:
+    0px 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0px 2px 4px -1px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  gap: 12px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.dropdownItem {
+  display: flex;
+  padding: 6px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selectedItem {
+  border-radius: 3px;
+  background: var(--interface-dark-gray-950);
+}

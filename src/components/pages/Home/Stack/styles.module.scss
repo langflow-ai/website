@@ -1,0 +1,51 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.stackContainer {
+  z-index: 1;
+  position: relative;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--spacer-9);
+  gap: var(--spacer-4);
+  opacity: 0.6;
+  flex-wrap: nowrap;
+  margin-bottom: 30px;
+  @include media-breakpoint-down(mlg) {
+    padding-top: var(--spacer-4);
+    align-items: center;
+  }
+
+  &_heading {
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 140%;
+    @include media-breakpoint-down(xxll) {
+      padding-left: 45px;
+    }
+    @include media-breakpoint-down(xl) {
+      padding-left: 24px;
+    }
+    @include media-breakpoint-down(mlg) {
+      max-width: 190px;
+      padding-left: 0;
+    }
+  }
+  &_items {
+    display: flex;
+    gap: 52px;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.slider {
+  display: flex;
+  gap: 52px;
+  justify-content: center;
+  align-items: center;
+}

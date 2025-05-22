@@ -1,0 +1,68 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+/* Card.module.scss */
+.card {
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 38px;
+    cursor: pointer;
+
+}
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: 340px;
+    margin: 0 auto; 
+    border-radius: 24px;
+    border: 2px solid var(--zinc-zinc-100, #18181B);
+    opacity: 1;
+    transition: border 250ms ease-in-out, box-shadow 250ms ease-in-out;
+    box-sizing: border-box;
+    padding: 16px;
+    position: relative;
+    z-index: 2;
+    &:hover {
+        box-shadow: 0px 8.014px 48.082px -14.024px var(--zinc-zinc-400, #52525B) inset;
+        border: 1px solid var(--zinc-zinc-400, #52525B);
+        transition: border 250ms ease-in-out, box-shadow 250ms ease-in-out;
+        color: var(--primary-white);
+        button {
+            color: var(--primary-white);
+        }
+    }
+    @include media-breakpoint-down(xl) {
+        max-width: 412px;
+    }
+  }
+  
+  
+  .cardText {
+    text-align: left;
+    color: var(--primary-white);
+    @include media-breakpoint-down(sm) {
+      text-align: center;
+  }
+  }
+  
+  .cardText h4 {
+    font-family: var(--font-body);
+    font-size: 24px;
+    font-weight: 200;
+    line-height: 130%;
+
+  }
+  @keyframes dissolve {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

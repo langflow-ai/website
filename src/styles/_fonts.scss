@@ -1,0 +1,57 @@
+@font-face {
+  font-family: "Chivo";
+  font-display: swap;
+  src: url("./fonts/Chivo/Chivo-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SF";
+  font-display: swap;
+  src: url("./fonts/sf-pro-display/SFPRODISPLAYREGULAR.OTF") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 500;
+  font-display: swap;
+  src: url("./fonts/Inter/static/Inter_18pt-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/Inter/static/Inter_18pt-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 600;
+  font-display: swap;
+  src: url("./fonts/Inter/static/Inter_18pt-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 700;
+  font-display: swap;
+  src: url("./fonts/JetBrains/JetBrainsMono-VariableFont_wght.ttf") format("truetype");
+}
+
+$font-body: "Chivo", sans-serif;
+$font-sf: "SF", sans-serif;
+$font-inter: "Inter", sans-serif;
+$font-jet-brains: "JetBrains Mono", sans-serif;
+
+$font-all: (
+  "font-body": $font-body,
+  "font-sf": $font-sf,
+  "font-inter": $font-inter,
+  "font-jet-brains": $font-jet-brains,
+);
+
+:root {
+  @each $font, $family in $font-all {
+    --#{$font}: #{$family};
+  }
+}

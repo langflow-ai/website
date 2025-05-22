@@ -1,0 +1,91 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.slider {
+  --time: 15s;
+  --slider-height: auto;
+
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  width: 100%;
+  height: var(--slider-height);
+  opacity: 0;
+  transition: opacity 0.4s linear;
+
+  > div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    position: relative;
+    min-width: calc(var(--slider-width) * (var(--quantity) - 1));
+    height: var(--slider-height);
+    opacity: 1;
+    animation: fade-in;
+  }
+
+  .list {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--slider-height);
+    gap: var(--slide-gap);
+    margin-right: var(--slide-gap);
+  }
+
+  &[data-animate="true"] {
+    opacity: 1;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 3% 94%,
+      transparent
+    );
+
+    .list {
+      position: absolute;
+      left: 100%;
+      animation: slide var(--time) linear infinite;
+      animation-delay: calc(
+        (var(--time) / var(--quantity)) * (var(--index) - 1) - var(--time)
+      );
+    }
+
+    &.hoverable:hover {
+      .list {
+        animation-play-state: paused;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion) {
+    &[data-animate="true"] {
+      overflow: auto;
+
+      > div {
+        min-width: fit-content;
+      }
+
+      .list {
+        animation: none;
+        position: relative;
+        left: 0;
+
+        &:not(:first-of-type) {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@keyframes slide {
+  from {
+    left: 100%;
+  }
+  to {
+    left: calc(var(--slider-width) * -1);
+  }
+}

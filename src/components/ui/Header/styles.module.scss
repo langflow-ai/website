@@ -1,0 +1,240 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.header {
+  background: var(--primary-black);
+  padding: 24px 32px;
+  color: var(--primary-white);
+  font-family: var(--font-inter);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  &_img {
+    object-fit: contain;
+  }
+}
+
+.nav {
+  display: flex;
+  margin-left: 40px;
+  gap: 32px;
+  a {
+    text-decoration: none;
+    color: var(--primary-white);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+}
+
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+  h6 {
+    font-weight: 500;
+  }
+}
+
+.badge {
+  background-color: #ff4ecd;
+  color: var(--primary-white);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.dropdown {
+  position: absolute;
+  top: 26px;
+  background: #111;
+  padding: 6px;
+  font-family: var(--font-inter);
+  border-radius: 15px;
+  border: 1px solid rgb(34, 34, 34);
+  width: 160px;
+  left: -18%;
+  top: 125%;
+  cursor: pointer;
+  a {
+    padding: 5px 10px;
+    font-size: 500 !important;
+    color: var(--primary-white);
+  }
+}
+
+.right {
+  display: flex;
+  gap: 15px;
+  @include media-breakpoint-down(xl) {
+    display: none;
+  }
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  h6 {
+    font-weight: 500;
+    font-family: var(--font-inter) !important;
+    color: var(--primary-white);
+  }
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.badge {
+  width: 84px;
+  display: flex;
+  padding: 5px 6px 6px 6px;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+  background: var(
+    --Gradient-1,
+    linear-gradient(270deg, #f480ff -2%, #ff3276 100%)
+  );
+
+  &_heading {
+    color: black !important;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    font-family: var(--font-inter);
+  }
+}
+
+.menuButton {
+  position: relative;
+  width: 30px;
+  height: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 1000;
+
+  span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #aaa;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &.active {
+    span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    span:nth-child(2) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    display: none;
+  }
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow: scroll;
+  width: 100%;
+  background: #000;
+  z-index: 900;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 20px;
+  transition: all 0.4s ease-in-out;
+}
+
+.drawerContent {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 600px;
+  gap: 20px;
+  color: var(--primary-white);
+}
+
+.drawerSectionTitle {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.drawerItem {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-bottom: 16px;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+
+  &:hover {
+    color: #f480ff;
+  }
+
+  &_heading {
+    font-size: 15px;
+    font-family: var(--font-inter);
+  }
+}
+
+.drawerItemActive {
+  color: #ffff;
+  font-size: 16px;
+  font-weight: 500;
+}
+.drawerSubItemContainer {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 600px;
+  gap: 16px;
+  color: var(--primary-white);
+}
+.drawerSubItem {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--primary-white);
+  cursor: pointer;
+  border-bottom: 2px solid rgb(34, 34, 34);
+  width: 100%;
+  padding: 0px 0px 16px;
+
+  &:hover {
+    color: #f480ff;
+  }
+}
+
+.drawer hr {
+  border: none;
+  border-top: 1px solid #333;
+}

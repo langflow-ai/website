@@ -1,0 +1,137 @@
+// Colors
+
+$primary: (
+  black: #000000,
+  purple: #6b1c96,
+  white: #ffffff,
+  body: #1a1a30,
+  orange: #e64328,
+);
+
+$secondary: (
+  fuchsia: #a71181,
+  red: #d90036,
+  rose: #c0085c,
+  tangerine: #f28719,
+  yellow: #ffca0b,
+  orange: #ffa500,
+  neon-pink: #e1335e,
+);
+
+$_colors: (
+  solid-light-gray: (
+    800: #4a4a4a,
+    700: #71717a,
+    600: #4c5974,
+    500: #808da4,
+    450: #7f7f7f,
+    400: #a1a1aa,
+    300: #a7a7a7,
+    200: #ffffff3b,
+  ),
+  dark-gray: (
+    950: #18181b,
+    900: #1a1617,
+    800: #262626,
+    750: #2c2c30,
+    700: #20293a,
+    650: #27272a,
+    600: #271734,
+    500: #362742,
+    400: #463851,
+    300: #55485f,
+    250: #52525b,
+    200: #65596e,
+    150: #43434d,
+    125: #3f3f46,
+    100: #3c4961,
+    75: #4d5869,
+    50: #5c6a85,
+    25: #a6b1c2,
+  ),
+  light-gray: (
+    600: #b7c0c4,
+    500: #c2cacf,
+    400: #ced5d9,
+    300: #dae0e3,
+    200: #e6ebed,
+    150: #f6f8fa,
+    100: #f2f6f7,
+    75: #d4d4d8,
+    50: #e6e6e6,
+    40: #e4e4e7,
+    25: #f4f4f5,
+  ),
+  purple: (
+    600: #3c1055,
+    500: #4c146b,
+    400: #5b1880,
+    300: #7f3aa4,
+    200: #9259b2,
+    100: #a677c0,
+    50: #c084fc,
+  ),
+  green: (
+    500: #008040,
+  ),
+  yellow: (
+    500: #916707,
+  ),
+  red: (
+    600: #dc2626,
+    500: #d52424,
+    400: #f53e47,
+    300: #feecec,
+  ),
+  blue: (
+    1000: #152166,
+    950: #150485,
+    900: #022140,
+    800: #133d68,
+    750: #504fe8,
+    700: #003395,
+    650: #2120e2,
+    625: #6366F1,
+    600: #1d4fae,
+    575: #0d80f2,
+    550: #0a66c2,
+    500: #1e71d4,
+    400: #6c9fff,
+    300: #c6daff,
+  ),
+  orange: (
+    500: #e64328,
+  ),
+  pink: (
+    600: #f472b6,
+    500: #f81f9c,
+  ),
+);
+
+:root {
+  // Creating the box shadows variants to be used eery
+  --box-shadow-100: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  --box-shadow-200: 0px 8px 24px 0px rgba(26, 26, 48, 0.1);
+
+  @each $color, $value in $primary {
+    --primary-#{"" + $color}: #{$value};
+    --primary-#{"" + $color}-rgb:
+      #{red($value)}, #{green($value)}, #{blue($value)};
+  }
+  @each $color, $value in $secondary {
+    --interface-#{"" + $color}: #{$value};
+    --interface-#{"" + $color}-rgb:
+      #{red($value)}, #{green($value)}, #{blue($value)};
+  }
+  @each $colorname, $variants in $_colors {
+    @each $variant, $value in $variants {
+      $keyname: "--interface-" + $colorname + "-" + $variant;
+      $rgbkey: "--interface-" + $colorname + "-" + $variant + "-rgb";
+      #{$keyname}: #{$value};
+      #{$rgbkey}:
+        #{red($value)},
+        #{green($value)},
+        #{blue($value)};
+    }
+  }
+}

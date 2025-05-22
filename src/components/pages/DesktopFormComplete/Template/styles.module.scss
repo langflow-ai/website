@@ -1,0 +1,38 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.template {
+  background-image: url("https://framerusercontent.com/images/8bKKgoZVqgsfLRek309Lmht8M.jpg?scale-down-to=2048");
+  display: flex;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-color: var(--primary-black);
+  flex-direction: column;
+  overflow-y: scroll;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 300px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 48px;
+  max-width: 724px;
+  h4 {
+    font-size: 40px !important;
+    font-weight: 400 !important;
+  }
+  h6 {
+    font-family: var(--font-body) !important;
+    font-weight: 500 !important;
+    font-size: 18px !important;
+
+  }
+  @include media-breakpoint-down(md) {
+    margin-top: 75px;
+  }
+}

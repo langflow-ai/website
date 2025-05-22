@@ -1,0 +1,15 @@
+@mixin spacer($bottom: 96px, $gap: 0px, $space: 0px) {
+  margin-bottom: $bottom;
+  scroll-margin-top: calc(
+    var(--header-height) + var(--announcement-height, 50px) + $gap
+  );
+
+  @if $space != 0px {
+    padding-top: $space;
+    padding-bottom: $space;
+
+    &:nth-last-child(2) {
+      margin-bottom: 0;
+    }
+  }
+}

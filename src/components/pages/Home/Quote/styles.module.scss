@@ -1,0 +1,105 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.testimonialSection {
+  color: var(--primary-white);
+  padding-top: 85px;
+  padding-bottom: 85px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.row {
+  gap: 48px;
+  justify-content: space-between;
+  @include media-breakpoint-down(xl) {
+    gap: var(--spacer-5);
+  }
+}
+.quote {
+  font-family: var(--font-body);
+  font-size: 36px;
+  font-weight: 200;
+  line-height: 1.2em;
+  letter-spacing: 0;
+  @include media-breakpoint-down(xl) {
+    text-align: center;
+  }
+  @include media-breakpoint-down(lg) {
+    font-size: 24px;
+  }
+}
+.col {
+  margin-left: auto;
+}
+.icon {
+  @include media-breakpoint-down(xl) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.companyIcon {
+  font-size: 1.2rem;
+}
+
+.detailsContainer {
+  padding: 0px;
+  @include media-breakpoint-down(xl) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.details {
+  margin-top: 41px;
+  @include media-breakpoint-down(lg) {
+    flex-direction: column;
+  }
+}
+.author {
+  margin-left: 24px;
+  @include media-breakpoint-down(lg) {
+    margin-left: 0px;
+    text-align: center;
+  }
+}
+.authorImage {
+  border-radius: 50%;
+  @include media-breakpoint-down(lg) {
+    margin-bottom: 10px;
+  }
+}
+
+.authorName {
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 140%;
+  letter-spacing: -0.24px;
+  white-space: nowrap;
+  overflow: hidden;
+  @include media-breakpoint-down(lg) {
+    font-size: 16px;
+  }
+}
+
+.authorTitle {
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 200;
+  line-height: 140%;
+  letter-spacing: -0.2px;
+  @include media-breakpoint-down(lg) {
+    font-size: 16px;
+  }
+}
+
+.removePaddingOnMobile {
+  @include media-breakpoint-down(xl) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

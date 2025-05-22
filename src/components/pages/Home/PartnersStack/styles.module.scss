@@ -1,0 +1,24 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+.stack {
+  margin-bottom: 54px;
+  margin-top: var(--spacer-6);
+}
+.title {
+  color: var(--primary-white);
+  font-family: var(--font-body);
+  font-size: 43px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: var(--spacer-2);
+}
+.description {
+  color: var(--primary-white);
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 130%;
+  max-width: 778px;
+  margin-bottom: var(--spacer-5);
+}
