@@ -1,5 +1,5 @@
-@import "/src/styles/variables";
-@import "~bootstrap/scss/mixins";
+@import '/src/styles/variables';
+@import '~bootstrap/scss/mixins';
 
 .hero {
   position: relative;
@@ -47,7 +47,10 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 32px;
+  position: relative;
   &_title {
+    position: absolute;
+    left: -40px;
     font-size: 56px;
     font-weight: 400;
     line-height: 100%;
@@ -61,11 +64,16 @@
     justify-content: center;
     align-items: center;
     margin: 0;
+    min-width: 672px;
     @include media-breakpoint-down(xl) {
+      min-width: 378px;
+      left: -20px;
       max-width: 390px;
       padding: 24px 32px;
     }
     @include media-breakpoint-down(mlg) {
+      left: 0px;
+      position: relative;
       border: none;
       background: transparent;
       padding: 0;
@@ -76,20 +84,21 @@
     }
   }
   &_description {
+    margin-top: 155px !important;
     font-size: 18px;
     font-weight: 300;
     line-height: 140%;
-    padding-left: 45px;
     color: white;
     max-width: 554px;
     margin: 0;
     @include media-breakpoint-down(xl) {
-      padding-left: 24px;
+      margin-top: 245px !important;
       max-width: 425px;
     }
     @include media-breakpoint-down(mlg) {
       max-width: 100%;
       padding: 0;
+      margin-top: 0px !important;
     }
   }
   @include media-breakpoint-down(xl) {
@@ -103,12 +112,7 @@
 .button_group {
   display: flex;
   gap: 16px;
-  padding-left: 45px;
-  @include media-breakpoint-down(xl) {
-    padding-left: 24px;
-  }
   @include media-breakpoint-down(mlg) {
-    padding: 0;
     flex-direction: column;
   }
   @include media-breakpoint-down(md) {

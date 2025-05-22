@@ -4,6 +4,8 @@
 .logos {
   opacity: 0.6;
   &_isMobile {
+    max-width: 1280px;
+    width: 100%;
     mask-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0) 0%,

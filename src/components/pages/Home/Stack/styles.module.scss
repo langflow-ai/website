@@ -4,6 +4,9 @@
 .stackContainer {
   z-index: 1;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stack {
@@ -25,12 +28,6 @@
     font-size: 20px;
     font-weight: 500;
     line-height: 140%;
-    @include media-breakpoint-down(xxll) {
-      padding-left: 45px;
-    }
-    @include media-breakpoint-down(xl) {
-      padding-left: 24px;
-    }
     @include media-breakpoint-down(mlg) {
       max-width: 190px;
       padding-left: 0;
