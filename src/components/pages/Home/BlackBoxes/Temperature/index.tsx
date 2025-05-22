@@ -2,6 +2,8 @@
 import { useState } from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
+import IconPrecise from "@/components/ui/icons/IconPrecise";
+import IconCreative from "@/components/ui/icons/IconCreative";
 
 const TemperatureComponent = () => {
   const [temperature, setTemperature] = useState(0.5);
@@ -29,21 +31,11 @@ const TemperatureComponent = () => {
       </div>
       <div className={styles.captions}>
         <div className={styles.captions_precise}>
-          <Image
-            src="/assests/icon-precise.svg"
-            alt="icon"
-            width={16}
-            height={16}
-          />
+          <IconPrecise />
           <p>Precise</p>
         </div>
         <div className={styles.captions_creative}>
-          <Image
-            src="/assests/icon-creative.svg"
-            alt="icon"
-            width={16}
-            height={16}
-          />
+          <IconCreative />
           <p>Creative</p>
         </div>
       </div>

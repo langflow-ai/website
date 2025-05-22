@@ -13,7 +13,7 @@ const DownloadButton = ({ url }: { url: string }) => {
     <div className={styles.downloadButton}>
       <Image
         src={
-          "https://framerusercontent.com/images/NAwNuA5tzxlT0do1DGE0KugNGmA.png"
+          "/images/apple.avif"
         }
         alt={""}
         width={20}

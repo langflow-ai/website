@@ -39,7 +39,7 @@ const BlackBoxes = () => {
               <ReactCompareSlider
                 itemOne={
                   <Image
-                    src="/slider-left.png"
+                    src="/images/slider-left.png"
                     alt="slider-left"
                     width={340}
                     height={340}
@@ -47,7 +47,7 @@ const BlackBoxes = () => {
                 }
                 itemTwo={
                   <Image
-                    src="/slider-right.png"
+                    src="/images/slider-right.png"
                     alt="slider-right"
                     fill
                     className={styles.sliderImage}
@@ -56,7 +56,7 @@ const BlackBoxes = () => {
                 handle={
                   <div className={styles.sliderHandle}>
                     <Image
-                      src="/slider-handle.png"
+                      src="/images/slider-handle.png"
                       alt="slider-handle"
                       width={47}
                       height={47}

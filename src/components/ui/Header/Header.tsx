@@ -13,7 +13,7 @@ import Display from "@/components/ui/Display";
 import { LIST, SOCIALS } from "@/utils/constants";
 
 // Assests
-import Logo from "../../../../public/assests/logo.png";
+import Logo from "../../../../public/images/logo.png";
 
 // Styles
 import styles from "./styles.module.scss";

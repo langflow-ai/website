@@ -4,6 +4,8 @@ import styles from "./styles.module.scss";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import GlowCircle from "@/components/ui/icons/GlowCircle";
+import IconChevup from "@/components/ui/icons/IconChevup";
+import IconChevdown from "@/components/ui/icons/IconChevdown";
 
 const CrousalComponent = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -12,7 +14,7 @@ const CrousalComponent = () => {
   const data = [
     {
       title: "Chat",
-      src: "/content-chat.png",
+      src: "/images/content-chat.png",
       color: "#3B82F6",
       circles: 2,
       circlePositions: [
@@ -23,7 +25,7 @@ const CrousalComponent = () => {
     },
     {
       title: "Model",
-      src: "/content-model.png",
+      src: "/images/content-model.png",
       color: "#10B981",
       circles: 3,
       circlePositions: [
@@ -35,7 +37,7 @@ const CrousalComponent = () => {
     },
     {
       title: "Agent",
-      src: "/content-agent.png",
+      src: "/images/content-agent.png",
       color: "#F59E0B",
       circles: 2,
       circlePositions: [
@@ -65,12 +67,7 @@ const CrousalComponent = () => {
   return (
     <div className={styles.carouselContainer}>
       <div className={styles.button} onClick={handlePrev}>
-        <Image
-          src={"/assests/icon-chevup.svg"}
-          alt="icon"
-          width={26}
-          height={26}
-        />
+        <IconChevup />
       </div>
       <div className={styles.carouselWrapper}>
         <motion.div
@@ -112,12 +109,7 @@ const CrousalComponent = () => {
       </div>
 
       <div className={styles.button} onClick={handleNext}>
-        <Image
-          src={"/assests/icon-chevdown.svg"}
-          alt="icon"
-          width={26}
-          height={26}
-        />
+        <IconChevdown />
       </div>
     </div>
   );
