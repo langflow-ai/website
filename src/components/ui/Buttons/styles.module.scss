@@ -1,8 +1,22 @@
 .downloadButton {
   width: fit-content;
-  background: linear-gradient(to right, rgb(134, 239, 172), rgb(59, 130, 246));
   border-radius: 8px;
-  box-shadow: rgba(134, 239, 172, 0.3) 0px 0px 20px;
+  background: linear-gradient(
+    to right,
+    rgb(134, 239, 172),
+    rgb(59, 130, 246),
+    rgb(134, 239, 172)
+  );
+  background-size: 300% 100%;
+  background-position: 0% 50%;
+  border: none;
+  opacity: 1;
+  box-shadow: 0px 0px 10px rgba(52, 211, 153, 0.5), 0px 0px 15px rgba(52, 211, 153, 0.6);
+  transition: opacity 0.3s ease-in-out, box-shadow 0.1s ease-in-out;
+  animation: boxShadowAnimation 1.5s infinite alternate;
+  &:hover {
+    animation: waveGradient 5s ease-in-out infinite;
+  }
   display: flex;
   align-items: center;
   gap: 10px;
@@ -11,5 +25,23 @@
     text-decoration: none;
     color: white;
   }
-
+  @keyframes boxShadowAnimation {
+    0% {
+      box-shadow: 0px 0px 10px rgba(52, 211, 153, 0.5), 0px 0px 15px rgba(52, 211, 153, 0.6);
+    }
+    100% {
+      box-shadow: 0px 0px 15px rgba(52, 211, 153, 0.6), 0px 0px 20px rgba(52, 211, 153, 0.7);
+    }
+  }
+  @keyframes waveGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 }
