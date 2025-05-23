@@ -14,9 +14,6 @@
     rgba(0, 0, 0, 0) 100%
   );
   }
-  @include media-breakpoint-up(lg) {
-    margin-bottom: 3.5rem;
-  }
 
   .title {
     color: var(--2023-primary-white);
