@@ -85,7 +85,7 @@ const DragNDrop: React.FC = () => {
       <section className={styles.image}>
         <Image
           ref={box1Ref}
-          src="/drag-drop-deploy.png"
+          src="/images/drag-drop-deploy.png"
           alt="Agent code and UI"
           width={1000}
           height={478}
@@ -93,7 +93,7 @@ const DragNDrop: React.FC = () => {
           onLoadingComplete={onImageLoad}
           priority
         />
-        <Image src="/mobile-agent.png" alt="mobile-agent" width={600} height={500} className={`${styles.responsiveImg} ${styles.mobileImg}`} />
+        <Image src="/images/mobile-agent.png" alt="mobile-agent" width={600} height={500} className={`${styles.responsiveImg} ${styles.mobileImg}`} />
       </section>
 
       <section className={styles.image_relative}>
@@ -107,7 +107,7 @@ const DragNDrop: React.FC = () => {
         </section>
         <Image
           ref={box2Ref}
-          src="/run-share-collab.png"
+          src="/images/run-share-collab.png"
           alt="Run, Share and Collaborate"
           width={1000}
           height={536}
@@ -115,7 +115,7 @@ const DragNDrop: React.FC = () => {
           onLoadingComplete={onImageLoad}
           priority
         />
-        <Image src="/mobile-collab.png" alt="mobile-collab" width={600} height={500} className={`${styles.responsiveImg} ${styles.mobileImg}`} />
+        <Image src="/images/mobile-collab.png" alt="mobile-collab" width={600} height={500} className={`${styles.responsiveImg} ${styles.mobileImg}`} />
       </section>
 
       <section className={`${styles.heading} ${styles.heading_center}`}>
@@ -129,7 +129,7 @@ const DragNDrop: React.FC = () => {
       <section className={`${styles.image} ${styles.image_center}`}>
         <Image
           ref={box3Ref}
-          src="/assests/realtime-iteration.svg"
+          src="/svgs/realtime-iteration.svg"
           alt="Real-time Iteration"
           width={1280}
           height={383}
@@ -137,7 +137,7 @@ const DragNDrop: React.FC = () => {
           onLoadingComplete={onImageLoad}
           priority
         />
-        <Image src="/mobile-infra.png" alt="mobile-infra" width={1260} height={700} className={`${styles.responsiveImg} ${styles.mobileImg}`} />
+        <Image src="/images/mobile-infra.png" alt="mobile-infra" width={1260} height={700} className={`${styles.responsiveImg} ${styles.mobileImg}`} />
       </section>
       <section className={styles.heading}>
         <Display size={400} weight={300} className={styles.heading_title}>
@@ -148,7 +148,7 @@ const DragNDrop: React.FC = () => {
         </Display>
       </section>
       <section className={`${styles.image} ${styles.image_right}`}>
-        <Image ref={box4Ref} src="/dialog-api.png" alt="Dialog API" width={800} height={362} className={styles.responsiveImg} onLoadingComplete={onImageLoad} priority />
+        <Image ref={box4Ref} src="/images/dialog-api.png" alt="Dialog API" width={800} height={362} className={styles.responsiveImg} onLoadingComplete={onImageLoad} priority />
       </section>
       <section className={`${styles.heading} ${styles.heading_last}`}>
         <Display size={400} weight={300} className={styles.heading_title}>

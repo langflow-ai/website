@@ -56,17 +56,17 @@
   position: relative;
 
   &_first {
-    background-image: url("/box1.png");
+    background-image: url("/images/box1.png");
     background-size: cover;
     background-position: center;
   }
   &_second {
-    background-image: url("/box2.png");
+    background-image: url("/images/box2.png");
     background-size: cover;
     background-position: center;
   }
   &_third {
-    background-image: url("/box3.png");
+    background-image: url("/images/box3.png");
     background-size: cover;
     background-position: center;
   }
@@ -75,7 +75,7 @@
 .grid {
   background-size: cover;
   background-position: center;
-  background-image: url("/grid.png");
+  background-image: url("/images/grid.png");
   width: 100%;
   height: 100%;
   display: flex;

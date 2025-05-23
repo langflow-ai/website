@@ -1,5 +1,5 @@
 import { PARTNERS_STACK_TEXT } from "@/utils/constants";
-import { LOGOS } from "./constant";
+// import { LOGOS } from "./constant";
 import styles from "./styles.module.scss";
 import Display from "@/components/ui/Display";
 import Slider from "./Slider";
@@ -13,7 +13,7 @@ const PartnersStack = () => {
         </Display>
         <p className={styles.description}>{PARTNERS_STACK_TEXT.description}</p>
       </div>
-      <Slider logos={LOGOS} />
+      <Slider />
     </div>
   );
 };

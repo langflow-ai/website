@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import styles from "./styles.module.scss"; // Make sure to import the styles
 import Image from "next/image";
+import IconCheck from "@/components/ui/icons/IconCheck";
+import IconDropdown from "@/components/ui/icons/IconDropdown";
 
 interface Model {
   img: string;
@@ -40,12 +42,7 @@ const ModelComponent = () => {
           <div className={styles.icon}>{selectedModel.img}</div>
           <p className={styles.name}>{selectedModel?.name}</p>
         </div>
-        <Image
-          src="/assests/icon-dropdown.svg"
-          alt="icon"
-          width={20}
-          height={20}
-        />
+        <IconDropdown />
         {isDropdownOpen && (
           <div className={styles.dropdownList}>
             {models.map((model) => (
@@ -58,12 +55,7 @@ const ModelComponent = () => {
                   <div className={styles.icon}>{model.img}</div>
                   <p className={styles.name}>{model?.name}</p>
                 </div>
-                {model.value === selectedModel.value && <Image
-                  src="/assests/icon-check.svg"
-                  alt="icon"
-                  width={20}
-                  height={20}
-                />}
+                {model.value === selectedModel.value && <IconCheck />}
               </div>
             ))}
           </div>
