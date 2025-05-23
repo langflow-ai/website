@@ -6,12 +6,9 @@
   width: 100%;
   height: auto;
   z-index: 0;
-  min-height: 738px;
+  min-height: auto;
   padding-top: var(--spacer-4);
   font-family: var(--font-body);
-  @include media-breakpoint-down(xl) {
-    min-height: auto;
-  }
   .gradient-overlay {
     img {
       width: 100%;
