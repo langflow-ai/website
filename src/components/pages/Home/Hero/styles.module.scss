@@ -78,6 +78,7 @@
     @include media-breakpoint-down(md) {
       margin-left: 0px;
       border: none;
+      min-width: 100%;
     }
   }
   &_description {
