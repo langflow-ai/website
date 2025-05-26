@@ -53,10 +53,14 @@
   max-width: 416px;
   min-width: 355px;
   width: 100% !important;
-  height: 416px;
+  height: 355px;
   flex-shrink: 0;
   border-radius: 24px;
   position: relative;
+
+  @include media-breakpoint-down(xl) {
+   height: 416px;
+  }
 
   &_first {
     box-shadow: 0px 8.014px 48.082px -14.024px #34d399 inset;

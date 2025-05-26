@@ -7,8 +7,10 @@ import ModelSelector from './ModelSelector';
 import TemperatureComponent from './Temperature';
 import CrousalComponent from './Crousal';
 import TabsComponent from './Tabs';
+import useCheckMobile from '@/hooks/useCheckMobile';
 
 const BlackBoxes = () => {
+  const { isMobile } = useCheckMobile(1200);
   return (
     <div className={`${styles.container} container-wide`}>
       <div className={`${styles.container_title} `}>Ditch the Black Boxes</div>
@@ -46,7 +48,7 @@ const BlackBoxes = () => {
           <div className={`${styles.box} ${styles.box_third}`}>
             <div className={styles.grid}>
               <ReactCompareSlider
-                itemOne={<Image src="/images/slider-left.png" alt="slider-left" width={340} height={340} />}
+                itemOne={<Image src="/images/slider-left.png" alt="slider-left" width={isMobile ? 340 : 300} height={isMobile ? 340 : 300} />}
                 itemTwo={<Image src="/images/slider-right.png" alt="slider-right" fill className={styles.sliderImage} />}
                 handle={
                   <div className={styles.sliderHandle}>
