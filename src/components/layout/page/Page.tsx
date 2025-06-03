@@ -25,9 +25,10 @@ const Page: FC<Props> = ({
 }) => {
   const topbarContent = {
     home: {
-      title: "Langflow Desktop for macOS is here!",
-      linkTo: "/desktop",
-      linkText: "Try the alpha",
+      title:
+        "IBM plans to Acquire DataStax, Accelerating Production AI & NoSQL Data at Scale",
+      linkTo: "https://www.datastax.com/blog/ibm-plans-to-acquire-datastax?utm_medium=display&utm_source=langflow&utm_campaign=ibm-announce-feb-2025&utm_content=home_banner",
+      linkText: "Read more",
     },
     desktop: {
       title:

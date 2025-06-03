@@ -146,7 +146,7 @@ const QUOTES_DATA = [
 const HERO_CONTENT = {
   title: "Stop fighting your tools",
   description:
-    "Langflow is a low-code builder that makes it easier to build powerful AIs that can use any API, model, or database.",
+    "Langflow is a powerful tool to build and deploy AI agents and MCP servers. It comes with batteries included and supports all major LLMs, vector databases and a growing library of AI tools.",
   image: {
     src: "/images/Gradient.png",
     alt: "gradient",
@@ -156,7 +156,7 @@ const HERO_CONTENT = {
   buttons: {
     primary: {
       label: "Get Started for Free",
-      link: "https://astra.datastax.com/signup?type=langflow",
+      link: "/desktop",
     },
     secondary: {
       label: "Star on GitHub",
@@ -215,7 +215,7 @@ const GET_STARTED = {
   buttons: {
     primary: {
       label: "Get Started for Free",
-      link: "https://astra.datastax.com/signup?type=langflow",
+      link: "/desktop",
     },
     secondary: {
       label: "Star on GitHub",

@@ -19,6 +19,7 @@ import {
   useRelativeElementPositions,
 } from "@/hooks/useRelativeElementPositions";
 import { LineCoordinate } from "@/lib/types/paths";
+import Link from "next/link";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -63,14 +64,11 @@ const Hero = () => {
               </p>
             </div>
             <div className={styles.button_group}>
-              <Button
-                variant={ButtonTypes.FILLED}
-                onClick={() =>
-                  window.open(HERO_CONTENT.buttons.primary.link, "_blank")
-                }
-              >
-                {HERO_CONTENT.buttons.primary.label}
-              </Button>
+              <Link href={HERO_CONTENT.buttons.primary.link} >
+                <Button variant={ButtonTypes.FILLED} onClick={() => { return false }}>
+                  {HERO_CONTENT.buttons.primary.label}
+                </Button>
+              </Link>
               <Button
                 variant={ButtonTypes.BORDER}
                 onClick={() =>
