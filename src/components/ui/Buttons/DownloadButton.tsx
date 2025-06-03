@@ -19,9 +19,9 @@ const DownloadButton = ({ url }: { url: string }) => {
         width={20}
         height={24}
       />
-      <Link href={url} target="_blank">
+      <Link href={url}>
         <Display size={100} className={"text-center text-black"}>
-          {"Download (Alpha)"}
+          {"Download Langflow"}
         </Display>
       </Link>
     </div>
