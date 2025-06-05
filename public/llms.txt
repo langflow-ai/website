@@ -1,0 +1,79 @@
+# 
+# LLMS.TXT - AI LANGUAGE MODEL INSTRUCTIONS
+# 
+# PRIMARY FUNCTION:
+# This file provides structured information about your website specifically for AI language models.
+# It helps LLMs understand your site's purpose, content, and context when answering questions about it.
+# 
+# SECTION IMPORTANCE:
+# 
+# 1. Core Information (CRITICAL)
+#    - Essential facts: name, description, type, URL
+#    - Helps LLMs identify and describe your platform accurately
+#    - Should be concise but comprehensive
+# 
+# 2. Key Features (HIGH IMPORTANCE)
+#    - Main value propositions and capabilities
+#    - Helps LLMs explain what users can do on your platform
+#    - Useful for recommendation and comparison queries
+# 
+# 3. Important Pages (HIGH IMPORTANCE)
+#    - Direct links to key sections
+#    - Helps LLMs provide specific navigation guidance
+#    - Should include primary user journeys
+# 
+# 4. Contact Information (MEDIUM IMPORTANCE)
+#    - Social media and communication channels
+#    - Enables LLMs to direct users to support/community
+#    - Builds credibility and trust signals
+# 
+# 5. Product Details (HIGH IMPORTANCE)
+#    - Specific information about your main offering
+#    - Helps LLMs provide accurate details about the product
+#    - Should include key facts users frequently ask about
+# 
+# BEST PRACTICES:
+# - Keep information current and accurate
+# - Use clear, descriptive language
+# - Include quantifiable details (features, system requirements)
+# - Provide absolute URLs
+# - Update when major features/details change
+# - Consider what users would most commonly ask about
+#
+
+# Core Information - Essential facts about the platform
+name: Langflow Desktop
+description: The powerful desktop application for building AI workflows visually. Create, test, and deploy AI agents with an intuitive drag-and-drop interface.
+type: AI Development Platform - Desktop Application
+url: https://langflow.org
+
+# Key Features - Main value propositions and platform capabilities
+- Visual AI workflow builder with drag-and-drop interface
+- Pre-built components for popular AI models and services
+- Real-time testing and debugging capabilities
+- Local development environment for privacy and control
+- Export workflows for production deployment
+- Integrated with major LLM providers (OpenAI, Anthropic, etc.)
+- Cross-platform support (Windows, macOS, Linux)
+- Open-source and extensible architecture
+
+# Important Pages - Primary navigation destinations for users
+- Home: https://langflow.org/
+- Desktop App: https://langflow.org/desktop
+- Download Form: https://langflow.org/desktop-form
+- Download Complete: https://langflow.org/desktop-form-complete
+
+# Contact Information - Community and support channels
+- GitHub: https://github.com/langflow-ai/langflow
+- Discord: https://discord.com/invite/EqksyE2EX9
+- Twitter: https://x.com/langflow_ai
+- YouTube: https://www.youtube.com/@Langflow
+- Documentation: https://docs.langflow.org
+
+# Product Details - Specific information about the desktop application
+- Platform: Cross-platform desktop application
+- License: Open source (MIT License)
+- System Requirements: Windows 10+, macOS 10.15+, Linux Ubuntu 18.04+
+- Installation: Direct download from website
+- Use Cases: AI prototyping, workflow automation, agent development
+- Target Users: Developers, data scientists, AI researchers, business analysts 
