@@ -1,0 +1,77 @@
+# 
+# ROBOTS.TXT - WEB CRAWLER CONTROL FILE
+# 
+# PRIMARY FUNCTION:
+# This file tells search engine crawlers (bots) which pages they can and cannot access on your website.
+# It's the first file most crawlers check when visiting your site, making it crucial for SEO and security.
+# 
+# DIRECTIVE IMPORTANCE:
+# 
+# 1. User-agent: * (CRITICAL)
+#    - Specifies which bots these rules apply to
+#    - "*" means ALL crawlers (Google, Bing, etc.)
+#    - Can be specific: "User-agent: Googlebot"
+# 
+# 2. Allow: / (HIGH IMPORTANCE)
+#    - Explicitly allows crawlers to access the root and all pages
+#    - Overrides any conflicting Disallow rules
+#    - Good practice for transparency
+# 
+# 3. Sitemap: URL (HIGH IMPORTANCE)
+#    - Points crawlers to your sitemap location
+#    - Helps discovery of all your pages
+#    - Should be absolute URL
+# 
+# 4. Disallow: /path/* (SECURITY & SEO)
+#    - Blocks crawlers from sensitive/irrelevant areas
+#    - Saves crawl budget for important content
+#    - Protects private sections
+# 
+# BEST PRACTICES:
+# - Keep file at root level (/robots.txt)
+# - Use absolute URLs for Sitemap directive
+# - Test with Google Search Console
+# - Block admin, API, and development paths
+# - Don't use for sensitive data (use authentication instead)
+# - Update when site structure changes
+#
+
+# Allow all crawlers to access the website
+User-agent: *
+Allow: /
+
+# Sitemap location - helps crawlers discover all pages efficiently
+Sitemap: https://langflow.org/sitemap.xml
+
+# Block crawler access to technical and private areas
+# These paths don't provide value to search results and may contain sensitive data
+
+# API endpoints - internal functionality, not for search indexing
+Disallow: /api/*
+
+# Next.js technical files - framework internals, not content
+Disallow: /_next/*
+
+# Static assets - already discoverable through page references
+Disallow: /static/*
+
+# Development and build files - technical artifacts
+Disallow: /.next/*
+Disallow: /node_modules/*
+
+# Authentication & user management - privacy protection
+Disallow: /auth/*
+Disallow: /login/*
+Disallow: /logout/*
+
+# Download tracking and analytics - internal metrics
+Disallow: /track/*
+Disallow: /analytics/*
+
+# Admin and configuration areas - sensitive operations
+Disallow: /admin/*
+Disallow: /config/*
+
+# Temporary files and cache - technical storage
+Disallow: /tmp/*
+Disallow: /cache/* 
