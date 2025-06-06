@@ -18,9 +18,7 @@ const Template = () => {
                   size={400}
                   weight={400}
                 >
-                  {
-                    "Download Langflow Desktop"
-                  }
+                  {"Download Langflow Desktop"}
                 </Display>
                 <Display
                   className="spacer--bottom-4  text-white pt-5 "
@@ -33,7 +31,6 @@ const Template = () => {
                 </Display>
 
                 <MarketoForm
-                  allowBypass={true}
                   showFootNote={false}
                   successRedirect={"/desktop-form-complete"}
                   id={5302}

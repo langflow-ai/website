@@ -1,5 +1,5 @@
-@import '/src/styles/variables';
-@import '~bootstrap/scss/mixins';
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
 
 .hero {
   position: relative;
@@ -112,6 +112,12 @@
   gap: 16px;
   @include media-breakpoint-down(mlg) {
     flex-direction: column;
+    a {
+      width: 100%;
+      button {
+        width: 100%;
+      }
+    }
   }
   @include media-breakpoint-down(md) {
     flex-direction: column;

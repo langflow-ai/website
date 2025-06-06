@@ -24,12 +24,21 @@ const GetStarted = () => {
           <h1 className={styles.container_title}>{title}</h1>
           <p className={styles.container_description}>{description}</p>
           <div className={styles.button_group}>
-            <Link href={primary.link} >
-              <Button variant={ButtonTypes.FILLED} onClick={() => { return false }}>
+            <Link href={primary.link}>
+              <Button
+                variant={ButtonTypes.FILLED}
+                onClick={() => {
+                  return false;
+                }}
+              >
                 {primary.label}
               </Button>
             </Link>
-            <Button variant={ButtonTypes.BORDER}  onClick={() => window.open(secondary.link, "_blank")} icon={<Github />}>
+            <Button
+              variant={ButtonTypes.BORDER}
+              onClick={() => window.open(secondary.link, "_blank")}
+              icon={<Github />}
+            >
               {secondary.label}
             </Button>
           </div>

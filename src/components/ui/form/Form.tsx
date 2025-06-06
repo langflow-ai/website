@@ -68,7 +68,7 @@ const MarketoForm = ({
   onSuccess = () => null,
   successTracking,
   concatValuesToRedirect,
-  useBusinessEmailValidation = true,
+  useBusinessEmailValidation = false,
   showFootNote = true,
   shouldDisableButton = false,
 }: Props): JSX.Element => {
@@ -101,7 +101,7 @@ const MarketoForm = ({
           SEQUENCE_ID_1,
           values?.Email,
           values?.FirstName,
-          values?.LastName,
+          values?.LastName
         );
       }
     } catch (error) {
@@ -115,7 +115,7 @@ const MarketoForm = ({
       if (concatValuesToRedirect) {
         const valuesString = `name=${values?.FirstName} ${values?.LastName}&email=${values?.Email}`;
         redirectLink = redirectLink.concat(
-          redirectLink.includes("?") ? `&${valuesString}` : `?${valuesString}`,
+          redirectLink.includes("?") ? `&${valuesString}` : `?${valuesString}`
         );
       }
       window.open(redirectLink, "_self");
@@ -194,7 +194,7 @@ const MarketoForm = ({
       });
     },
     invalidateForm,
-    useBusinessEmailValidation,
+    useBusinessEmailValidation
   );
 
   useIsomorphicLayoutEffect(() => {
