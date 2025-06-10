@@ -21,12 +21,6 @@ const Template: FC<PropsWithChildren> = () => {
               </div>
               <div className={styles.title}>
                 <Display
-                  size={700}
-                  className={`${styles.text} text-white text-center`}
-                >
-                  {"Langflow Desktop is Here!"}
-                </Display>
-                <Display
                   size={200}
                   className={`${styles.description} text-center text-white`}
                 >
@@ -34,6 +28,7 @@ const Template: FC<PropsWithChildren> = () => {
                     "Join thousands of developers accelerating their AI workflows. Start your first Langflow project now."
                   }
                 </Display>
+                
                 <DownloadButton url="/desktop-form" />
               </div>
             </div>

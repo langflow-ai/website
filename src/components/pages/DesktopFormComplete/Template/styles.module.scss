@@ -8,7 +8,7 @@
   background-repeat: no-repeat;
   background-color: var(--primary-black);
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -17,7 +17,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  margin-top: 300px;
+  margin-top: 30px;
   align-items: center;
   justify-content: flex-start;
   gap: 48px;

@@ -18,23 +18,19 @@ const Template = () => {
                   size={400}
                   weight={400}
                 >
-                  {
-                    "🚀 Download Langflow Desktop – Use the App with Just One Click!"
-                  }
+                  {"Download Langflow Desktop"}
                 </Display>
-
                 <Display
                   className="spacer--bottom-4  text-white pt-5 "
                   size={100}
                   weight={400}
                 >
                   {
-                    "Complete the form to get instant access to the download link!"
+                    "Please be sure to provide your legal first and last name, company and work email address."
                   }
                 </Display>
 
                 <MarketoForm
-                  allowBypass={true}
                   showFootNote={false}
                   successRedirect={"/desktop-form-complete"}
                   id={5302}

@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!-- 
+  SITEMAP FUNCTION & ELEMENT IMPORTANCE
+  
+  PRIMARY FUNCTION:
+  A sitemap is an XML file that helps search engines discover, crawl, and index your website pages more efficiently.
+  It serves as a roadmap of your site's content and provides metadata about each page.
+  
+  ELEMENT IMPORTANCE HIERARCHY:
+  
+  1. <loc> (CRITICAL - Required)
+     - The actual URL of the page
+     - Must be absolute and accessible
+     - Most important for search engine discovery
+  
+  2. <lastmod> (HIGH IMPORTANCE)
+     - Tells search engines when content was last updated
+     - Helps prioritize crawling of fresh content
+     - Critical for sites with frequently changing content
+  
+  3. <changefreq> (MEDIUM IMPORTANCE)
+     - Provides hint about update frequency
+     - Helps search engines optimize crawl scheduling
+     - Not a guarantee, just guidance for crawlers
+  
+  4. <priority> (LOW-MEDIUM IMPORTANCE)
+     - Relative importance compared to other pages on YOUR site
+     - Does NOT affect ranking compared to other websites
+     - Helps search engines understand your site's structure
+  
+  BEST PRACTICES:
+  - Keep sitemaps under 50,000 URLs and 50MB
+  - Use consistent URL formats (with/without trailing slashes)
+  - Submit sitemap to Google Search Console and Bing Webmaster Tools
+  - Update automatically when content changes (like this file does!)
+-->
+
+<!-- XML Declaration: defines version and encoding of the file -->
+
+<!-- urlset: root element that contains all site URLs -->
+<!-- xmlns: required namespace for sitemap protocol -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Landing Page - highest priority (main entry point) -->
+  <url>
+    <!-- loc: complete URL of the page (required) -->
+    <loc>https://langflow.org/</loc>
+    <!-- lastmod: date of last modification (YYYY-MM-DD) -->
+    <lastmod>2025-06-05</lastmod>
+    <!-- changefreq: estimated frequency of page changes -->
+    <!-- Values: always, hourly, daily, weekly, monthly, yearly, never -->
+    <changefreq>weekly</changefreq>
+    <!-- priority: relative priority between 0.0 and 1.0 -->
+    <!-- 1.0 = maximum priority, 0.5 = default, 0.0 = minimum -->
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Desktop page - second most important (main product feature) -->
+  <url>
+    <loc>https://langflow.org/desktop</loc>
+    <lastmod>2025-06-05</lastmod>
+    <!-- weekly: product information updated regularly -->
+    <changefreq>weekly</changefreq>
+    <!-- 0.9: high priority for main product page -->
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Desktop form page - third priority (user journey step) -->
+  <url>
+    <loc>https://langflow.org/desktop-form</loc>
+    <lastmod>2025-06-05</lastmod>
+    <!-- monthly: form pages change less frequently -->
+    <changefreq>monthly</changefreq>
+    <!-- 0.8: medium-high priority for conversion funnel -->
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Desktop form complete page - fourth priority (completion step) -->
+  <url>
+    <loc>https://langflow.org/desktop-form-complete</loc>
+    <lastmod>2025-06-05</lastmod>
+    <!-- monthly: completion pages are relatively static -->
+    <changefreq>monthly</changefreq>
+    <!-- 0.7: medium priority for final step in user journey -->
+    <priority>0.7</priority>
+  </url>
+  
+</urlset> 

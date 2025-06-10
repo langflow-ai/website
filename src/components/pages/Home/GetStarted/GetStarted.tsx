@@ -7,6 +7,7 @@ import Button from "@/components/ui/button/Button";
 import { ButtonTypes } from "@/components/ui/button/types";
 import Github from "@/components/ui/icons/Github";
 import { GET_STARTED } from "@/utils/constants";
+import Link from "next/link";
 
 const GetStarted = () => {
   const {
@@ -23,10 +24,21 @@ const GetStarted = () => {
           <h1 className={styles.container_title}>{title}</h1>
           <p className={styles.container_description}>{description}</p>
           <div className={styles.button_group}>
-            <Button variant={ButtonTypes.FILLED} onClick={() => window.open(primary.link, "_blank")}>
-              {primary.label}
-            </Button>
-            <Button variant={ButtonTypes.BORDER}  onClick={() => window.open(secondary.link, "_blank")} icon={<Github />}>
+            <Link href={primary.link}>
+              <Button
+                variant={ButtonTypes.FILLED}
+                onClick={() => {
+                  return false;
+                }}
+              >
+                {primary.label}
+              </Button>
+            </Link>
+            <Button
+              variant={ButtonTypes.BORDER}
+              onClick={() => window.open(secondary.link, "_blank")}
+              icon={<Github />}
+            >
               {secondary.label}
             </Button>
           </div>

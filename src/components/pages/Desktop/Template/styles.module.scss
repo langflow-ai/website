@@ -9,7 +9,7 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -78,7 +78,7 @@
 }
 
 .text {
-  font-size: 120px !important;
+  font-size: 100px !important;
   font-weight: 500 !important;
   font-family: var(--font-body) !important;
   max-width: 1800px;
