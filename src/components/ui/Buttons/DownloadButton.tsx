@@ -1,6 +1,6 @@
 // Dependencies
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 // Components
 import Display from "@/components/ui/Display";

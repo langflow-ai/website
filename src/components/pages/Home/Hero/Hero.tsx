@@ -19,7 +19,7 @@ import {
   useRelativeElementPositions,
 } from "@/hooks/useRelativeElementPositions";
 import { LineCoordinate } from "@/lib/types/paths";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);

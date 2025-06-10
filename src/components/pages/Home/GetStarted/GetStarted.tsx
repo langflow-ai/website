@@ -7,7 +7,7 @@ import Button from "@/components/ui/button/Button";
 import { ButtonTypes } from "@/components/ui/button/types";
 import Github from "@/components/ui/icons/Github";
 import { GET_STARTED } from "@/utils/constants";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 const GetStarted = () => {
   const {

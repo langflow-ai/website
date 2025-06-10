@@ -2,7 +2,7 @@ import React from "react";
 import Display from "@/components/ui/Display";
 import { Weight } from "@/components/ui/Display/types";
 import styles from "./styles.module.scss";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import Speaker from "../icons/Speaker";
 
 interface Props {

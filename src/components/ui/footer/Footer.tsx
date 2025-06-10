@@ -6,7 +6,7 @@ import { SOCIALS } from "@/utils/constants";
 
 // Styles
 import styles from "./styles.module.scss";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 const Footer = () => {
   return (

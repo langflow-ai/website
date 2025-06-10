@@ -3,7 +3,7 @@
 // Dependencies
 import Image from "next/image";
 import { useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 // Components
 import Badge from "@/components/ui/Header/Badge";
