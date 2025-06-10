@@ -23,7 +23,7 @@ const Template: FC<PropsWithChildren> = () => {
               </Display>
               <DownloadButton
                 url={
-                  "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_1.4.2_aarch64.dmg"
+                  "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_aarch64.dmg"
                 }
               />
             </div>
