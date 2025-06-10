@@ -1,3 +1,5 @@
+"use client";
+
 // Dependencies
 import { PortableText as BasePortableText } from "@portabletext/react";
 

@@ -8,3 +8,5 @@ export const config: ClientConfig = {
   perspective: "published",
   stega: false,
 };
+
+export const PREVIEW_READ_API_KEY_TOKEN = process.env.NEXT_SANITY_API_TOKEN!;

@@ -1,6 +1,12 @@
 // Dependencies
 import { FC, useMemo } from "react";
-// import hljs from "highlight.js/lib/common";
+import Highlight from "react-highlight";
+
+// Components
+import CopyToClipboard from "./Copy";
+
+// Styles
+import styles from "./styles.module.scss";
 
 // Props type
 type Props = {
@@ -39,11 +45,11 @@ const Code: FC<Props> = (props) => {
   }, [code]);
 
   return (
-    <div>
-      <pre
-        className={language ? `language-${language}` : ""}
-        dangerouslySetInnerHTML={{ __html: sanitizedCode }}
-      />
+    <div className={styles.code}>
+      <CopyToClipboard code={sanitizedCode} />
+      <Highlight className={language ? `language-${language}` : ""}>
+        {sanitizedCode}
+      </Highlight>
     </div>
   );
 };
