@@ -6,6 +6,7 @@ import { PortableText as BasePortableText } from "@portabletext/react";
 // Components
 import Small from "./block/Small";
 import Code from "./types/Code";
+import HeadingText from "./block/Heading";
 import Image from "./types/Image";
 
 interface Props {
@@ -16,6 +17,12 @@ interface Props {
 const DEFAULT_SERIALIZERS = {
   block: {
     small: Small,
+    h1: HeadingText,
+    h2: HeadingText,
+    h3: HeadingText,
+    h4: HeadingText,
+    h5: HeadingText,
+    h6: HeadingText,
   },
   types: {
     code: Code,

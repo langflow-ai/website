@@ -33,7 +33,7 @@
       scroll-margin-top: 96px;
       font-weight: 600;
       margin: var(--spacer-5) 0 var(--spacer-2);
-      color: var(--2023-primary-white);
+      color: var(--primary-white);
 
       * {
         color: inherit;
@@ -147,7 +147,7 @@
           font-weight: 300;
           font-size: 1.25rem;
           line-height: 1.5em;
-          color: var(--2023-primary-black);
+          color: var(--primary-black);
 
           &:not(:last-child) {
             margin-bottom: var(--spacer-3);
