@@ -36,19 +36,18 @@ const DownloadForm = () => {
                 Coming Soon
               </Display>
             ) : (
-              <div className={styles.downloadButton}>
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleDownload(option.link, option.fileName);
-                  }}
-                >
-                  <Display size={100} weight={600} className={'text-center text-black'}>
-                    {option.btnText}
-                  </Display>
-                </a>
-              </div>
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleDownload(option.link, option.fileName);
+                }}
+                className={styles.downloadButton}
+              >
+                <Display size={100} weight={600} className={'text-center text-black'}>
+                  {option.btnText}
+                </Display>
+              </a>
             )}
           </div>
         ))}

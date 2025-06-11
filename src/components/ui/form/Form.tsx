@@ -79,6 +79,18 @@ const MarketoForm = ({
 
   const isValidInstantBook = instantBook?.uuid && instantBook?.org_id && instantBook.task_id && instantBook?.environment;
 
+  const updateFormLabels = () => {
+    const emailLabel = document.querySelector('label[for="Email"], #LblEmail');
+    if (emailLabel) {
+      emailLabel.innerHTML = '<div class="mktoAsterix">*</div>Business Email:';
+    }
+
+    const submitButton = document.querySelector('.mktoButton[type="submit"]');
+    if (submitButton) {
+      submitButton.textContent = 'Download Langflow';
+    }
+  };
+
   const handleSuccess = (values?: any) => {
     try {
       const action = successTracking?.action || 'www - Form Submitted';
@@ -124,7 +136,7 @@ const MarketoForm = ({
       }
       setLoaded(true);
       isFunction(onLoad) && onLoad(form);
-
+      updateFormLabels();
       if (id == 4429) {
         form.onSubmit(() => {
           window.ChiliPiper.submit('datastax', 'inbound_router_mobile_demo', {
@@ -245,26 +257,6 @@ const MarketoForm = ({
       });
     };
   }, [id, hasErrorBeenHandled]);
-
-  useEffect(() => {
-    const updateFormLabels = () => {
-      const emailLabel = document.querySelector('label[for="Email"], #LblEmail');
-      if (emailLabel) {
-        emailLabel.innerHTML = '<div class="mktoAsterix">*</div>Business Email:';
-      }
-
-      const submitButton = document.querySelector('.mktoButton[type="submit"]');
-      if (submitButton) {
-        submitButton.textContent = 'Download Langflow';
-      }
-    };
-
-    const timeout = setTimeout(() => {
-      updateFormLabels();
-    }, 200);
-
-    return () => clearTimeout(timeout);
-  }, []);
 
   if (formLoadError) {
     return (
