@@ -4,11 +4,20 @@ import { useState } from 'react';
 import Display from '@/components/ui/Display';
 import MarketoForm from '@/components/ui/form';
 import styles from './styles.module.scss';
-import Link from '../Link';
 import { DOWNLOAD_OPTIONS } from '@/utils/constants';
 
 const DownloadForm = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const handleDownload = async (url: string, filename: string) => {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  };
 
   if (formSubmitted) {
     return (
@@ -28,11 +37,17 @@ const DownloadForm = () => {
               </Display>
             ) : (
               <div className={styles.downloadButton}>
-                <Link href={option.link}>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleDownload(option.link, option.fileName);
+                  }}
+                >
                   <Display size={100} weight={600} className={'text-center text-black'}>
                     {option.btnText}
                   </Display>
-                </Link>
+                </a>
               </div>
             )}
           </div>

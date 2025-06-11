@@ -2,7 +2,7 @@
 @import '~bootstrap/scss/mixins';
 
 .template {
-  // background-image: url("/images/background.png");
+  // background-image: url("/images/new-gradient.png");
   // background-size: cover;
   // background-position: center center;
   background-color: var(--primary-black);
@@ -10,9 +10,13 @@
   min-height: calc(100vh - 200px);
   flex-direction: column;
   overflow-y: auto;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  position: relative;
+
+  background:
+    linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0) 80%, transparent 80%), url('/images/new-gradient.png');
+  background-size: 100% 80%; 
+  background-position: top center;
+  background-repeat: no-repeat;
   @include media-breakpoint-down(sm) {
     min-height: calc(100vh - 240px);
   }

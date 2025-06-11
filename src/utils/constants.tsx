@@ -223,14 +223,16 @@ const DOWNLOAD_OPTIONS = [
   {
     icon: <Apple />,
     name: 'macOS (Apple Silicon)',
-    link: '/',
+    link: 'https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_aarch64.dmg',
+    fileName: 'Langflow_aarch64.dmg',
     btnText: 'Download',
     isComingSoon: false
   },
   {
     icon: <Apple />,
     name: 'macOS (Intel)',
-    link: '/',
+    link: 'https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_aarch64.dmg',
+    fileName: 'Langflow_aarch64.dmg',
     btnText: 'Download',
     isComingSoon: false
   },
@@ -238,6 +240,7 @@ const DOWNLOAD_OPTIONS = [
     icon: <Windows />,
     name: 'Windows (x64)',
     link: '/',
+    fileName: '',
     btnText: '',
     isComingSoon: true
   },
@@ -245,13 +248,15 @@ const DOWNLOAD_OPTIONS = [
     icon: <Windows />,
     name: 'Windows (Arm)',
     link: '/',
-    btnText: '', 
+    fileName: '',
+    btnText: '',
     isComingSoon: true
   },
   {
     icon: <Globe />,
     name: 'Web app',
-    link: '/',
+    link: 'https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_aarch64.dmg',
+    fileName: 'Langflow_aarch64.dmg',
     btnText: 'Open',
     isComingSoon: false
   }

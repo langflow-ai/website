@@ -259,10 +259,11 @@ const MarketoForm = ({
       }
     };
 
-    updateFormLabels();
-    const interval = setInterval(updateFormLabels, 500);
+    const timeout = setTimeout(() => {
+      updateFormLabels();
+    }, 200);
 
-    return () => clearInterval(interval);
+    return () => clearTimeout(timeout);
   }, []);
 
   if (formLoadError) {
