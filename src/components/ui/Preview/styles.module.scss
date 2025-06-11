@@ -1,0 +1,15 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.preview {
+  background: var(--interface-orange);
+  border-top-right-radius: 6px;
+  border-width: 2px 2px 0 0;
+  bottom: 0;
+  color: var(--interface-dark-gray-700);
+  font-size: 0.75rem;
+  left: 0;
+  padding: 0.25rem 0.5rem;
+  position: fixed;
+  z-index: 9999;
+}

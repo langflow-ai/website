@@ -1,0 +1,49 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.hero {
+  --hero-space: 30px;
+
+  background-attachment: fixed;
+  background-color: var(--primary-black);
+  background-image: url("/images/background.png");
+  background-position: center center;
+  background-size: cover;
+  overflow-y: scroll;
+  padding-bottom: 100px;
+  text-align: center;
+
+  &:first-child {
+    padding-top: 100px;
+  }
+
+  h1 {
+    @include media-breakpoint-up(xl) {
+      font-size: 120px !important;
+      font-weight: 500 !important;
+      font-family: var(--font-body) !important;
+      margin-bottom: var(--hero-space);
+    }
+  }
+
+  .subtitle {
+    font-size: 29px;
+    font-weight: 300;
+    font-family: var(--font-body);
+    line-height: 140%;
+    opacity: 0.8;
+    max-width: 600px;
+
+    @include media-breakpoint-up(xl) {
+      max-width: 928px;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    --hero-space: 94px;
+
+    display: grid;
+    height: 100dvh;
+    place-items: center;
+  }
+}

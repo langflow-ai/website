@@ -1,0 +1,35 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.form {
+  background-attachment: fixed;
+  background-color: var(--primary-black);
+  background-image: url("/images/background.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding-bottom: 100px;
+  width: 100%;
+  overflow-y: scroll;
+
+  &:first-child:last-child {
+    min-height: 100dvh;
+  }
+
+  &:first-child {
+    padding-top: 100px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    h2 {
+      font-size: 40px;
+    }
+  }
+}

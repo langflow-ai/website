@@ -1,13 +1,15 @@
 // Dependencies
 import type { CSSProperties, FC, PropsWithChildren } from "react";
+import { draftMode } from "next/headers";
 
 // Components
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/footer";
+import Preview from "@/components/ui/Preview";
+import Topbar from "@/components/ui/Topbar";
 
 // Styles
 import styles from "./styles.module.scss";
-import Topbar from "@/components/ui/Topbar";
 
 type Props = PropsWithChildren<{
   legacy?: boolean;
@@ -23,6 +25,8 @@ const Page: FC<Props> = ({
   style,
   type = "normal",
 }) => {
+  const isDrafMode = draftMode().isEnabled;
+
   const topbarContent = {
     home: {
       title:
@@ -58,6 +62,8 @@ const Page: FC<Props> = ({
       </main>
 
       <Footer />
+
+      {isDrafMode && <Preview />}
     </div>
   );
 };
