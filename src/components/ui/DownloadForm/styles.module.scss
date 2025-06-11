@@ -1,0 +1,97 @@
+@import '/src/styles/variables';
+@import '~bootstrap/scss/mixins';
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.listItem {
+  width: 100%;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #374151;
+}
+
+.listItem:last-child {
+  padding-bottom: 0px;
+  border-bottom: none;
+}
+
+.detailsItem {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.itemName {
+  flex: 1;
+  color: var(--primary-white);
+  font-size: 18px;
+  line-height: 130%;
+  letter-spacing: 0.18px;
+}
+
+.comingSoon {
+  color: var(--primary-white);
+  font-size: 16px !important;
+  transform: skew(-10deg);
+  opacity: 0.5;
+}
+
+.opacity {
+  opacity: 0.5;
+}
+
+.downloadButton {
+  width: 115px;
+  height: fit-content;
+  border-radius: 8px;
+  background: linear-gradient(to right, rgb(134, 239, 172), rgb(59, 130, 246), rgb(134, 239, 172));
+  box-shadow:
+    0px 0px 20px 12px rgba(52, 211, 153, 0.5),
+    0px 0px 4px 2px rgba(52, 211, 153, 0.8);
+  background-size: 300% 100%;
+  background-position: 0% 50%;
+  border: none;
+  transition:
+    opacity 0.3s ease-in-out,
+    box-shadow 0.1s ease-in-out;
+  animation: boxShadowAnimation 1.5s infinite alternate;
+  &:hover {
+    animation: waveGradient 5s ease-in-out infinite;
+  }
+  padding: 10px 16px;
+  a {
+    text-decoration: none;
+    color: white;
+  }
+  @keyframes boxShadowAnimation {
+    0% {
+      box-shadow:
+        0px 0px 10px rgba(52, 211, 153, 0.5),
+        0px 0px 15px rgba(52, 211, 153, 0.6);
+    }
+    100% {
+      box-shadow:
+        0px 0px 15px rgba(52, 211, 153, 0.6),
+        0px 0px 20px rgba(52, 211, 153, 0.7);
+    }
+  }
+  @keyframes waveGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}

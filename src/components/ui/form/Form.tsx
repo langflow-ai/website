@@ -1,32 +1,29 @@
-"use client";
+'use client';
 
 // Dependencies
-import { ReactElement, useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import Script from "next/script";
+import { ReactElement, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Script from 'next/script';
 
 // Types
-import {
-  RingLeadInstantBookCallback,
-  RingLeadInstantBookInit,
-} from "@/lib/types/ringlead";
-import { InstantBook } from "@/lib/types/sanity";
-import { CustomWindow } from "@/lib/types/window";
+import { RingLeadInstantBookCallback, RingLeadInstantBookInit } from '@/lib/types/ringlead';
+import { InstantBook } from '@/lib/types/sanity';
+import { CustomWindow } from '@/lib/types/window';
 
 // Hooks
-import useIsomorphicLayoutEffect from "@/hooks/useIsomorphicLayoutEffect";
-import useMarketo from "@/hooks/useMarketo";
+import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
+import useMarketo from '@/hooks/useMarketo';
 
 // Utilities
-import { addLead, SEQUENCE_ID_1 } from "@/lib/utils/addLeads";
-import { isFormSubmittable } from "@/lib/utils/marketo";
-import { isFunction } from "@/lib/utils/str";
-import { trackEvent } from "@/lib/utils/tracking";
+import { addLead, SEQUENCE_ID_1 } from '@/lib/utils/addLeads';
+import { isFormSubmittable } from '@/lib/utils/marketo';
+import { isFunction } from '@/lib/utils/str';
+import { trackEvent } from '@/lib/utils/tracking';
 
 // Components
-import Markup from "@/components/ui/markup";
-import Footnote from "@/components/ui/footnote";
-import Text from "@/components/ui/text";
+import Markup from '@/components/ui/markup';
+import Footnote from '@/components/ui/footnote';
+import Text from '@/components/ui/text';
 
 // Globals
 declare let RingLeadInstantBook: {
@@ -70,7 +67,7 @@ const MarketoForm = ({
   concatValuesToRedirect,
   useBusinessEmailValidation = false,
   showFootNote = true,
-  shouldDisableButton = false,
+  shouldDisableButton = false
 }: Props): JSX.Element => {
   const searchParams = useSearchParams();
   const isMounted = useRef(false);
@@ -80,29 +77,20 @@ const MarketoForm = ({
   const [ringleadLoaded, setRingleadLoaded] = useState<boolean>(false);
   const [hasErrorBeenHandled, setHasErrorBeenHandled] = useState(false);
 
-  const isValidInstantBook =
-    instantBook?.uuid &&
-    instantBook?.org_id &&
-    instantBook.task_id &&
-    instantBook?.environment;
+  const isValidInstantBook = instantBook?.uuid && instantBook?.org_id && instantBook.task_id && instantBook?.environment;
 
   const handleSuccess = (values?: any) => {
     try {
-      const action = successTracking?.action || "www - Form Submitted";
+      const action = successTracking?.action || 'www - Form Submitted';
       const payload = {
-        category: "All",
+        category: 'All',
         label: window.location.pathname,
-        ...(successTracking?.payload || {}),
+        ...(successTracking?.payload || {})
       };
 
       trackEvent(action, payload);
-      if (values?.interestedinCassandraHealthCheck === "yes") {
-        addLead(
-          SEQUENCE_ID_1,
-          values?.Email,
-          values?.FirstName,
-          values?.LastName
-        );
+      if (values?.interestedinCassandraHealthCheck === 'yes') {
+        addLead(SEQUENCE_ID_1, values?.Email, values?.FirstName, values?.LastName);
       }
     } catch (error) {
       console.log(error);
@@ -114,11 +102,9 @@ const MarketoForm = ({
       let redirectLink = successRedirect;
       if (concatValuesToRedirect) {
         const valuesString = `name=${values?.FirstName} ${values?.LastName}&email=${values?.Email}`;
-        redirectLink = redirectLink.concat(
-          redirectLink.includes("?") ? `&${valuesString}` : `?${valuesString}`
-        );
+        redirectLink = redirectLink.concat(redirectLink.includes('?') ? `&${valuesString}` : `?${valuesString}`);
       }
-      window.open(redirectLink, "_self");
+      window.open(redirectLink, '_self');
     }
 
     return false;
@@ -141,9 +127,9 @@ const MarketoForm = ({
 
       if (id == 4429) {
         form.onSubmit(() => {
-          window.ChiliPiper.submit("datastax", "inbound_router_mobile_demo", {
+          window.ChiliPiper.submit('datastax', 'inbound_router_mobile_demo', {
             map: true,
-            formId: `mktoForm_${id}`,
+            formId: `mktoForm_${id}`
           });
         });
       }
@@ -152,34 +138,34 @@ const MarketoForm = ({
         const requiredFields: string[] = [];
 
         try {
-          form.getFormElem().find("button").attr("disabled", true);
+          form.getFormElem().find('button').attr('disabled', true);
           form
             .getFormElem()
-            .find(".mktoRequiredField")
-            .find("input, textarea, select")
+            .find('.mktoRequiredField')
+            .find('input, textarea, select')
             .map((_: number, input: any) => {
               requiredFields.push(input.id);
             });
         } catch (error) {
-          console.log("Error getting required fields", error);
+          console.log('Error getting required fields', error);
         }
 
-        form.getFormElem().on("change", () => {
+        form.getFormElem().on('change', () => {
           const isValid = isFormSubmittable(form.getValues(), requiredFields);
 
           if (isValid) {
-            form.getFormElem().find("button").attr("disabled", false);
+            form.getFormElem().find('button').attr('disabled', false);
             return;
           }
 
-          form.getFormElem().find("button").attr("disabled", true);
+          form.getFormElem().find('button').attr('disabled', true);
         });
 
         form.onValidate((isValid) => {
           if (isValid) {
-            form.getFormElem().find("button").attr("disabled", false);
+            form.getFormElem().find('button').attr('disabled', false);
           } else {
-            form.getFormElem().find("button").attr("disabled", true);
+            form.getFormElem().find('button').attr('disabled', true);
           }
         });
       }
@@ -218,10 +204,7 @@ const MarketoForm = ({
   }, [isValidInstantBook]);
 
   useEffect(() => {
-    if (
-      (allowBypass && searchParams.get("bypass")) ||
-      searchParams.get("aliId")
-    ) {
+    if ((allowBypass && searchParams.get('bypass')) || searchParams.get('aliId')) {
       handleSuccess();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -229,17 +212,12 @@ const MarketoForm = ({
 
   useEffect(() => {
     const checkForErrorAndFocusEmail = () => {
-      const errorMsg = document.querySelector("#ValidMsgEmail");
-      const emailInput = document.querySelector("#Email") as HTMLInputElement;
-      if (
-        !hasErrorBeenHandled &&
-        errorMsg &&
-        errorMsg.textContent?.includes("Please enter a business email") &&
-        emailInput
-      ) {
+      const errorMsg = document.querySelector('#ValidMsgEmail');
+      const emailInput = document.querySelector('#Email') as HTMLInputElement;
+      if (!hasErrorBeenHandled && errorMsg && errorMsg.textContent?.includes('Please enter a business email') && emailInput) {
         emailInput.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
+          behavior: 'smooth',
+          block: 'center'
         });
 
         setHasErrorBeenHandled(true);
@@ -257,16 +235,35 @@ const MarketoForm = ({
     const form = document.querySelector(`#mktoForm_${id}`) as HTMLFormElement;
     const submitButton = form?.querySelector('button[type="submit"]');
     if (submitButton) {
-      submitButton.addEventListener("click", () => {
+      submitButton.addEventListener('click', () => {
         setHasErrorBeenHandled(false);
       });
     }
     return () => {
-      submitButton?.removeEventListener("click", () => {
+      submitButton?.removeEventListener('click', () => {
         setHasErrorBeenHandled(false);
       });
     };
   }, [id, hasErrorBeenHandled]);
+
+  useEffect(() => {
+    const updateFormLabels = () => {
+      const emailLabel = document.querySelector('label[for="Email"], #LblEmail');
+      if (emailLabel) {
+        emailLabel.innerHTML = '<div class="mktoAsterix">*</div>Business Email:';
+      }
+
+      const submitButton = document.querySelector('.mktoButton[type="submit"]');
+      if (submitButton) {
+        submitButton.textContent = 'Download Langflow';
+      }
+    };
+
+    updateFormLabels();
+    const interval = setInterval(updateFormLabels, 500);
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (formLoadError) {
     return (
@@ -278,19 +275,10 @@ const MarketoForm = ({
 
   return (
     <>
-      {isValidInstantBook && (
-        <Script
-          type="text/javascript"
-          src="https://scheduler.ringlead.com/scripts/instantbook.js"
-        />
-      )}
-      {title && typeof title === "string" ? (
-        <h2 className="h2 text-center">{title}</h2>
-      ) : (
-        title
-      )}
+      {isValidInstantBook && <Script type="text/javascript" src="https://scheduler.ringlead.com/scripts/instantbook.js" />}
+      {title && typeof title === 'string' ? <h2 className="h2 text-center">{title}</h2> : title}
       {success && feedback ? (
-        typeof feedback === "string" ? (
+        typeof feedback === 'string' ? (
           <Markup content={feedback} />
         ) : (
           feedback

@@ -1,0 +1,54 @@
+'use client';
+
+import { useState } from 'react';
+import Display from '@/components/ui/Display';
+import MarketoForm from '@/components/ui/form';
+import styles from './styles.module.scss';
+import Link from '../Link';
+import { DOWNLOAD_OPTIONS } from '@/utils/constants';
+
+const DownloadForm = () => {
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  if (formSubmitted) {
+    return (
+      <div className={styles.list}>
+        {DOWNLOAD_OPTIONS.map((option, index) => (
+          <div key={index} className={styles.listItem}>
+            <div className={`${styles.detailsItem} ${option.isComingSoon ? styles.opacity : ''}`}>
+              {option.icon}
+              <Display size={100} weight={600} className={styles.itemName}>
+                {option.name}
+              </Display>
+            </div>
+
+            {option.isComingSoon ? (
+              <Display size={100} weight={400} className={styles.comingSoon}>
+                Coming Soon
+              </Display>
+            ) : (
+              <div className={styles.downloadButton}>
+                <Link href={option.link}>
+                  <Display size={100} weight={600} className={'text-center text-black'}>
+                    {option.btnText}
+                  </Display>
+                </Link>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Display className="text-white" size={100} weight={400}>
+        Fill out the form below to receive access to download the desktop app for Mac.
+      </Display>
+      <MarketoForm showFootNote={false} onSuccess={() => setFormSubmitted(true)} id={5302} useBusinessEmailValidation />
+    </>
+  );
+};
+
+export default DownloadForm;

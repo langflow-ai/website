@@ -5,7 +5,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 9px;
+  gap: 16px;
 
   .mktoOffset,
   .mktoGutter {
@@ -31,11 +31,11 @@
   .mktoField {
     display: flex;
     flex-direction: column;
-    gap: 11px;
+    gap: 12px;
     float: none !important;
     margin: 0 !important;
     width: 100% !important;
-    input[type="checkbox"] {
+    input[type='checkbox'] {
       width: fit-content !important;
     }
     a {
@@ -65,11 +65,11 @@
       display: none;
     }
 
-    &:has(input[type="hidden"]) {
+    &:has(input[type='hidden']) {
       display: none;
     }
 
-    &:has(input[type="email"], input[name="Email"]) {
+    &:has(input[type='email'], input[name='Email']) {
       order: 1;
 
       input {
@@ -78,12 +78,7 @@
     }
 
     @include media-breakpoint-up(lg) {
-      &:has(
-          input[name="FirstName"],
-          input[name="LastName"],
-          input[name="Title"],
-          input[name="Company"]
-        ) {
+      &:has(input[name='FirstName'], input[name='LastName'], input[name='Title'], input[name='Company']) {
         order: 2;
         flex: 1 1 calc(50% - 1rem);
 
@@ -92,7 +87,7 @@
         }
       }
 
-      &:has(input[name="Title"], input[name="Company"]) {
+      &:has(input[name='Title'], input[name='Company']) {
         order: 5;
       }
     }
@@ -114,6 +109,7 @@
 
       .mktoAsterix {
         margin-right: 0.5em;
+        display: none;
       }
 
       * {
@@ -135,11 +131,11 @@
       }
     }
 
-    input[type="text"],
-    input[type="tel"],
-    input[type="email"],
-    input[type="search"],
-    input[type="url"],
+    input[type='text'],
+    input[type='tel'],
+    input[type='email'],
+    input[type='search'],
+    input[type='url'],
     textarea.mktoField,
     select.mktoField,
     select,
@@ -185,11 +181,7 @@
   }
 
   .downloadButton {
-    background: linear-gradient(
-      to right,
-      rgb(134, 239, 172),
-      rgb(59, 130, 246)
-    );
+    background: linear-gradient(to right, rgb(134, 239, 172), rgb(59, 130, 246));
     border-radius: 6px;
     box-shadow: rgba(134, 239, 172, 0.3) 0px 0px 20px;
     display: flex;
@@ -213,12 +205,8 @@
     display: flex;
     width: 100%;
 
-    button[type="submit"] {
-      background: linear-gradient(
-        to right,
-        rgb(134, 239, 172),
-        rgb(59, 130, 246)
-      ) !important;
+    button[type='submit'] {
+      background: linear-gradient(to right, rgb(134, 239, 172), rgb(59, 130, 246)) !important;
       background-color: var(--primary-black) !important;
       font-size: 14px !important;
       font-family: var(--font-inter) !important;
@@ -242,9 +230,8 @@
       line-height: 1rem;
       outline: none;
       padding: calc(1.125rem - 1px) var(--spacer-3) calc(1rem - 1px);
-      text-transform: uppercase;
       width: 100%;
-      margin-bottom: var(--spacer-2);
+      margin-top: 4px;
 
       &:hover:not(:disabled) {
         background: var(--interface-purple-500);
@@ -276,12 +263,13 @@
     }
   }
 
-  .mktoFormRow + .mktoButtonRow {
-    margin-top: 1rem !important;
+  .mktoFormRow:has(.mktoHtmlText) {
+    display: none !important;
   }
 
   .mktoLabel:has(+ div + .mktoCheckboxList),
   .mktoHtmlText {
+    display: none !important;
     font-family: var(--font-body) !important;
     font-size: 0.875rem !important;
     font-weight: 400;
@@ -317,6 +305,10 @@
       display: flex;
       flex-direction: row-reverse;
     }
+  }
+
+  .mktoClear {
+    display: none !important;
   }
 
   .mktoError {
