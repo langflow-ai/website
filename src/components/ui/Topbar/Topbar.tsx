@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Topbar = ({ title, linkTo, linkText }: Props) => {
-  const { isMobile } = useCheckMobile(576);
+  const { isMobile } = useCheckMobile(638);
   return (
     <div className={styles.topbar}>
       <Speaker />
@@ -28,8 +28,7 @@ const Topbar = ({ title, linkTo, linkText }: Props) => {
       ) : (
         <div className={styles.textContainer}>
           <Display size={100} weight={Weight.Regular} className={styles.text}>
-            {title}
-            <Link href={linkTo}>{linkText}</Link>
+            {title} <Link href={linkTo}>{linkText}</Link>
           </Display>
         </div>
       )}

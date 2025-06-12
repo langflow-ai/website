@@ -14,7 +14,7 @@ import { DOWNLOAD_OPTIONS } from "@/utils/constants";
 import styles from "./styles.module.scss";
 
 const DownloadForm = () => {
-  const [formSubmitted, setFormSubmitted] = useState(true);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleDownload = async (url: string, filename: string) => {
     const a = document.createElement("a");
@@ -78,7 +78,6 @@ const DownloadForm = () => {
         showFootNote={false}
         onSuccess={() => setFormSubmitted(true)}
         id={5302}
-        useBusinessEmailValidation
       />
     </>
   );

@@ -6,10 +6,6 @@ import { useState, useEffect } from "react";
 // Components
 import Link from "@/components/ui/Link";
 import Display from "@/components/ui/Display";
-import Github from "@/components/icons/github/Github";
-import Discord from "@/components/icons/discord/Discord";
-import Twitter from "@/components/icons/Twitter/Twitter";
-import Youtube from "@/components/icons/youtube/Youtube";
 
 // Styles
 import styles from "./styles.module.scss";
@@ -17,9 +13,9 @@ import { SOCIALS } from "@/utils/constants";
 
 const Social = () => {
   const [socialCounts, setSocialCounts] = useState({
-    github: null,
-    discord: null,
-    youtube: null,
+    github: "73k",
+    discord: "18k",
+    youtube: "11k",
   });
 
   useEffect(() => {
@@ -30,26 +26,28 @@ const Social = () => {
           "https://img.shields.io/github/stars/langflow-ai/langflow.json"
         );
         const githubData = await githubResponse.json();
-        const githubStars = githubData.value;
+        const githubStars = githubData?.value;
 
         // Discord API request for member count
         const discordResponse = await fetch(
           "https://discord.com/api/v9/invites/EqksyE2EX9?with_counts=true&with_expiration=true"
         );
         const discordData = await discordResponse.json();
-        const discordMembers = discordData.approximate_member_count;
+        const discordMembers = discordData?.approximate_member_count;
+        const roundedMembers = Math.round(discordMembers / 1000);
+        const formattedMembers = `${roundedMembers}k`;
 
         // YouTube API request for subscribers count
         const youtubeResponse = await fetch(
           "https://img.shields.io/youtube/channel/subscribers/UCn2bInQrjdDYKEEmbpwblLQ.json?label=Subscribe"
         );
         const youtubeData = await youtubeResponse.json();
-        const youtubeSubscribers = youtubeData.value;
+        const youtubeSubscribers = youtubeData?.value;
 
         // Set state with fetched data
         setSocialCounts({
           github: githubStars,
-          discord: discordMembers,
+          discord: formattedMembers,
           youtube: youtubeSubscribers,
         });
       } catch (error) {

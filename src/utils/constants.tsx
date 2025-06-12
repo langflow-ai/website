@@ -110,25 +110,25 @@ const LIST = [
 const SOCIALS = [
   {
     icon: <Github />,
-    count: "62k", // Placeholder until we fetch the count
+    count: "73k",
     url: "https://github.com/langflow-ai/langflow",
     platform: "github",
   },
   {
     icon: <Discord />,
-    count: "0",
+    count: "18k",
     url: "https://discord.com/invite/EqksyE2EX9",
     platform: "discord",
   },
   {
     icon: <Twitter />,
-    count: "0",
+    count: "10k",
     url: "https://x.com/langflow_ai",
     platform: "twitter",
   },
   {
     icon: <Youtube />,
-    count: "0",
+    count: "11k",
     url: "https://www.youtube.com/@Langflow",
     platform: "youtube",
   },
@@ -258,7 +258,7 @@ const DOWNLOAD_OPTIONS = [
   {
     icon: <Apple />,
     name: "macOS (Intel)",
-    link: "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_aarch64.dmg",
+    link: "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_x64_86.dmg",
     fileName: "Langflow_aarch64.dmg",
     btnText: "Download",
     isComingSoon: false,

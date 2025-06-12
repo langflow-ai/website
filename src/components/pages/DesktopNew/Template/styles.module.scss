@@ -21,7 +21,7 @@
   background-size: 100% 80%;
   background-position: top center;
   background-repeat: no-repeat;
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(lg) {
     min-height: calc(100vh - 240px);
     background: none;
   }
