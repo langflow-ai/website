@@ -1,3 +1,6 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
 .topbar {
   height: 56px;
   padding: 0 32px;
@@ -5,6 +8,10 @@
   align-items: center;
   background: linear-gradient(90deg, #3e64fe, #083a98);
   gap: 16px;
+  @include media-breakpoint-down(sm) {
+    height: fit-content;
+    padding: 8px 32px;
+  }
 }
 
 .textContainer {
@@ -16,7 +23,12 @@
     color: var(--primary-white) !important;
     font-family: var(--font-sf) !important;
     font-size: 15px !important;
-  } 
+  }
+  @include media-breakpoint-down(sm) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 4px;
+  }
 }
 
 .text {

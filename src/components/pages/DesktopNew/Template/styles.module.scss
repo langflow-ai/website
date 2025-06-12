@@ -17,12 +17,13 @@
       rgba(0, 0, 0, 0) 80%,
       transparent 80%
     ),
-    url("/images/new-gradient.webp");
+    url("/images/new-desktop.png");
   background-size: 100% 80%;
   background-position: top center;
   background-repeat: no-repeat;
   @include media-breakpoint-down(sm) {
     min-height: calc(100vh - 240px);
+    background: none;
   }
 }
 
@@ -33,6 +34,7 @@
   justify-content: space-between;
   gap: 24px;
   margin-top: 126px;
+  margin-bottom: 40px;
 
   @include media-breakpoint-down(xlg) {
     padding: 0px 20px;
