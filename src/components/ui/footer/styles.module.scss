@@ -12,7 +12,7 @@
   flex-direction: row-reverse;
   justify-content: space-between;
   @include media-breakpoint-down(sm) {
-    flex-direction: column-reverse;
+    flex-direction: column;
     gap: 20px;
   }
 }
