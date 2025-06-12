@@ -30,7 +30,7 @@ const Hero = () => {
       { ref: box1Ref, offsetY: 32 },
       { ref: box2Ref, offsetY: 32 },
     ],
-    [],
+    []
   );
 
   const positions = useRelativeElementPositions(containerRef, elementConfigs);
@@ -56,28 +56,40 @@ const Hero = () => {
         <div className={styles.grid} ref={containerRef}>
           <div className={styles.left}>
             <div className={styles.content}>
-              <h1 ref={box1Ref} className={styles.content_title}>
-                {HERO_CONTENT.title}
-              </h1>
-              <p className={styles.content_description}>
-                {HERO_CONTENT.description}
-              </p>
-            </div>
-            <div className={styles.button_group}>
-              <Link href={HERO_CONTENT.buttons.primary.link} >
-                <Button variant={ButtonTypes.FILLED} onClick={() => { return false }}>
-                  {HERO_CONTENT.buttons.primary.label}
-                </Button>
-              </Link>
-              <Button
-                variant={ButtonTypes.BORDER}
-                onClick={() =>
-                  window.open(HERO_CONTENT.buttons.secondary.link, "_blank")
-                }
-                icon={<Github />}
-              >
-                {HERO_CONTENT.buttons.secondary.label}
-              </Button>
+              <div className={styles.content__wrapper}>
+                <h1 ref={box1Ref} className={styles.content_title}>
+                  {HERO_CONTENT.title}
+                </h1>
+                <p className={styles.content_description}>
+                  {HERO_CONTENT.description}
+                </p>
+                <div className={styles.button_group}>
+                  <Link href={HERO_CONTENT.buttons.primary.link}>
+                    <Button
+                      variant={ButtonTypes.FILLED}
+                      onClick={() => {
+                        return false;
+                      }}
+                    >
+                      {HERO_CONTENT.buttons.primary.label}
+                    </Button>
+                  </Link>
+                  <Link
+                    href={HERO_CONTENT.buttons.secondary.link}
+                    target="_blank"
+                  >
+                    <Button
+                      variant={ButtonTypes.BORDER}
+                      icon={<Github />}
+                      onClick={() => {
+                        return false;
+                      }}
+                    >
+                      {HERO_CONTENT.buttons.secondary.label}
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
           <div className={styles.model} ref={box2Ref}>

@@ -5,6 +5,7 @@ main.layout {
 }
 body:has(.layout) {
   background-color: var(--primary-black);
+  color: var(--primary-white);
 }
 
 .container-wide {

@@ -133,6 +133,7 @@ const SOCIALS = [
     platform: "youtube",
   },
 ];
+
 const QUOTES_DATA = [
   {
     quote:

@@ -34,13 +34,17 @@ const GetStarted = () => {
                 {primary.label}
               </Button>
             </Link>
-            <Button
-              variant={ButtonTypes.BORDER}
-              onClick={() => window.open(secondary.link, "_blank")}
-              icon={<Github />}
-            >
-              {secondary.label}
-            </Button>
+            <Link href={secondary.link}>
+              <Button
+                variant={ButtonTypes.BORDER}
+                onClick={() => {
+                  return false;
+                }}
+                icon={<Github />}
+              >
+                {secondary.label}
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

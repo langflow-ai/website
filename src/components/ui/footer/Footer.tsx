@@ -19,7 +19,7 @@ const Footer = () => {
               weight={400}
               className={styles.innerContainer_font}
             >
-              {"© 2024. All rights reserved"}
+              {`© ${new Date().getFullYear()}. All rights reserved`}
             </Display>
           </div>
 

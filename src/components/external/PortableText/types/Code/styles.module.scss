@@ -1,0 +1,53 @@
+.code {
+  margin: 2rem 0;
+  background: var(--primary-black);
+  border: 1px solid var(--interface-solid-light-gray-700);
+  border-radius: 0.4rem;
+  padding: 2rem 1rem 0;
+  position: relative;
+
+  pre {
+    padding-bottom: 1rem;
+    background: var(--primary-black);
+
+    code {
+      background: var(--primary-black);
+    }
+  }
+
+  button {
+    appearance: none;
+    border: none;
+    background: var(--primary-black);
+    color: var(--primary-white);
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    span:first-child {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    span:nth-child(2) {
+      background: black;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      line-height: 1.5em;
+      font-family: var(--font-body);
+      margin-right: 0.5rem;
+    }
+  }
+}

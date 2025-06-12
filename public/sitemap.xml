@@ -64,26 +64,5 @@
     <changefreq>weekly</changefreq>
     <!-- 0.9: high priority for main product page -->
     <priority>0.9</priority>
-  </url>
-  
-  <!-- Desktop form page - third priority (user journey step) -->
-  <url>
-    <loc>https://langflow.org/desktop-form</loc>
-    <lastmod>2025-06-05</lastmod>
-    <!-- monthly: form pages change less frequently -->
-    <changefreq>monthly</changefreq>
-    <!-- 0.8: medium-high priority for conversion funnel -->
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Desktop form complete page - fourth priority (completion step) -->
-  <url>
-    <loc>https://langflow.org/desktop-form-complete</loc>
-    <lastmod>2025-06-05</lastmod>
-    <!-- monthly: completion pages are relatively static -->
-    <changefreq>monthly</changefreq>
-    <!-- 0.7: medium priority for final step in user journey -->
-    <priority>0.7</priority>
-  </url>
-  
+  </url>  
 </urlset> 
