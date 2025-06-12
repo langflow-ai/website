@@ -107,16 +107,16 @@ const LIST = [
 const SOCIALS = [
   {
     icon: <Github />,
-    count: "62k",
+    count: "73k",
     url: "https://github.com/langflow-ai/langflow",
   },
   {
     icon: <Discord />,
-    count: "12k",
+    count: "18k",
     url: "https://discord.com/invite/EqksyE2EX9",
   },
-  { icon: <Twitter />, count: "8k", url: "https://x.com/langflow_ai" },
-  { icon: <Youtube />, count: "6k", url: "https://www.youtube.com/@Langflow" },
+  { icon: <Twitter />, count: "10k", url: "https://x.com/langflow_ai" },
+  { icon: <Youtube />, count: "11k", url: "https://www.youtube.com/@Langflow" },
 ];
 const QUOTES_DATA = [
   {
