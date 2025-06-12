@@ -45,9 +45,20 @@
   align-items: flex-start;
   gap: 32px;
   position: relative;
-  &_title {
+
+  &__wrapper {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
     left: -40px;
+    @include media-breakpoint-down(xl) {
+      left: 0px;
+      position: relative;
+    }
+  }
+
+  &_title {
     font-size: 56px;
     font-weight: 400;
     line-height: 100%;
@@ -61,9 +72,10 @@
     justify-content: center;
     align-items: center;
     margin: 0;
-    min-width: 672px;
+    min-width: 673px;
     @include media-breakpoint-down(xl) {
       min-width: 378px;
+      position: absolute;
       left: -20px;
       max-width: 390px;
       padding: 24px 32px;
@@ -74,29 +86,31 @@
       border: none;
       background: transparent;
       padding: 0;
+      min-width: 100%;
     }
     @include media-breakpoint-down(md) {
       margin-left: 0px;
       border: none;
-      min-width: 100%;
     }
   }
   &_description {
-    margin-top: 155px !important;
+    margin: 0px !important;
     font-size: 18px;
     font-weight: 300;
+    padding-left: 40px;
     line-height: 140%;
     color: white;
-    max-width: 554px;
+    max-width: 580px;
     margin: 0;
     @include media-breakpoint-down(xl) {
-      margin-top: 245px !important;
+      margin: 245px 0px 37px !important;
       max-width: 425px;
+      padding-left: 0px;
     }
     @include media-breakpoint-down(mlg) {
       max-width: 100%;
       padding: 0;
-      margin-top: 0px !important;
+      margin: 0px !important;
     }
   }
   @include media-breakpoint-down(xl) {
@@ -109,7 +123,13 @@
 
 .button_group {
   display: flex;
+  padding-left: 40px;
   gap: 16px;
+
+  @include media-breakpoint-down(xl) {
+    padding-left: 0px;
+  }
+
   @include media-breakpoint-down(mlg) {
     flex-direction: column;
     a {
