@@ -74,15 +74,20 @@ const Hero = () => {
                       {HERO_CONTENT.buttons.primary.label}
                     </Button>
                   </Link>
-                  <Button
-                    variant={ButtonTypes.BORDER}
-                    onClick={() =>
-                      window.open(HERO_CONTENT.buttons.secondary.link, "_blank")
-                    }
-                    icon={<Github />}
+                  <Link
+                    href={HERO_CONTENT.buttons.secondary.link}
+                    target="_blank"
                   >
-                    {HERO_CONTENT.buttons.secondary.label}
-                  </Button>
+                    <Button
+                      variant={ButtonTypes.BORDER}
+                      icon={<Github />}
+                      onClick={() => {
+                        return false;
+                      }}
+                    >
+                      {HERO_CONTENT.buttons.secondary.label}
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
