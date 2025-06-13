@@ -105,6 +105,12 @@ const LIST = [
       },
     ],
   },
+  {
+    title: "Download",
+    link: "/desktop-new",
+    icon: "",
+    comingSoon: false,
+  },
 ];
 
 const SOCIALS = [
