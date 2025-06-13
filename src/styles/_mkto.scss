@@ -5,7 +5,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 9px;
+  gap: 16px;
 
   .mktoOffset,
   .mktoGutter {
@@ -31,7 +31,7 @@
   .mktoField {
     display: flex;
     flex-direction: column;
-    gap: 11px;
+    gap: 12px;
     float: none !important;
     margin: 0 !important;
     width: 100% !important;
@@ -114,6 +114,7 @@
 
       .mktoAsterix {
         margin-right: 0.5em;
+        display: none;
       }
 
       * {
@@ -149,7 +150,6 @@
       border: 1px solid #52525b;
       color: var(--primary-white);
       font-family: var(--font-inter);
-      color: #999999;
       font-size: 14px !important;
       line-height: 1.5;
       outline-offset: 0;
@@ -220,8 +220,8 @@
         rgb(59, 130, 246)
       ) !important;
       background-color: var(--primary-black) !important;
-      font-size: 14px !important;
-      font-family: var(--font-inter) !important;
+      font-size: 16px !important;
+      font-family: var(--font-body) !important;
       font-weight: 600;
     }
 
@@ -234,7 +234,7 @@
       color: var(--primary-black);
       display: inline-flex;
       font-family: var(--font-heading);
-      font-size: 0.875rem;
+      font-size: 1rem !important;
       font-weight: 600;
       height: 50px;
       justify-content: center;
@@ -242,9 +242,8 @@
       line-height: 1rem;
       outline: none;
       padding: calc(1.125rem - 1px) var(--spacer-3) calc(1rem - 1px);
-      text-transform: uppercase;
       width: 100%;
-      margin-bottom: var(--spacer-2);
+      margin-top: 4px;
 
       &:hover:not(:disabled) {
         background: var(--interface-purple-500);
@@ -276,12 +275,13 @@
     }
   }
 
-  .mktoFormRow + .mktoButtonRow {
-    margin-top: 1rem !important;
+  .mktoFormRow:has(.mktoHtmlText) {
+    display: none !important;
   }
 
   .mktoLabel:has(+ div + .mktoCheckboxList),
   .mktoHtmlText {
+    display: none !important;
     font-family: var(--font-body) !important;
     font-size: 0.875rem !important;
     font-weight: 400;
@@ -317,6 +317,10 @@
       display: flex;
       flex-direction: row-reverse;
     }
+  }
+
+  .mktoClear {
+    display: none !important;
   }
 
   .mktoError {

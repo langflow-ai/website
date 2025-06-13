@@ -2,7 +2,7 @@
 @import "~bootstrap/scss/mixins";
 
 .template {
-  background-image: url("/images/background.png");
+  background-image: url("/images/new-desktop.png");
   background-size: cover;
   background-position: center center;
   background-color: var(--primary-black);
@@ -13,7 +13,9 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-
+  @include media-breakpoint-down(sm) {
+    background: none;
+  }
 }
 .container {
   max-width: 1800px !important;

@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.social {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  h6 {
+    font-weight: 500;
+    color: var(--primary-white);
+  }
+}

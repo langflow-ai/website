@@ -126,6 +126,11 @@
   padding-left: 40px;
   gap: 16px;
 
+  a,
+  button {
+    height: 51px;
+  }
+
   @include media-breakpoint-down(xl) {
     padding-left: 0px;
   }

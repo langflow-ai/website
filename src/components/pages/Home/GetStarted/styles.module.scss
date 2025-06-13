@@ -59,6 +59,11 @@
   gap: var(--spacer-2);
   margin-top: 40px;
 
+  a,
+  button {
+    height: 51px;
+  }
+
   a {
     @include media-breakpoint-down(md) {
       width: 100%;
