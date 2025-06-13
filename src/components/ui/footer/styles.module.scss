@@ -13,6 +13,7 @@
   justify-content: space-between;
   @include media-breakpoint-down(sm) {
     flex-direction: column;
+    align-items: center;
     gap: 20px;
   }
 }
@@ -22,6 +23,11 @@
   display: flex;
   align-items: center;
   gap: 16px;
+
+  @include media-breakpoint-down(sm) {
+    justify-content: center;
+  }
+
   &_font {
     font-family: var(--font-inter);
     font-size: 14px !important;
