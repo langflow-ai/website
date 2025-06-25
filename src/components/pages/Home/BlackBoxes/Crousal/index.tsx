@@ -77,7 +77,7 @@ const CrousalComponent = () => {
             type: "spring",
             stiffness: 300,
             damping: 30,
-            onStart: () => setIsAnimating(true),
+            // onStart: () => setIsAnimating(true),
             onComplete: handleAnimationComplete,
           }}
         >
