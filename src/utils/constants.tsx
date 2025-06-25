@@ -178,7 +178,7 @@ const HERO_CONTENT = {
   buttons: {
     primary: {
       label: "Get Started for Free",
-      link: "/desktop",
+      link: "/desktop-new",
     },
     secondary: {
       label: "Star on GitHub",
@@ -237,7 +237,7 @@ const GET_STARTED = {
   buttons: {
     primary: {
       label: "Get Started for Free",
-      link: "/desktop",
+      link: "/desktop-new",
     },
     secondary: {
       label: "Star on GitHub",
@@ -286,14 +286,14 @@ const DOWNLOAD_OPTIONS = [
     btnText: "",
     isComingSoon: true,
   },
-  {
-    icon: <Globe />,
-    name: "Web app",
-    link: "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_aarch64.dmg",
-    fileName: "",
-    btnText: "Open",
-    isComingSoon: true,
-  },
+  // {
+  //   icon: <Globe />,
+  //   name: "Web app",
+  //   link: "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_aarch64.dmg",
+  //   fileName: "",
+  //   btnText: "Open",
+  //   isComingSoon: true,
+  // },
 ];
 
 export {
