@@ -1,5 +1,5 @@
 // Components
-import { KitForm } from "../../Home/KitForm/KitForm";
+import { KitForm } from "../KitForm/KitForm";
 import Display from "@/components/ui/Display";
 
 // Styles
