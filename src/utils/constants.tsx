@@ -18,6 +18,9 @@ import ButterUp from "@/components/ui/icons/ButterUp";
 import Contact from "@/components/icons/contact/Contact";
 import Linkedin from "@/components/icons/linkedin/Linkedin";
 import WinWeb from "@/components/ui/icons/WinWeb";
+import Apple from "@/components/ui/icons/Apple";
+import Windows from "@/components/ui/icons/Windows";
+import Globe from "@/components/ui/icons/Globe";
 
 const LIST = [
   // {
@@ -102,6 +105,12 @@ const LIST = [
       },
     ],
   },
+  {
+    title: "Download",
+    link: "/desktop",
+    icon: "",
+    comingSoon: false,
+  },
 ];
 
 const SOCIALS = [
@@ -109,15 +118,28 @@ const SOCIALS = [
     icon: <Github />,
     count: "73k",
     url: "https://github.com/langflow-ai/langflow",
+    platform: "github",
   },
   {
     icon: <Discord />,
     count: "18k",
     url: "https://discord.com/invite/EqksyE2EX9",
+    platform: "discord",
   },
-  { icon: <Twitter />, count: "10k", url: "https://x.com/langflow_ai" },
-  { icon: <Youtube />, count: "11k", url: "https://www.youtube.com/@Langflow" },
+  {
+    icon: <Twitter />,
+    count: "10k",
+    url: "https://x.com/langflow_ai",
+    platform: "twitter",
+  },
+  {
+    icon: <Youtube />,
+    count: "11k",
+    url: "https://www.youtube.com/@Langflow",
+    platform: "youtube",
+  },
 ];
+
 const QUOTES_DATA = [
   {
     quote:
@@ -231,6 +253,49 @@ const GET_STARTED = {
   },
 };
 
+const DOWNLOAD_OPTIONS = [
+  {
+    icon: <Apple />,
+    name: "macOS (Apple Silicon)",
+    link: "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_aarch64.dmg",
+    fileName: "Langflow_aarch64.dmg",
+    btnText: "Download",
+    isComingSoon: false,
+  },
+  {
+    icon: <Apple />,
+    name: "macOS (Intel)",
+    link: "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_x64_86.dmg",
+    fileName: "Langflow_aarch64.dmg",
+    btnText: "Download",
+    isComingSoon: false,
+  },
+  {
+    icon: <Windows />,
+    name: "Windows (x64)",
+    link: "/",
+    fileName: "",
+    btnText: "",
+    isComingSoon: true,
+  },
+  {
+    icon: <Windows />,
+    name: "Windows (Arm)",
+    link: "/",
+    fileName: "",
+    btnText: "",
+    isComingSoon: true,
+  },
+  // {
+  //   icon: <Globe />,
+  //   name: "Web app",
+  //   link: "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_aarch64.dmg",
+  //   fileName: "",
+  //   btnText: "Open",
+  //   isComingSoon: true,
+  // },
+];
+
 export {
   LIST,
   SOCIALS,
@@ -242,4 +307,5 @@ export {
   STACK_TEXT,
   STACK_LOGOS,
   GET_STARTED,
+  DOWNLOAD_OPTIONS,
 };
