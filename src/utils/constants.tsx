@@ -107,7 +107,7 @@ const LIST = [
   },
   {
     title: "Download",
-    link: "/desktop-new",
+    link: "/desktop",
     icon: "",
     comingSoon: false,
   },
@@ -178,7 +178,7 @@ const HERO_CONTENT = {
   buttons: {
     primary: {
       label: "Get Started for Free",
-      link: "/desktop-new",
+      link: "/desktop",
     },
     secondary: {
       label: "Star on GitHub",
@@ -237,7 +237,7 @@ const GET_STARTED = {
   buttons: {
     primary: {
       label: "Get Started for Free",
-      link: "/desktop-new",
+      link: "/desktop",
     },
     secondary: {
       label: "Star on GitHub",
