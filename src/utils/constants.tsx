@@ -123,7 +123,7 @@ const QUOTES_DATA = [
     quote:
       "Langflow lets us take complex product ideas and quickly bring them to life through visual flows that anyone can understand.",
     authorName: "Jonathan Blomgren",
-    authorTitle: "COO, BetterUp",
+    authorTitle: "Studios Director, BetterUp",
     authorImage: "/images/Coo_2.png",
     icon: <ButterUp />,
   },
@@ -138,8 +138,8 @@ const QUOTES_DATA = [
   {
     quote:
       "Langflow has completely transformed the way we iterate and deploy AI workflows.",
-    authorName: "Jonathan Blomgren",
-    authorTitle: "COO, BetterUp",
+    authorName: "Brendon Geils",
+    authorTitle: "CEO, Athena Intelligence",
     authorImage: "/images/Coo.png",
   },
 ];
