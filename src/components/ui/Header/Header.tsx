@@ -8,16 +8,16 @@ import Link from "@/components/ui/Link";
 // Components
 import Badge from "@/components/ui/Header/Badge";
 import Display from "@/components/ui/Display";
-
+import DownArrow from "@/components/icons/downArrow/DownArrow";
+import Social from "../Social";
 // Utils
-import { LIST, SOCIALS } from "@/utils/constants";
+import { LIST } from "@/utils/constants";
 
 // Assests
 import Logo from "../../../../public/images/logo.png";
 
 // Styles
 import styles from "./styles.module.scss";
-import DownArrow from "@/components/icons/downArrow/DownArrow";
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false);
@@ -107,7 +107,7 @@ const Header = () => {
                     clearTimeout(leaveTimeout.current);
                     leaveTimeout.current = setTimeout(
                       () => setHoveredIndex(null),
-                      200,
+                      200
                     );
                   }}
                 >
@@ -133,7 +133,7 @@ const Header = () => {
                       onMouseLeave={() => {
                         leaveTimeout.current = setTimeout(
                           () => setHoveredIndex(null),
-                          200,
+                          200
                         );
                       }}
                     >
@@ -167,16 +167,7 @@ const Header = () => {
           </nav>
         </div>
         <div className={styles.right}>
-          {SOCIALS?.map((s, index) => (
-            <div key={index}>
-              <Link href={s.url} target="_blank">
-                <div className={styles.social}>
-                  {s.icon}
-                  <Display size={100}>{s.count}</Display>
-                </div>
-              </Link>
-            </div>
-          ))}
+          <Social />
         </div>
         <div
           className={`${styles.menuButton} ${isActive ? styles.active : ""}`}
