@@ -6,10 +6,22 @@ import styles from "../../../ui/button/styles.module.scss";
 import { kitSubscribe } from "../../../../app/actions/kitSubscribe";
 
 export function KitForm() {
-  const [state, formAction] = useFormState(kitSubscribe, {
+  let referrer = window.location.href;
+  if (!referrer.includes("utm_source")) {
+    const url = new URL(referrer);
+    url.searchParams.set("utm_source", "langflow.org");
+    url.searchParams.set("utm_medium", "website");
+    url.searchParams.set("utm_campaign", "organic");
+    referrer = url.toString();
+  }
+  const initialState = {
     success: false,
     errors: [],
-  });
+    referrer: referrer,
+  };
+
+  const [state, formAction] = useFormState(kitSubscribe, initialState);
+
   return (
     <>
       {!state.success ? (
