@@ -4,19 +4,23 @@ import { useFormState, useFormStatus } from "react-dom";
 
 import styles from "../../../ui/button/styles.module.scss";
 import { kitSubscribe } from "../../../../app/actions/kitSubscribe";
+import { useEffect } from "react";
 
 export function KitForm() {
   let referrer = "";
-  if (window && window.location) {
-    referrer = window.location.href;
-    if (!referrer.includes("utm_source")) {
-      const url = new URL(referrer);
-      url.searchParams.set("utm_source", "langflow.org");
-      url.searchParams.set("utm_medium", "website");
-      url.searchParams.set("utm_campaign", "organic");
-      referrer = url.toString();
+  useEffect(() => {
+    if (window && window.location) {
+      referrer = window.location.href;
+      if (!referrer.includes("utm_source")) {
+        const url = new URL(referrer);
+        url.searchParams.set("utm_source", "langflow.org");
+        url.searchParams.set("utm_medium", "website");
+        url.searchParams.set("utm_campaign", "organic");
+        referrer = url.toString();
+      }
     }
-  }
+  });
+
   const initialState = {
     success: false,
     errors: [],
