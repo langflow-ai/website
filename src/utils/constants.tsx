@@ -54,6 +54,12 @@ const LIST = [
         download: false,
       },
       {
+        title: "Newsletter",
+        url: "/newsletter",
+        icon: null,
+        download: false,
+      },
+      {
         title: "Brand Kit",
         url: "/brandkit/brandkit.zip",
         icon: null,

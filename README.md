@@ -98,6 +98,14 @@ This website uses Sanity CMS for content management. The CMS integration allows 
 - Media asset management
 - Real-time content preview
 
+## Newsletter sign up
+
+This website includes a subscription form for a newsletter hosted with [kit.com](https://kit.com).
+
+You will need a Kit API key stored in the environment for the subscription form to function correctly.
+
+You can also add a Kit form ID in the environment. This will add the subscriber to a form and capture attribution from UTM tags in the URL. Note: attribution is not captured when the referrer is localhost.
+
 ## Key Features
 
 - **Responsive Design** - Optimized for all devices
