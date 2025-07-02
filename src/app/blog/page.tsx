@@ -14,8 +14,9 @@ import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
 import Button from "@/components/ui/button";
 import { ButtonTypes } from "@/components/ui/button/types";
 import { Byline } from "@/components/ui/Blog/Byline";
-import { Metadata, NextPage } from "next";
+import LinesOverlay from "@/components/ui/Blog/LinesOverlay";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
+import { Metadata, NextPage } from "next";
 
 type Post = {
   _id: string;
@@ -62,7 +63,10 @@ const BlogIndex: NextPage = async () => {
   return (
     <PageLayout className="layout" type="normal">
       <BackgroundGradient />
-      <section className="container d-grid gap-2 p-4">
+      <section
+        id="blog-section"
+        className="container d-grid gap-2 p-4 position-relative"
+      >
         <Display size={700} tagName="h1">
           Blog
         </Display>
@@ -73,7 +77,7 @@ const BlogIndex: NextPage = async () => {
               href={`/blog/${latestPost.slug?.current}`}
               className="text-reset text-decoration-none"
             >
-              <div className="card p-4 d-grid gap-4 bg-black border-dark border-4 shadow text-white">
+              <div className="card post-card p-4 d-grid gap-4 bg-black border-dark border-4 shadow text-white">
                 <div className="card-body d-flex flex-column justify-content-between gap-4 p-0">
                   <div className="d-flex flex-row gap-4">
                     <Display size={200} className="text-white">
@@ -126,7 +130,7 @@ const BlogIndex: NextPage = async () => {
                 href={`/blog/${post.slug?.current}`}
                 className="text-reset text-decoration-none"
               >
-                <div className="card p-4 d-grid gap-4 bg-black text-white shadow border-4 border-dark">
+                <div className="card post-card p-4 d-grid gap-4 bg-black text-white shadow border-4 border-dark">
                   {post.featureImage && (
                     <SanityImage
                       image={post.featureImage}
@@ -163,6 +167,9 @@ const BlogIndex: NextPage = async () => {
             </div>
           ))}
         </div>
+
+        {/* SVG lines connecting cards */}
+        <LinesOverlay />
       </section>
     </PageLayout>
   );
