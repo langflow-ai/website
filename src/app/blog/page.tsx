@@ -15,6 +15,7 @@ import Button from "@/components/ui/button";
 import { ButtonTypes } from "@/components/ui/button/types";
 import { Byline } from "@/components/ui/Blog/Byline";
 import { Metadata, NextPage } from "next";
+import { BackgroundGradient } from "@/components/BackgroundGradient";
 
 type Post = {
   _id: string;
@@ -60,6 +61,7 @@ const BlogIndex: NextPage = async () => {
 
   return (
     <PageLayout className="layout" type="normal">
+      <BackgroundGradient />
       <section className="container d-grid gap-2 p-4">
         <Display size={700} tagName="h1">
           Blog
