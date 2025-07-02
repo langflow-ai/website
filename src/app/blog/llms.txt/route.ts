@@ -19,19 +19,6 @@ interface Post {
 }
 
 /**
- * Convert Sanity PortableText blocks into a plain-text string.
- */
-function portableTextToPlainText(body: Post["body"]): string {
-  if (!body) return "";
-  return body
-    .map((block) => {
-      if (block._type !== "block" || !Array.isArray(block.children)) return "";
-      return block.children.map((child) => child.text).join("");
-    })
-    .join("\n");
-}
-
-/**
  * GET /blog/llms.txt – returns a newline-delimited summary for each blog post.
  * The format is intentionally simple so that large language models can ingest
  * and reason about the blog's content with minimal hallucination.

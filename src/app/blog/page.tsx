@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { draftMode } from "next/headers";
 
 // Backend
@@ -41,7 +40,7 @@ type Post = {
 
 export const dynamic = "force-static";
 
-const BlogIndex: FC = async () => {
+export async function BlogIndex() {
   // Check for draft mode to fetch preview content
   const isDraftMode = draftMode().isEnabled;
 
@@ -165,7 +164,7 @@ const BlogIndex: FC = async () => {
       </section>
     </PageLayout>
   );
-};
+}
 
 export const metadata: Metadata = {
   title: "Blog | Langflow - The fastest way to build AI Agents",
