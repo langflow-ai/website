@@ -1,0 +1,60 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.grid {
+  margin-bottom: var(--spacer-8);
+
+  .heading {
+    margin-bottom: var(--spacer-5);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .list {
+    min-height: 400px;
+  }
+
+  .event {
+    &:not(:last-child) {
+      margin-bottom: var(--spacer-4);
+    }
+  }
+}
+
+.tabs {
+  background: var(--interface-dark-gray-950);
+  border: 1px solid var(--interface-dark-gray-650);
+  border-radius: 0.875rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 0.25rem;
+
+  button {
+    background: transparent;
+    appearance: none;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow:
+      0px 1px 3px 0px rgba(0, 0, 0, 0.1),
+      0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 0 0;
+    color: var(--interface-solid-light-gray-700);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5em;
+    height: 2rem;
+
+    &[data-active="true"] {
+      background: var(--primary-white);
+      color: var(--primary-black);
+    }
+  }
+}

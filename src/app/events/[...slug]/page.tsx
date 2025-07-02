@@ -19,7 +19,6 @@ import { parseSlugToString } from "@/lib/utils/str";
 
 // Components
 import PageLayout from "@/components/layout/page";
-import Template from "@/components/pages/Page/Template";
 
 // Props types
 type Props = {
@@ -33,7 +32,7 @@ type Props = {
  */
 export const dynamic = "force-static";
 export const dynamicParams = true;
-const DOCUMENT_TYPE = "page";
+const DOCUMENT_TYPE = "event";
 
 export async function generateStaticParams() {
   // Data
@@ -89,7 +88,7 @@ const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
     PAGE_BY_SLUG_QUERY,
     {
       type: DOCUMENT_TYPE,
-      slugs: [parsedSlug, `/${parsedSlug}`],
+      slugs: [`events/${parsedSlug}`, `/events/${parsedSlug}`],
     },
     isDraftMode
   );
@@ -98,11 +97,11 @@ const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
     notFound();
   }
 
-  return (
-    <PageLayout className="layout" type="normal">
-      <Template sections={page.sections} />
-    </PageLayout>
-  );
+  return <PageLayout className="layout" type="normal">
+    <pre>
+    {JSON.stringify(page, null, 2)}
+    </pre>
+  </PageLayout>;
 };
 
 export default DynamicPage;
