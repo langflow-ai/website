@@ -8,11 +8,6 @@ const nextConfig = {
         destination: "https://docs.langflow.org",
         permanent: false,
       },
-      {
-        source: "/blog",
-        destination: "https://blog.langflow.org",
-        permanent: false,
-      },
     ];
   },
 };
