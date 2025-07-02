@@ -116,8 +116,8 @@ const BlogIndex: NextPage = async () => {
           </div>
         )}
 
-        <Display size={200} className="pt-4">
-          Other Posts
+        <Display size={400} style={{ paddingLeft: 11, paddingTop: "2rem" }}>
+          Older Posts
         </Display>
 
         {/** @todo Add a Search/Ask */}
