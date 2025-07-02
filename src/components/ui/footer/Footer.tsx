@@ -4,6 +4,7 @@ import Social from "@/components/ui/Social";
 
 // Styles
 import styles from "./styles.module.scss";
+import Link from "../Link";
 
 const Footer = () => {
   return (
@@ -22,18 +23,25 @@ const Footer = () => {
               {`© ${new Date().getFullYear()}. All rights reserved`}
             </Display>
           </div>
+          <div className={styles.left}>
+            <Display
+              size={100}
+              weight={600}
+              className={styles.innerContainer_font}
+            >
+              ·
+            </Display>
+          </div>
 
-          {/* <div className={styles.left}>
+          <div className={styles.left}>
             <Display
               size={100}
               weight={400}
               className={styles.innerContainer_font}
             >
-              <Link href={"/preferences"} target="_blank">
-                {"Manage Privacy Choices"}
-              </Link>
+              <Link href={"/preferences"}>{"Manage Privacy Choices"}</Link>
             </Display>
-          </div> */}
+          </div>
         </div>
       </div>
     </section>
