@@ -59,13 +59,17 @@ const Header = () => {
               {LIST.map((item) => (
                 <div key={item.title}>
                   <div className={styles.drawerItem}>
-                    <Display
-                      tagName="div"
-                      className={styles.drawerItem_heading}
-                      size={100}
-                    >
-                      {item.title}
-                    </Display>
+                    {item?.link ? (
+                      <Link href={item.link}>
+                        <Display size={100} className={styles.drawerItem_heading}>
+                          {item.title}
+                        </Display>
+                      </Link>
+                    ) : (
+                      <Display size={100} className={styles.drawerItem_heading}>
+                        {item.title}
+                      </Display>
+                    )}
 
                     {item.comingSoon && <Badge />}
                   </div>
@@ -74,7 +78,24 @@ const Header = () => {
                       <div className={styles.drawerSubItemContainer}>
                         {item.subTabs.map((sub) => (
                           <div key={sub.title} className={styles.drawerSubItem}>
-                            <Display size={100}>{sub?.title}</Display>
+                            {sub.download ? (
+                              <a
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleDownload(sub.url, sub.title);
+                                }}
+                                download="brandkit.zip"
+                                className={styles.downloadLink}
+                              >
+                                {sub.icon}
+                                <Display size={100}>{sub.title}</Display>
+                              </a>
+                            ) : (
+                              <Link key={sub.title} href={sub.url}>
+                                {sub.icon}
+                                {sub.title}
+                              </Link>
+                            )}
                           </div>
                         ))}
                       </div>

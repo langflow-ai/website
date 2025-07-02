@@ -109,9 +109,9 @@
   gap: 4px;
   border-radius: 4px;
   background: var(
-    --Gradient-1,
-    linear-gradient(270deg, #f480ff -2%, #ff3276 100%)
-  );
+--Gradient-1,
+linear-gradient(270deg, #f480ff -2%, #ff3276 100%)
+);
 
   &_heading {
     color: black !important;
@@ -143,10 +143,12 @@
 
   &.active {
     span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
+      position: absolute;
+      transform: rotate(45deg);
     }
     span:nth-child(2) {
-      transform: rotate(-45deg) translate(5px, -5px);
+      position: absolute;
+      transform: rotate(-45deg);
     }
   }
 
@@ -157,7 +159,7 @@
 
 .drawer {
   position: fixed;
-  top: 0;
+  top: 60px;
   left: 0;
   height: 100vh;
   overflow: scroll;
@@ -178,6 +180,16 @@
   max-width: 600px;
   gap: 20px;
   color: var(--primary-white);
+  a {
+    text-decoration: none;
+    color: var(--primary-white);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
 }
 
 .drawerSectionTitle {
