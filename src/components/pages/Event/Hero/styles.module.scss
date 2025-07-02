@@ -15,7 +15,7 @@
     margin-top: auto;
     color: var(--primary-white);
     font-weight: 600;
-    font-family: var(--font-heading);
+    font-family: var(--font-body);
     line-height: 1em;
     font-size: 1rem;
     transition: color 0.4s ease;
@@ -149,6 +149,25 @@
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacer-3);
+
+    a {
+      margin-top: auto;
+      color: var(--primary-white);
+      font-weight: 600;
+      font-family: var(--font-body);
+      line-height: 1em;
+      font-size: 1rem;
+      text-transform: uppercase;
+      transition: color 0.4s ease;
+      margin-bottom: var(--spacer-2);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacer-1);
+
+      &:hover {
+        color: var(--interface-purple-50);
+      }
+    }
 
     @include media-breakpoint-up(lg) {
       flex-direction: row;

@@ -21,6 +21,7 @@ const Template: FC<Props> = ({ event }) => {
         location={event.location}
         title={event.title}
         type={event.type}
+        ctas={event.ctas}
       />
 
       {event.sections?.map((section, index) => {

@@ -54,7 +54,6 @@ export async function GET(request: Request) {
       start: start,
       end: end,
     },
-    true
   );
 
   return NextResponse.json({

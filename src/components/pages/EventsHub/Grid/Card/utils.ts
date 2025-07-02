@@ -66,8 +66,6 @@ export const getEventDate = (
   const startMonth = startDate?.replace(/\ [0-9]+/g, "");
   const endMonth = endDate?.replace(/\ [0-9]+/g, "");
 
-  console.log(start, end);
-
   if (dates.length === 1) {
     const _date = formatDate(start.date as string, "MMMM dd, yyyy");
     const _time = !!start?.time ? `${formatTime(start.time, "h:mm a")}` : null;

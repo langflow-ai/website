@@ -2,10 +2,7 @@
 import { FC } from "react";
 
 // Types
-import type {
-  DateWithTimeField,
-  PortableText as SanityContent,
-} from "@/lib/types/sanity.types";
+import type { CtaLink, DateWithTimeField } from "@/lib/types/sanity.types";
 
 // Components
 import DateIcon from "./icons/Date";
@@ -24,6 +21,7 @@ import {
 
 // Styles
 import styles from "./styles.module.scss";
+import Button from "@/components/ui/button";
 
 // Constants
 const LABELS: Record<"virtual" | "in-person", string> = {
@@ -33,6 +31,7 @@ const LABELS: Record<"virtual" | "in-person", string> = {
 
 // Props types
 type Props = {
+  ctas?: CtaLink[];
   dates: DateWithTimeField[];
   location?: string;
   title?: string;
@@ -40,7 +39,14 @@ type Props = {
   intro?: any;
 };
 
-const Hero: FC<Props> = ({ dates, intro, location, title, type }) => {
+const Hero: FC<Props> = ({
+  ctas = [],
+  dates,
+  intro,
+  location,
+  title,
+  type,
+}) => {
   // // Local Variables
   const upcomingDate = getEventUpcomingDate(dates || []);
   const upcomingMonth = getEventUpcomingDate(dates || [], "month");
@@ -87,21 +93,31 @@ const Hero: FC<Props> = ({ dates, intro, location, title, type }) => {
               </Text>
             )}
 
-            {/* {ctas && (
+            {ctas && (
               <div className={styles.ctas}>
-                {ctas?.map((cta) => (
-                  <Button
-                    color={Color.Reverse}
-                    href={cta.url}
-                    key={cta._key}
-                    variant={Variant.Link}
-                    uppercase
+                {ctas?.map((cta, i) => (
+                  <Link
+                    className={styles.link}
+                    href={cta.url as string}
+                    key={i}
                   >
-                    {cta.text}
-                  </Button>
+                    <span>{cta.text}</span>
+                    <svg
+                      width="6"
+                      height="13"
+                      viewBox="0 0 6 13"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2.16196 0.792358L5.45785 6.5021L2.16196 12.2058L0 12.2076L3.29589 6.5021L0 0.792358H2.16196Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </Link>
                 ))}
               </div>
-            )} */}
+            )}
           </div>
         </div>
         <div className="row">
