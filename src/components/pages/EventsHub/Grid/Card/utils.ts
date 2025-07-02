@@ -84,3 +84,54 @@ export const getEventDate = (
 
   return null;
 };
+
+/**
+ * Get the most upcoming date from the event dates and format it to be only the day
+ *
+ * @param {DateWithTimeField[]} dates
+ * @return {string}
+ */
+export const getEventUpcomingDate = (
+  dates: DateWithTimeField[] = [],
+  type = "day"
+): string | null => {
+  // Validations
+  if (dates.length === 0) return null;
+
+  const FORMATS: Record<string, string> = {
+    day: "dd",
+    month: "MMM",
+  };
+  const first = dates[0];
+
+  return first ? formatDate(first.date, FORMATS[type] || "dd") : null;
+};
+
+/**
+ * Parse the Event dates
+ * Convert the date to start-end time for the event based on the set timezone
+ *
+ * @param {DateWithTimeField[]} dates
+ * @return {string}
+ */
+export const getEventTime = (dates: DateWithTimeField[] = []): string => {
+  // Validations
+  if (dates.length === 0) return "";
+
+  // Today
+  const today = new Date().toISOString().substring(0, 10);
+  const upcomingDate =
+    dates
+      ?.filter((date) => !!date?.date)
+      .find((date) => (date.date as string) > today) || dates[0];
+
+  if (upcomingDate) {
+    const startTime = upcomingDate?.time;
+
+    if (startTime) {
+      return `${formatTime(startTime, "h:mm a")}`;
+    }
+  }
+
+  return "";
+};

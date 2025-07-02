@@ -12,13 +12,14 @@ import {
 } from "@/lib/backend/sanity/queries";
 
 // Types
-import { Seo, type Page as PageType } from "@/lib/types/sanity.types";
+import { Seo, type Event as PageType } from "@/lib/types/sanity.types";
 
 // Utilities
 import { parseSlugToString } from "@/lib/utils/str";
 
 // Components
 import PageLayout from "@/components/layout/page";
+import Template from "@/components/pages/Event/Template";
 
 // Props types
 type Props = {
@@ -97,11 +98,11 @@ const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
     notFound();
   }
 
-  return <PageLayout className="layout" type="normal">
-    <pre>
-    {JSON.stringify(page, null, 2)}
-    </pre>
-  </PageLayout>;
+  return (
+    <PageLayout className="layout" type="normal">
+      <Template event={page} />
+    </PageLayout>
+  );
 };
 
 export default DynamicPage;
