@@ -1,17 +1,28 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { CustomWindow } from "@/lib/types/window";
 
 declare let window: CustomWindow;
 
 const Template = () => {
+  const hasNavigated = useRef(false);
+
   function experienceClosed(reason: string) {
-    if (reason != "willNotShow") {
-      if (document.referrer && document.referrer !== document.location.href) {
-        window.location.href = document.referrer;
+    if (reason != "willNotShow" && !hasNavigated.current) {
+      hasNavigated.current = true;
+      // Check if there's a history to go back to
+      if (window.history.length > 1) {
+        console.log("history back");
+        window.history.back();
       } else {
-        window.location.href = "/";
+        console.log("no history back");
+        // Fallback to home page if no history
+        if (document.referrer) {
+          window.location.href = document.referrer;
+        } else {
+          window.location.href = "/";
+        }
       }
     }
   }
