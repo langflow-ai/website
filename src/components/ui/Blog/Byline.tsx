@@ -34,8 +34,8 @@ export function Byline({ author, publishedAt }: BylineProps) {
         <Text
           size={200}
           tagName="p"
-          className="text-white"
-          style={{ lineHeight: 1.2 }}
+          className="text-secondary"
+          style={{ lineHeight: 1.2, color: "#8F969E" }}
         >
           {Intl.DateTimeFormat("en-US", {
             year: "numeric",
