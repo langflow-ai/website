@@ -17,28 +17,8 @@ import { Byline } from "@/components/ui/Blog/Byline";
 import LinesOverlay from "@/components/ui/Blog/LinesOverlay";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
 import { Metadata, NextPage } from "next";
-
-type Post = {
-  _id: string;
-  title?: string;
-  slug?: { current?: string };
-  excerpt?: string;
-  body: {
-    _id: string;
-    _type: string;
-    children: {
-      _type: string;
-      text: string;
-    }[];
-  }[];
-  publishedAt: string;
-  featureImage?: any;
-  author: {
-    name?: string;
-    slug?: { current?: string };
-    avatar?: any;
-  };
-};
+import { BlogPost } from "@/lib/types/sanity.types";
+import { Post } from "@/components/ui/Blog/Post";
 
 export const dynamic = "force-static";
 
@@ -47,13 +27,18 @@ const BlogIndex: NextPage = async () => {
   const isDraftMode = draftMode().isEnabled;
 
   // Fetch posts
-  const posts = await sanityFetch<Post[]>(BLOG_POSTS_QUERY, {}, isDraftMode);
+  const posts = await sanityFetch<BlogPost[]>(
+    BLOG_POSTS_QUERY,
+    {},
+    isDraftMode
+  );
 
   // Generate excerpts
   const postsWithExcerpts = await Promise.all(
     posts.map(async (post) => ({
       ...post,
-      excerpt: post.excerpt || (await generateBlogExcerpt(post.body)),
+      excerpt:
+        post.excerpt ?? (await generateBlogExcerpt(post.body)) ?? undefined,
     }))
   );
 
@@ -126,44 +111,7 @@ const BlogIndex: NextPage = async () => {
         <div className="row">
           {otherPosts.map((post) => (
             <div key={post._id} className="p-4 col-md-6">
-              <Link
-                href={`/blog/${post.slug?.current}`}
-                className="text-reset text-decoration-none"
-              >
-                <div className="card post-card p-4 d-grid gap-4 bg-black text-white shadow border-4 border-dark">
-                  {post.featureImage && (
-                    <SanityImage
-                      image={post.featureImage}
-                      alt={post.title || ""}
-                      className="card-img-top w-100 h-auto rounded-3"
-                    />
-                  )}
-                  <div className="card-body d-flex flex-column justify-content-between gap-4 p-0">
-                    <Display
-                      size={400}
-                      tagName="h2"
-                      className="w-75"
-                      style={{ textWrap: "balance" }}
-                    >
-                      {post.title}
-                    </Display>
-                    <Byline
-                      author={post.author}
-                      publishedAt={post.publishedAt}
-                    />
-                    {
-                      <Text size={300} tagName="p" className="text-white">
-                        {post.excerpt}
-                      </Text>
-                    }
-                  </div>
-                  <div className="flex-row" style={{ justifyItems: "end" }}>
-                    <Button variant={ButtonTypes.BORDER}>
-                      Read more &rarr;
-                    </Button>
-                  </div>
-                </div>
-              </Link>
+              <Post post={{ ...post }} />
             </div>
           ))}
         </div>

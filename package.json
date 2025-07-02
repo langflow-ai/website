@@ -30,6 +30,7 @@
     "react-dom": "^18.3.1",
     "react-highlight": "^0.15.0",
     "react-is": "^19.1.0",
+    "react-player": "^3.0.0",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
