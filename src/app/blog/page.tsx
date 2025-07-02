@@ -73,7 +73,7 @@ const BlogIndex: NextPage = async () => {
               href={`/blog/${latestPost.slug?.current}`}
               className="text-reset text-decoration-none"
             >
-              <div className="card p-4 d-grid gap-4 bg-dark shadow border-0 text-white">
+              <div className="card p-4 d-grid gap-4 bg-black border-dark border-4 shadow text-white">
                 <div className="card-body d-flex flex-column justify-content-between gap-4 p-0">
                   <div className="d-flex flex-row gap-4">
                     <Display size={200} className="text-white">
@@ -126,12 +126,12 @@ const BlogIndex: NextPage = async () => {
                 href={`/blog/${post.slug?.current}`}
                 className="text-reset text-decoration-none"
               >
-                <div className="card p-4 d-grid gap-4 bg-dark text-white shadow border-0">
+                <div className="card p-4 d-grid gap-4 bg-black text-white shadow border-4 border-dark">
                   {post.featureImage && (
                     <SanityImage
                       image={post.featureImage}
                       alt={post.title || ""}
-                      className="card-img-top w-100 h-auto"
+                      className="card-img-top w-100 h-auto rounded-3"
                     />
                   )}
                   <div className="card-body d-flex flex-column justify-content-between gap-4 p-0">
