@@ -14,7 +14,7 @@ import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
 import Button from "@/components/ui/button";
 import { ButtonTypes } from "@/components/ui/button/types";
 import { Byline } from "@/components/ui/Blog/Byline";
-import { Metadata } from "next";
+import { Metadata, NextPage } from "next";
 
 type Post = {
   _id: string;
@@ -40,7 +40,7 @@ type Post = {
 
 export const dynamic = "force-static";
 
-export async function BlogIndex() {
+const BlogIndex: NextPage = async () => {
   // Check for draft mode to fetch preview content
   const isDraftMode = draftMode().isEnabled;
 
@@ -164,7 +164,7 @@ export async function BlogIndex() {
       </section>
     </PageLayout>
   );
-}
+};
 
 export const metadata: Metadata = {
   title: "Blog | Langflow - The fastest way to build AI Agents",
