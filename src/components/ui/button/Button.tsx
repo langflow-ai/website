@@ -1,15 +1,20 @@
-import React from 'react';
-import { ButtonTypes } from './types'; // Import enum
-import styles from './styles.module.scss'; // Import SCSS styles
+import React from "react";
+import { ButtonTypes } from "./types"; // Import enum
+import styles from "./styles.module.scss"; // Import SCSS styles
 
 interface ButtonProps {
   variant: ButtonTypes;
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void; // Optional for server rendering
   icon?: React.ReactNode; // Accept an icon as a prop
 }
 
-const Button: React.FC<ButtonProps> = ({ variant = ButtonTypes.FILLED, children, onClick, icon }) => {
+const Button: React.FC<ButtonProps> = ({
+  variant = ButtonTypes.FILLED,
+  children,
+  onClick,
+  icon,
+}) => {
   // Dynamically set the class name for the button
   const buttonClass = `${styles.button} ${styles[variant]}`;
 
