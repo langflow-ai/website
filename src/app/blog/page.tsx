@@ -125,7 +125,7 @@ const BlogIndex: NextPage = async () => {
 
         <div className="row">
           {otherPosts.map((post) => (
-            <div key={post._id} className="p-2 col-md-6">
+            <div key={post._id} className="p-4 col-md-6">
               <Link
                 href={`/blog/${post.slug?.current}`}
                 className="text-reset text-decoration-none"
