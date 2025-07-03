@@ -3,4 +3,17 @@
     color: #666; // Light grey for visibility against black background
     opacity: 1; // Ensure placeholder color is applied consistently
   }
+  padding-right: 5rem !important; // extra space for the shortcut indicator
+}
+
+.shortcutIndicator {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  font-size: 1rem;
+  color: #8e8e8e;
+  border: 1px solid #8e8e8e;
+  border-radius: 4px;
+  padding: 2px 6px;
+  pointer-events: none; // allow clicks to pass through
 }

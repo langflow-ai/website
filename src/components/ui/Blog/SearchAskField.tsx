@@ -23,8 +23,31 @@ interface SearchAskFieldProps {
  */
 export default function SearchAskField({ className }: SearchAskFieldProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [state, dispatch] = useReducer(reducer, initialState);
   const { query, loading, answer, searchResults, referencedPosts } = state;
+
+  // Detect platform for shortcut display & handling
+  const isMac =
+    typeof window !== "undefined" &&
+    /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+
+  // Register global key handler for ⌘K / Ctrl+K
+  useEffect(() => {
+    function handleKeydown(e: KeyboardEvent) {
+      const pressedK = e.key.toLowerCase() === "k";
+      const isShortcut =
+        (isMac && e.metaKey && pressedK) || (!isMac && e.ctrlKey && pressedK);
+      if (isShortcut) {
+        e.preventDefault();
+        // Focus the input field
+        inputRef.current?.focus();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeydown);
+    return () => window.removeEventListener("keydown", handleKeydown);
+  }, [isMac]);
 
   const hasPanel =
     loading ||
@@ -164,7 +187,10 @@ export default function SearchAskField({ className }: SearchAskFieldProps) {
           className="d-flex flex-column gap-2 position-relative"
           style={{ flex: 1, fontSize: "0.9rem" }}
         >
-          <label className="w-100 d-grid gap-1">
+          <label
+            className="w-100 d-grid gap-1"
+            style={{ position: "relative" }}
+          >
             Search or ask...
             <input
               type="text"
@@ -176,7 +202,12 @@ export default function SearchAskField({ className }: SearchAskFieldProps) {
               style={{ height: "48px" }}
               className={`form-control bg-black text-white border-dark p-2 px-3 ${styles.inputField}`}
               disabled={loading}
+              ref={inputRef}
             />
+            {/* Shortcut indicator */}
+            <span className={`${styles.shortcutIndicator}`}>
+              {isMac ? "⌘K" : "Ctrl+K"}
+            </span>
           </label>
           {/* Results Panel */}
           {(loading ||
