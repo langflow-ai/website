@@ -10,11 +10,7 @@ interface Post {
   title?: string;
   slug?: { current?: string };
   excerpt?: string;
-  body: {
-    _id: string;
-    _type: string;
-    children: { _type: string; text: string }[];
-  }[];
+  body: string;
   publishedAt: string;
   author: {
     name?: string;
@@ -23,12 +19,7 @@ interface Post {
 
 function portableTextToPlainText(body: Post["body"]): string {
   if (!body) return "";
-  return body
-    .map((block) => {
-      if (block._type !== "block" || !Array.isArray(block.children)) return "";
-      return block.children.map((child) => child.text).join("");
-    })
-    .join("\n");
+  return body;
 }
 
 /**
