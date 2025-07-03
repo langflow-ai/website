@@ -226,7 +226,7 @@ const LinesOverlay: React.FC = () => {
             style={{
               transformOrigin: `${p.x}px ${p.y}px`,
               animation: `popDot 0.3s ease-out forwards`,
-              animationDelay: `${edges.length * stagger + idx * 0.005}s`,
+              animationDelay: `${edges.length * stagger + idx * 0.05}s`,
               opacity: 0,
             }}
           />
@@ -241,7 +241,7 @@ const LinesOverlay: React.FC = () => {
             style={{
               transformOrigin: `${p.x}px ${p.y}px`,
               animation: `popDot 0.3s ease-out forwards`,
-              animationDelay: `${edges.length * stagger + idx * 0.05}s`,
+              animationDelay: `${edges.length * stagger + idx * 0.005}s`,
               opacity: 0,
             }}
           />
