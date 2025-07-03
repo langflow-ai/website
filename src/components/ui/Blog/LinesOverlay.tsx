@@ -207,7 +207,7 @@ const LinesOverlay: React.FC = () => {
           style={{
             strokeDasharray: 1,
             strokeDashoffset: 1,
-            animation: `drawLine ${drawDuration}s ease-out forwards`,
+            animation: `drawLine ${drawDuration}s ease forwards`,
             animationDelay: `${idx * stagger}s`,
           }}
         />
@@ -226,7 +226,7 @@ const LinesOverlay: React.FC = () => {
             style={{
               transformOrigin: `${p.x}px ${p.y}px`,
               animation: `popDot 0.3s ease-out forwards`,
-              animationDelay: `${edges.length * stagger + idx * 0.05}s`,
+              animationDelay: `${edges.length * stagger + idx * 0.005}s`,
               opacity: 0,
             }}
           />

@@ -18,6 +18,7 @@ import { BackgroundGradient } from "@/components/BackgroundGradient";
 import { Metadata, NextPage } from "next";
 import { BlogPost } from "@/lib/types/sanity.types";
 import PostsFeed from "@/components/ui/Blog/PostsFeed";
+import SearchAskField from "@/components/ui/Blog/SearchAskField";
 
 export const dynamic = "force-static";
 
@@ -52,7 +53,7 @@ const BlogIndex: NextPage = async () => {
       <BackgroundGradient />
       <section
         id="blog-section"
-        className="container d-grid gap-2 p-4 position-relative"
+        className="container d-grid gap-4 p-4 position-relative"
       >
         <Display size={700} tagName="h1">
           Blog
@@ -103,7 +104,9 @@ const BlogIndex: NextPage = async () => {
           </div>
         )}
 
-        <Display size={400} style={{ paddingLeft: 11, paddingTop: "2rem" }}>
+        <SearchAskField className="position-relative z-3" />
+
+        <Display size={400} style={{ paddingLeft: 11, paddingTop: "1rem" }}>
           Older Posts
         </Display>
 
