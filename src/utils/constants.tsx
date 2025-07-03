@@ -49,7 +49,7 @@ const LIST = [
       },
       {
         title: "Blog",
-        url: "https://blog.langflow.org/",
+        url: "/blog",
         icon: null,
         download: false,
       },
