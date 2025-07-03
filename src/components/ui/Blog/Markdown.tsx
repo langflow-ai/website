@@ -63,7 +63,10 @@ export const Markdown = ({ children }: { children: string }) => {
                 alt={props.alt ?? ""}
                 className="max-w-100 h-auto rounded-2 my-4 mx-auto"
               />
-              <figcaption style={{ fontSize: "0.9rem" }}>
+              <figcaption
+                className="text-center text-secondary"
+                style={{ fontSize: "0.9rem" }}
+              >
                 {props.alt}
               </figcaption>
             </figure>
