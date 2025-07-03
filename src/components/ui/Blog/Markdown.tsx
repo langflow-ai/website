@@ -9,8 +9,10 @@ import python from "highlight.js/lib/languages/python";
 import typescript from "highlight.js/lib/languages/typescript";
 import "highlight.js/styles/github-dark-dimmed.css"; // theme
 import rehypeHighlight from "rehype-highlight";
+import { remarkPostEmbed } from "@/lib/utils/remarkPostEmbed";
 
 import { YouTubeEmbed } from "./YouTubeEmbed";
+import { PostEmbed } from "./PostEmbed";
 
 hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("typescript", typescript);
@@ -19,7 +21,7 @@ hljs.registerLanguage("python", python);
 export const Markdown = ({ children }: { children: string }) => {
   return (
     <ReactMarkdown
-      remarkPlugins={[remarkGfm, remarkYouTube]}
+      remarkPlugins={[remarkGfm, remarkYouTube, remarkPostEmbed]}
       components={{
         table: ({ node, ...props }) => {
           return <table className="table">{props.children}</table>;
@@ -28,22 +30,28 @@ export const Markdown = ({ children }: { children: string }) => {
           return <th className="table-dark">{props.children}</th>;
         },
         td: ({ node, ...props }) => {
-          return <td className="table-dark">{props.children}</td>;
+          return (
+            <td className="table-dark" style={{ verticalAlign: "middle" }}>
+              {props.children}
+            </td>
+          );
         },
         code: ({ node, ...props }) => {
           return (
             <pre
               style={{
-                fontSize: "1rem",
+                fontSize: "inherit",
+                maxWidth: "calc(100vw - 4rem)",
+                verticalAlign: "middle",
               }}
               className={clsx(
                 !props.children!.toString().includes("\n")
-                  ? "d-inline p-1"
-                  : "p-4",
-                "border border-dark text-white rounded-2"
+                  ? "d-inline-block m-0 p-1"
+                  : "d-block p-4",
+                "border overflow-x-auto text-overflow-ellipsis border-dark text-white rounded-2"
               )}
             >
-              <code className="">{props.children}</code>
+              <code>{props.children}</code>
             </pre>
           );
         },
@@ -53,12 +61,9 @@ export const Markdown = ({ children }: { children: string }) => {
               <img
                 src={src}
                 alt={props.alt ?? ""}
-                className="w-100 h-auto rounded-2 my-4"
+                className="max-w-100 h-auto rounded-2 my-4 mx-auto"
               />
-              <figcaption
-                className="text-secondary"
-                style={{ fontSize: "0.9rem" }}
-              >
+              <figcaption style={{ fontSize: "0.9rem" }}>
                 {props.alt}
               </figcaption>
             </figure>
@@ -66,9 +71,13 @@ export const Markdown = ({ children }: { children: string }) => {
         },
         // Handle YouTube embeds as divs with data attributes
         div: ({ node, ...props }: any) => {
-          // Check if this div has a data-youtube-embed attribute
+          // Handle YouTube embeds
           if (props["data-youtube-embed"]) {
             return <YouTubeEmbed url={props["data-youtube-embed"] as string} />;
+          }
+          // Handle Sanity post embeds
+          if (props["data-post-embed"]) {
+            return <PostEmbed slug={props["data-post-embed"] as string} />;
           }
           return <div {...props}>{props.children}</div>;
         },
