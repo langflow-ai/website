@@ -2,14 +2,13 @@ import { draftMode } from "next/headers";
 
 // Backend
 import { sanityFetch } from "@/lib/backend/sanity/client";
-import { BLOG_POSTS_QUERY } from "@/lib/backend/sanity/queries";
+import { BLOG_POSTS_PAGINATED_QUERY } from "@/lib/backend/sanity/queries";
 
 // Components
 import PageLayout from "@/components/layout/page";
 import Display from "@/components/ui/Display";
 import Text from "@/components/ui/text";
 import Link from "@/components/ui/Link";
-import SanityImage from "@/components/ui/media/SanityImage";
 import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
 import Button from "@/components/ui/button";
 import { ButtonTypes } from "@/components/ui/button/types";
@@ -18,7 +17,7 @@ import LinesOverlay from "@/components/ui/Blog/LinesOverlay";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
 import { Metadata, NextPage } from "next";
 import { BlogPost } from "@/lib/types/sanity.types";
-import { Post } from "@/components/ui/Blog/Post";
+import PostsFeed from "@/components/ui/Blog/PostsFeed";
 
 export const dynamic = "force-static";
 
@@ -26,10 +25,13 @@ const BlogIndex: NextPage = async () => {
   // Check for draft mode to fetch preview content
   const isDraftMode = draftMode().isEnabled;
 
-  // Fetch posts
+  // Pagination settings
+  const LIMIT = 7;
+
+  // Fetch first batch of posts
   const posts = await sanityFetch<BlogPost[]>(
-    BLOG_POSTS_QUERY,
-    {},
+    BLOG_POSTS_PAGINATED_QUERY,
+    { start: 0, end: LIMIT },
     isDraftMode
   );
 
@@ -43,7 +45,7 @@ const BlogIndex: NextPage = async () => {
   );
 
   const latestPost = postsWithExcerpts[0];
-  const otherPosts = postsWithExcerpts.slice(1);
+  const initialOtherPosts = postsWithExcerpts.slice(1);
 
   return (
     <PageLayout className="layout" type="normal">
@@ -105,16 +107,12 @@ const BlogIndex: NextPage = async () => {
           Older Posts
         </Display>
 
-        {/** @todo Add a Search/Ask */}
-        {/** @todo add pagination */}
-
-        <div className="row">
-          {otherPosts.map((post) => (
-            <div key={post._id} className="p-4 col-md-6">
-              <Post post={{ ...post }} />
-            </div>
-          ))}
-        </div>
+        {/* Initial batch of older posts followed by infinite scroll */}
+        <PostsFeed
+          initialPosts={initialOtherPosts}
+          initialOffset={postsWithExcerpts.length}
+          limit={LIMIT}
+        />
 
         {/* SVG lines connecting cards */}
         <LinesOverlay />

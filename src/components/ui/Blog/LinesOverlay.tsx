@@ -110,7 +110,32 @@ const LinesOverlay: React.FC = () => {
   useLayoutEffect(() => {
     measure();
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+
+    // Observe DOM mutations to re-measure when new posts mount/unmount
+    const section = document.getElementById("blog-section");
+    let mutationObserver: MutationObserver | undefined;
+    if (section && "MutationObserver" in window) {
+      mutationObserver = new MutationObserver((mutations) => {
+        // Check if any nodes were added or removed that could change layout
+        const hasLayoutChange = mutations.some(
+          (m) => m.addedNodes.length > 0 || m.removedNodes.length > 0
+        );
+        if (hasLayoutChange) {
+          // Use requestAnimationFrame to wait until layout settles
+          requestAnimationFrame(measure);
+        }
+      });
+
+      mutationObserver.observe(section, {
+        childList: true,
+        subtree: true,
+      });
+    }
+
+    return () => {
+      window.removeEventListener("resize", measure);
+      mutationObserver?.disconnect();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -135,12 +160,25 @@ const LinesOverlay: React.FC = () => {
     return `M ${start.x},${start.y} Q ${ctrl.x},${ctrl.y} ${end.x},${end.y}`;
   };
 
+  const drawDuration = 0.6; // seconds
+  const stagger = 0.15; // delay between successive edges
+
   return (
     <svg
       className="position-absolute top-0 start-0 w-100 h-100"
       style={{ pointerEvents: "none" }}
       xmlns="http://www.w3.org/2000/svg"
     >
+      {/* Animation keyframes */}
+      <style>{`
+        @keyframes drawLine {
+          to { stroke-dashoffset: 0; }
+        }
+        @keyframes popDot {
+          from { transform: scale(0); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+      `}</style>
       <defs>
         {/* Glow filter */}
         <filter id="glow" x="-100%" y="-100%" width="400%" height="400%">
@@ -165,6 +203,13 @@ const LinesOverlay: React.FC = () => {
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
+          pathLength={1}
+          style={{
+            strokeDasharray: 1,
+            strokeDashoffset: 1,
+            animation: `drawLine ${drawDuration}s ease-out forwards`,
+            animationDelay: `${idx * stagger}s`,
+          }}
         />
       ))}
 
@@ -178,6 +223,12 @@ const LinesOverlay: React.FC = () => {
             r={7}
             fill="#7528fc"
             filter="url(#glow)"
+            style={{
+              transformOrigin: `${p.x}px ${p.y}px`,
+              animation: `popDot 0.3s ease-out forwards`,
+              animationDelay: `${edges.length * stagger + idx * 0.05}s`,
+              opacity: 0,
+            }}
           />
           <circle
             key={`dot-${idx}-2`}
@@ -187,6 +238,12 @@ const LinesOverlay: React.FC = () => {
             stroke="#fff"
             strokeWidth={2}
             fill="#7528fc"
+            style={{
+              transformOrigin: `${p.x}px ${p.y}px`,
+              animation: `popDot 0.3s ease-out forwards`,
+              animationDelay: `${edges.length * stagger + idx * 0.05}s`,
+              opacity: 0,
+            }}
           />
         </>
       ))}

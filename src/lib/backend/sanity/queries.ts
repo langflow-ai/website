@@ -76,3 +76,20 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
     }
   }
 `);
+
+export const BLOG_POSTS_PAGINATED_QUERY = defineQuery(`
+  *[_type == "post" && defined(slug.current)] | order(publishedAt desc)[$start...$end] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    body,
+    publishedAt,
+    featureImage,
+    "author": author-> {
+      name,
+      slug,
+      avatar
+    }
+  }
+`);
