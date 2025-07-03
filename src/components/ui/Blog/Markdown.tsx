@@ -26,16 +26,16 @@ export const Markdown = ({ children }: { children: string }) => {
         table: ({ node, ...props }) => {
           return <table className="table">{props.children}</table>;
         },
-        th: ({ node, ...props }) => {
-          return <th className="table-dark">{props.children}</th>;
-        },
-        td: ({ node, ...props }) => {
-          return (
-            <td className="table-dark" style={{ verticalAlign: "middle" }}>
-              {props.children}
-            </td>
-          );
-        },
+        th: ({ node, ...props }) => (
+          <th {...props} className={clsx("table-dark", props.className)} />
+        ),
+        td: ({ node, ...props }) => (
+          <td
+            {...props}
+            style={{ verticalAlign: "middle", ...props.style }}
+            className={clsx("table-dark", props.className)}
+          />
+        ),
         code: ({ node, ...props }) => {
           return (
             <pre
