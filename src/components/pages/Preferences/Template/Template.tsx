@@ -13,10 +13,8 @@ const Template = () => {
       hasNavigated.current = true;
       // Check if there's a history to go back to
       if (window.history.length > 1) {
-        console.log("history back");
         window.history.back();
       } else {
-        console.log("no history back");
         // Fallback to home page if no history
         if (document.referrer) {
           window.location.href = document.referrer;
