@@ -1,11 +1,15 @@
 // Dependencies
 import { createClient, QueryParams, type SanityClient } from "next-sanity";
+import imageUrlBuilder from "@sanity/image-url";
 
 // Config
 import { config, PREVIEW_READ_API_KEY_TOKEN } from "./config";
 
 // Client
 export const client: SanityClient = createClient(config);
+
+const builder = imageUrlBuilder(client);
+export const getImageUrl = (source: any): string => builder.image(source).url();
 
 export const sanityFetch = async <QueryResponse>(
   query: string,

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { NextPage } from "next";
 import "./styles.scss";
 
-import { sanityFetch } from "@/lib/backend/sanity/client";
+import { sanityFetch, getImageUrl } from "@/lib/backend/sanity/client";
 import {
   BLOG_POSTS_SLUGS_QUERY,
   POST_BY_SLUG_QUERY,
@@ -55,13 +55,19 @@ export const generateMetadata = async ({
     isDraftMode
   );
 
+  console.log(post?.featureImage);
+
+  const featureImageUrl = post?.featureImage
+    ? getImageUrl(post.featureImage)
+    : undefined;
+
   return {
-    title: post?.title,
+    title: `${post?.title} | Langflow - The AI Agent Builder`,
     description: post?.excerpt,
     openGraph: {
       title: post?.title,
       description: post?.excerpt,
-      images: post?.featureImage ? [post.featureImage] : undefined,
+      images: featureImageUrl ? [featureImageUrl] : undefined,
     },
   };
 };
