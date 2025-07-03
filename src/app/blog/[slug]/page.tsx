@@ -94,7 +94,7 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
     <PageLayout className="layout" type="normal">
       <BackgroundGradient />
       <article className="d-flex flex-column gap-4 p-4 blog-article">
-        <ol className="list-unstyled d-flex gap-2 text-white w-100 m-0">
+        <ol className="list-unstyled p-0 d-flex gap-2 text-white w-100 m-0">
           <li>
             <Text size={100}>
               <a href="/">Home</a>&nbsp;&nbsp;/
