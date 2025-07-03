@@ -16,6 +16,7 @@
     "@sanity/client": "^7.4.0",
     "@sanity/image-url": "^1.1.0",
     "bootstrap": "^5.3.2",
+    "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "framer-motion": "12.11.3",
     "highlight.js": "^11.11.1",
@@ -30,8 +31,14 @@
     "react-dom": "^18.3.1",
     "react-highlight": "^0.15.0",
     "react-is": "^19.1.0",
+    "react-markdown": "^10.1.0",
     "react-player": "^3.0.0",
-    "styled-components": "^6.1.18"
+    "rehype-highlight": "^7.0.2",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.1",
+    "styled-components": "^6.1.18",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",

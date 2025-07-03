@@ -5,7 +5,13 @@ export const YouTubeEmbed = ({ url }: { url: string }) => {
     return null;
   }
 
-  const embedUrl = url.replace("watch?v=", "embed/");
+  // If it's just a video ID (like "TDcT9ao47Tk"), construct the full URL
+  let videoUrl = url;
+  if (!url.includes("youtube.com") && !url.includes("youtu.be")) {
+    videoUrl = `https://www.youtube.com/watch?v=${url}`;
+  }
+
+  const embedUrl = videoUrl.replace("watch?v=", "embed/");
 
   return (
     <div className="youtube-embed rounded-2 overflow-hidden my-4">

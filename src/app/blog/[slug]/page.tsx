@@ -13,10 +13,11 @@ import {
 import PageLayout from "@/components/layout/page";
 import Display from "@/components/ui/Display";
 import Text from "@/components/ui/text";
-import PortableText from "@/components/external/PortableText";
 import { Byline } from "@/components/ui/Blog/Byline";
 import { Post } from "@/components/ui/Blog/Post";
 import { BlogPost } from "@/lib/types/sanity.types";
+import { Markdown } from "@/components/ui/Blog/Markdown";
+import { BackgroundGradient } from "@/components/BackgroundGradient";
 
 interface Post {
   _id: string;
@@ -85,7 +86,8 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
 
   return (
     <PageLayout className="layout" type="normal">
-      <article className="d-flex flex-column gap-4 p-4 container-sm blog-article">
+      <BackgroundGradient />
+      <article className="d-flex flex-column gap-4 p-4 blog-article">
         <ol className="list-unstyled d-flex gap-2 text-white w-100 m-0">
           <li>
             <Text size={100}>
@@ -110,7 +112,7 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
         />
         {post.body && (
           <Text size={300} tagName="div" className="article d-grid gap-4">
-            <PortableText value={post.body} />
+            <Markdown>{post.body}</Markdown>
           </Text>
         )}
         <hr className="my-4 border-top border-light" />

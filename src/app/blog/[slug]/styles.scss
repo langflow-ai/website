@@ -1,4 +1,7 @@
 .blog-article {
+  max-width: 1024px;
+  margin: 0 auto;
+
   p {
     text-align: justify;
     font-size: 1.2rem;
@@ -14,12 +17,19 @@
     border-radius: 0.5rem;
   }
 
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 2rem;
+  }
+
   ul,
   ol {
-    list-style: none !important;
-    list-style-position: inside !important;
+    list-style-position: outside !important;
     font-size: 1.2rem;
-    padding-left: 0;
+    padding-left: 1.2rem;
     margin: 1rem 0 !important;
     li {
       margin-bottom: 0.5em;
