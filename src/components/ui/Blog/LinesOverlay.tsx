@@ -180,7 +180,7 @@ const LinesOverlay: React.FC = () => {
             filter="url(#glow)"
           />
           <circle
-            key={`dot-${idx}`}
+            key={`dot-${idx}-2`}
             cx={p.x}
             cy={p.y}
             r={7}
