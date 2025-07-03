@@ -59,6 +59,8 @@ const BlogIndex: NextPage = async () => {
           Blog
         </Display>
 
+        <SearchAskField className="position-relative z-3" />
+
         {latestPost && (
           <div key={latestPost._id}>
             <Link
@@ -103,8 +105,6 @@ const BlogIndex: NextPage = async () => {
             </Link>
           </div>
         )}
-
-        <SearchAskField className="position-relative z-3" />
 
         <Display size={400} style={{ paddingLeft: 11, paddingTop: "1rem" }}>
           Older Posts
