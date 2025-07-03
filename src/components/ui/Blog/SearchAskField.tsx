@@ -5,6 +5,7 @@ import Link from "@/components/ui/Link";
 import Text from "@/components/ui/text";
 import LoadingDots from "./LoadingDots";
 import { reducer, initialState } from "./searchAskFieldReducer";
+import styles from "./SearchAskField.module.scss";
 
 interface SearchAskFieldProps {
   className?: string;
@@ -173,7 +174,7 @@ export default function SearchAskField({ className }: SearchAskFieldProps) {
                 dispatch({ type: "SET_QUERY", payload: e.target.value })
               }
               style={{ height: "48px" }}
-              className="form-control bg-black text-white border-dark p-2 px-3"
+              className={`form-control bg-black text-white border-dark p-2 px-3 ${styles.inputField}`}
               disabled={loading}
             />
           </label>
