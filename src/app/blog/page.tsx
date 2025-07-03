@@ -62,7 +62,7 @@ const BlogIndex: NextPage = async () => {
               href={`/blog/${latestPost.slug?.current}`}
               className="text-reset text-decoration-none"
             >
-              <div className="card post-card p-4 d-grid gap-4 bg-black border-dark border-4 shadow text-white">
+              <div className="card post-card p-4 d-grid gap-4 bg-black border-dark border-2 shadow text-white">
                 <div className="card-body d-flex flex-column justify-content-between gap-4 p-0">
                   <div className="d-flex flex-row gap-4">
                     <Display size={200} className="text-white">

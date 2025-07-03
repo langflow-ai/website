@@ -13,7 +13,7 @@ export function Post({ post }: { post: BlogPost }) {
       href={`/blog/${post.slug?.current}`}
       className="text-reset text-decoration-none"
     >
-      <div className="card post-card p-4 d-grid gap-4 bg-black text-white shadow border-4 border-dark">
+      <div className="card post-card p-4 d-grid gap-4 bg-black text-white shadow border-2 border-dark">
         {post.featureImage && (
           <SanityImage
             image={post.featureImage}
