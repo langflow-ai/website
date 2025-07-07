@@ -3,20 +3,9 @@ export const revalidate = 60 * 60; // 1 hour
 
 import { sanityFetch } from "@/lib/backend/sanity/client";
 import { BLOG_POSTS_QUERY } from "@/lib/backend/sanity/queries";
+import { BlogPost } from "@/lib/types/sanity.types";
 import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
 import type { NextRequest } from "next/server";
-
-interface Post {
-  _id: string;
-  title?: string;
-  slug?: { current?: string };
-  excerpt?: string;
-  body: {
-    _id: string;
-    _type: string;
-    children: { _type: string; text: string }[];
-  }[];
-}
 
 /**
  * GET /blog/llms.txt – returns a newline-delimited summary for each blog post.
@@ -25,7 +14,7 @@ interface Post {
  */
 export async function GET(_req: NextRequest): Promise<Response> {
   // We always fetch the published content here – draft posts are excluded.
-  const posts = await sanityFetch<Post[]>(BLOG_POSTS_QUERY);
+  const posts = await sanityFetch<BlogPost[]>(BLOG_POSTS_QUERY);
 
   const fileHeader = `# Langflow Blog
   
