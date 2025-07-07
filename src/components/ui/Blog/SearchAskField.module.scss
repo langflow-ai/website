@@ -1,0 +1,7 @@
+.inputField {
+  &::placeholder {
+    color: #666; // Light grey for visibility against black background
+    opacity: 1; // Ensure placeholder color is applied consistently
+  }
+  padding-right: 5rem !important; // extra space for the shortcut indicator
+}

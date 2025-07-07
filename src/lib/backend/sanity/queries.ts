@@ -33,3 +33,63 @@ export const PAGES_SLUGS_QUERY = defineQuery(`
     && !(_id in path("drafts.**"))
   ].seo.slug.current
   `);
+
+// BLOG: Fetch all posts with necessary fields ordered by published date
+export const BLOG_POSTS_QUERY = defineQuery(`
+  *[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    excerpt,
+    body,
+    publishedAt,
+    featureImage,
+    "author": author-> {
+      name,
+      slug,
+      avatar
+    }
+  }
+`);
+
+// BLOG: Fetch all post slugs for static generation
+export const BLOG_POSTS_SLUGS_QUERY = defineQuery(`
+  *[
+    _type == "post" && defined(slug.current) && !(_id in path("drafts.**"))
+  ].slug.current
+`);
+
+// BLOG: Fetch a single post by slug
+export const POST_BY_SLUG_QUERY = defineQuery(`
+  *[_type == "post" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    body,
+    publishedAt,
+    featureImage,
+    "author": author-> {
+      name,
+      slug,
+      avatar
+    }
+  }
+`);
+
+export const BLOG_POSTS_PAGINATED_QUERY = defineQuery(`
+  *[_type == "post" && defined(slug.current)] | order(publishedAt desc)[$start...$end] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    body,
+    publishedAt,
+    featureImage,
+    "author": author-> {
+      name,
+      slug,
+      avatar
+    }
+  }
+`);

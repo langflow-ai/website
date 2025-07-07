@@ -71,31 +71,19 @@ $mobile-sizes: (
 
   p,
   ul {
-    margin-bottom: 1em;
-
+    margin: 0;
     &:last-child {
       margin-bottom: 0;
     }
   }
 
   ul {
-    list-style: none;
-
     li {
       margin-bottom: 0.5em;
       position: relative;
 
       p {
         margin-bottom: 0px !important;
-      }
-
-      &::before {
-        background: none;
-        content: "\2022";
-        position: absolute;
-        display: inline-block;
-        left: -1em;
-        width: 1em;
       }
     }
   }
