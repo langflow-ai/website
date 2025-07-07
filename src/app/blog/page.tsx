@@ -72,6 +72,18 @@ const BlogIndex: NextPage = async () => {
 
 export const metadata: Metadata = {
   title: "Blog | Langflow - The fastest way to build AI Agents",
+  openGraph: {
+    url: "https://langflow.org/blog",
+    siteName: "Langflow",
+    images: [
+      {
+        url: "/images/blog-og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Langflow - Low-code AI builder",
+      },
+    ],
+  },
   description:
     "Explore the latest news, updates, and insights from the Langflow team. Learn about the latest features, best practices, and how to get the most out of Langflow.",
 };
