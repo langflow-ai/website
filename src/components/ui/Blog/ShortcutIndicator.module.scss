@@ -1,0 +1,17 @@
+.shortcutIndicator {
+    display: none !important;
+    position: absolute;
+    right: 0.6rem;
+    bottom: 0.6rem;
+    font-size: 1rem;
+    color: #8e8e8e;
+    border: 1px solid #8e8e8e;
+    border-radius: 4px;
+    padding: 2px 6px;
+    pointer-events: none; // allow clicks to pass through
+  
+    @media (min-width: 1024px) {
+      display: block !important;
+    }
+  }
+  

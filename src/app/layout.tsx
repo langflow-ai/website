@@ -1,6 +1,8 @@
 // Dependencies
 import type { Metadata } from "next";
-import Script from "next/script";
+
+// Components
+import HeaderScripts from "@/components/scripts/Header";
 
 // Styles
 import "@/styles/index.scss";
@@ -58,23 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Google Analytics Script */}
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=G-L8Y98PSEMQ`}
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-L8Y98PSEMQ');
-            `,
-          }}
-        />
+        <HeaderScripts />
       </head>
       <body>
         <main className="layout layout-dark">{children}</main>
