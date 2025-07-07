@@ -19,7 +19,7 @@ import { BlogPost } from "@/lib/types/sanity.types";
 import { Markdown } from "@/components/ui/Blog/Markdown";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
 
-interface Post {
+type Post = {
   _id: string;
   title?: string;
   slug?: { current?: string };
@@ -32,9 +32,7 @@ interface Post {
     slug?: { current?: string };
     avatar?: any;
   };
-}
-
-export const dynamic = "force-static";
+};
 
 export async function generateStaticParams() {
   const slugs = await sanityFetch<string[]>(BLOG_POSTS_SLUGS_QUERY);
@@ -134,3 +132,5 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
 };
 
 export default BlogPostPage;
+
+export const dynamic = "force-static";
