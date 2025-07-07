@@ -10,7 +10,8 @@ import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 export const client: SanityClient = createClient(config);
 
 const builder = imageUrlBuilder(client);
-export const getImageUrl = (source: SanityImageSource): string => builder.image(source).url();
+export const getImageUrl = (source: SanityImageSource | null): string =>
+  source ? builder.image(source).url() : "";
 
 export const sanityFetch = async <QueryResponse>(
   query: string,
