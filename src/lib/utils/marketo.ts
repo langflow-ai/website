@@ -294,7 +294,7 @@ const _debug = (...args: any) => {
  */
 const debounce = (
   func: (...args: any) => void,
-  wait: number,
+  wait: number
 ): ((...args: any) => void) => {
   let timeout: NodeJS.Timeout;
 
@@ -348,7 +348,7 @@ const checkIfFormIsEnriched = (formElId: string): boolean => {
  */
 const onCountryChangeListener = (formElId: string) => {
   const countryField = document.querySelector<HTMLSelectElement>(
-    `#${formElId} select[name="Country"]`,
+    `#${formElId} select[name="Country"]`
   );
 
   if (countryField) {
@@ -357,7 +357,7 @@ const onCountryChangeListener = (formElId: string) => {
       debounce(() => {
         const country = countryField.value;
         setCountryStates(country, formElId);
-      }, 500),
+      }, 500)
     );
   }
 };
@@ -371,24 +371,24 @@ const onCountryChangeListener = (formElId: string) => {
 const setCountryStates = (country: string, formElId: string) => {
   const zIContactAccuracyScore =
     document.querySelector<HTMLInputElement>(
-      `#${formElId} input[name="zIContactAccuracyScore"]`,
+      `#${formElId} input[name="zIContactAccuracyScore"]`
     )?.valueAsNumber || 0;
   const ziStateValue =
     document.querySelector<HTMLInputElement>(
-      `#${formElId} input[name="zIContactState"]`,
+      `#${formElId} input[name="zIContactState"]`
     )?.value || "";
 
   if (ZI_COUNTRY_STATES[country]) {
     _debug("Setting states for country", country);
     const states = ZI_COUNTRY_STATES[country];
     const stateField = document.querySelector<HTMLSelectElement>(
-      `#${formElId} select[name="State"]`,
+      `#${formElId} select[name="State"]`
     );
 
     if (stateField) {
       stateField.options.length = 0;
       stateField.options.add(
-        new Option("Please select State/Province", "", true, true),
+        new Option("Please select State/Province", "", true, true)
       );
 
       states.forEach((state) => {
@@ -402,7 +402,7 @@ const setCountryStates = (country: string, formElId: string) => {
         }
 
         stateField.options.add(
-          new Option(state, state, isSelected, isSelected),
+          new Option(state, state, isSelected, isSelected)
         );
       });
     }
@@ -417,7 +417,7 @@ const setCountryStates = (country: string, formElId: string) => {
  */
 const ziScoreListener = (formElId: string, form: MarketoForm) => {
   const emailField = document.querySelector<HTMLInputElement>(
-    `#${formElId} input[name="Email"]`,
+    `#${formElId} input[name="Email"]`
   );
 
   const processForm = () => {
@@ -425,7 +425,7 @@ const ziScoreListener = (formElId: string, form: MarketoForm) => {
 
     const zIContactAccuracyScore =
       document.querySelector<HTMLInputElement>(
-        `#${formElId} input[name="zIContactAccuracyScore"]`,
+        `#${formElId} input[name="zIContactAccuracyScore"]`
       )?.valueAsNumber || 0;
 
     _debug("ZI score - ", zIContactAccuracyScore);
@@ -433,10 +433,10 @@ const ziScoreListener = (formElId: string, form: MarketoForm) => {
     Object.entries(ZI_ENRICHED_FIELDS).forEach(([ziField, formField]) => {
       _debug(`ziField - ${ziField}, formField - ${formField}`);
       const ziFieldEl = document.querySelector<HTMLInputElement>(
-        `#${formElId} input[name="${ziField}"]`,
+        `#${formElId} input[name="${ziField}"]`
       );
       const formFieldEl = document.querySelector<HTMLInputElement>(
-        `#${formElId} input[name="${formField}"]`,
+        `#${formElId} input[name="${formField}"]`
       );
 
       if (!ziFieldEl || !formFieldEl) {
@@ -447,7 +447,7 @@ const ziScoreListener = (formElId: string, form: MarketoForm) => {
       const formFieldValue = formFieldEl.value;
 
       _debug(
-        `ziFieldValue - ${ziFieldValue}, formFieldValue - ${formFieldValue}`,
+        `ziFieldValue - ${ziFieldValue}, formFieldValue - ${formFieldValue}`
       );
 
       if (zIContactAccuracyScore >= ZI_PASSING_SCORE) {
@@ -511,6 +511,7 @@ export const setBusinessEmailValidation = (form: MarketoForm) => {
 export const addHiddenFields = (form: MarketoForm) => {
   form.addHiddenFields({
     Referrer_URL__c: window.location.href,
+    referrer: document.referrer.length > 0 ? document.referrer : "NULL",
   });
 };
 
@@ -535,7 +536,7 @@ export const reorderFields = (form: MarketoForm) => {
 
 export const isFormSubmittable = (
   values: Record<string, any>,
-  requiredFields: string[] = [],
+  requiredFields: string[] = []
 ) => {
   let isValid = true;
 

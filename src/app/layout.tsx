@@ -1,6 +1,8 @@
 // Dependencies
 import type { Metadata } from "next";
-import Script from "next/script";
+
+// Components
+import HeaderScripts from "@/components/scripts/Header";
 
 // Styles
 import "@/styles/index.scss";
@@ -58,29 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Google Analytics Script */}
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=G-L8Y98PSEMQ`}
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-L8Y98PSEMQ');
-            `,
-          }}
-        />
-        <Script
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `!function(){window.semaphore=window.semaphore||[],window.ketch=function(){window.semaphore.push(arguments)};var e=document.createElement("script");e.type="text/javascript",e.src="https://global.ketchcdn.com/web/v3/config/datastax/langflow_org_web/boot.js",e.defer=e.async=!0,document.getElementsByTagName("head")[0].appendChild(e)}();`,
-          }}
-        />
+        <HeaderScripts />
       </head>
       <body>
         <main className="layout layout-dark">{children}</main>
