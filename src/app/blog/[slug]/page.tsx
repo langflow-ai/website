@@ -114,11 +114,9 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
           author={post.author || { name: "Unknown" }}
           publishedAt={post.publishedAt || ""}
         />
-        {post.body && (
-          <Text size={300} tagName="div" className="article d-grid gap-4">
-            <Markdown>{post.body}</Markdown>
-          </Text>
-        )}
+        <Text size={300} tagName="div" className="article d-grid gap-4">
+          <Markdown>{post.body}</Markdown>
+        </Text>
         <hr className="my-4 border-top border-light" />
         <Display size={600} tagName="h2" className="m-0">
           Similar Posts
