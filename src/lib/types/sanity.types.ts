@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+
 // Source: schema.json
 export type Page = {
   _id: string;
@@ -297,22 +299,15 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 
 export type BlogPost = {
   _id: string;
-  title?: string;
-  slug?: { current?: string };
+  title: string;
+  slug: { current: string };
   excerpt?: string;
-  body: {
-    _id: string;
-    _type: string;
-    children: {
-      _type: string;
-      text: string;
-    }[];
-  }[];
+  body: string;
   publishedAt: string;
-  featureImage?: any;
+  featureImage: SanityImageSource;
   author: {
-    name?: string;
-    slug?: { current?: string };
-    avatar?: any;
+    name: string;
+    slug: { current: string };
+    avatar: SanityImageSource;
   };
 };

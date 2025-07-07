@@ -19,21 +19,6 @@ import { BlogPost } from "@/lib/types/sanity.types";
 import { Markdown } from "@/components/ui/Blog/Markdown";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
 
-type Post = {
-  _id: string;
-  title?: string;
-  slug?: { current?: string };
-  excerpt?: string;
-  body?: any;
-  publishedAt?: string;
-  featureImage?: any;
-  author?: {
-    name?: string;
-    slug?: { current?: string };
-    avatar?: any;
-  };
-};
-
 export async function generateStaticParams() {
   const slugs = await sanityFetch<string[]>(BLOG_POSTS_SLUGS_QUERY);
   return (slugs || [])
@@ -47,15 +32,13 @@ export const generateMetadata = async ({
   params: { slug: string };
 }) => {
   const isDraftMode = draftMode().isEnabled;
-  const post = await sanityFetch<Post>(
+  const post = await sanityFetch<BlogPost>(
     POST_BY_SLUG_QUERY,
     { slug: params.slug },
     isDraftMode
   );
 
-  const featureImageUrl = post?.featureImage
-    ? getImageUrl(post.featureImage)
-    : undefined;
+  const featureImageUrl = getImageUrl(post.featureImage);
 
   return {
     title: `${post?.title} | Langflow - The AI Agent Builder`,
@@ -73,7 +56,11 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
 }) => {
   const isDraftMode = draftMode().isEnabled;
   const [post, otherPosts] = await Promise.all([
-    sanityFetch<Post>(POST_BY_SLUG_QUERY, { slug: params.slug }, isDraftMode),
+    sanityFetch<BlogPost>(
+      POST_BY_SLUG_QUERY,
+      { slug: params.slug },
+      isDraftMode
+    ),
     (await sanityFetch<BlogPost[]>(BLOG_POSTS_QUERY, {}, isDraftMode))
       .filter(
         (otherPost) =>

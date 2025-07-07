@@ -73,13 +73,13 @@ export const Markdown = ({ children }: { children: string }) => {
           );
         },
         // Handle YouTube embeds as divs with data attributes
-        div: ({ node, ...props }: any) => {
+        div: ({ node, ...props }) => {
           // Handle YouTube embeds
-          if (props["data-youtube-embed"]) {
+          if ("data-youtube-embed" in props) {
             return <YouTubeEmbed url={props["data-youtube-embed"] as string} />;
           }
           // Handle Sanity post embeds
-          if (props["data-post-embed"]) {
+          if ("data-post-embed" in props) {
             return <PostEmbed slug={props["data-post-embed"] as string} />;
           }
           return <div {...props}>{props.children}</div>;

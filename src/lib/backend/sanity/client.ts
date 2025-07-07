@@ -4,12 +4,13 @@ import imageUrlBuilder from "@sanity/image-url";
 
 // Config
 import { config, PREVIEW_READ_API_KEY_TOKEN } from "./config";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 // Client
 export const client: SanityClient = createClient(config);
 
 const builder = imageUrlBuilder(client);
-export const getImageUrl = (source: any): string => builder.image(source).url();
+export const getImageUrl = (source: SanityImageSource): string => builder.image(source).url();
 
 export const sanityFetch = async <QueryResponse>(
   query: string,

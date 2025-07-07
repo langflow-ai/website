@@ -1,13 +1,14 @@
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import SanityImage from "../media/SanityImage";
 import Text from "../text";
 
 type BylineProps = {
   author: {
-    name?: string;
-    slug?: {
-      current?: string;
+    name: string;
+    slug: {
+      current: string;
     };
-    avatar?: any;
+    avatar: SanityImageSource;
   };
   publishedAt: string;
 };
