@@ -38,14 +38,18 @@ export const generateMetadata = async ({
     isDraftMode
   );
 
+  if (!post) {
+    notFound();
+  }
+
   const featureImageUrl = getImageUrl(post.featureImage);
 
   return {
-    title: `${post?.title} | Langflow - The AI Agent Builder`,
-    description: post?.excerpt,
+    title: `${post.title} | Langflow - The AI Agent Builder`,
+    description: post.excerpt,
     openGraph: {
-      title: post?.title,
-      description: post?.excerpt,
+      title: post.title,
+      description: post.excerpt,
       images: featureImageUrl ? [featureImageUrl] : undefined,
     },
   };

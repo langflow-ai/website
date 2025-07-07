@@ -17,8 +17,8 @@ export function Byline({ author, publishedAt }: BylineProps) {
   return (
     <div className="d-flex flex-row items-center gap-2">
       <SanityImage
-        image={author?.avatar}
-        alt={author?.name || ""}
+        image={author.avatar}
+        alt={author.name}
         width={32}
         height={32}
         className="rounded-circle"
@@ -30,7 +30,7 @@ export function Byline({ author, publishedAt }: BylineProps) {
           className="text-white"
           style={{ lineHeight: 1.2 }}
         >
-          Written by {author?.name}
+          Written by {author.name}
         </Text>
         <Text
           size={200}
@@ -42,7 +42,7 @@ export function Byline({ author, publishedAt }: BylineProps) {
             year: "numeric",
             month: "long",
             day: "numeric",
-          }).format(new Date(publishedAt!))}
+          }).format(new Date(publishedAt))}
         </Text>
       </div>
     </div>
