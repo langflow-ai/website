@@ -31,11 +31,9 @@ export function Post({ post }: { post: BlogPost }) {
             {post.title}
           </Display>
           <Byline author={post.author} publishedAt={post.publishedAt} />
-          {
-            <Text size={300} tagName="p" className="text-white">
-              {post.excerpt}
-            </Text>
-          }
+          <Text size={300} tagName="p" className="text-white">
+            {post.excerpt}
+          </Text>
         </div>
         <div className="flex-row" style={{ justifyItems: "end" }}>
           <Button variant={ButtonTypes.BORDER}>Read more &rarr;</Button>

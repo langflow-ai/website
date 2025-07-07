@@ -17,10 +17,6 @@ interface Post {
   };
 }
 
-function portableTextToPlainText(body: Post["body"]): string {
-  if (!body) return "";
-  return body;
-}
 
 /**
  * GET /blog/llms-full.txt – returns the full text of every blog post.
@@ -36,7 +32,7 @@ export async function GET(_req: NextRequest): Promise<Response> {
   const records = posts
     .map((post) => {
       const url = `${host}/blog/${post.slug?.current ?? ""}`;
-      const bodyText = portableTextToPlainText(post.body);
+      const bodyText = post.body;
 
       return (
         `TITLE: ${post.title ?? "Untitled"}` +

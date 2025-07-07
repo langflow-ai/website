@@ -6,6 +6,7 @@ import Text from "@/components/ui/text";
 import LoadingDots from "./LoadingDots";
 import { reducer, initialState } from "./searchAskFieldReducer";
 import styles from "./SearchAskField.module.scss";
+import {ShortcutIndicator} from "./ShortcutIndicator";
 
 interface SearchAskFieldProps {
   className?: string;
@@ -204,12 +205,8 @@ export default function SearchAskField({ className }: SearchAskFieldProps) {
               disabled={loading}
               ref={inputRef}
             />
-            {/* Shortcut indicator */}
-            <span className={`${styles.shortcutIndicator}`}>
-              {isMac ? "⌘K" : "Ctrl+K"}
-            </span>
+            <ShortcutIndicator isMac={isMac} />
           </label>
-          {/* Results Panel */}
           {(loading ||
             answer ||
             (searchResults && searchResults.length >= 0)) && (

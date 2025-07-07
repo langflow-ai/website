@@ -55,8 +55,6 @@ export const generateMetadata = async ({
     isDraftMode
   );
 
-  console.log(post?.featureImage);
-
   const featureImageUrl = post?.featureImage
     ? getImageUrl(post.featureImage)
     : undefined;

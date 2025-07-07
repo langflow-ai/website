@@ -1,53 +1,59 @@
 "use client";
 
-import SanityImage from "@/components/ui/media/SanityImage";
+// Dependencies
 import { PortableText as BasePortableText } from "@portabletext/react";
-import Code from "./types/Code";
-import YouTubeEmbed from "@/components/ui/Blog/YouTubeEmbed";
 
-const components = {
-  marks: {
-    code: (props: any) => {
-      return (
-        <code className="rounded-1 bg-dark text-white p-1">
-          {props.children}
-        </code>
-      );
-    },
+// Components
+import Small from "./block/Small";
+import Code from "./types/Code";
+import HeadingText from "./block/Heading";
+import Image from "./types/Image";
+
+interface Props {
+  value: any;
+  components?: any;
+}
+
+const DEFAULT_SERIALIZERS = {
+  block: {
+    small: Small,
+    h1: HeadingText,
+    h2: HeadingText,
+    h3: HeadingText,
+    h4: HeadingText,
+    h5: HeadingText,
+    h6: HeadingText,
   },
   types: {
-    youtubeEmbed: (props: any) => {
-      return <YouTubeEmbed url={props.value.url} />;
-    },
-    blockCode: (props: any) => {
-      return <Code isInline={false} index={props.index} value={props.value} />;
-    },
-    image: (props: any) => {
-      return (
-        <figure className="my-0 mx-auto d-flex flex-column gap-2">
-          <SanityImage
-            className="h-auto w-full rounded-2"
-            image={props.value.asset._ref}
-            alt={props.value.alt}
-          />
-          {props.value.alt && (
-            <figcaption
-              style={{
-                fontSize: "0.875rem",
-              }}
-              className="text-secondary text-center"
-            >
-              {props.value.alt}
-            </figcaption>
-          )}
-        </figure>
-      );
-    },
+    code: Code,
+    image: Image,
   },
 };
 
-const PortableText = ({ value }: { value: any }) => {
-  return <BasePortableText value={value} components={components} />;
+const merge = (...objects: any) => {
+  const isObject = (obj: any) => obj && typeof obj === "object";
+
+  return objects.reduce((acc: any, obj: any) => {
+    if (!isObject(acc) || !isObject(obj)) {
+      return obj;
+    }
+
+    Object.keys(obj).forEach((key) => {
+      if (isObject(acc[key]) && isObject(obj[key])) {
+        acc[key] = merge(acc[key], obj[key]);
+      } else {
+        acc[key] = obj[key];
+      }
+    });
+
+    return acc;
+  }, {});
+};
+
+const PortableText = ({ value, components }: Props) => {
+  const serializers =
+    merge(DEFAULT_SERIALIZERS, components) || DEFAULT_SERIALIZERS;
+  return <BasePortableText value={value} components={serializers} />;
 };
 
 export default PortableText;

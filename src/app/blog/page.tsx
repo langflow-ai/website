@@ -7,18 +7,14 @@ import { BLOG_POSTS_PAGINATED_QUERY } from "@/lib/backend/sanity/queries";
 // Components
 import PageLayout from "@/components/layout/page";
 import Display from "@/components/ui/Display";
-import Text from "@/components/ui/text";
-import Link from "@/components/ui/Link";
 import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
-import Button from "@/components/ui/button";
-import { ButtonTypes } from "@/components/ui/button/types";
-import { Byline } from "@/components/ui/Blog/Byline";
 import LinesOverlay from "@/components/ui/Blog/LinesOverlay";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
 import { Metadata, NextPage } from "next";
 import { BlogPost } from "@/lib/types/sanity.types";
 import PostsFeed from "@/components/ui/Blog/PostsFeed";
 import SearchAskField from "@/components/ui/Blog/SearchAskField";
+import { LatestPost } from "@/components/ui/Blog/LatestPost";
 
 export const dynamic = "force-static";
 
@@ -58,66 +54,16 @@ const BlogIndex: NextPage = async () => {
         <Display size={700} tagName="h1">
           Blog
         </Display>
-
         <SearchAskField className="position-relative z-3" />
-
-        {latestPost && (
-          <div key={latestPost._id}>
-            <Link
-              href={`/blog/${latestPost.slug?.current}`}
-              className="text-reset text-decoration-none"
-            >
-              <div className="card post-card p-4 d-grid gap-4 bg-black border-dark border-2 shadow text-white">
-                <div className="card-body d-flex flex-column justify-content-between gap-4 p-0">
-                  <div className="d-flex flex-row gap-4">
-                    <Display size={200} className="text-white">
-                      Latest Post
-                    </Display>
-                  </div>
-                  <div className="d-flex flex-row gap-4">
-                    <div className="d-flex flex-column gap-4">
-                      <div className="d-flex flex-column gap-4">
-                        <Display
-                          size={400}
-                          tagName="h2"
-                          className="w-75"
-                          style={{ textWrap: "balance" }}
-                        >
-                          {latestPost.title}
-                        </Display>
-                        <Byline
-                          author={latestPost.author}
-                          publishedAt={latestPost.publishedAt}
-                        />
-                      </div>
-                      {
-                        <Text size={300} tagName="p" className="text-white">
-                          {latestPost.excerpt}
-                        </Text>
-                      }
-                    </div>
-                  </div>
-                </div>
-                <div className="flex-row" style={{ justifyItems: "stretch" }}>
-                  <Button variant={ButtonTypes.FILLED}>Read more &rarr;</Button>
-                </div>
-              </div>
-            </Link>
-          </div>
-        )}
-
+        {latestPost && <LatestPost post={latestPost} />}
         <Display size={400} style={{ paddingLeft: 11, paddingTop: "1rem" }}>
           Older Posts
         </Display>
-
-        {/* Initial batch of older posts followed by infinite scroll */}
         <PostsFeed
           initialPosts={initialOtherPosts}
           initialOffset={postsWithExcerpts.length}
           limit={LIMIT}
         />
-
-        {/* SVG lines connecting cards */}
         <LinesOverlay />
       </section>
     </PageLayout>

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useReducer } from "react";
 import { BlogPost } from "@/lib/types/sanity.types";
 import { Post } from "./Post";
+import { postsFeedReducer, initialPostsFeedState } from "./postsFeedReducer";
 
 interface PostsFeedProps {
   initialPosts: BlogPost[];
@@ -15,10 +16,11 @@ const PostsFeed: React.FC<PostsFeedProps> = ({
   initialOffset,
   limit = 7,
 }) => {
-  const [posts, setPosts] = useState<BlogPost[]>(initialPosts);
-  const [offset, setOffset] = useState<number>(initialOffset);
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [state, dispatch] = useReducer(
+    postsFeedReducer,
+    initialPostsFeedState(initialPosts, initialOffset)
+  );
+  const { posts, offset, loading, hasMore } = state;
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -39,23 +41,22 @@ const PostsFeed: React.FC<PostsFeedProps> = ({
   }, [sentinelRef.current, loading, hasMore]);
 
   const fetchMore = async () => {
-    setLoading(true);
+    dispatch({ type: "SET_LOADING", payload: true });
     try {
       const res = await fetch(`/api/posts?offset=${offset}&limit=${limit}`);
       if (!res.ok) throw new Error("Failed to load posts");
 
       const newPosts: BlogPost[] = await res.json();
 
-      setPosts((prev) => [...prev, ...newPosts]);
-      setOffset((prev) => prev + newPosts.length);
+      dispatch({ type: "ADD_POSTS", payload: newPosts });
 
       if (newPosts.length < limit) {
-        setHasMore(false);
+        dispatch({ type: "SET_HAS_MORE", payload: false });
       }
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      dispatch({ type: "SET_LOADING", payload: false });
     }
   };
 
