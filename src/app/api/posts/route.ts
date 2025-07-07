@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { BLOG_POSTS_PAGINATED_QUERY } from "@/lib/backend/sanity/queries";
 import { sanityFetch } from "@/lib/backend/sanity/client";
-import { BlogPost } from "@/lib/types/sanity.types";
+import { BlogPost } from "@/lib/types/sanity";
 import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
 
 export async function GET(request: Request) {

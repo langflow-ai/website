@@ -5,7 +5,7 @@ import { Byline } from "@/components/ui/Blog/Byline";
 import Text from "@/components/ui/text";
 import Button from "@/components/ui/button";
 import { ButtonTypes } from "@/components/ui/button/types";
-import { BlogPost } from "@/lib/types/sanity.types";
+import { BlogPost } from "@/lib/types/sanity";
 
 export function Post({ post }: { post: BlogPost }) {
   return (

@@ -1,4 +1,4 @@
-import { BlogPost } from "@/lib/types/sanity.types";
+import { BlogPost } from "@/lib/types/sanity";
 
 export interface RefPost {
   _id: string;

@@ -1,0 +1,47 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.share {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  @include media-breakpoint-up(md) {
+    margin-left: auto;
+  }
+
+  h5 {
+    text-transform: uppercase;
+    color: var(--primary-black);
+    margin: 0 var(--spacer-3) 0 0;
+  }
+
+  > div {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacer-1);
+  }
+
+  a {
+    display: inline-flex;
+    color: var(--primary-black);
+    transition-property: background-color, color;
+    transition-duration: var(--button-transition-time);
+    transition-timing-function: var(--button-transition-ease);
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+
+      path {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+
+    &:hover {
+      text-decoration: none;
+      color: var(--primary-white);
+    }
+  }
+}

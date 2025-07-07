@@ -12,14 +12,14 @@ import {
 } from "@/lib/backend/sanity/queries";
 
 // Types
-import { Seo, type Page as PageType } from "@/lib/types/sanity.types";
+import { Seo, type Event as PageType } from "@/lib/types/sanity.types";
 
 // Utilities
 import { parseSlugToString } from "@/lib/utils/str";
 
 // Components
 import PageLayout from "@/components/layout/page";
-import Template from "@/components/pages/Page/Template";
+import Template from "@/components/pages/Event/Template";
 
 // Props types
 type Props = {
@@ -33,7 +33,7 @@ type Props = {
  */
 export const dynamic = "force-static";
 export const dynamicParams = true;
-const DOCUMENT_TYPE = "page";
+const DOCUMENT_TYPE = "event";
 
 export async function generateStaticParams() {
   // Data
@@ -89,7 +89,7 @@ const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
     PAGE_BY_SLUG_QUERY,
     {
       type: DOCUMENT_TYPE,
-      slugs: [parsedSlug, `/${parsedSlug}`],
+      slugs: [`events/${parsedSlug}`, `/events/${parsedSlug}`],
     },
     isDraftMode
   );
@@ -100,7 +100,7 @@ const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
 
   return (
     <PageLayout className="layout" type="normal">
-      <Template sections={page.sections} />
+      <Template event={page} />
     </PageLayout>
   );
 };

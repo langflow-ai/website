@@ -1,0 +1,23 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.hero {
+  padding-top: var(--spacer-8);
+  margin-bottom: var(--spacer-8);
+  color: var(--2023-primary-white);
+
+  h1 {
+    margin-bottom: var(--spacer-3);
+  }
+
+  img {
+    border-radius: 10px;
+    display: none;
+  }
+
+  @include media-breakpoint-up(lg) {
+    img {
+      display: block;
+    }
+  }
+}

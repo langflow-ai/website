@@ -15,7 +15,7 @@ import Display from "@/components/ui/Display";
 import Text from "@/components/ui/text";
 import { Byline } from "@/components/ui/Blog/Byline";
 import { Post } from "@/components/ui/Blog/Post";
-import { BlogPost } from "@/lib/types/sanity.types";
+import { BlogPost } from "@/lib/types/sanity";
 import { Markdown } from "@/components/ui/Blog/Markdown";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
 

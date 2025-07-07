@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { sanityFetch } from "@/lib/backend/sanity/client";
-import { BlogPost } from "@/lib/types/sanity.types";
+import { BlogPost } from "@/lib/types/sanity";
 import OpenAI from "openai";
 import { BLOG_POSTS_QUERY } from "@/lib/backend/sanity/queries";
 import { getBodyText } from "@/lib/utils/getBodyText";
