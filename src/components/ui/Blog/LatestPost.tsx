@@ -1,4 +1,4 @@
-import { BlogPost } from "@/lib/types/sanity.types";
+import { BlogPost } from "@/lib/types/sanity";
 import Link from "next/link";
 import Display from "../Display";
 import { Byline } from "./Byline";

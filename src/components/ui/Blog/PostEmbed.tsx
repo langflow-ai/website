@@ -1,6 +1,6 @@
 import { sanityFetch } from "@/lib/backend/sanity/client";
 import { POST_BY_SLUG_QUERY } from "@/lib/backend/sanity/queries";
-import { BlogPost } from "@/lib/types/sanity.types";
+import { BlogPost } from "@/lib/types/sanity";
 import { Post } from "./Post";
 
 interface PostEmbedProps {

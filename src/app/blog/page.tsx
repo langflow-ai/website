@@ -11,7 +11,7 @@ import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
 import LinesOverlay from "@/components/ui/Blog/LinesOverlay";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
 import { Metadata, NextPage } from "next";
-import { BlogPost } from "@/lib/types/sanity.types";
+import { BlogPost } from "@/lib/types/sanity";
 import PostsFeed from "@/components/ui/Blog/PostsFeed";
 import SearchAskField from "@/components/ui/Blog/SearchAskField";
 import { LatestPost } from "@/components/ui/Blog/LatestPost";

@@ -3,7 +3,7 @@ export const revalidate = 60 * 60; // 1 hour
 
 import { sanityFetch } from "@/lib/backend/sanity/client";
 import { BLOG_POSTS_QUERY } from "@/lib/backend/sanity/queries";
-import { BlogPost } from "@/lib/types/sanity.types";
+import { BlogPost } from "@/lib/types/sanity";
 import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
 import type { NextRequest } from "next/server";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useReducer } from "react";
-import { BlogPost } from "@/lib/types/sanity.types";
+import { BlogPost } from "@/lib/types/sanity";
 import { Post } from "./Post";
 import { postsFeedReducer, initialPostsFeedState } from "./postsFeedReducer";
 
