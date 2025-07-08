@@ -54,7 +54,8 @@ export function formatTime(time: string, timeFormat: string): string | null {
  * @return {string}
  */
 export const getEventDate = (
-  dates: DateWithTimeField[] = []
+  dates: DateWithTimeField[] = [],
+  timeSeparator = " • "
 ): string | null => {
   // Validations
   if (dates.length === 0) return null;
@@ -69,8 +70,11 @@ export const getEventDate = (
   if (dates.length === 1) {
     const _date = formatDate(start.date as string, "MMMM dd, yyyy");
     const _time = !!start?.time ? `${formatTime(start.time, "h:mm a")}` : null;
+    const timezone = start.timezone ? processEventDateTimezone(start, true) : "";
 
-    return [_date, _time].filter(Boolean).join(" • ");
+    return [_date, timezone ? `${_time} ${timezone}` : _time]
+      .filter(Boolean)
+      .join(timeSeparator);
   }
 
   if (startMonth === endMonth) {
@@ -133,3 +137,50 @@ export const getEventTime = (dates: DateWithTimeField[] = []): string => {
 
   return "";
 };
+
+/**
+ * Process date timezone to remove settings content from sanity
+ *
+ * @param {EventDate} date
+ * @return {string}
+ */
+export const processEventDateTimezone = (
+  date: DateWithTimeField,
+  hideUtc?: boolean
+): string => {
+  if (date.timezone) {
+    let timeZone = dsTimezoneProcessor(date.timezone, hideUtc ? true : false);
+
+    // if (date?.isDaylightSaving) {
+    //   timeZone = DAYLIGHT_SAVING_TIMEZONES[timeZone] || timeZone;
+    // }
+
+    return timeZone;
+  }
+
+  return date.timezone || "";
+};
+
+/**
+ * DsTimezone string processor
+ * DsTimezone field includes a settings section inside the string
+ * Region (UTC-offset) [Country|TimezoneId]
+ *
+ * This function removes the country and timezoneId from the string
+ * and map offset to there respective timezones
+ *
+ * @param timezone string
+ * @returns
+ */
+export function dsTimezoneProcessor(timezone: string, utc?: boolean): string {
+  if (utc) {
+    const offsetMatch = timezone.match(/(-\d{2})/);
+    if (offsetMatch && offsetMatch[1] === "-03") {
+      return "BRT";
+    } else {
+      return timezone.replace(/(\ )?(\[|\()(.*?)(\]|\))/g, "");
+    }
+  } else {
+    return timezone.replace(/(\ )?\[(.*?)\]/, "");
+  }
+}

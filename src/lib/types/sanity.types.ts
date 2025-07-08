@@ -102,18 +102,25 @@ export type Page = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  seo?: Seo
-  sections?: Array<
-    | ({
-        _key: string
-      } & SectionContent)
-    | ({
-        _key: string
-      } & SectionForm)
-    | ({
-        _key: string
-      } & SectionHero)
-  >
+  title?: string
+  slug?: {
+    current?: string
+    source?: string
+    _type: 'seoSlug'
+  }
+  thumbnail?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  body?: string
 }
 
 export type Event = {
@@ -124,48 +131,31 @@ export type Event = {
   _rev: string
   type?: 'in-person' | 'virtual'
   title?: string
-  introduction?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal' | 'small'
-    listItem?: 'bullet' | 'number'
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
-  ctas?: Array<
-    {
-      _key: string
-    } & CtaLink
-  >
-  sections?: Array<
-    | ({
-        _key: string
-      } & SectionContent)
-    | ({
-        _key: string
-      } & SectionForm)
-    | ({
-        _key: string
-      } & SectionHero)
-  >
+  slug?: {
+    current?: string
+    source?: string
+    _type: 'seoSlug'
+  }
+  thumbnail?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  excerpt?: string
+  body?: string
   dates?: Array<
     {
       _key: string
     } & DateWithTimeField
   >
   location?: string
-  preview?: CardPreview
-  seo?: Seo
 }
 
 export type SectionHero = {
@@ -263,7 +253,11 @@ export type SectionContent = {
 export type Seo = {
   _type: 'seo'
   title?: string
-  slug?: Slug
+  slug?: {
+    current?: string
+    source?: string
+    _type: 'seoSlug'
+  }
   description?: string
   canonical?: string
   image?: {
@@ -327,6 +321,8 @@ export type CtaLink = {
   url?: string
 }
 
+export type SeoSlug = Slug
+
 export type SimplePortableText = Array<{
   children?: Array<{
     marks?: Array<string>
@@ -387,6 +383,7 @@ export type DateWithTimeField = {
   _type: 'dateWithTimeField'
   date?: string
   time?: string
+  timezone?: string
 }
 
 export type MediaTag = {
@@ -397,6 +394,8 @@ export type MediaTag = {
   _rev: string
   name?: Slug
 }
+
+export type Timezone = string
 
 export type Markdown = string
 
@@ -540,10 +539,12 @@ export type AllSanitySchemaTypes =
   | CardPreview
   | Marketo
   | CtaLink
+  | SeoSlug
   | SimplePortableText
   | PortableText
   | DateWithTimeField
   | MediaTag
+  | Timezone
   | Markdown
   | Code
   | SanityImagePaletteSwatch

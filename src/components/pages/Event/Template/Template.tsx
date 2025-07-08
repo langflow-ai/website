@@ -6,7 +6,7 @@ import type { Event } from "@/lib/types/sanity.types";
 
 // Components
 import Hero from "../Hero";
-import Content from "@/components/pages/Page/Content";
+import Content from "@/components/pages/Event/Content";
 
 // Props types
 type Props = {
@@ -17,21 +17,12 @@ const Template: FC<Props> = ({ event }) => {
     <>
       <Hero
         dates={event.dates || []}
-        intro={event.introduction}
         location={event.location}
         title={event.title}
         type={event.type}
-        ctas={event.ctas}
       />
 
-      {event.sections?.map((section, index) => {
-        switch (section._type) {
-          case "section.content":
-            return <Content key={section._key} {...section} center={false} />;
-          default:
-            return <section key={(section as any)._key || index}></section>;
-        }
-      })}
+      {event.body && <Content content={event.body} />}
     </>
   );
 };

@@ -115,17 +115,13 @@
       line-height: 1.23em;
       text-transform: capitalize;
 
-      p {
-        margin: 0;
-
-        a {
-          color: inherit;
-          font: inherit;
-          text-decoration: underline;
-        }
-
-        &:not(:first-child) {
-          color: var(--interface-solid-light-gray-300);
+      &__data {
+        span {
+          font-weight: 500;
+          &:not(:first-child) {
+            color: var(--interface-solid-light-gray-300);
+            font-weight: 400;
+          }
         }
       }
 
