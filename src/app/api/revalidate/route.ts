@@ -54,8 +54,8 @@ export async function POST(req: NextRequest) {
 
     const { slug, type } = body;
     const path = __buildPath(slug, type);
-    await revalidatePath(slug);
-    return NextResponse.json({ slug });
+    await revalidatePath(path);
+    return NextResponse.json({ path });
   } catch (err: any) {
     console.error(err);
     return new Response(err.message, { status: 500 });
