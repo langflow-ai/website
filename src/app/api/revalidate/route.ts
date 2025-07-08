@@ -8,11 +8,29 @@ import { sanityFetch } from "@/lib/backend/sanity/client";
 
 // Constants
 const SECRET = process.env.NEXT_SANITY_REVALIDATE_SECRET;
+const PREFIXES: Record<string, string | null> = {
+  page: null,
+  event: "events/",
+  post: "blog/",
+};
 
 type WebhookPayload = {
   type: string;
   slug?: string;
   lang?: string;
+};
+
+// Helper function to generate the correct path based on slug & page type
+const __buildPath = (slug: string, type: string) => {
+  const prefix = PREFIXES[type];
+  let path = slug.replace(/^\//, "");
+
+  if (prefix) {
+    path = `${prefix.replace(/\/$/, "")}/${path.replace(prefix, "")}`; // ensure the prefix is valid
+  }
+
+  // Ensure the path includes the initial slash
+  return `/${path}`;
 };
 
 export async function POST(req: NextRequest) {
@@ -29,14 +47,15 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    if (!body?.slug) {
+    if (!body?.slug || !body?.type) {
       const message = "Bad Request";
       return new Response(JSON.stringify({ message, body }), { status: 400 });
     }
 
-    const { slug } = body;
-    await revalidatePath(slug);
-    return NextResponse.json({ slug });
+    const { slug, type } = body;
+    const path = __buildPath(slug, type);
+    await revalidatePath(path);
+    return NextResponse.json({ path });
   } catch (err: any) {
     console.error(err);
     return new Response(err.message, { status: 500 });
