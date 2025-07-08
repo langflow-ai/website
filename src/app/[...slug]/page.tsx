@@ -12,7 +12,8 @@ import {
 } from "@/lib/backend/sanity/queries";
 
 // Types
-import { Seo, type Page as PageType } from "@/lib/types/sanity.types";
+import { Page as PageType } from "@/lib/types/sanity.types";
+import { Seo } from "@/lib/types/sanity";
 
 // Utilities
 import { parseSlugToString } from "@/lib/utils/str";
@@ -71,11 +72,11 @@ export const generateMetadata = async ({ params: { slug } }: Props) => {
   );
   return {
     title: metadata?.title,
-    description: metadata?.description,
+    // description: metadata?.description,
     openGraph: {
       url: `https://www.langflow.org/${metadata?.slug?.current?.replace(/^\//, "")}`,
       title: metadata?.title,
-      description: metadata?.description,
+      // description: metadata?.description,
       siteName: "Langflow",
       images: "/images/logo.png",
     },
@@ -100,7 +101,7 @@ const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
 
   return (
     <PageLayout className="layout" type="normal">
-      <Template sections={page.sections} />
+      <Template page={page} />
     </PageLayout>
   );
 };

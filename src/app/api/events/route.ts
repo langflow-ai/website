@@ -32,6 +32,7 @@ export async function GET(request: Request) {
   const perPage = parseInt(searchParams.get("perPage") ?? `${ITEMS_PER_PAGE}`);
   const type = searchParams.get("type") || "upcoming";
 
+  const today = new Date();
   const currentPage = page - 1;
   const start = currentPage * perPage;
   const end = currentPage * perPage + perPage;
@@ -48,13 +49,11 @@ export async function GET(request: Request) {
   const { count, results } = await sanityFetch<{
     count: number;
     results: EventCard[];
-  }>(
-    QUERIES_BY_TYPE[type],
-    {
-      start: start,
-      end: end,
-    },
-  );
+  }>(QUERIES_BY_TYPE[type], {
+    from: today.toISOString().substring(0, 10),
+    start: start,
+    end: end,
+  });
 
   return NextResponse.json({
     data: {

@@ -16,8 +16,7 @@ const Grid: FC = () => {
   // Local State
   const [active, setActive] = useState<"upcoming" | "past">("upcoming");
 
-  const { events, count, loading } = useEvents(active);
-  console.log(events);
+  const { events, count } = useEvents(active);
 
   return (
     <section className={styles.grid}>

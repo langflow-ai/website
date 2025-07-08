@@ -5,10 +5,8 @@ import { defineQuery } from "next-sanity";
  *
  */
 export const PAGE_BY_SLUG_QUERY = defineQuery(`
-  *[_type == $type && defined(seo.slug.current) && seo.slug.current in $slugs][0] {
+  *[_type == $type && defined(slug.current) && slug.current in $slugs][0] {
     _id,
-    seo,
-    sections,
     ...,
   }
 `);
@@ -18,7 +16,11 @@ export const PAGE_BY_SLUG_QUERY = defineQuery(`
  *
  */
 export const METADATA_BY_SLUG_QUERY = defineQuery(`
-  *[_type == $type && defined(seo.slug.current) && seo.slug.current in $slugs][0].seo
+  *[_type == $type && defined(slug.current) && slug.current in $slugs][0] {
+    title,
+    slug,
+    thumbnail
+  }
 `);
 
 /**
@@ -27,7 +29,7 @@ export const METADATA_BY_SLUG_QUERY = defineQuery(`
 export const VALIDATE_DOCUMENT_BY_SLUG_QUERY = defineQuery(`
   count(*[
     _type in ["page", "event", "post"] // Doing this to avoid timeout errors
-    && defined(seo.slug.current) && seo.slug.current in $slugs
+    && defined(slug.current) && slug.current in $slugs
   ])
 `);
 
@@ -38,9 +40,9 @@ export const VALIDATE_DOCUMENT_BY_SLUG_QUERY = defineQuery(`
 export const PAGES_SLUGS_QUERY = defineQuery(`
   *[
     _type == $type
-    && defined(seo.slug.current)
+    && defined(slug.current)
     && !(_id in path("drafts.**"))
-  ].seo.slug.current
+  ].slug.current
 `);
 
 /**
@@ -48,17 +50,17 @@ export const PAGES_SLUGS_QUERY = defineQuery(`
  */
 export const API_GET_UPCOMING_EVENTS_QUERY = defineQuery(`
   {
-    "count": count(*[ _type == "event" && !(_id in path("drafts.**")) && count((dates[].date)[@ >= now()]) > 0 ]),
+    "count": count(*[ _type == "event" && !(_id in path("drafts.**")) && count((dates[].date)[@ >= $from]) > 0 ]),
     "results": *[
       _type == "event"
       && !(_id in path("drafts.**"))
-      && count((dates[].date)[@ >= now()]) > 0
+      && count((dates[].date)[@ >= $from]) > 0
     ] | order(dates[0].date asc, seo.title asc) [$start...$end] {
       "dates": dates,
-      "description": preview.description,
-      "slug": seo.slug.current,
-      "thumbnail": preview.thumbnail,
-      "title": coalesce(preview.title, title, seo.title),
+      "description": excerpt,
+      "slug": slug.current,
+      "thumbnail": thumbnail,
+      "title": title,
       "type": type,
     }
   }
@@ -69,17 +71,17 @@ export const API_GET_UPCOMING_EVENTS_QUERY = defineQuery(`
  */
 export const API_GET_ON_DEMAND_EVENTS_QUERY = defineQuery(`
   {
-    "count": count(*[ _type == "event" && !(_id in path("drafts.**")) && count((dates[].date)[@ <= now()]) > 0 ]),
+    "count": count(*[ _type == "event" && !(_id in path("drafts.**")) && count((dates[].date)[@ <= $from]) > 0 ]),
     "results": *[
       _type == "event"
       && !(_id in path("drafts.**"))
-      && count((dates[].date)[@ <= now()]) > 0
+      && count((dates[].date)[@ <= $from]) > 0
     ] | order(dates[0].date asc, seo.title asc) [$start...$end] {
       "dates": dates,
-      "description": coalesce(preview.description, introduction),
-      "slug": seo.slug.current,
-      "thumbnail": preview.thumbnail.asset->url,
-      "title": coalesce(preview.title, title, seo.title),
+      "description": excerpt,
+      "slug": slug.current,
+      "thumbnail": thumbnail,
+      "title": title,
       "type": type,
     }
   }

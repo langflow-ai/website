@@ -20,6 +20,7 @@ type Props = {
 };
 
 const Card: FC<Props> = ({ event }) => {
+  console.log(event);
   return (
     <div className={`row ${styles.card}`}>
       <div className="col-lg-4">
@@ -38,7 +39,7 @@ const Card: FC<Props> = ({ event }) => {
         <Text size={200} tagName="p">
           {event.description}
         </Text>
-        <Link href={event.slug}>
+        <a href={event.slug}>
           <span>Learn More</span>
           <svg
             width="6"
@@ -52,7 +53,7 @@ const Card: FC<Props> = ({ event }) => {
               fill="currentColor"
             ></path>
           </svg>
-        </Link>
+        </a>
       </div>
     </div>
   );

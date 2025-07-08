@@ -1,5 +1,5 @@
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { CardPreview, Event } from "./sanity.types";
+import { CardPreview, Event, SeoSlug } from "./sanity.types";
 
 export type InstantBook = {
   uuid: string;
@@ -8,10 +8,18 @@ export type InstantBook = {
   environment: number;
 };
 
-export type EventCard = CardPreview &
-  Required<Pick<Event, "type" | "title" | "dates">> & {
-    slug: string;
-  };
+export type Seo = {
+  title: string;
+  thumbnail?: SanityImageSource;
+  slug: SeoSlug;
+};
+
+export type EventCard = Required<
+  Pick<Event, "type" | "title" | "dates" | "thumbnail">
+> & {
+  slug: string;
+  description: string;
+};
 
 export type BlogPost = {
   _id: string;

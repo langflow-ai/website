@@ -7,10 +7,9 @@ import type { CtaLink, DateWithTimeField } from "@/lib/types/sanity.types";
 // Components
 import DateIcon from "./icons/Date";
 import LocationIcon from "./icons/Location";
-import PortableText from "@/components/external/PortableText";
 import Display from "@/components/ui/Display";
+import Lines, { Mode } from "@/components/ui/Lines";
 import Link from "@/components/ui/Link";
-import Text from "@/components/ui/text";
 import SocialShare from "@/components/external/SocialShare";
 
 // Utilities
@@ -51,7 +50,7 @@ const Hero: FC<Props> = ({
   const upcomingDate = getEventUpcomingDate(dates || []);
   const upcomingMonth = getEventUpcomingDate(dates || [], "month");
   const info = {
-    dates: `${getEventDate(dates || [])}`,
+    dates: `${getEventDate(dates || [], "\\\\")}`,
     location: location,
   };
 
@@ -87,37 +86,6 @@ const Hero: FC<Props> = ({
             <Display className={styles.title} size={600} tagName="h2">
               {title}
             </Display>
-            {intro && (
-              <Text className={styles.intro} size={300} tagName="div">
-                <PortableText value={intro} />
-              </Text>
-            )}
-
-            {ctas && (
-              <div className={styles.ctas}>
-                {ctas?.map((cta, i) => (
-                  <Link
-                    className={styles.link}
-                    href={cta.url as string}
-                    key={i}
-                  >
-                    <span>{cta.text}</span>
-                    <svg
-                      width="6"
-                      height="13"
-                      viewBox="0 0 6 13"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M2.16196 0.792358L5.45785 6.5021L2.16196 12.2058L0 12.2076L3.29589 6.5021L0 0.792358H2.16196Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  </Link>
-                ))}
-              </div>
-            )}
           </div>
         </div>
         <div className="row">
@@ -135,7 +103,13 @@ const Hero: FC<Props> = ({
                       />
                     )}
                     {key === "location" && <LocationIcon />}
-                    <div>{value}</div>
+                    <span className={styles.details__item__data}>
+                      <Lines
+                        text={value?.replace("\\\\", "\n") || ""}
+                        mode={Mode.Break}
+                        wrap
+                      />
+                    </span>
                   </div>
                 ))}
             </div>

@@ -1,7 +1,6 @@
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextPage } from "next";
-import "./styles.scss";
 
 import { sanityFetch, getImageUrl } from "@/lib/backend/sanity/client";
 import {
