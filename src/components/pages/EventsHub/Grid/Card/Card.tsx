@@ -24,7 +24,9 @@ const Card: FC<Props> = ({ event }) => {
   return (
     <div className={`row ${styles.card}`}>
       <div className="col-lg-4">
-        <Image image={event.thumbnail} alt={event.title} />
+        <Link href={event.slug}>
+          <Image image={event.thumbnail} alt={event.title} />
+        </Link>
       </div>
       <div className="col-lg-8 d-flex flex-column align-items-start">
         <Display className={styles.info} size={100} tagName="div">
@@ -33,13 +35,15 @@ const Card: FC<Props> = ({ event }) => {
           <span>{getEventDate(event.dates)}</span>
         </Display>
 
-        <Display size={300} tagName="h4">
-          {event.title}
-        </Display>
+        <Link href={event.slug}>
+          <Display size={300} tagName="h4">
+            {event.title}
+          </Display>
+        </Link>
         <Text size={200} tagName="p">
           {event.description}
         </Text>
-        <a href={event.slug}>
+        <Link href={event.slug}>
           <span>Learn More</span>
           <svg
             width="6"
@@ -53,7 +57,7 @@ const Card: FC<Props> = ({ event }) => {
               fill="currentColor"
             ></path>
           </svg>
-        </a>
+        </Link>
       </div>
     </div>
   );

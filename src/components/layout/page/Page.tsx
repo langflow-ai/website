@@ -31,19 +31,21 @@ const Page: FC<Props> = ({
     home: {
       title:
         "IBM Acquires DataStax, Accelerating Production AI & NoSQL Data at Scale",
-      linkTo: "https://www.datastax.com/blog/datastax-joins-ibm?utm_medium=display&utm_source=langflow&utm_campaign=ibm-close-2025&utm_content=home_banner",
+      linkTo:
+        "https://www.datastax.com/blog/datastax-joins-ibm?utm_medium=display&utm_source=langflow&utm_campaign=ibm-close-2025&utm_content=home_banner",
       linkText: "Read more",
     },
     desktop: {
       title:
         "IBM Acquires DataStax, Accelerating Production AI & NoSQL Data at Scale",
-      linkTo: "https://www.datastax.com/blog/datastax-joins-ibm?utm_medium=display&utm_source=langflow&utm_campaign=ibm-close-2025&utm_content=home_banner",
+      linkTo:
+        "https://www.datastax.com/blog/datastax-joins-ibm?utm_medium=display&utm_source=langflow&utm_campaign=ibm-close-2025&utm_content=home_banner",
       linkText: "Read more",
     },
   };
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
+    <>
+      <header className={styles.header}>
         {type !== "normal" && (
           <Topbar
             title={topbarContent[type].title}
@@ -52,7 +54,8 @@ const Page: FC<Props> = ({
           />
         )}
         <Header />
-      </div>
+      </header>
+
       <main
         className={`${className} ${legacy ? "legacy" : ""}`}
         id={"page"}
@@ -64,7 +67,7 @@ const Page: FC<Props> = ({
       <Footer />
 
       {isDrafMode && <Preview />}
-    </div>
+    </>
   );
 };
 

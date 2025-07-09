@@ -1,0 +1,12 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.article {
+  min-height: 100dvh;
+  padding-top: 2rem;
+  padding-bottom: 6rem;
+
+  @include media-breakpoint-up(lg) {
+    padding-top: 7.225rem;
+  }
+}
