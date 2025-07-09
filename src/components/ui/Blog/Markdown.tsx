@@ -12,6 +12,9 @@ import rehypeHighlight from "rehype-highlight";
 import { remarkPostEmbed } from "@/lib/utils/remarkPostEmbed";
 import { remarkSequel } from "@/lib/utils/remarkSequel";
 
+import Button, { ButtonTypes } from "@/components/ui/button";
+import Link from "@/components/ui/Link";
+
 import { YouTubeEmbed } from "./YouTubeEmbed";
 import { PostEmbed } from "./PostEmbed";
 import { SequelEmbed } from "./SequelEmbed";
@@ -25,6 +28,32 @@ export const Markdown = ({ children }: { children: string }) => {
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkYouTube, remarkPostEmbed, remarkSequel]}
       components={{
+        a: ({ node, ...props }) => {
+          if (!props.href) return <span>{props.children}</span>;
+
+          return (
+            <Link
+              href={props.href}
+            >
+              {props.children}
+            </Link>
+          );
+        },
+        button: ({ node, ...props }) => {
+          const { href, variant } = props as any;
+          const variantType: keyof typeof ButtonTypes = variant;
+          const variantName = ButtonTypes[variantType || "FILLED"];
+
+          return (
+            <Button
+              variant={variantName}
+              href={href}
+              style={{ display: "inline-block" }}
+            >
+              {props.children}
+            </Button>
+          );
+        },
         table: ({ node, ...props }) => {
           return <table className="table">{props.children}</table>;
         },

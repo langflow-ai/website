@@ -81,7 +81,7 @@ $default-sm-sizes: (
   margin-bottom: 0;
   $display: &;
 
-  a {
+  a:not([class*="button"]) {
     &,
     &:hover,
     &:visited {

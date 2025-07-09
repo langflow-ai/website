@@ -1,4 +1,8 @@
-import React from "react";
+import React, {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  ElementType,
+} from "react";
 import { ButtonTypes } from "./types"; // Import enum
 import styles from "./styles.module.scss"; // Import SCSS styles
 
@@ -7,22 +11,29 @@ interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void; // Optional for server rendering
   icon?: React.ReactNode; // Accept an icon as a prop
+  href?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({
+type AllowedHTMLAttributes = AnchorHTMLAttributes<HTMLAnchorElement> &
+  ButtonHTMLAttributes<HTMLButtonElement>;
+
+const Button: React.FC<AllowedHTMLAttributes & ButtonProps> = ({
+  className,
   variant = ButtonTypes.FILLED,
   children,
   onClick,
   icon,
+  ...props
 }) => {
   // Dynamically set the class name for the button
-  const buttonClass = `${styles.button} ${styles[variant]}`;
+  const buttonClass = `${styles.button} ${styles[variant]} ${className}`;
+  const Element: ElementType = !!props.href ? "a" : "button";
 
   return (
-    <button className={buttonClass} onClick={onClick}>
+    <Element className={buttonClass} onClick={onClick} {...props}>
       <span className={styles.icon}>{icon}</span>
       {children}
-    </button>
+    </Element>
   );
 };
 

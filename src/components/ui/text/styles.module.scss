@@ -60,7 +60,7 @@ $mobile-sizes: (
 
   $text: &;
 
-  a {
+  a:not([class*="button"]) {
     &,
     &:hover,
     &:visited {
