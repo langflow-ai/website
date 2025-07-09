@@ -70,6 +70,9 @@ const Hero = () => {
                       onClick={() => {
                         return false;
                       }}
+                      data-event="Langflow.org - CTA Clicked"
+                      data-text={HERO_CONTENT.buttons.primary.label}
+                      data-section="hero"
                     >
                       {HERO_CONTENT.buttons.primary.label}
                     </Button>
@@ -84,6 +87,9 @@ const Hero = () => {
                       onClick={() => {
                         return false;
                       }}
+                      data-event="Langflow.org - CTA Clicked"
+                      data-text={HERO_CONTENT.buttons.secondary.label}
+                      data-section="hero"
                     >
                       {HERO_CONTENT.buttons.secondary.label}
                     </Button>

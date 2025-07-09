@@ -136,7 +136,7 @@ const SOCIALS = [
     icon: <Twitter />,
     count: "10k",
     url: "https://x.com/langflow_ai",
-    platform: "twitter",
+    platform: "x",
   },
   {
     icon: <Youtube />,
@@ -272,7 +272,7 @@ const DOWNLOAD_OPTIONS = [
     icon: <Apple />,
     name: "macOS (Intel)",
     link: "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_x64_86.dmg",
-    fileName: "Langflow_aarch64.dmg",
+    fileName: "Langflow_x64_86.dmg",
     btnText: "Download",
     isComingSoon: false,
   },

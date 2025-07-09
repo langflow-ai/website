@@ -121,11 +121,18 @@ export function gaHandler(...args: any[]) {
 }
 
 export function trackEvent(name: string, payload?: Record<string, unknown>) {
+  if (typeof window === 'undefined') {
+    return; // Exit early during SSR
+  }
   if (window.analytics) {
     const updatedPayload = {
-      ...payload,
-      event_label: payload?.label || window.location.pathname,
-      event_category: payload?.category,
+      ...(payload?.label !== undefined && {
+        event_label: payload?.label
+      }),
+      ...(payload?.category !== undefined && {
+        event_category: payload?.category
+      }),
+      ...payload
     };
     window.analytics.track(name, updatedPayload);
   }

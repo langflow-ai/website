@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 // Components
 import HeaderScripts from "@/components/scripts/Header";
+import { DataAttributeTracker } from "@/components/DataAttributeTracker";
 
 // Styles
 import "@/styles/index.scss";
@@ -62,7 +63,10 @@ export default function RootLayout({
       <head>
         <HeaderScripts />
       </head>
-      <body className="layout layout-dark">{children}</body>
+      <body>
+        <main className="layout layout-dark">{children}</main>
+        <DataAttributeTracker />
+      </body>
     </html>
   );
 }

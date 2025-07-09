@@ -60,7 +60,11 @@ const Header = () => {
                 <div key={item.title}>
                   <div className={styles.drawerItem}>
                     {item?.link ? (
-                      <Link href={item.link}>
+                      <Link
+                        href={item.link}
+                        data-event="Langflow.org - Nav Clicked"
+                        data-top-level={item.title}
+                      >
                         <Display size={100} className={styles.drawerItem_heading}>
                           {item.title}
                         </Display>
@@ -86,12 +90,21 @@ const Header = () => {
                                 }}
                                 download="brandkit.zip"
                                 className={styles.downloadLink}
+                                data-event="Langflow.org - Nav Clicked"
+                                data-top-level={item.title}
+                                data-sub-level={sub.title}
                               >
                                 {sub.icon}
                                 <Display size={100}>{sub.title}</Display>
                               </a>
                             ) : (
-                              <Link key={sub.title} href={sub.url}>
+                              <Link
+                                key={sub.title}
+                                href={sub.url}
+                                data-event="Langflow.org - Nav Clicked"
+                                data-top-level={item.title}
+                                data-sub-level={sub.title}
+                              >
                                 {sub.icon}
                                 {sub.title}
                               </Link>
@@ -107,7 +120,11 @@ const Header = () => {
           </div>
         )}
         <div className={styles.left}>
-          <Link href={"/"}>
+          <Link
+            href={"/"}
+            data-event="Langflow.org - Logo Clicked"
+            data-text="Langflow"
+          >
             <Image
               src={Logo}
               alt="Langflow Logo"
@@ -133,7 +150,11 @@ const Header = () => {
                   }}
                 >
                   {item?.link ? (
-                    <Link href={item.link}>
+                    <Link
+                      href={item.link}
+                      data-event="Langflow.org - Nav Clicked"
+                      data-top-level={item.title}
+                    >
                       <Display size={100} className={styles.drawerItem_heading}>
                         {item.title}
                       </Display>
@@ -173,7 +194,13 @@ const Header = () => {
                               <Display size={100}>{sub.title}</Display>
                             </a>
                           ) : (
-                            <Link key={sub.title} href={sub.url}>
+                            <Link
+                              key={sub.title}
+                              href={sub.url}
+                              data-event="Langflow.org - Nav Clicked"
+                              data-top-level={item.title}
+                              data-sub-level={sub.title}
+                            >
                               {sub.icon}
                               {sub.title}
                             </Link>
