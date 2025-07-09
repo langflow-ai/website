@@ -28,7 +28,7 @@ function SocialShare({ className, title }: Props): JSX.Element {
   const pathname = usePathname();
 
   // Variables
-  const url = `https://www.datastax.com/${pathname}`;
+  const url = `https://www.langflow.org${pathname}`;
 
   return (
     <div className={`${styles.share} ${className}`}>
