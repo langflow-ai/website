@@ -12,8 +12,8 @@ const Hero: FC = () => {
   return (
     <section className={styles.hero}>
       <div className="container">
-        <div className="row align-items-center justify-content-between">
-          <div className="col-lg-6">
+        <div className="row">
+          <div className="col">
             <Display size={500} tagName="h1">
               Events
             </Display>

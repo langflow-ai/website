@@ -47,25 +47,40 @@ const BlogIndex: NextPage = async () => {
   return (
     <PageLayout className="layout" type="normal">
       <BackgroundGradient />
-      <section
-        id="blog-section"
-        className="container d-grid gap-4 p-4 position-relative"
-      >
-        <Display size={700} tagName="h1">
-          Blog
-        </Display>
-        <SearchAskField className="position-relative z-3" />
-        {latestPost && <LatestPost post={latestPost} />}
-        <Display size={400} style={{ paddingLeft: 11, paddingTop: "1rem" }}>
-          Older Posts
-        </Display>
-        <PostsFeed
-          initialPosts={initialOtherPosts}
-          initialOffset={postsWithExcerpts.length}
-          limit={LIMIT}
-        />
-        <LinesOverlay />
+      <section className="container py-4">
+        <div className="row">
+          <div className="col d-grid gap-4">
+            <Display size={700} tagName="h1">
+              Blog
+            </Display>
+            <SearchAskField className="position-relative z-3" />
+          </div>
+        </div>
       </section>
+
+      {latestPost && (
+        <section className="container">
+          <div className="row">
+            <div className="col">
+              <div className="d-grid gap-4 position-relative" id="blog-section">
+                <LatestPost post={latestPost} />
+                <Display
+                  size={400}
+                  style={{ paddingLeft: 11, paddingTop: "1rem" }}
+                >
+                  Older Posts
+                </Display>
+                <PostsFeed
+                  initialPosts={initialOtherPosts}
+                  initialOffset={postsWithExcerpts.length}
+                  limit={LIMIT}
+                />
+                <LinesOverlay />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </PageLayout>
   );
 };
