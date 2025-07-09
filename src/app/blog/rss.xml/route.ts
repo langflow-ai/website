@@ -33,7 +33,7 @@ export async function GET() {
       <guid isPermaLink="true">${postUrl}</guid>
       <pubDate>${pubDate}</pubDate>
       <description><![CDATA[${description}]]></description>
-      <author>${post.author.name}</author>
+      <author>please-reply@langflow.org (${post.author.name})</author>
       ${imageUrl ? `<enclosure url="${imageUrl}" length="0" type="image/jpeg" />` : ""}
     </item>`;
       })
