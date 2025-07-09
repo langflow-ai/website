@@ -42,14 +42,11 @@ const Header = () => {
             s.onload = initMunchkin;
             document.getElementsByTagName("head")[0].appendChild(s);
           })();          
-          `,
+          `
         }}
       />
       {/* Google Analytics Scripts */}
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=G-L8Y98PSEMQ`}
-      />
+      <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=G-L8Y98PSEMQ`} />
       <Script
         id="google-analytics"
         strategy="afterInteractive"
@@ -59,13 +56,26 @@ const Header = () => {
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'G-L8Y98PSEMQ');
-            `,
+            `
         }}
       />
       <Script
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: `!function(){window.semaphore=window.semaphore||[],window.ketch=function(){window.semaphore.push(arguments)};var e=document.createElement("script");e.type="text/javascript",e.src="https://global.ketchcdn.com/web/v3/config/datastax/langflow_org_web/boot.js",e.defer=e.async=!0,document.getElementsByTagName("head")[0].appendChild(e)}();`,
+          __html: `!function(){window.semaphore=window.semaphore||[],window.ketch=function(){window.semaphore.push(arguments)};var e=document.createElement("script");e.type="text/javascript",e.src="https://global.ketchcdn.com/web/v3/config/datastax/langflow_org_web/boot.js",e.defer=e.async=!0,document.getElementsByTagName("head")[0].appendChild(e)}();`
+        }}
+      />
+
+      {/* Google tag (gtag.js) */}
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-995363228" />
+      <Script
+        dangerouslySetInnerHTML={{
+          __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-995363228');
+            `
         }}
       />
     </>
