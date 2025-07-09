@@ -18,7 +18,7 @@ const Content: FC<Props> = ({ content }) => {
     <section className={styles.content}>
       <div className="container">
         <div className="row">
-          <div className="col-lg-9">
+          <div className="col">
             <Text className={styles.article} size={300} tagName="article">
               <Markdown>{content}</Markdown>
             </Text>

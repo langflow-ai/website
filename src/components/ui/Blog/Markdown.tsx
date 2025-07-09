@@ -10,12 +10,14 @@ import typescript from "highlight.js/lib/languages/typescript";
 import "highlight.js/styles/github-dark-dimmed.css"; // theme
 import rehypeHighlight from "rehype-highlight";
 import { remarkPostEmbed } from "@/lib/utils/remarkPostEmbed";
+import { remarkSequel } from "@/lib/utils/remarkSequel";
 
 import Button, { ButtonTypes } from "@/components/ui/button";
 import Link from "@/components/ui/Link";
 
 import { YouTubeEmbed } from "./YouTubeEmbed";
 import { PostEmbed } from "./PostEmbed";
+import { SequelEmbed } from "./SequelEmbed";
 
 hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("typescript", typescript);
@@ -24,7 +26,7 @@ hljs.registerLanguage("python", python);
 export const Markdown = ({ children }: { children: string }) => {
   return (
     <ReactMarkdown
-      remarkPlugins={[remarkGfm, remarkYouTube, remarkPostEmbed]}
+      remarkPlugins={[remarkGfm, remarkYouTube, remarkPostEmbed, remarkSequel]}
       components={{
         a: ({ node, ...props }) => {
           if (!props.href) return <span>{props.children}</span>;
@@ -110,6 +112,9 @@ export const Markdown = ({ children }: { children: string }) => {
           // Handle Sanity post embeds
           if ("data-post-embed" in props) {
             return <PostEmbed slug={props["data-post-embed"] as string} />;
+          }
+          if ("data-sequel-embed" in props) {
+            return <SequelEmbed id={props["data-sequel-embed"] as string} />;
           }
           return <div {...props}>{props.children}</div>;
         },

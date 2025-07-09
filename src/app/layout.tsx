@@ -62,9 +62,7 @@ export default function RootLayout({
       <head>
         <HeaderScripts />
       </head>
-      <body>
-        <main className="layout layout-dark">{children}</main>
-      </body>
+      <body className="layout layout-dark">{children}</body>
     </html>
   );
 }

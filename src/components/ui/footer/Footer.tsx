@@ -8,7 +8,7 @@ import Link from "../Link";
 
 const Footer = () => {
   return (
-    <section className={`${styles.footer}`}>
+    <footer className={`${styles.footer}`}>
       <div className={styles.container}>
         <div className={styles.right}>
           <Social />
@@ -44,7 +44,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </section>
+    </footer>
   );
 };
 

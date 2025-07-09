@@ -10,8 +10,9 @@
     margin-bottom: var(--spacer-2);
   }
 
-  h4 {
+  a:has(h4) {
     margin-bottom: var(--spacer-3);
+    color: inherit;
   }
 
   img {
@@ -26,7 +27,7 @@
     margin-bottom: var(--spacer-3);
   }
 
-  a {
+  a:not(:has(h4)) {
     margin-top: auto;
     color: var(--primary-white);
     font-weight: 600;
