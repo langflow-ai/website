@@ -9,6 +9,7 @@ import MarketoForm from "@/components/ui/form";
 
 // Utils
 import { DOWNLOAD_OPTIONS } from "@/utils/constants";
+import { trackEvent } from '@/lib/utils/tracking';
 
 // Styles
 import styles from "./styles.module.scss";
@@ -21,6 +22,10 @@ const DownloadForm = () => {
     a.href = url;
     a.download = filename;
     document.body.appendChild(a);
+    trackEvent("Langflow.org - Langflow Desktop Downloaded", {
+      text: "Download",
+      filename: filename
+    });
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);

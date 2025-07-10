@@ -5,6 +5,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import styles from "../../../ui/button/styles.module.scss";
 import { kitSubscribe } from "../../../../app/actions/kitSubscribe";
 import { useEffect } from "react";
+import { trackEvent } from '@/lib/utils/tracking';
 
 export function KitForm() {
   let referrer = "";
@@ -28,6 +29,12 @@ export function KitForm() {
   };
 
   const [state, formAction] = useFormState(kitSubscribe, initialState);
+
+  if (state.success) {
+    trackEvent("Langflow.org - Newsletter Subscribe Button Clicked", {
+      text: "Subscribe"
+    })
+  }
 
   return (
     <>
