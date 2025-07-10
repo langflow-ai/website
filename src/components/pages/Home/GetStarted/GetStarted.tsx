@@ -30,6 +30,9 @@ const GetStarted = () => {
                 onClick={() => {
                   return false;
                 }}
+                data-event="Langflow.org - CTA Clicked"
+                data-text={primary.label}
+                data-section="get-started"
               >
                 {primary.label}
               </Button>
@@ -41,6 +44,9 @@ const GetStarted = () => {
                   return false;
                 }}
                 icon={<Github />}
+                data-event="Langflow.org - CTA Clicked"
+                data-text={secondary.label}
+                data-section="get-started"
               >
                 {secondary.label}
               </Button>

@@ -13,7 +13,7 @@ import { SOCIALS } from "@/utils/constants";
 
 const Social = () => {
   const [socialCounts, setSocialCounts] = useState({
-    github: "73k",
+    github: "84k",
     discord: "18k",
     youtube: "11k",
   });
@@ -62,7 +62,12 @@ const Social = () => {
     <div className={styles.container}>
       {SOCIALS.map((s, index) => (
         <div key={index}>
-          <Link href={s.url} target="_blank">
+          <Link
+            href={s.url}
+            target="_blank"
+            data-event="Langflow.org - Social Clicked"
+            data-platform={s.platform}
+          >
             <div className={styles.social}>
               {s.icon}
               <Display size={100} weight={400}>
