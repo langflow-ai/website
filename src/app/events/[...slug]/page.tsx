@@ -12,7 +12,8 @@ import {
 } from "@/lib/backend/sanity/queries";
 
 // Types
-import { Seo, type Event as PageType } from "@/lib/types/sanity.types";
+import type { Event as PageType } from "@/lib/types/sanity.types";
+import type { Seo } from "@/lib/types/sanity";
 
 // Utilities
 import { parseSlugToString } from "@/lib/utils/str";
@@ -60,12 +61,12 @@ export async function generateStaticParams() {
  */
 export const generateMetadata = async ({ params: { slug } }: Props) => {
   const isDraftMode = (await draftMode()).isEnabled;
-  const parsedSlug = parseSlugToString(slug);
+  const parsedSlug = parseSlugToString(slug).replace(/events\//, "");
   const metadata = await sanityFetch<Seo>(
     METADATA_BY_SLUG_QUERY,
     {
       type: DOCUMENT_TYPE,
-      slugs: [parsedSlug, `/${parsedSlug}`],
+      slugs: [`events/${parsedSlug}`, `/events/${parsedSlug}`],
     },
     isDraftMode
   );
@@ -77,7 +78,7 @@ export const generateMetadata = async ({ params: { slug } }: Props) => {
       title: metadata?.title,
       description: metadata?.description,
       siteName: "Langflow",
-      images: "/images/logo.png",
+      images: [metadata?.thumbnail ? metadata?.thumbnail : "/images/logo.png"],
     },
   };
 };

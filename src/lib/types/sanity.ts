@@ -10,8 +10,9 @@ export type InstantBook = {
 
 export type Seo = {
   title: string;
-  thumbnail?: SanityImageSource;
+  thumbnail?: string;
   slug: SeoSlug;
+  description?: string;
 };
 
 export type EventCard = Required<

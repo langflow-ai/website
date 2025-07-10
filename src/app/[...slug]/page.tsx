@@ -72,13 +72,13 @@ export const generateMetadata = async ({ params: { slug } }: Props) => {
   );
   return {
     title: metadata?.title,
-    // description: metadata?.description,
+    description: metadata?.description || "",
     openGraph: {
       url: `https://www.langflow.org/${metadata?.slug?.current?.replace(/^\//, "")}`,
       title: metadata?.title,
-      // description: metadata?.description,
+      description: metadata?.description || "",
       siteName: "Langflow",
-      images: "/images/logo.png",
+      images: [metadata?.thumbnail ? metadata?.thumbnail : "/images/logo.png"],
     },
   };
 };

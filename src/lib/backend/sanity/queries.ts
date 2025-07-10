@@ -19,7 +19,7 @@ export const METADATA_BY_SLUG_QUERY = defineQuery(`
   *[_type == $type && defined(slug.current) && slug.current in $slugs][0] {
     title,
     slug,
-    thumbnail
+    "thumbnail": thumbnail.asset->url
   }
 `);
 
