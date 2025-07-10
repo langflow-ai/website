@@ -10,6 +10,7 @@ import "@/styles/index.scss";
 
 export const generateMetadata = (): Metadata => {
   return {
+    metadataBase: new URL("https://www.langflow.org"),
     title: "Langflow | Low-code AI builder for agentic and RAG applications",
     description:
       "Langflow is a low-code AI builder for agentic and retrieval-augmented generation (RAG) apps. Code in Python and use any LLM or vector database.",

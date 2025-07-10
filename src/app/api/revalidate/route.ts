@@ -4,33 +4,15 @@ import { type NextRequest, NextResponse } from "next/server";
 import { parseBody } from "next-sanity/webhook";
 
 // Backend
-import { sanityFetch } from "@/lib/backend/sanity/client";
+import { buildPath } from "@/lib/backend/sanity/utils";
 
 // Constants
 const SECRET = process.env.NEXT_SANITY_REVALIDATE_SECRET;
-const PREFIXES: Record<string, string | null> = {
-  page: null,
-  event: "events/",
-  post: "blog/",
-};
 
 type WebhookPayload = {
   type: string;
   slug?: string;
   lang?: string;
-};
-
-// Helper function to generate the correct path based on slug & page type
-const __buildPath = (slug: string, type: string) => {
-  const prefix = PREFIXES[type];
-  let path = slug.replace(/^\//, "");
-
-  if (prefix) {
-    path = `${prefix.replace(/\/$/, "")}/${path.replace(prefix, "")}`; // ensure the prefix is valid
-  }
-
-  // Ensure the path includes the initial slash
-  return `/${path}`;
 };
 
 export async function POST(req: NextRequest) {
@@ -53,7 +35,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { slug, type } = body;
-    const path = __buildPath(slug, type);
+    const path = buildPath(slug, type);
     await revalidatePath(path);
     return NextResponse.json({ path });
   } catch (err: any) {
