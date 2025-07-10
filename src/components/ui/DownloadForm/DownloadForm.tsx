@@ -77,7 +77,7 @@ const DownloadForm = () => {
     <>
       <Display className="text-white" size={100} weight={400}>
         Fill out the form below to receive access to download the desktop app
-        for Mac.
+        for Mac or Windows.
       </Display>
       <MarketoForm
         showFootNote={false}
