@@ -58,29 +58,27 @@ const BlogIndex: NextPage = async () => {
         </div>
       </section>
 
-      {latestPost && (
-        <section className="container">
-          <div className="row">
-            <div className="col">
-              <div className="d-grid gap-4 position-relative" id="blog-section">
-                <LatestPost post={latestPost} />
-                <Display
-                  size={400}
-                  style={{ paddingLeft: 11, paddingTop: "1rem" }}
-                >
-                  Older Posts
-                </Display>
-                <PostsFeed
-                  initialPosts={initialOtherPosts}
-                  initialOffset={postsWithExcerpts.length}
-                  limit={LIMIT}
-                />
-                <LinesOverlay />
-              </div>
+      <section className="container">
+        <div className="row">
+          <div className="col">
+            <div className="d-grid gap-4 position-relative" id="blog-section">
+              {latestPost && <LatestPost post={latestPost} />}
+              <Display
+                size={400}
+                style={{ paddingLeft: 11, paddingTop: "1rem" }}
+              >
+                Older Posts
+              </Display>
+              <PostsFeed
+                initialPosts={initialOtherPosts}
+                initialOffset={postsWithExcerpts.length}
+                limit={LIMIT}
+              />
+              <LinesOverlay />
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
     </PageLayout>
   );
 };
