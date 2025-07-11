@@ -1,5 +1,6 @@
 // Dependencies
 import type { Metadata } from "next";
+import * as Sentry from "@sentry/nextjs";
 
 // Components
 import HeaderScripts from "@/components/scripts/Header";
@@ -10,6 +11,9 @@ import "@/styles/index.scss";
 
 export const generateMetadata = (): Metadata => {
   return {
+    other: {
+      ...Sentry.getTraceData(),
+    },
     metadataBase: new URL("https://www.langflow.org"),
     title: "Langflow | Low-code AI builder for agentic and RAG applications",
     description:
