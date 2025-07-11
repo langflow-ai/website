@@ -6,11 +6,16 @@ import Text from "@/components/ui/text";
 import LoadingDots from "./LoadingDots";
 import { reducer, initialState } from "./searchAskFieldReducer";
 import styles from "./SearchAskField.module.scss";
-import {ShortcutIndicator} from "./ShortcutIndicator";
+import dynamic from "next/dynamic";
 
 interface SearchAskFieldProps {
   className?: string;
 }
+
+const ShortcutIndicator = dynamic(
+  () => import("./ShortcutIndicator").then((mod) => mod.ShortcutIndicator),
+  { ssr: false }
+);
 
 /**
  * SearchAskField renders an input that differentiates between a search

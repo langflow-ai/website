@@ -16,7 +16,7 @@ export async function LatestPost({ post }: { post: BlogPost }) {
         <div className="card post-card p-4 d-grid gap-4 bg-black border-dark border-2 shadow text-white">
           <div className="card-body d-flex flex-column justify-content-between gap-4 p-0">
             <div className="d-flex flex-row gap-4">
-              <Display size={200} className="text-white">
+              <Display tagName="h2" size={200} className="text-white">
                 Latest Post
               </Display>
             </div>

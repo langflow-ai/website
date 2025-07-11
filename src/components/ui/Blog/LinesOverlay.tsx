@@ -215,9 +215,8 @@ const LinesOverlay: React.FC = () => {
 
       {/* Draw dots */}
       {dots.map((p, idx) => (
-        <>
+        <React.Fragment key={`dot-fragment-${idx}`}>
           <circle
-            key={`dot-${idx}`}
             cx={p.x}
             cy={p.y}
             r={7}
@@ -231,7 +230,6 @@ const LinesOverlay: React.FC = () => {
             }}
           />
           <circle
-            key={`dot-${idx}-2`}
             cx={p.x}
             cy={p.y}
             r={7}
@@ -245,7 +243,7 @@ const LinesOverlay: React.FC = () => {
               opacity: 0,
             }}
           />
-        </>
+        </React.Fragment>
       ))}
     </svg>
   );

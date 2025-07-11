@@ -19,6 +19,7 @@ export function Post({ post }: { post: BlogPost }) {
             image={post.featureImage}
             alt={post.title || ""}
             className="card-img-top w-100 h-auto rounded-3"
+            width={300}
           />
         )}
         <div className="card-body d-flex flex-column justify-content-between gap-4 p-0">
