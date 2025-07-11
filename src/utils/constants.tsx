@@ -184,7 +184,7 @@ const HERO_CONTENT = {
   buttons: {
     primary: {
       label: "Get Started for Free",
-      link: "https://github.com/langflow-ai/langflow?tab=readme-ov-file#%EF%B8%8F-quickstart",
+      link: "/desktop",
     },
     secondary: {
       label: "Star on GitHub",
@@ -263,24 +263,24 @@ const DOWNLOAD_OPTIONS = [
   {
     icon: <Apple />,
     name: "macOS (Apple Silicon)",
-    link: "https://github.com/langflow-ai/langflow/releases/download/1.5.0/Langflow_1.5.0_aarch64.dmg",
-    fileName: "Langflow_1.5.0_aarch64.dmg",
+    link: "https://github.com/langflow-ai/langflow/releases/download/1.5.0.post1/Langflow_1.5.1_aarch64.dmg",
+    fileName: "Langflow_1.5.1_aarch64.dmg",
     btnText: "Download",
     isComingSoon: false,
   },
   {
     icon: <Apple />,
     name: "macOS (Intel)",
-    link: "https://github.com/langflow-ai/langflow/releases/download/1.5.0/Langflow_1.5.0_x86_64.dmg",
-    fileName: "Langflow_1.5.0_x86_64.dmg",
+    link: "https://github.com/langflow-ai/langflow/releases/download/1.5.0.post1/Langflow_1.5.1_x86_64.dmg",
+    fileName: "Langflow_1.5.1_x86_64.dmg",
     btnText: "Download",
     isComingSoon: false,
   },
   {
     icon: <Windows />,
     name: "Windows (x64)",
-    link: "https://github.com/langflow-ai/langflow/releases/download/1.5.0/Langflow_1.5.0_x64_en-US.msi",
-    fileName: "Langflow_1.5.0_x64_en-US.msi",
+    link: "https://github.com/langflow-ai/langflow/releases/download/1.5.0.post1/Langflow_1.5.1_x64_en-US.msi",
+    fileName: "Langflow_1.5.1_x64_en-US.msi",
     btnText: "Download",
     isComingSoon: false,
   },
