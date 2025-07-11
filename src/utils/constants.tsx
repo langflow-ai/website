@@ -184,7 +184,7 @@ const HERO_CONTENT = {
   buttons: {
     primary: {
       label: "Get Started for Free",
-      link: "/desktop",
+      link: "https://github.com/langflow-ai/langflow?tab=readme-ov-file#%EF%B8%8F-quickstart",
     },
     secondary: {
       label: "Star on GitHub",
