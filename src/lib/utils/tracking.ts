@@ -45,7 +45,7 @@ export function homepageHeroTracking(event: SyntheticEvent): void {
  */
 export function workshopRegistrationTracking(
   event: SyntheticEvent,
-  name: string,
+  name: string
 ): void {
   event.preventDefault();
   const target = event.target as HTMLAnchorElement;
@@ -63,7 +63,7 @@ export function workshopRegistrationTracking(
 export function clickTracking(
   event: SyntheticEvent,
   eventLabel: string,
-  properties: Json,
+  properties: Json
 ): void {
   event.preventDefault();
   const target = event.target as HTMLAnchorElement;
@@ -78,7 +78,7 @@ export const saveSourceDataToMixpanel = () => {
   if (window.mixpanel) {
     try {
       const urlParams: URLSearchParams = new URLSearchParams(
-        window.location.search,
+        window.location.search
       );
       const utmSource = urlParams.get("utm_source");
       const utmMedium = urlParams.get("utm_medium");
@@ -103,7 +103,7 @@ export const saveSourceDataToMixpanel = () => {
       window.mixpanel.register(params("last"));
     } catch (e) {
       console.error(
-        `Mixpanel error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
+        `Mixpanel error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`
       );
     }
   }
@@ -121,92 +121,34 @@ export function gaHandler(...args: any[]) {
 }
 
 export function trackEvent(name: string, payload?: Record<string, unknown>) {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return; // Exit early during SSR
   }
+
   if (window.analytics) {
     const updatedPayload = {
       ...(payload?.label !== undefined && {
-        event_label: payload?.label
+        event_label: payload?.label,
       }),
       ...(payload?.category !== undefined && {
-        event_category: payload?.category
+        event_category: payload?.category,
       }),
-      ...payload
+      ...payload,
     };
     window.analytics.track(name, updatedPayload);
   }
 
-  if (name === "www - Sequel Form Submitted") {
-    trackLinkedInEvent(LINKEDIN_DEFAULT_SEQUEL_FORM_SUBMITTED_CONVERSION_ID);
-    window.rdt && window.rdt("track", "Lead");
-    return;
-  }
-
-  if (name === "www - Hacking Agents Form Submitted") {
-    trackLinkedInEvent(
-      LINKEDIN_HACKING_AGENTS_EVENT_FORM_SUBMITTED_CONVERSION_ID,
-    );
-    window.rdt && window.rdt("track", "Lead");
-    return;
-  }
-
-  if (name === "www - Gated Resource Form Submitted") {
-    trackLinkedInEvent(LINKEDIN_GATED_ASSET_DOWNLOAD_CONVERSION_ID);
-    window.rdt && window.rdt("track", "Lead");
-    return;
-  }
-
-  if (name === "www - Demo Form Submitted") {
-    trackLinkedInEvent(LINKEDIN_DEMO_FORM_SUBMITTED_CONVERSION_ID);
-    window.rdt && window.rdt("track", "Lead");
-    return;
-  }
-
-  if (name === "www - Contact Us Form Submitted") {
-    trackLinkedInEvent(LINKEDIN_CONTACT_US_FORM_SUBMITTED_CONVERSION_ID);
-    window.rdt && window.rdt("track", "Lead");
-    return;
-  }
-
-  if (name === "Astra - Terms Accepted") {
-    trackLinkedInEvent(LINKEDIN_ASTRA_TERMS_ACCEPTED_CONVERSION_ID);
-    window.rdt && window.rdt("track", "SignUp");
-    return;
-  }
-
-  if (name.includes("www - Cassandra Forward 2025 Submitted")) {
-    trackLinkedInEvent(LINKEDIN_CASSANDRA_FORWARD_2025_CONVERSION_ID);
-    window.rdt && window.rdt("track", "Lead");
-    return;
-  }
-  if (name.includes("www - paid landing page registration")) {
-    window.rdt && window.rdt("track", "Lead");
-    return;
-  }
-
-  if (name.includes("Form") || name.includes("Newsletter")) {
-    if (payload && payload.category === "Events") {
-      trackLinkedInEvent(LINKEDIN_DEFAULT_FORM_EVENTS_SUBMITTED_CONVERSION_ID);
-      window.rdt && window.rdt("track", "Lead");
-      return;
-    }
-
-    if (payload && payload.category === "Newsletter") {
-      trackLinkedInEvent(
-        LINKEDIN_DEFAULT_FORM_NEWSLETTER_SUBMITTED_CONVERSION_ID,
-      );
-      return;
-    }
-
-    // fallback
+  if (name.includes("Form Submitted")) {
     trackLinkedInEvent(LINKEDIN_DEFAULT_FORM_SUBMITTED_CONVERSION_ID);
+    window.rdt && window.rdt("track", "Lead");
+    // Event snippet for www_-_Form_Submitted conversion page
+    window.gtag && window.gtag("event", "conversion", {'send_to': 'AW-995363228/p-_QCNfuqM8aEJyT0NoD'});
   }
 }
 
 function getConsentGrantedState(
   consent: string,
-  defaultValue: "granted" | "denied",
+  defaultValue: "granted" | "denied"
 ): "granted" | "denied" {
   if (window.ketchConsent) {
     const purposes = window.ketchConsent.purposes || {};
@@ -224,19 +166,19 @@ export function addKetchConsentToContextMiddleware() {
           ...(payload.obj.properties || {}),
           analyticsStorageConsentState: getConsentGrantedState(
             "analytics",
-            "granted",
+            "granted"
           ),
           adsStorageConsentState: getConsentGrantedState(
             "targeted_advertising",
-            "granted",
+            "granted"
           ),
           adUserDataConsentState: getConsentGrantedState(
             "targeted_advertising",
-            "granted",
+            "granted"
           ),
           adPersonalizationConsentState: getConsentGrantedState(
             "targeted_advertising",
-            "granted",
+            "granted"
           ),
         };
         payload.obj.context.consent = {
@@ -250,7 +192,7 @@ export function addKetchConsentToContextMiddleware() {
 
 export function checkLinkByHref(
   validHrefs: { [key: string]: any },
-  href: string,
+  href: string
 ) {
   Object.keys(validHrefs).every((targetHref: string) => {
     if (href.endsWith(targetHref)) {
@@ -265,7 +207,7 @@ export function checkLinkByHref(
 
 export function checkLinkByParentId(
   validParents: { [key: string]: any },
-  target: HTMLElement,
+  target: HTMLElement
 ) {
   Object.keys(validParents).every((parentId: string) => {
     let currentElement: HTMLElement | null = target;
