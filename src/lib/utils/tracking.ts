@@ -4,18 +4,7 @@ import { SyntheticEvent } from "react";
 // Types
 import { Json } from "../types/definitions";
 import { CustomWindow } from "../types/window";
-import {
-  LINKEDIN_ASTRA_TERMS_ACCEPTED_CONVERSION_ID,
-  LINKEDIN_CASSANDRA_FORWARD_2025_CONVERSION_ID,
-  LINKEDIN_CONTACT_US_FORM_SUBMITTED_CONVERSION_ID,
-  LINKEDIN_DEFAULT_FORM_EVENTS_SUBMITTED_CONVERSION_ID,
-  LINKEDIN_DEFAULT_FORM_NEWSLETTER_SUBMITTED_CONVERSION_ID,
-  LINKEDIN_DEFAULT_FORM_SUBMITTED_CONVERSION_ID,
-  LINKEDIN_DEFAULT_SEQUEL_FORM_SUBMITTED_CONVERSION_ID,
-  LINKEDIN_DEMO_FORM_SUBMITTED_CONVERSION_ID,
-  LINKEDIN_GATED_ASSET_DOWNLOAD_CONVERSION_ID,
-  LINKEDIN_HACKING_AGENTS_EVENT_FORM_SUBMITTED_CONVERSION_ID,
-} from "@/lib/utils/linkedin";
+import { LINKEDIN_DEFAULT_FORM_SUBMITTED_CONVERSION_ID } from "@/lib/utils/linkedin";
 
 declare let window: CustomWindow;
 
@@ -142,7 +131,10 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
     trackLinkedInEvent(LINKEDIN_DEFAULT_FORM_SUBMITTED_CONVERSION_ID);
     window.rdt && window.rdt("track", "Lead");
     // Event snippet for www_-_Form_Submitted conversion page
-    window.gtag && window.gtag("event", "conversion", {'send_to': 'AW-995363228/p-_QCNfuqM8aEJyT0NoD'});
+    window.gtag &&
+      window.gtag("event", "conversion", {
+        send_to: "AW-995363228/p-_QCNfuqM8aEJyT0NoD",
+      });
   }
 }
 
