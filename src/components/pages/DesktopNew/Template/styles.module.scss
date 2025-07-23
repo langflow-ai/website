@@ -2,14 +2,13 @@
 @import "~bootstrap/scss/mixins";
 
 .template {
-  background-color: var(--primary-black);
   display: flex;
   min-height: calc(100vh - 200px);
   flex-direction: column;
   overflow-y: auto;
   position: relative;
-
-  background:
+  background-color: var(--primary-black);
+  background-image:
     linear-gradient(
       to bottom,
       transparent 40%,
