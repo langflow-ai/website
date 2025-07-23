@@ -2,40 +2,75 @@
 @import "~bootstrap/scss/mixins";
 
 .template {
-  background-image: url("/images/background.png");
   display: flex;
-  min-height: 100vh;
-  background-repeat: no-repeat;
-  background-color: var(--primary-black);
-  width: 100%;
+  min-height: calc(100vh - 200px);
   flex-direction: column;
-  gap: 60px;
   overflow-y: auto;
-  background-size: cover; 
-  background-position: center;
-  background-attachment: fixed;
+  position: relative;
+  background-color: var(--primary-black);
+  background-image:
+    linear-gradient(
+      to bottom,
+      transparent 40%,
+      rgba(0, 0, 0, 0) 40%,
+      rgba(0, 0, 0, 0) 80%,
+      transparent 80%
+    ),
+    url("/images/new-desktop.png");
+  background-size: 100% 80%;
+  background-position: top center;
+  background-repeat: no-repeat;
+  @include media-breakpoint-down(lg) {
+    min-height: calc(100vh - 240px);
+    background: none;
+  }
+}
+
+.heading {
+  font-size: 56px !important;
+  font-weight: 500 !important;
+  font-family: var(--font-body) !important;
+  line-height: 115%;
+  @include media-breakpoint-down(lg) {
+    font-size: 44px !important;
+  }
+
+  @include media-breakpoint-down(md) {
+    font-size: 32px !important;
+  }
 }
 
 .content {
   height: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
   gap: 94px;
 }
 
-.form {
-  max-width: 900px;
+.container {
+  max-width: 1280px !important;
+  padding: 0px;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  h4 {
-    font-size: 40px !important;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 126px;
+  margin-bottom: 40px;
+
+  @include media-breakpoint-down(xlg) {
+    padding: 0px 20px;
   }
+
+  @include media-breakpoint-down(lg) {
+    flex-direction: column;
+    margin-top: 80px;
+    padding: 0px 40px;
+  }
+
   @include media-breakpoint-down(md) {
-    h4 {
-      font-size: 32px !important;
-    }
+    padding: 0px 24px;
   }
+}
+
+.button {
+  float: left;
 }

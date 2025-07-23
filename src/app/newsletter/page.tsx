@@ -13,7 +13,7 @@ export const generateMetadata = (): Metadata => {
 
 const Desktop = async () => {
   return (
-    <Page className="layout " type="desktop">
+    <Page className="layout" type="desktop">
       <Template />
     </Page>
   );

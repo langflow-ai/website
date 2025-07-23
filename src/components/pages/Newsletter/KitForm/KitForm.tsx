@@ -2,10 +2,12 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 
-import styles from "../../../ui/button/styles.module.scss";
+import btnStyles from "../../../ui/button/styles.module.scss";
+import styles from "./styles.module.scss";
 import { kitSubscribe } from "../../../../app/actions/kitSubscribe";
 import { useEffect } from "react";
-import { trackEvent } from '@/lib/utils/tracking';
+import { trackEvent } from "@/lib/utils/tracking";
+import Display from "@/components/ui/Display";
 
 export function KitForm() {
   let referrer = "";
@@ -32,14 +34,22 @@ export function KitForm() {
 
   if (state.success) {
     trackEvent("Langflow.org - Newsletter Subscribe Button Clicked", {
-      text: "Subscribe"
-    })
+      text: "Subscribe",
+    });
   }
 
   return (
-    <>
+    <div className={styles.formContainer}>
       {!state.success ? (
-        <form action={formAction} className="container" data-bs-theme="dark">
+        <form action={formAction} data-bs-theme="dark" className={styles.form}>
+          <Display className="text-white" size={400} weight={500}>
+            Sign up for the newsletter
+          </Display>
+
+          <Display size={100} weight={400}>
+            Enter your details to start receiving AI++
+          </Display>
+
           <div className="mb-5">
             <label htmlFor="email" className="form-label">
               Email address: *
@@ -80,7 +90,7 @@ export function KitForm() {
           </p>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
@@ -88,7 +98,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <button
-      className={`${styles.button} ${styles["filled-button"]}`}
+      className={`${btnStyles.button} ${btnStyles["filled-button"]}`}
       type="submit"
       disabled={pending}
     >
