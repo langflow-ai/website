@@ -60,6 +60,18 @@ const LIST = [
         download: false,
       },
       {
+        title: "Events",
+        url: "/events",
+        icon: null,
+        download: false,
+      },
+      {
+        title: "Podcast",
+        url: "/podcast",
+        icon: null,
+        download: false,
+      },
+      {
         title: "Brand Kit",
         url: "/brandkit/brandkit.zip",
         icon: null,
