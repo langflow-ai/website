@@ -1,0 +1,54 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.formContainer {
+  max-width: 500px;
+  min-width: 500px;
+  height: fit-content;
+  padding: 40px;
+  display: flex;
+  float: right;
+  border-radius: 20px;
+  border: 1px solid var(--color-gray-Gray-700, #4a4a4a);
+  background: var(--color-brand-Black, #000);
+  @include media-breakpoint-down(lg) {
+    max-width: 100%;
+    min-width: 100%;
+  }
+  @include media-breakpoint-down(md) {
+    padding: 24px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: fit-content;
+  width: 100%;
+  h4 {
+    font-size: 32px !important;
+  }
+  h6 {
+    font-size: 18px !important;
+  }
+  @include media-breakpoint-down(md) {
+    h4 {
+      font-size: 24px !important;
+    }
+  }
+}
+
+.heading {
+  font-size: 56px !important;
+  font-weight: 500 !important;
+  font-family: var(--font-body) !important;
+  line-height: 115%;
+  @include media-breakpoint-down(lg) {
+    font-size: 44px !important;
+  }
+
+  @include media-breakpoint-down(md) {
+    font-size: 32px !important;
+  }
+}
