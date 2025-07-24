@@ -36,3 +36,9 @@ export type BlogPost = {
     avatar: SanityImageSource;
   };
 };
+
+export type PageForSiteMap = {
+  _id: string;
+  slug: string;
+  _updatedAt: string;
+};
