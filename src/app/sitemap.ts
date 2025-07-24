@@ -67,7 +67,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const events = await sanityFetch<PageForSiteMap[]>(PUBLISHED_EVENTS_QUERY);
   const eventUrls = events.map((event) => ({
-    url: `${baseUrl}/events/${event.slug}`,
+    url: `${baseUrl}${event.slug}`,
     lastModified: event._updatedAt,
     changeFrequency: CHANGE_FREQUENCIES.MONTHLY,
     priority: 0.7,
