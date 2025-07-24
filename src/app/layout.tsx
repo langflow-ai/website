@@ -67,6 +67,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <HeaderScripts />
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
       </head>
       <body>
         <main className="layout layout-dark">{children}</main>
