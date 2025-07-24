@@ -76,12 +76,21 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
     notFound();
   }
 
+  const authors = [
+    ...(post.author ? [post.author] : []),
+    ...(post.authors || []),
+  ];
+
+  if (authors.length === 0) {
+    authors.push({ name: "Unknown" });
+  }
+
   return (
     <PageLayout className="layout" type="normal">
       <BackgroundGradient />
       <header className="container">
         <div className="row">
-          <div className="col d-flex flex-column gap-4 p-4">
+          <div className="col d-flex flex-column gap-4 py-4">
             <ol className="list-unstyled p-0 d-flex gap-2 text-white w-100 m-0">
               <li>
                 <Text size={100}>
@@ -101,7 +110,7 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
               {post.title}
             </Display>
             <Byline
-              author={post.author || { name: "Unknown" }}
+              authors={authors}
               publishedAt={post.publishedAt || ""}
             />
           </div>
@@ -123,7 +132,7 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
       {otherPosts && (
         <section className="container">
           <div className="row my-4">
-            <div className="col">
+            <div className="col`">
               <hr className="my-4 border-top border-light" />
 
               <Display size={600} tagName="h2" className="m-0">

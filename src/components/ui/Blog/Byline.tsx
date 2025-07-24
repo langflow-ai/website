@@ -1,28 +1,35 @@
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { AuthorClip } from "@/lib/types/sanity";
 import SanityImage from "../media/SanityImage";
 import Text from "../text";
 
+import styles from "./Byline.module.scss";
+
 type BylineProps = {
-  author: {
-    name: string;
-    slug: {
-      current: string;
-    };
-    avatar: SanityImageSource;
-  };
+  authors: AuthorClip[];
   publishedAt: string;
 };
 
-export function Byline({ author, publishedAt }: BylineProps) {
+export function Byline({ authors, publishedAt }: BylineProps) {
   return (
     <div className="d-flex flex-row items-center gap-2">
-      <SanityImage
-        image={author.avatar}
-        alt={author.name}
-        width={32}
-        height={32}
-        className="rounded-circle"
-      />
+      {authors && (
+        <div className={styles.avatars}>
+          {authors
+            ?.filter((author) => !!author.avatar)
+            .map((author, index) => (
+              <SanityImage
+                image={author.avatar}
+                alt={author.name}
+                width={32}
+                height={32}
+                className="rounded-circle"
+                key={author.slug?.current || index}
+                title={author.name}
+              />
+            ))}
+        </div>
+      )}
       <div className="d-flex flex-column">
         <Text
           size={200}
@@ -30,7 +37,11 @@ export function Byline({ author, publishedAt }: BylineProps) {
           className="text-white"
           style={{ lineHeight: 1.2 }}
         >
-          Written by {author.name}
+          Written by{" "}
+          {authors
+            ?.map((author) => author.name)
+            .join(", ")
+            .replace(/, ([^,]*)$/, " & $1")}
         </Text>
         <Text
           size={200}

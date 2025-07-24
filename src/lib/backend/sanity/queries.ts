@@ -112,6 +112,11 @@ export const BLOG_POSTS_QUERY = defineQuery(`
       name,
       slug,
       avatar
+    },
+    authors[]-> {
+      name,
+      slug,
+      avatar
     }
   }
 `);
@@ -134,6 +139,11 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
     publishedAt,
     featureImage,
     "author": author-> {
+      name,
+      slug,
+      avatar
+    },
+    authors[]-> {
       name,
       slug,
       avatar
@@ -160,6 +170,11 @@ export const BLOG_POSTS_PAGINATED_QUERY = defineQuery(`
     publishedAt,
     featureImage,
     "author": author-> {
+      name,
+      slug,
+      avatar
+    },
+    authors[]-> {
       name,
       slug,
       avatar

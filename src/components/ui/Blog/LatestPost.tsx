@@ -7,6 +7,15 @@ import Button from "../button";
 import { ButtonTypes } from "../button/types";
 
 export async function LatestPost({ post }: { post: BlogPost }) {
+  const authors = [
+    ...(post.author ? [post.author] : []),
+    ...(post.authors || []),
+  ];
+
+  if (authors.length === 0) {
+    authors.push({ name: "Unknown" });
+  }
+
   return (
     <div key={post._id}>
       <Link
@@ -31,7 +40,7 @@ export async function LatestPost({ post }: { post: BlogPost }) {
                   >
                     {post.title}
                   </Display>
-                  <Byline author={post.author} publishedAt={post.publishedAt} />
+                  <Byline authors={authors} publishedAt={post.publishedAt} />
                 </div>
                 {
                   <Text size={300} tagName="p" className="text-white">
