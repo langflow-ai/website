@@ -68,6 +68,12 @@ export default function RootLayout({
       <head>
         <HeaderScripts />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          href="/blog/rss.xml"
+          title="Langflow RSS Feed"
+        />
       </head>
       <body>
         <main className="layout layout-dark">{children}</main>
