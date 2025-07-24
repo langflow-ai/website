@@ -12,11 +12,13 @@ interface Post {
   excerpt?: string;
   body: string;
   publishedAt: string;
-  author: {
+  author?: {
     name?: string;
   };
+  authors?: {
+    name?: string;
+  }[];
 }
-
 
 /**
  * GET /blog/llms-full.txt – returns the full text of every blog post.
@@ -33,12 +35,19 @@ export async function GET(_req: NextRequest): Promise<Response> {
     .map((post) => {
       const url = `${host}/blog/${post.slug?.current ?? ""}`;
       const bodyText = post.body;
+      const author = [
+        post.author ? post.author.name : null,
+        ...(post.authors ? post.authors?.map((author) => author.name) : []),
+        null,
+      ]
+        .filter(Boolean)
+        .join(",");
 
       return (
         `TITLE: ${post.title ?? "Untitled"}` +
         `\nURL: ${url}` +
         `\nPUBLISHED AT: ${post.publishedAt}` +
-        (post.author?.name ? `\nAUTHOR: ${post.author.name}` : "") +
+        (author ? `\nAUTHOR: ${author}` : "") +
         `\nCONTENT:\n${bodyText}` +
         `\n\n===` // delimiter between records
       );

@@ -24,8 +24,16 @@ export async function GET() {
         const postUrl = `https://langflow.org/blog/${post.slug.current}`;
         const pubDate = new Date(post.publishedAt).toUTCString();
         const imageUrl = getImageUrl(post.featureImage);
-        const description = post.excerpt || getBodyText(post.body).substring(0, 200) + "...";
-        
+        const description =
+          post.excerpt || getBodyText(post.body).substring(0, 200) + "...";
+        const author = [
+          post.author ? post.author.name : null,
+          ...(post.authors ? post.authors?.map((author) => author.name) : []),
+          "Unknown",
+        ]
+          .filter(Boolean)
+          .join(",");
+
         return `
     <item>
       <title><![CDATA[${post.title}]]></title>
@@ -33,7 +41,7 @@ export async function GET() {
       <guid isPermaLink="true">${postUrl}</guid>
       <pubDate>${pubDate}</pubDate>
       <description><![CDATA[${description}]]></description>
-      <author>please-reply@langflow.org (${post.author.name})</author>
+      <author>please-reply@langflow.org (${author})</author>
       ${imageUrl ? `<enclosure url="${imageUrl}" length="0" type="image/jpeg" />` : ""}
     </item>`;
       })

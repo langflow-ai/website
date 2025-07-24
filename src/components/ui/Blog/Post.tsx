@@ -8,6 +8,15 @@ import { ButtonTypes } from "@/components/ui/button/types";
 import { BlogPost } from "@/lib/types/sanity";
 
 export function Post({ post }: { post: BlogPost }) {
+  const authors = [
+    ...(post.author ? [post.author] : []),
+    ...(post.authors || []),
+  ];
+
+  if (authors.length === 0) {
+    authors.push({ name: "Unknown" });
+  }
+
   return (
     <Link
       href={`/blog/${post.slug?.current}`}
@@ -31,7 +40,7 @@ export function Post({ post }: { post: BlogPost }) {
           >
             {post.title}
           </Display>
-          <Byline author={post.author} publishedAt={post.publishedAt} />
+          <Byline authors={authors} publishedAt={post.publishedAt} />
           <Text size={300} tagName="p" className="text-white">
             {post.excerpt}
           </Text>
