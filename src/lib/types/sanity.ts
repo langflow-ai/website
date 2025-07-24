@@ -22,6 +22,12 @@ export type EventCard = Required<
   description: string;
 };
 
+export type AuthorClip = {
+  name: string;
+  slug?: { current: string };
+  avatar?: SanityImageSource;
+}
+
 export type BlogPost = {
   _id: string;
   title: string;
@@ -30,9 +36,6 @@ export type BlogPost = {
   body: string;
   publishedAt: string;
   featureImage: SanityImageSource;
-  author: {
-    name: string;
-    slug: { current: string };
-    avatar: SanityImageSource;
-  };
+  author?: AuthorClip;
+  authors?: AuthorClip[];
 };

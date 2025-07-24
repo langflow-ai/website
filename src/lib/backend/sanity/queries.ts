@@ -126,6 +126,11 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
       name,
       slug,
       avatar
+    },
+    authors[]-> {
+      name,
+      slug,
+      avatar
     }
   }
 `);
