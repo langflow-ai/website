@@ -87,6 +87,17 @@ export const API_GET_ON_DEMAND_EVENTS_QUERY = defineQuery(`
   }
 `);
 
+/**
+ * Fetch all published events with their slug and updated date
+ */
+export const PUBLISHED_EVENTS_QUERY = defineQuery(`
+  *[_type == "event" && defined(slug.current) && !(_id in path("drafts.**"))] {
+    _id,
+    slug: slug.current,
+    _updatedAt
+  }
+`);
+
 // BLOG: Fetch all posts with necessary fields ordered by published date
 export const BLOG_POSTS_QUERY = defineQuery(`
   *[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
@@ -127,6 +138,15 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
       slug,
       avatar
     }
+  }
+`);
+
+// BLOG: Fetch published blog posts with their slug and updated date
+export const PUBLISHED_BLOG_POSTS_QUERY = defineQuery(`
+  *[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))] | order(publishedAt desc) {
+    _id,
+    slug: slug.current,
+    _updatedAt
   }
 `);
 
