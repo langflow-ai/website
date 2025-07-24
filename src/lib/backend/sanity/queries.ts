@@ -93,7 +93,7 @@ export const API_GET_ON_DEMAND_EVENTS_QUERY = defineQuery(`
 export const PUBLISHED_EVENTS_QUERY = defineQuery(`
   *[_type == "event" && defined(slug.current) && !(_id in path("drafts.**"))] {
     _id,
-    slug: slug.current,
+    "slug": slug.current,
     _updatedAt
   }
 `);
@@ -145,7 +145,7 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
 export const PUBLISHED_BLOG_POSTS_QUERY = defineQuery(`
   *[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))] | order(publishedAt desc) {
     _id,
-    slug: slug.current,
+    "slug": slug.current,
     _updatedAt
   }
 `);
