@@ -33,7 +33,7 @@ const Template = () => {
           </Display>
 
           <Button
-            href="https://langflow.kit.com/posts"
+            href="https://news.langflow.org"
             variant={ButtonTypes.BORDER}
             className={styles.button}
           >
