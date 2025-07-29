@@ -1,5 +1,5 @@
 // Dependencies
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { parseBody } from "next-sanity/webhook";
 
@@ -35,9 +35,18 @@ export async function POST(req: NextRequest) {
     }
 
     const { slug, type } = body;
+    const revalidatedPaths: string[] = [];
     const path = buildPath(slug, type);
-    await revalidatePath(path);
-    return NextResponse.json({ path });
+    revalidatePath(path);
+    revalidatedPaths.push(path);
+
+    // Additionally revalidate the blog index when a post changes
+    if (type === "post") {
+      revalidatePath("/blog");
+      revalidatedPaths.push("/blog");
+    }
+
+    return NextResponse.json({ paths: revalidatedPaths });
   } catch (err: any) {
     console.error(err);
     return new Response(err.message, { status: 500 });
