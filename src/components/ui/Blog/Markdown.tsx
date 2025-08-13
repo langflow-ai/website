@@ -77,7 +77,7 @@ export const Markdown = ({ children }: { children: string }) => {
               )}
             >
               <code>
-                {(props.children as string).replaceAll("\\```", "```")}
+                {(props.children?.toString() ?? "").replaceAll("\\```", "```")}
               </code>
             </pre>
           );
