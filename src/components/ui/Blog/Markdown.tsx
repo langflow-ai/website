@@ -31,13 +31,7 @@ export const Markdown = ({ children }: { children: string }) => {
         a: ({ node, ...props }) => {
           if (!props.href) return <span>{props.children}</span>;
 
-          return (
-            <Link
-              href={props.href}
-            >
-              {props.children}
-            </Link>
-          );
+          return <Link href={props.href}>{props.children}</Link>;
         },
         button: ({ node, ...props }) => {
           const { href, variant } = props as any;
@@ -82,7 +76,9 @@ export const Markdown = ({ children }: { children: string }) => {
                 "border overflow-x-auto text-overflow-ellipsis border-dark text-white rounded-2"
               )}
             >
-              <code>{props.children}</code>
+              <code>
+                {(props.children as string).replaceAll("\\```", "```")}
+              </code>
             </pre>
           );
         },
