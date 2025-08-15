@@ -38,7 +38,7 @@ export async function POST(request: Request) {
         {
           role: "system",
           content:
-            "You are a helpful assistant answering questions about Langflow and its blog content. Use the provided context to answer the user's question. If the context is insufficient, reply that you don't know and encourage searching instead.",
+            "You are a helpful assistant answering questions about Langflow and its blog content. Use the provided context to answer the user's question. If the context is insufficient, reply that you don't know and encourage searching instead. DO NOT respond in Markdown, but instead just regular plain text.",
         },
         {
           role: "user",
