@@ -233,7 +233,7 @@ const CARDS = [
 const PARTNERS_STACK_TEXT = {
   title: "Connect your existing tools",
   description:
-    "Choose from hundreds of data sources, models, or vector stores. If don’t find what your looking for, build your own custom component.",
+    "Choose from hundreds of data sources, models, or vector stores. If you don’t find what you’re looking for, build your own custom component.",
 };
 const STACK_TEXT = {
   heading: "Used by leading AI development teams",
