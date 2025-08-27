@@ -5,6 +5,13 @@
 }
 
 @font-face {
+  font-family: "Chivo";
+  font-display: swap;
+  font-style: italic;
+  src: url("./fonts/Chivo/Chivo-Italic-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
   font-family: "SF";
   font-display: swap;
   src: url("./fonts/sf-pro-display/SFPRODISPLAYREGULAR.OTF") format("truetype");
