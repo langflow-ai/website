@@ -102,8 +102,8 @@ const MarketoForm = ({
 
       trackEvent(action, payload);
       
-      // Fire GA4 desktop_download event for form submissions
-      if (window.gtag) {
+      // Fire GA4 desktop_download event for form submissions on desktop page
+      if (window.gtag && window.location.pathname === '/desktop') {
         window.gtag('event', 'desktop_download', {});
       }
       
