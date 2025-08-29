@@ -115,6 +115,21 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
   }
 
   if (window.analytics) {
+    // Get current UTM parameters for attribution
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmData: Record<string, string | null> = {
+      utm_source: urlParams.get("utm_source"),
+      utm_medium: urlParams.get("utm_medium"),
+      utm_campaign: urlParams.get("utm_campaign"),
+      utm_content: urlParams.get("utm_content"),
+      utm_term: urlParams.get("utm_term"),
+    };
+
+    // Remove null UTM values
+    const cleanedUtmData = Object.fromEntries(
+      Object.entries(utmData).filter(([_, value]) => value !== null)
+    );
+
     const updatedPayload = {
       ...(payload?.label !== undefined && {
         event_label: payload?.label,
@@ -123,6 +138,7 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
         event_category: payload?.category,
       }),
       ...payload,
+      ...cleanedUtmData,
     };
     window.analytics.track(name, updatedPayload);
   }
@@ -219,5 +235,52 @@ export function checkLinkByParentId(
 export const trackLinkedInEvent = (conversionId: number) => {
   if (window.lintrk) {
     window.lintrk("track", { conversion_id: conversionId });
+  }
+};
+
+/**
+ * Get UTM parameters from URL and send them to Segment.
+ */
+export const saveUTMDataToSegment = () => {
+  if (typeof window === "undefined") {
+    return; // Exit early during SSR
+  }
+
+  if (window.analytics) {
+    try {
+      const urlParams: URLSearchParams = new URLSearchParams(
+        window.location.search
+      );
+      const utmSource = urlParams.get("utm_source");
+      const utmMedium = urlParams.get("utm_medium");
+      const utmCampaign = urlParams.get("utm_campaign");
+      const utmContent = urlParams.get("utm_content");
+      const utmTerm = urlParams.get("utm_term");
+      const gclid = urlParams.get("gclid");
+
+      // Only track if we have UTM parameters
+      if (utmSource || utmMedium || utmCampaign || utmContent || utmTerm || gclid) {
+        const utmData: Record<string, string | null> = {
+          utm_source: utmSource,
+          utm_medium: utmMedium,
+          utm_campaign: utmCampaign,
+          utm_content: utmContent,
+          utm_term: utmTerm,
+          gclid: gclid,
+        };
+
+        // Remove null values
+        const cleanedUtmData = Object.fromEntries(
+          Object.entries(utmData).filter(([_, value]) => value !== null)
+        );
+
+        // Set UTM parameters as user traits for attribution
+        window.analytics.identify(null, cleanedUtmData);
+      }
+    } catch (e) {
+      console.error(
+        `Segment UTM tracking error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`
+      );
+    }
   }
 };
