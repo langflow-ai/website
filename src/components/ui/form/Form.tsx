@@ -101,6 +101,12 @@ const MarketoForm = ({
       };
 
       trackEvent(action, payload);
+      
+      // Fire GA4 desktop_download event for form submissions
+      if (window.gtag) {
+        window.gtag('event', 'desktop_download', {});
+      }
+      
       if (values?.interestedinCassandraHealthCheck === 'yes') {
         addLead(SEQUENCE_ID_1, values?.Email, values?.FirstName, values?.LastName);
       }
