@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { trackEvent } from '@/lib/utils/tracking';
+import { trackEvent, saveUTMDataToSegment } from '@/lib/utils/tracking';
 
 let isDataAttributeTrackingInitialized = false;
 
@@ -72,6 +72,7 @@ export function initializeDataAttributeTracking() {
 export function DataAttributeTracker() {
   useEffect(() => {
     initializeDataAttributeTracking();
+    saveUTMDataToSegment();
   }, []);
 
   return null; // This component renders nothing
