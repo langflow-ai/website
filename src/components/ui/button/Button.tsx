@@ -1,10 +1,10 @@
 import React, {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  ElementType,
+    AnchorHTMLAttributes,
+    ButtonHTMLAttributes,
+    ElementType,
 } from "react";
-import { ButtonTypes } from "./types"; // Import enum
 import styles from "./styles.module.scss"; // Import SCSS styles
+import { ButtonTypes } from "./types"; // Import enum
 
 interface ButtonProps {
   variant: ButtonTypes;
@@ -31,7 +31,7 @@ const Button: React.FC<AllowedHTMLAttributes & ButtonProps> = ({
 
   return (
     <Element className={buttonClass} onClick={onClick} {...props}>
-      <span className={styles.icon}>{icon}</span>
+      {icon && <span className={styles.icon}>{icon}</span>}
       {children}
     </Element>
   );
