@@ -94,10 +94,12 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
   width: 100%;
+  justify-items: center;
 
   @include media-breakpoint-down(md) {
     grid-template-columns: 1fr;
     gap: 20px;
+    justify-items: center;
   }
 }
 
@@ -118,6 +120,11 @@
     border-color: var(--interface-purple-300);
     transform: translateY(-2px);
     box-shadow: 0 8px 32px rgba(107, 28, 150, 0.1);
+  }
+
+  @include media-breakpoint-down(md) {
+    max-width: 100%;
+    width: 100%;
   }
 
   @include media-breakpoint-down(sm) {
