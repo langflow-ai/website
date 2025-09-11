@@ -36,6 +36,12 @@ const Benefits = () => {
   return (
     <section id="benefits" className={styles.benefits}>
       <div className={`${styles.container} container-wide`}>
+        <header className={styles.header}>
+          <h2 className={styles.title}>Partner Benefits</h2>
+          <p className={styles.description}>
+            Join our partner program and unlock exclusive benefits designed to help you grow your business with Langflow.
+          </p>
+        </header>
         <div className={styles.grid}>
           {BENEFITS.map((benefit, index) => (
             <div key={index} className={styles.benefitCard}>
