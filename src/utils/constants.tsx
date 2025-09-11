@@ -314,6 +314,8 @@ const DOWNLOAD_OPTIONS = [
   // },
 ];
 
+const NEWSLETTER_BLURB = "A++ is sent out every two weeks with all the latest news for developers on AI, Agents and MCP."
+
 export {
   LIST,
   SOCIALS,
@@ -326,4 +328,5 @@ export {
   STACK_LOGOS,
   GET_STARTED,
   DOWNLOAD_OPTIONS,
+  NEWSLETTER_BLURB,
 };

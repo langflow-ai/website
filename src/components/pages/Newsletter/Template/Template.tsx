@@ -7,6 +7,9 @@ import { ButtonTypes } from "@/components/ui/button/types";
 // Styles
 import styles from "./styles.module.scss";
 
+// Utils
+import { NEWSLETTER_BLURB } from "@/utils/constants";
+
 const Template = () => {
   return (
     <section className={styles.template}>
@@ -27,9 +30,7 @@ const Template = () => {
             size={200}
             weight={400}
           >
-            {
-              "A++ is sent out every two weeks with all the latest news for developers on AI, Agents and MCP."
-            }
+            {NEWSLETTER_BLURB}
           </Display>
 
           <Button
