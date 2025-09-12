@@ -1,6 +1,9 @@
 "use client";
 
+import { CustomWindow } from "@/lib/types/window";
 import { useEffect } from "react";
+
+declare let window: CustomWindow;
 
 const PartnersAnalytics = () => {
   useEffect(() => {
@@ -84,7 +87,7 @@ const PartnersAnalytics = () => {
         const attr = button.getAttribute('data-attr');
         window.gtag?.("event", "click", {
           event_category: "Partners CTA",
-          event_label: attr,
+          event_label: attr || 'unknown',
           value: 1,
         });
       });
