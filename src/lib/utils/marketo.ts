@@ -510,7 +510,7 @@ export const setBusinessEmailValidation = (form: MarketoForm) => {
 
 export const addHiddenFields = (form: MarketoForm) => {
   form.addHiddenFields({
-    Referrer_URL__c: window.location.href,
+    Referrer_URL__c: document.referrer.length > 0 ? document.referrer : "NULL",
     referrer: document.referrer.length > 0 ? document.referrer : "NULL",
   });
 };
