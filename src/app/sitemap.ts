@@ -1,10 +1,10 @@
-import { MetadataRoute } from "next";
 import { sanityFetch } from "@/lib/backend/sanity/client";
-import { PageForSiteMap } from "@/lib/types/sanity";
 import {
-  PUBLISHED_BLOG_POSTS_QUERY,
-  PUBLISHED_EVENTS_QUERY,
+    PUBLISHED_BLOG_POSTS_QUERY,
+    PUBLISHED_EVENTS_QUERY,
 } from "@/lib/backend/sanity/queries";
+import { PageForSiteMap } from "@/lib/types/sanity";
+import { MetadataRoute } from "next";
 
 const CHANGE_FREQUENCIES = {
   ALWAYS: "always",
@@ -34,6 +34,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: date,
       changeFrequency: CHANGE_FREQUENCIES.MONTHLY,
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/partners`,
+      lastModified: date,
+      changeFrequency: CHANGE_FREQUENCIES.MONTHLY,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/blog`,

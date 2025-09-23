@@ -20,6 +20,12 @@
     width: 100%;
   }
 
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &.border-button {
     border: 2px solid rgba(152, 244, 254, 0.3);
     background: transparent;
