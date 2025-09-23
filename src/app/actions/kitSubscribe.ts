@@ -12,11 +12,17 @@ export async function kitSubscribe(
 ): Promise<KitFormState> {
   const email = formData.get("email") as string;
   const referrer = previousState.referrer;
-
+  if (!process.env.KIT_API_KEY) {
+    return {
+      errors: ["No KIT_API_KEY configured."],
+      success: false,
+      referrer,
+    };
+  }
   const options = {
     method: "POST",
     headers: {
-      "X-Kit-Api-Key": process.env.KIT_API_KEY ?? "",
+      "X-Kit-Api-Key": process.env.KIT_API_KEY,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email_address: email, state: "inactive" }),
@@ -27,26 +33,24 @@ export async function kitSubscribe(
     const data = await response.json();
 
     if (response.ok) {
-      if (process.env.KIT_FORM_ID) {
-        const formOptions = {
-          method: "POST",
-          headers: {
-            "X-Kit-Api-Key": process.env.KIT_API_KEY ?? "",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email_address: email,
-            referrer,
-          }),
-        };
-        fetch(
-          `https://api.kit.com/v4/forms/${process.env.KIT_FORM_ID}/subscribers`,
-          formOptions
-        )
-          .then((res) => res.json())
-          .then((data) => console.log(data))
-          .catch((error) => console.error("Error submitting form:", error));
-      }
+      const formOptions = {
+        method: "POST",
+        headers: {
+          "X-Kit-Api-Key": process.env.KIT_API_KEY,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email_address: email,
+          referrer,
+        }),
+      };
+      fetch(
+        `https://api.kit.com/v4/forms/${process.env.KIT_FORM_ID}/subscribers`,
+        formOptions
+      )
+        .then((res) => res.json())
+        .catch((error) => console.error("Error submitting form:", error));
+
       return {
         errors: [],
         success: true,
