@@ -170,7 +170,7 @@ const Header = () => {
 
                   {item?.subTabs && isHovered && (
                     <div
-                      className={styles.dropdown}
+                      className={item?.title === "Get Help" ? styles.dropdownGetHelp : styles.dropdown}
                       onMouseEnter={() => clearTimeout(leaveTimeout.current)}
                       onMouseLeave={() => {
                         leaveTimeout.current = setTimeout(
