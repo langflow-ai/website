@@ -124,32 +124,6 @@ const LIST = [
     ],
   },
   {
-    title: "Get Help",
-    link: "",
-    icon: "/assets/icons/community.svg",
-    comingSoon: false,
-    subTabs: [
-      {
-        title: "Community help",
-        url: "https://discord.gg/EqksyE2EX9",
-        icon: null,
-        download: false,
-      },
-      {
-        title: "Professional Services",
-        url: "/contact-us",
-        icon: null,
-        download: false,
-      },
-      {
-        title: "Premier Support",
-        url: "/contact-us",
-        icon: null,
-        download: false,
-      },
-    ],
-  },
-  {
     title: "Download",
     link: "/desktop",
     icon: "",

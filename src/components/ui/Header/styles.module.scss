@@ -79,24 +79,6 @@
   }
 }
 
-.dropdownGetHelp {
-  position: absolute;
-  top: 26px;
-  background: #111;
-  padding: 6px;
-  font-family: var(--font-inter);
-  border-radius: 15px;
-  border: 1px solid rgb(34, 34, 34);
-  width: 200px;
-  left: -18%;
-  top: 125%;
-  cursor: pointer;
-  a {
-    padding: 5px 10px;
-    font-size: 500 !important;
-    color: var(--primary-white);
-  }
-}
 .right {
   display: flex;
   gap: 15px;
