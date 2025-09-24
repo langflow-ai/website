@@ -4,6 +4,7 @@ import { PageForSiteMap } from "@/lib/types/sanity";
 import {
   PUBLISHED_BLOG_POSTS_QUERY,
   PUBLISHED_EVENTS_QUERY,
+  PUBLISHED_PAGES_QUERY,
 } from "@/lib/backend/sanity/queries";
 
 const CHANGE_FREQUENCIES = {
@@ -73,6 +74,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const pages = await sanityFetch<PageForSiteMap[]>(PUBLISHED_PAGES_QUERY);
+  const pageUrls = pages.map((page) => ({
+    // slug already contains the leading slash
+    url: `${baseUrl}${page.slug}`,
+    lastModified: page._updatedAt,
+    changeFrequency: CHANGE_FREQUENCIES.MONTHLY,
+    priority: 0.6,
+  }));
+
   // Combine all URLs
-  return [...staticPages, ...blogPostsUrls, ...eventUrls];
+  return [...staticPages, ...blogPostsUrls, ...eventUrls, ...pageUrls];
 }

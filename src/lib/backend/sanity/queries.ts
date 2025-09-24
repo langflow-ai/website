@@ -181,3 +181,12 @@ export const BLOG_POSTS_PAGINATED_QUERY = defineQuery(`
     }
   }
 `);
+
+// Fetch published pages with their slug and updated date for sitemap
+export const PUBLISHED_PAGES_QUERY = defineQuery(`
+  *[_type == "page" && defined(slug.current) && !(_id in path("drafts.**"))] {
+    _id,
+    "slug": slug.current,
+    _updatedAt
+  }
+`);
