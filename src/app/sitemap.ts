@@ -76,7 +76,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const pages = await sanityFetch<PageForSiteMap[]>(PUBLISHED_PAGES_QUERY);
   const pageUrls = pages.map((page) => ({
-    url: `${baseUrl}/${page.slug}`,
+    // slug already contains the leading slash
+    url: `${baseUrl}${page.slug}`,
     lastModified: page._updatedAt,
     changeFrequency: CHANGE_FREQUENCIES.MONTHLY,
     priority: 0.6,
