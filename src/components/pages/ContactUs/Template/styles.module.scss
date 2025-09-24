@@ -33,11 +33,13 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 24px;
-  margin-top: 126px;
+  margin-top:  90px;
   margin-bottom: 40px;
 
   @include media-breakpoint-down(xlg) {
     padding: 0px 20px;
+    align-items: center;
+    justify-content: space-between;
   }
 
   @include media-breakpoint-down(lg) {
@@ -82,8 +84,21 @@
   gap: 20px;
   width: 100%;
 }
+.heading{
+    color: var(--primary-white);
+    font-size: 48px !important;
+    font-weight: 400 !important;
+    line-height: 120% !important; 
+    letter-spacing: -0.48px !important;
+}
 .subtitle {
   max-width: 539px;
+  font-size: 18px !important;
+  font-weight: 300 !important;
+  line-height: 140% !important; /* 25.2px */
+  @include media-breakpoint-down(xlg) {
+   text-align: center;
+  }
   @include media-breakpoint-down(lg) {
   max-width: 100%;
   }

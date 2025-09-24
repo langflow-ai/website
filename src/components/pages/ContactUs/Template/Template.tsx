@@ -13,7 +13,7 @@ const Template: FC<PropsWithChildren> = () => {
   return (
     <section className={styles.template}>
       <div className={`container h-100 ${styles.container}`}>
-      <Display className="text-white" size={400} weight={500}>
+      <Display className={`text-white ${styles.heading}`} size={400} weight={500}>
               We're here for you!
       </Display>
       <Display className={`text-white ${styles.subtitle}`} size={100} weight={400}>

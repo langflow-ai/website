@@ -2,7 +2,10 @@
 @import "~bootstrap/scss/mixins";
 
 .contactTitle {
-  color: var(--zinc-zinc-700, #D4D4D8);
+  color:  #D4D4D8;
+  font-size: 24px !important;
+  font-weight: 500 !important;
+  font-family: var(--font-inter) !important;
 }
 
 .list {
