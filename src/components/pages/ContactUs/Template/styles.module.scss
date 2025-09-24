@@ -27,25 +27,22 @@
 }
 
 .container {
-  max-width: 1280px !important;
   padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 24px;
-  margin-top:  90px;
-  margin-bottom: 40px;
+  margin-top: var(--spacer-6);
+  margin-bottom: var(--spacer-8);
 
   @include media-breakpoint-down(xlg) {
     padding: 0px 20px;
-    align-items: center;
     justify-content: space-between;
   }
 
   @include media-breakpoint-down(lg) {
-    flex-direction: column;
-    margin-top: 80px;
+    min-width: 100%;
     padding: 0px 40px;
+    margin: var(--spacer-6) 0px var(--spacer-8);
   }
 
   @include media-breakpoint-down(md) {
@@ -53,20 +50,20 @@
   }
 }
 
-
 .right {
-  max-width: 500px;
-  min-width: 500px;
-  height: fit-content;
-  padding: 40px;
+  max-width: 537px;
+  padding: 28px var(--spacer-3);
   display: flex;
   border-radius: 20px;
   border: 1px solid var(--color-gray-Gray-700, #4a4a4a);
   background: var(--color-brand-Black, #000);
+
   @include media-breakpoint-down(lg) {
+    width: 100%;
     max-width: 100%;
     min-width: 100%;
   }
+
   @include media-breakpoint-down(md) {
     padding: 24px;
   }
@@ -81,25 +78,30 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   width: 100%;
 }
-.heading{
-    color: var(--primary-white);
-    font-size: 48px !important;
-    font-weight: 400 !important;
-    line-height: 120% !important; 
-    letter-spacing: -0.48px !important;
+
+.heading {
+  color: var(--primary-white);
+  font-size: 48px !important;
+  font-weight: 400 !important;
+  line-height: 120% !important;
+  letter-spacing: -0.48px !important;
+  margin-bottom: 12px;
+
+  @include media-breakpoint-down(md) {
+    font-size: 32px !important;
+  }
 }
+
 .subtitle {
   max-width: 539px;
   font-size: 18px !important;
   font-weight: 300 !important;
-  line-height: 140% !important; /* 25.2px */
-  @include media-breakpoint-down(xlg) {
-   text-align: center;
-  }
-  @include media-breakpoint-down(lg) {
-  max-width: 100%;
+  line-height: 140% !important;
+  margin-bottom: 40px;
+
+  @include media-breakpoint-down(md) {
+    max-width: 100%;
   }
 }

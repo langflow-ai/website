@@ -127,9 +127,9 @@
   gap: 4px;
   border-radius: 4px;
   background: var(
---Gradient-1,
-linear-gradient(270deg, #f480ff -2%, #ff3276 100%)
-);
+    --Gradient-1,
+    linear-gradient(270deg, #f480ff -2%, #ff3276 100%)
+  );
 
   &_heading {
     color: black !important;
