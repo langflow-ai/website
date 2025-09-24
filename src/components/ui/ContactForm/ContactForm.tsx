@@ -13,7 +13,17 @@ const ContactForm = () => {
       <Display className={styles.contact__title} size={100} weight={400}>
         Contact us
       </Display>
-      <MarketoForm showFootNote={false} id={5302} />
+      <MarketoForm
+        showFootNote={false}
+        id={5484}
+        useBusinessEmailValidation
+        feedback={
+          <Display size={100} weight={400}>
+            We've received your request and someone from our team will reach out
+            shortly.
+          </Display>
+        }
+      />
     </div>
   );
 };
