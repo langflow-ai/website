@@ -67,6 +67,64 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <HeaderScripts />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Langflow",
+              "alternateName": "Langflow AI",
+              "url": "https://www.langflow.org",
+              "logo": "https://www.langflow.org/images/logo.png",
+              "description": "Langflow is a low-code AI builder for agentic and retrieval-augmented generation (RAG) apps. Code in Python and use any LLM or vector database.",
+              "foundingDate": "2023",
+              "sameAs": [
+                "https://github.com/langflow-ai/langflow",
+                "https://twitter.com/langflow_ai",
+                "https://discord.gg/EqksyE2EX9",
+                "https://www.youtube.com/@Langflow"
+              ]
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "Langflow",
+              "applicationCategory": "DeveloperApplication",
+              "operatingSystem": "Cross-platform",
+              "description": "Langflow is a low-code AI builder for agentic and retrieval-augmented generation (RAG) apps. Code in Python and use any LLM or vector database.",
+              "url": "https://www.langflow.org",
+              "downloadUrl": "https://github.com/langflow-ai/langflow",
+              "author": {
+                "@type": "Organization",
+                "name": "Langflow",
+                "url": "https://www.langflow.org"
+              },
+              "offers": [
+                {
+                  "@type": "Offer",
+                  "name": "Open Source",
+                  "price": "0",
+                  "priceCurrency": "USD",
+                  "description": "Free open-source version with full features"
+                }
+              ]
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": "https://www.langflow.org",
+              "name": "Langflow",
+              "url": "https://www.langflow.org",
+              "description": "Langflow is a low-code AI builder for agentic and retrieval-augmented generation (RAG) apps. Code in Python and use any LLM or vector database.",
+              "inLanguage": "en-US",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Langflow",
+                "url": "https://www.langflow.org"
+              }
+            }
+          ])
+        }} />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         <link
           rel="alternate"
