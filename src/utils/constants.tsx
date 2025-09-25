@@ -149,6 +149,12 @@ const LIST = [
     icon: "",
     comingSoon: false,
   },
+  {
+    title: "Contact Us",
+    link: "/contact-us",
+    icon: "",
+    comingSoon: false,
+  },
 ];
 
 const SOCIALS = [
