@@ -124,6 +124,12 @@ const LIST = [
     comingSoon: false,
     subTabs: [
       {
+        title: "Contact Us",
+        url: "/contact-us",
+        icon: null,
+        download: false,
+      },
+      {
         title: "Community help",
         url: "https://discord.gg/EqksyE2EX9",
         icon: null,
@@ -146,12 +152,6 @@ const LIST = [
   {
     title: "Download",
     link: "/desktop",
-    icon: "",
-    comingSoon: false,
-  },
-  {
-    title: "Contact Us",
-    link: "/contact-us",
     icon: "",
     comingSoon: false,
   },

@@ -36,7 +36,7 @@
       opacity: 0.6;
     }
   }
-  @media (max-width: 850px) {
+  @include media-breakpoint-down(md) {
     display: none;
   }
 }
@@ -170,7 +170,7 @@
     }
   }
 
-  @media (min-width: 851px) {
+  @include media-breakpoint-up(md) {
     display: none;
   }
 }
