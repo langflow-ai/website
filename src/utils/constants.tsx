@@ -86,12 +86,6 @@ const LIST = [
     comingSoon: false,
     subTabs: [
       {
-        title: "Contact us",
-        url: "mailto:contact@langflow.org",
-        icon: <Contact size="22" />,
-        download: false,
-      },
-      {
         title: "GitHub",
         url: "https://bit.ly/langflow",
         icon: <Github size="22" />,
@@ -119,6 +113,38 @@ const LIST = [
         title: "LinkedIn",
         url: "https://www.linkedin.com/company/langflow/",
         icon: <Linkedin size="22" />,
+        download: false,
+      },
+    ],
+  },
+  {
+    title: "Get Help",
+    link: "",
+    icon: "/assets/icons/community.svg",
+    comingSoon: false,
+    subTabs: [
+      {
+        title: "Contact Us",
+        url: "/contact-us",
+        icon: null,
+        download: false,
+      },
+      {
+        title: "Community help",
+        url: "https://discord.gg/EqksyE2EX9",
+        icon: null,
+        download: false,
+      },
+      {
+        title: "Professional Services",
+        url: "/contact-us",
+        icon: null,
+        download: false,
+      },
+      {
+        title: "Premier Support",
+        url: "/contact-us",
+        icon: null,
         download: false,
       },
     ],
@@ -314,7 +340,8 @@ const DOWNLOAD_OPTIONS = [
   // },
 ];
 
-const NEWSLETTER_BLURB = "A++ is sent out every two weeks with all the latest news for developers on AI, Agents and MCP."
+const NEWSLETTER_BLURB =
+  "A++ is sent out every two weeks with all the latest news for developers on AI, Agents and MCP.";
 
 export {
   LIST,

@@ -1,0 +1,24 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.contact {
+  &__title {
+    color: var(--interface-light-gray-75);
+    font-size: 24px !important;
+    font-weight: 500 !important;
+    font-family: var(--font-inter) !important;
+    margin-bottom: var(--spacer-2);
+  }
+
+  :global(.mktoForm) {
+    gap: var(--spacer-3);
+  }
+
+  :global(.mktoFieldWrap) {
+    gap: var(--spacer-1) !important;
+  }
+
+  :global(.mktoLabel) {
+    font-family: var(--font-inter) !important;
+  }
+}

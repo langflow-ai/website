@@ -2,7 +2,7 @@
 
 // Dependencies
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "@/components/ui/Link";
 
 // Components
@@ -23,6 +23,15 @@ const Header = () => {
   const [isActive, setIsActive] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const leaveTimeout = useRef<any>(null);
+
+  useEffect(() => {
+    if (isActive) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+    return () => document.body.classList.remove("no-scroll");
+  }, [isActive]);
 
   const toggleMenu = () => {
     setIsActive(!isActive);
@@ -54,7 +63,12 @@ const Header = () => {
     <section className={styles.header}>
       <div className={styles.container}>
         {isActive && (
-          <div className={styles.drawer}>
+          <div
+            className={styles.drawer}
+            role="dialog"
+            aria-modal="true"
+            aria-hidden={!isActive}
+          >
             <div className={styles.drawerContent}>
               {LIST.map((item) => (
                 <div key={item.title}>
@@ -65,7 +79,10 @@ const Header = () => {
                         data-event="Langflow.org - Nav Clicked"
                         data-top-level={item.title}
                       >
-                        <Display size={100} className={styles.drawerItem_heading}>
+                        <Display
+                          size={100}
+                          className={styles.drawerItem_heading}
+                        >
                           {item.title}
                         </Display>
                       </Link>
@@ -170,7 +187,11 @@ const Header = () => {
 
                   {item?.subTabs && isHovered && (
                     <div
-                      className={styles.dropdown}
+                      className={
+                        item?.title === "Get Help"
+                          ? styles.dropdownGetHelp
+                          : styles.dropdown
+                      }
                       onMouseEnter={() => clearTimeout(leaveTimeout.current)}
                       onMouseLeave={() => {
                         leaveTimeout.current = setTimeout(

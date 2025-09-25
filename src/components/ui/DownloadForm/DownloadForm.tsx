@@ -115,7 +115,10 @@ const DownloadForm = () => {
     if (checkbox?.checked && email) {
       const formData = new FormData();
       formData.append("email", email);
-      await kitSubscribe({ errors: [], success: false, referrer: window.location.href }, formData);
+      await kitSubscribe(
+        { errors: [], success: false, referrer: window.location.href },
+        formData
+      );
       trackEvent("Langflow.org - Newsletter Subscribed From Download Form", {
         text: "Subscribe",
       });
@@ -175,6 +178,7 @@ const DownloadForm = () => {
         showFootNote={false}
         onSuccess={handleSuccess}
         onLoad={handleFormLoad}
+        isDownload
         id={5302}
       />
     </>

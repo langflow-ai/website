@@ -79,6 +79,24 @@
   }
 }
 
+.dropdownGetHelp {
+  position: absolute;
+  top: 26px;
+  background: #111;
+  padding: 6px;
+  font-family: var(--font-inter);
+  border-radius: 15px;
+  border: 1px solid rgb(34, 34, 34);
+  width: 200px;
+  left: -18%;
+  top: 125%;
+  cursor: pointer;
+  a {
+    padding: 5px 10px;
+    font-size: 500 !important;
+    color: var(--primary-white);
+  }
+}
 .right {
   display: flex;
   gap: 15px;
@@ -109,9 +127,9 @@
   gap: 4px;
   border-radius: 4px;
   background: var(
---Gradient-1,
-linear-gradient(270deg, #f480ff -2%, #ff3276 100%)
-);
+    --Gradient-1,
+    linear-gradient(270deg, #f480ff -2%, #ff3276 100%)
+  );
 
   &_heading {
     color: black !important;
@@ -160,12 +178,15 @@ linear-gradient(270deg, #f480ff -2%, #ff3276 100%)
 .drawer {
   position: fixed;
   top: 60px;
+  inset: 60px 0 0 0;
+  height: calc(100vh - 60px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   left: 0;
-  height: 100vh;
-  overflow: scroll;
   width: 100%;
-  background: #000;
-  z-index: 900;
+  background: var(--primary-black);
+  z-index: 9999;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -249,4 +270,15 @@ linear-gradient(270deg, #f480ff -2%, #ff3276 100%)
 .drawer hr {
   border: none;
   border-top: 1px solid #333;
+}
+
+.drawer[aria-hidden="true"] {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
 }
