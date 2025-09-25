@@ -16,7 +16,6 @@ const ContactForm = () => {
       <MarketoForm
         showFootNote={false}
         id={5484}
-        useBusinessEmailValidation
         feedback={
           <Display size={100} weight={400}>
             We've received your request and someone from our team will reach out
