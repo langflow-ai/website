@@ -130,7 +130,7 @@ const LIST = [
         download: false,
       },
       {
-        title: "Community help",
+        title: "Community Help",
         url: "https://discord.gg/EqksyE2EX9",
         icon: null,
         download: false,
