@@ -101,6 +101,7 @@
   font-weight: 300 !important;
   line-height: 140% !important;
   margin-bottom: 40px;
+  text-align: center;
 
   @include media-breakpoint-down(md) {
     max-width: 100%;
