@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 
 export const generateMetadata = (): Metadata => {
   return {
-    title: "AI++ Newsletter | Langflow",
+    title: "AI++ Newsletter",
     description:
       "Sign up for the AI++ Newsletter to stay updated with the latest in AI, Agents and MCP.",
   };

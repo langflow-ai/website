@@ -7,8 +7,8 @@ import Template from "@/components/pages/EventsHub/Template";
 
 export const generateMetadata = (): Metadata => {
   return {
-    title: "Events | Langflow",
-    description: "Langflow Events",
+    title: "Events",
+    description: "Discover upcoming Langflow events, workshops, and community meetups",
   };
 };
 

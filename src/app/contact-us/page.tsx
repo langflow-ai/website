@@ -8,8 +8,8 @@ import Template from "@/components/pages/ContactUs/Template/Template";
 
 export const generateMetadata = (): Metadata => {
   return {
-    title: "Contact Us | Langflow",
-    description: "Langflow Desktop Application",
+    title: "Contact Us",
+    description: "Get in touch with the Langflow team",
   };
 };
 

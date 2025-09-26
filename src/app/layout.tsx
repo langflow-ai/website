@@ -6,6 +6,9 @@ import * as Sentry from "@sentry/nextjs";
 import HeaderScripts from "@/components/scripts/Header";
 import { DataAttributeTracker } from "@/components/DataAttributeTracker";
 
+// Utilities
+import { SITE_NAME, DEFAULT_TAGLINE } from "@/lib/utils/titles";
+
 // Styles
 import "@/styles/index.scss";
 
@@ -15,7 +18,10 @@ export const generateMetadata = (): Metadata => {
       ...Sentry.getTraceData(),
     },
     metadataBase: new URL("https://www.langflow.org"),
-    title: "Langflow | Low-code AI builder for agentic and RAG applications",
+    title: {
+      template: `%s | ${SITE_NAME} | ${DEFAULT_TAGLINE}`,
+      default: `${SITE_NAME} | ${DEFAULT_TAGLINE}`,
+    },
     description:
       "Langflow is a low-code AI builder for agentic and retrieval-augmented generation (RAG) apps. Code in Python and use any LLM or vector database.",
     icons: {
@@ -34,7 +40,7 @@ export const generateMetadata = (): Metadata => {
     creator: "Langflow",
     publisher: "Langflow",
     openGraph: {
-      title: "Langflow | Low-code AI builder for agentic and RAG applications",
+      title: `${SITE_NAME} | ${DEFAULT_TAGLINE}`,
       description:
         "Langflow is a low-code AI builder for agentic and retrieval-augmented generation (RAG) apps. Code in Python and use any LLM or vector database.",
       url: "https://langflow.org",
@@ -50,7 +56,7 @@ export const generateMetadata = (): Metadata => {
     },
     twitter: {
       card: "summary_large_image",
-      title: "Langflow | Low-code AI builder for agentic and RAG applications",
+      title: `${SITE_NAME} | ${DEFAULT_TAGLINE}`,
       description:
         "Langflow is a low-code AI builder for agentic and retrieval-augmented generation (RAG) apps. Code in Python and use any LLM or vector database.",
       images: ["/images/og-image.png"],

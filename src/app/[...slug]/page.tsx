@@ -17,6 +17,7 @@ import { Seo } from "@/lib/types/sanity";
 
 // Utilities
 import { parseSlugToString } from "@/lib/utils/str";
+import { formatOpenGraphTitle } from "@/lib/utils/titles";
 
 // Components
 import PageLayout from "@/components/layout/page";
@@ -75,7 +76,7 @@ export const generateMetadata = async ({ params: { slug } }: Props) => {
     description: metadata?.description || "",
     openGraph: {
       url: `https://www.langflow.org/${metadata?.slug?.current?.replace(/^\//, "")}`,
-      title: metadata?.title,
+      title: formatOpenGraphTitle(metadata?.title),
       description: metadata?.description || "",
       siteName: "Langflow",
       images: [metadata?.thumbnail ? metadata?.thumbnail : "/images/logo.png"],
