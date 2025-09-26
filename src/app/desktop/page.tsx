@@ -6,8 +6,8 @@ import { Suspense } from 'react';
 
 export const generateMetadata = (): Metadata => {
   return {
-    title: 'Desktop | Langflow',
-    description: 'Langflow Desktop Application'
+    title: 'Desktop',
+    description: 'Download and use the Langflow Desktop Application'
   };
 };
 

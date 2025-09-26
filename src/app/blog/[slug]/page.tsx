@@ -17,6 +17,7 @@ import { Post } from "@/components/ui/Blog/Post";
 import { BlogPost } from "@/lib/types/sanity";
 import { Markdown } from "@/components/ui/Blog/Markdown";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
+import { formatOpenGraphTitle } from "@/lib/utils/titles";
 
 export async function generateStaticParams() {
   const slugs = await sanityFetch<string[]>(BLOG_POSTS_SLUGS_QUERY);
@@ -44,10 +45,10 @@ export const generateMetadata = async ({
   const featureImageUrl = getImageUrl(post.featureImage);
 
   return {
-    title: `${post.title} | Langflow - The AI Agent Builder`,
+    title: post.title,
     description: post.excerpt,
     openGraph: {
-      title: post.title,
+      title: formatOpenGraphTitle(post.title),
       description: post.excerpt,
       images: featureImageUrl ? [featureImageUrl] : undefined,
     },
@@ -151,11 +152,6 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
           </div>
         </section>
       )}
-
-      {/* <article className="d-flex flex-column gap-4 p-4 blog-article">
-        
-        
-      </article> */}
     </PageLayout>
   );
 };

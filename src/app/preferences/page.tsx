@@ -6,8 +6,8 @@ import { Suspense } from "react";
 
 export const generateMetadata = (): Metadata => {
   return {
-    title: "Cookie Preferences | Langflow",
-    description: "Langflow Cookie Preferences",
+    title: "Cookie Preferences",
+    description: "Manage your cookie preferences for the Langflow website",
   };
 };
 
