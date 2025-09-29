@@ -5,13 +5,17 @@ export const YouTubeEmbed = ({ url }: { url: string }) => {
     return null;
   }
 
-  // If it's just a video ID (like "TDcT9ao47Tk"), construct the full URL
-  let videoUrl = url;
-  if (!url.includes("youtube.com") && !url.includes("youtu.be")) {
-    videoUrl = `https://www.youtube.com/watch?v=${url}`;
+  // Extract video ID from various YouTube URL formats
+  let videoId = url;
+
+  // If it's a full URL, extract the ID
+  if (url.includes("youtube.com") || url.includes("youtu.be")) {
+    const urlObj = new URL(url.replace("youtu.be/", "youtube.com/watch?v="));
+    videoId = urlObj.searchParams.get("v") || url.split("/").pop() || url;
   }
 
-  const embedUrl = videoUrl.replace("watch?v=", "embed/");
+  // Construct privacy-enhanced embed URL
+  const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
 
   return (
     <div className="youtube-embed rounded-2 overflow-hidden my-4">

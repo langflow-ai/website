@@ -25,8 +25,10 @@ const DownloadForm = () => {
     a.href = url;
     a.download = filename;
     document.body.appendChild(a);
-    trackEvent("Langflow.org - Langflow Desktop Downloaded", {
-      text: "Download",
+    trackEvent("CTA Clicked", {
+      CTA: "Download",
+      channel: "webpage",
+      location: "download-form",
       filename: filename,
     });
     a.click();
@@ -119,8 +121,10 @@ const DownloadForm = () => {
         { errors: [], success: false, referrer: window.location.href },
         formData
       );
-      trackEvent("Langflow.org - Newsletter Subscribed From Download Form", {
-        text: "Subscribe",
+      trackEvent("CTA Clicked", {
+        CTA: "Subscribe",
+        channel: "webpage",
+        location: "download-form",
       });
     }
     setFormSubmitted(true);

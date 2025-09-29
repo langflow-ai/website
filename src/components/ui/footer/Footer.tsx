@@ -1,12 +1,21 @@
+"use client";
+
 // Components
 import Display from "@/components/ui/Display";
 import Social from "@/components/ui/Social";
 
 // Styles
 import styles from "./styles.module.scss";
-import Link from "../Link";
 
 const Footer = () => {
+  const handlePrivacyClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // Trigger TrustArc consent banner
+    if (typeof window !== 'undefined' && (window as any).truste?.eu?.clickListener) {
+      (window as any).truste.eu.clickListener();
+    }
+  };
+
   return (
     <footer className={`${styles.footer}`}>
       <div className={styles.container}>
@@ -39,7 +48,9 @@ const Footer = () => {
               weight={400}
               className={styles.innerContainer_font}
             >
-              <Link href={"/preferences"}>{"Manage Privacy Choices"}</Link>
+              <a href="#" onClick={handlePrivacyClick} style={{ cursor: 'pointer' }}>
+                {"Manage Privacy Choices"}
+              </a>
             </Display>
           </div>
         </div>

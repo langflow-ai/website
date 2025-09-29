@@ -65,8 +65,12 @@ const Social = () => {
           <Link
             href={s.url}
             target="_blank"
-            data-event="Langflow.org - Social Clicked"
-            data-platform={s.platform}
+            data-event="UI Interaction"
+            data-action="clicked"
+            data-channel="webpage"
+            data-element-id={`social-${s.platform}`}
+            data-namespace="header"
+            data-platform-title="Langflow"
           >
             <div className={styles.social}>
               {s.icon}

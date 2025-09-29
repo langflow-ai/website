@@ -33,8 +33,10 @@ export function KitForm() {
   const [state, formAction] = useFormState(kitSubscribe, initialState);
 
   if (state.success) {
-    trackEvent("Langflow.org - Newsletter Subscribe Button Clicked", {
-      text: "Subscribe",
+    trackEvent("CTA Clicked", {
+      CTA: "Subscribe",
+      channel: "webpage",
+      location: "newsletter-form",
     });
   }
 
