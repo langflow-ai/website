@@ -145,7 +145,6 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
 
   if (name.includes("Form Submitted")) {
     trackLinkedInEvent(LINKEDIN_DEFAULT_FORM_SUBMITTED_CONVERSION_ID);
-    window.rdt && window.rdt("track", "Lead");
     // Event snippet for www_-_Form_Submitted conversion page
     window.gtag &&
       window.gtag("event", "conversion", {

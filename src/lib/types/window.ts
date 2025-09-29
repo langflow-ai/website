@@ -48,10 +48,6 @@ export type MixPanelWindow = Window & {
   mixpanel: any;
 };
 
-export type RedditWindow = Window & {
-  rdt: any;
-};
-
 export type ChiliPiperWindow = Window & {
   ChiliPiper: any;
 };
@@ -88,7 +84,6 @@ export type CustomWindow = AnalyticsWindow &
   JqueryWindow &
   IntercomWindow &
   MixPanelWindow &
-  RedditWindow &
   ChiliPiperWindow &
   RingLeadInstantBookType &
   GreCAPTCHAWindow &

@@ -238,51 +238,6 @@ const Header = () => {
           `
         }}
       /> */}
-      {/* Reddit Pixel scripts - Load only with advertising consent */}
-      <Script
-        id="reddit-pixel"
-        type="text/javascript"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function(w,d) {
-              function loadRedditPixel() {
-                if (typeof window.truste !== 'undefined' && window.truste.cma) {
-                  var consent = window.truste.cma.callApi('getConsent', window.location.href) || {};
-                  var hasAdvertising = consent[2] === 1;
-
-                  if (hasAdvertising) {
-                    if(!w.rdt){
-                      var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};
-                      p.callQueue=[];
-                      var t=d.createElement("script");
-                      t.src="https://www.redditstatic.com/ads/pixel.js";
-                      t.async=!0;
-                      var s=d.getElementsByTagName("script")[0];
-                      s.parentNode.insertBefore(t,s);
-                    }
-                    rdt('init','t2_4q7ujt12');
-                    rdt('track', 'PageVisit');
-                  }
-                }
-              }
-
-              // Listen for consent changes
-              if (window.addEventListener) {
-                window.addEventListener('cm_data_subject_consent_changed', loadRedditPixel);
-                window.addEventListener('cm_consent_preferences_set', loadRedditPixel);
-              }
-
-              // Initial check
-              if (document.readyState === 'complete') {
-                loadRedditPixel();
-              } else {
-                window.addEventListener('load', loadRedditPixel);
-              }
-            })(window, document);
-          `,
-        }}
-      />
     </>
   );
 };
