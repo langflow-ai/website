@@ -68,13 +68,9 @@ export type LinkedInInsightWindow = Window & {
   lintrk: any;
 };
 
-export type KetchWindow = Window & {
-  ketch: any;
-  semaphore: any;
-  ketchConsentLoaded: boolean;
-  ketchConsent: {
-    purposes: { [key: string]: boolean };
-  };
+export type IBMAnalyticsWindow = Window & {
+  _ibmAnalytics: any;
+  digitalData: any;
 };
 
 export type SequelWindow = Window & {
@@ -97,6 +93,6 @@ export type CustomWindow = AnalyticsWindow &
   RingLeadInstantBookType &
   GreCAPTCHAWindow &
   DemandbaseWindow &
-  KetchWindow &
+  IBMAnalyticsWindow &
   SequelWindow &
   LinkedInInsightWindow;

@@ -154,49 +154,8 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
   }
 }
 
-function getConsentGrantedState(
-  consent: string,
-  defaultValue: "granted" | "denied"
-): "granted" | "denied" {
-  if (window.ketchConsent) {
-    const purposes = window.ketchConsent.purposes || {};
-    return purposes[consent] === true ? "granted" : "denied";
-  }
-
-  return defaultValue;
-}
-
-export function addKetchConsentToContextMiddleware() {
-  if (window.analytics) {
-    window.analytics.addSourceMiddleware(({ payload, next }: any) => {
-      if (window.ketchConsent) {
-        payload.obj.properties = {
-          ...(payload.obj.properties || {}),
-          analyticsStorageConsentState: getConsentGrantedState(
-            "analytics",
-            "granted"
-          ),
-          adsStorageConsentState: getConsentGrantedState(
-            "targeted_advertising",
-            "granted"
-          ),
-          adUserDataConsentState: getConsentGrantedState(
-            "targeted_advertising",
-            "granted"
-          ),
-          adPersonalizationConsentState: getConsentGrantedState(
-            "targeted_advertising",
-            "granted"
-          ),
-        };
-        payload.obj.context.consent = {
-          categoryPreferences: window.ketchConsent?.purposes,
-        };
-      }
-      next(payload);
-    });
-  }
-}
+// IBM TrustArc consent is now handled by IBM common.js
+// No additional middleware needed as consent is managed at the IBM level
 
 export function checkLinkByHref(
   validHrefs: { [key: string]: any },

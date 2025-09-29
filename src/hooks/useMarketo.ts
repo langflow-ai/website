@@ -91,12 +91,7 @@ const useMarketo = (
   };
   const handleLoad = () => {
     loadForm();
-
-    if (!!window.ketchConsentLoaded) {
-      trackLoad();
-    } else {
-      window.addEventListener("ds.ketch.consent", trackLoad);
-    }
+    trackLoad();
   };
   const handleError = () => {
     const index = DOMAINS.indexOf(domain);
