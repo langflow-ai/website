@@ -85,7 +85,7 @@ const Header = () => {
                 "tealiumProfileName": "ibm-subsidiary",
               },
               "trustarc": {
-                "privacyPolicyLink": "https://www.datastax.com/legal/privacy-policy"
+                "privacyPolicyLink": "https://ibm.com/privacy"
               },
               "digitalData.page.services.google.enabled": true
             };
