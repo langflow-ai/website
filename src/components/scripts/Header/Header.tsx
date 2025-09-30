@@ -2,9 +2,7 @@
 import Script from "next/script";
 import { SEGMENT_COMMON_PROPERTIES } from "@/lib/utils/tracking";
 
-const segmentWriteKey =
-  process.env.NEXT_PUBLIC_SEGMENT_WRITE_KEY ||
-  "Eqt9jQ2FWQz2HYogszsQHfodPWehAVGs";
+const segmentWriteKey = process.env.NEXT_PUBLIC_SEGMENT_WRITE_KEY || "iVEXvycYxeZTDOyN71Egh2pWtLeuFHBr";
 
 const Header = () => {
   return (
