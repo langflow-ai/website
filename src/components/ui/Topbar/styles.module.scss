@@ -6,11 +6,32 @@
   padding: 0 32px;
   display: flex;
   align-items: center;
-  background: linear-gradient(90deg, #3e64fe, #083a98);
+  justify-content: center;
+  background: linear-gradient(
+    to right,
+    rgb(134, 239, 172),
+    rgb(59, 130, 246),
+    rgb(134, 239, 172)
+  );
+  background-size: 300% 100%;
+  background-position: 0% 50%;
   gap: 16px;
+  animation: waveGradient 30s ease-in-out infinite;
   @include media-breakpoint-down(sm) {
     height: fit-content;
     padding: 8px 32px;
+  }
+}
+
+@keyframes waveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
@@ -20,9 +41,10 @@
   gap: 8px;
   a {
     text-decoration: underline;
-    color: var(--primary-white) !important;
-    font-family: var(--font-sf) !important;
+    color: var(--primary-black) !important;
+    font-family: var(--font-body) !important;
     font-size: 15px !important;
+    font-weight: 600 !important;
   }
   @include media-breakpoint-down(sm) {
     flex-direction: row;
@@ -32,7 +54,8 @@
 }
 
 .text {
-  color: var(--primary-white) !important;
-  font-family: var(--font-sf) !important;
+  color: var(--primary-black) !important;
+  font-family: var(--font-body) !important;
   font-size: 15px !important;
+  font-weight: 600 !important;
 }

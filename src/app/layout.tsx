@@ -5,6 +5,7 @@ import * as Sentry from "@sentry/nextjs";
 // Components
 import HeaderScripts from "@/components/scripts/Header";
 import { DataAttributeTracker } from "@/components/DataAttributeTracker";
+import Topbar from "@/components/ui/Topbar";
 
 // Utilities
 import { SITE_NAME, DEFAULT_TAGLINE } from "@/lib/utils/titles";
@@ -140,6 +141,11 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <Topbar 
+          title="Langflow 1.6 just released" 
+          linkTo="/desktop" 
+          linkText="Download now" 
+        />
         <main className="layout layout-dark">{children}</main>
         <DataAttributeTracker />
       </body>
