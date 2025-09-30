@@ -9,6 +9,22 @@ import { LINKEDIN_DEFAULT_FORM_SUBMITTED_CONVERSION_ID } from "@/lib/utils/linke
 declare let window: CustomWindow;
 
 /**
+ * IBM Segment Common Properties
+ * Required properties that must be included with all Segment events
+ * Update these values once provided by IBM/DataStax
+ */
+export const SEGMENT_COMMON_PROPERTIES = {
+  productTitle: "<ADD>",
+  productCode: "<ADD>",
+  productCodeType: "<ADD>",
+  instanceId: "<ADD>",
+  UT30: "<ADD>",
+  productPlanName: "<ADD>",
+  productPlanType: "<ADD>",
+  subscriptionId: "<ADD>",
+} as const;
+
+/**
  * Track Homepage hero clicks
  *
  * @param {SyntheticEvent} event
@@ -139,8 +155,15 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
       }),
       ...payload,
       ...cleanedUtmData,
+      ...SEGMENT_COMMON_PROPERTIES,
     };
-    window.analytics.track(name, updatedPayload);
+
+    // Set userId to null for anonymous users (anonymousId will be auto-generated)
+    window.analytics.track(name, updatedPayload, {
+      context: {
+        userId: null,
+      },
+    });
   }
 
   if (name.includes("Form Submitted")) {
