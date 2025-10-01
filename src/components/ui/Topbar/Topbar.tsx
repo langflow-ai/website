@@ -17,7 +17,7 @@ const Topbar = ({ title, linkTo, linkText }: Props) => {
   const { isMobile } = useCheckMobile(638);
   return (
     <div className={styles.topbar}>
-      <Speaker />
+      <Speaker color="black" />
       {!isMobile ? (
         <div className={styles.textContainer}>
           <Display size={100} weight={Weight.Regular} className={styles.text}>
