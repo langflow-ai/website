@@ -11,17 +11,12 @@ declare let window: CustomWindow;
 /**
  * IBM Segment Common Properties
  * Required properties that must be included with all Segment events
- * Update these values once provided by IBM/DataStax
  */
 export const SEGMENT_COMMON_PROPERTIES = {
-  productTitle: "<ADD>",
-  productCode: "<ADD>",
-  productCodeType: "<ADD>",
-  instanceId: "<ADD>",
-  UT30: "<ADD>",
-  productPlanName: "<ADD>",
-  productPlanType: "<ADD>",
-  subscriptionId: "<ADD>",
+  productTitle: "IBM Elite Support for Langflow",
+  productCode: "5900BUB",
+  productCodeType: "WWPC",
+  ut30: "30AS5",
 } as const;
 
 /**
