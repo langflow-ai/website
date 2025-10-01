@@ -142,9 +142,9 @@ export default function RootLayout({
       </head>
       <body>
         <Topbar 
-          title="Langflow 1.6 just released" 
-          linkTo="/desktop" 
-          linkText="Download now" 
+          title="Langflow 1.6 is out!" 
+          linkTo="/blog/langflow-1-6" 
+          linkText="Read the announcement" 
         />
         <main className="layout layout-dark">{children}</main>
         <DataAttributeTracker />
