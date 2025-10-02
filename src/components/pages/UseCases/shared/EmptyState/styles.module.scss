@@ -1,0 +1,41 @@
+@import "../../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Empty State
+.emptyState {
+  text-align: center;
+  padding: var(--spacer-9) 0;
+}
+
+.emptyTitle {
+  margin-bottom: var(--spacer-3);
+  color: var(--primary-white);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  
+  @include media-breakpoint-down(md) {
+    font-size: 1.5rem;
+  }
+}
+
+.emptyDescription {
+  margin-bottom: var(--spacer-5);
+  color: var(--interface-light-gray-400);
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.emptyButton {
+  height: 51px;
+  padding: 0 var(--spacer-5);
+  
+  @include media-breakpoint-down(md) {
+    height: 60px;
+    padding: var(--spacer-3) var(--spacer-6);
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    max-width: 300px;
+  }
+}
