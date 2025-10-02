@@ -1,0 +1,21 @@
+@import "../../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Back Link
+.backLink {
+  color: var(--interface-blue-400);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  display: inline-block;
+  margin-bottom: var(--spacer-4);
+
+  &:hover {
+    color: var(--interface-blue-300);
+    text-decoration: underline;
+  }
+  
+  @include media-breakpoint-down(md) {
+    margin-bottom: var(--spacer-3);
+  }
+}

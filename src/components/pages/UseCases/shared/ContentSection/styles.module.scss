@@ -1,0 +1,16 @@
+@import "../../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Content Section
+.contentSection {
+  padding-top: var(--spacer-5);
+  padding-bottom: var(--spacer-9);
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(md) {
+  .contentSection {
+    padding-top: var(--spacer-4);
+    padding-bottom: var(--spacer-7);
+  }
+}

@@ -1,0 +1,252 @@
+@import "../../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Header Section styles are now in shared component
+
+.categoryMeta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacer-5);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacer-4);
+}
+
+.templateCount {
+  color: var(--interface-blue-400);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+// BackLink styles are now in shared component
+
+// Search Section styles are now in shared component
+
+.sortContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-3);
+  height: 100%;
+  
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacer-2);
+  }
+}
+
+.sortLabel {
+  color: var(--interface-light-gray-300);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.sortSelect {
+  height: 51px;
+  padding: 0 var(--spacer-4);
+  background: var(--interface-dark-gray-800);
+  border: 1px solid var(--interface-dark-gray-700);
+  border-radius: 8px;
+  color: var(--interface-light-gray-200);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
+
+  &:focus {
+    outline: none;
+    border-color: var(--interface-blue-500);
+  }
+  
+  @include media-breakpoint-down(md) {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+// Filter Chips
+.filterChips {
+  margin-top: var(--spacer-4);
+}
+
+.filterChip {
+  background: var(--interface-dark-gray-700);
+  border: 1px solid var(--interface-dark-gray-600);
+  color: var(--interface-light-gray-300);
+  padding: var(--spacer-2) var(--spacer-4);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: var(--spacer-2);
+  margin-bottom: var(--spacer-2);
+
+  
+
+  &:hover {
+    background: var(--interface-dark-gray-600);
+    border-color: var(--interface-blue-500);
+  }
+}
+
+.filterChipActive {
+  background: var(--interface-blue-500);
+  border-color: var(--interface-blue-400);
+  color: white;
+}
+
+.clearFilters {
+  background: transparent;
+  border: 1px solid var(--interface-red-500);
+  color: var(--interface-red-400);
+  padding: var(--spacer-2) var(--spacer-4);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: var(--interface-red-500);
+    color: white;
+  }
+}
+
+// Templates Section styles are now in shared component
+
+// Template Cards styles are now in shared component
+
+// Help Section
+.helpSection {
+  // ContentSection handles padding
+  text-align: center;
+}
+
+.helpTitle {
+  margin-bottom: var(--spacer-5);
+  color: var(--primary-white);
+}
+
+.helpContent {
+  background: var(--interface-dark-gray-800);
+  border: 1px solid var(--interface-dark-gray-700);
+  border-radius: 12px;
+  padding: var(--spacer-6);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacer-5);
+  text-align: left;
+  
+  @include media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+    gap: var(--spacer-4);
+  }
+}
+
+.helpColumn {
+  h4 {
+    color: var(--primary-white);
+    margin-bottom: var(--spacer-3);
+    font-size: 1.1rem;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      margin-bottom: var(--spacer-3);
+      color: var(--interface-light-gray-300);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  }
+}
+
+.statusIndicator,
+.difficultyIndicator {
+  display: inline-block;
+  padding: var(--spacer-1) var(--spacer-2);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-right: var(--spacer-2);
+  min-width: 80px;
+  text-align: center;
+}
+
+.statusIndicator[data-status="done"] {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+}
+
+.statusIndicator[data-status="improved"] {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3B82F6;
+}
+
+.statusIndicator[data-status="limited"] {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+}
+
+.statusIndicator[data-status="not-possible"] {
+  background: rgba(107, 114, 128, 0.2);
+  color: #6B7280;
+}
+
+.difficultyIndicator[data-difficulty="beginner"] {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+}
+
+.difficultyIndicator[data-difficulty="intermediate"] {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+}
+
+.difficultyIndicator[data-difficulty="advanced"] {
+  background: rgba(239, 68, 68, 0.2);
+  color: #EF4444;
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(md) {
+  .header {
+    padding-top: var(--spacer-7);
+    padding-bottom: var(--spacer-7);
+  }
+  
+  .searchSection {
+    padding-top: var(--spacer-7);
+    padding-bottom: var(--spacer-7);
+  }
+  
+  .templatesSection {
+    padding-top: var(--spacer-7);
+    padding-bottom: var(--spacer-7);
+  }
+  
+  .helpSection {
+    padding-top: var(--spacer-7);
+    padding-bottom: var(--spacer-7);
+  }
+  
+  .templateCard {
+    margin-bottom: var(--spacer-4);
+  }
+  
+  .templateCardHeader,
+  .templateCardBody,
+  .templateCardFooter {
+    padding: var(--spacer-4);
+  }
+  
+  .helpContent {
+    padding: var(--spacer-5);
+  }
+}
