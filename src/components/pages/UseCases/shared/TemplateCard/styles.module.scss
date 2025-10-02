@@ -1,0 +1,231 @@
+@import "../../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Template Card
+.templateCard {
+  background: var(--interface-dark-gray-800);
+  border: 1px solid var(--interface-dark-gray-700);
+  border-radius: 12px;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--box-shadow-200);
+    border-color: var(--interface-blue-500);
+  }
+}
+
+.templateCardHeader {
+  padding: var(--spacer-5) var(--spacer-5) var(--spacer-4);
+  border-bottom: 1px solid var(--interface-dark-gray-700);
+}
+
+.templateTitle {
+  margin-bottom: var(--spacer-3);
+  color: var(--primary-white);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  
+  @include media-breakpoint-down(md) {
+    font-size: 1.5rem;
+  }
+}
+
+.templateSummary {
+  color: var(--interface-light-gray-400);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.templateCardBody {
+  padding: var(--spacer-4) var(--spacer-5);
+  flex: 1;
+}
+
+.templateBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacer-2);
+  margin-bottom: var(--spacer-4);
+}
+
+.statusBadge {
+  padding: var(--spacer-1) var(--spacer-3);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-done {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-improved {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3B82F6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.status-still-limited {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-not-possible {
+  background: rgba(107, 114, 128, 0.2);
+  color: #6B7280;
+  border: 1px solid rgba(107, 114, 128, 0.3);
+}
+
+.difficultyBadge {
+  padding: var(--spacer-1) var(--spacer-3);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.difficulty-beginner {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.difficulty-intermediate {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.difficulty-advanced {
+  background: rgba(239, 68, 68, 0.2);
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.useCases {
+  margin: var(--spacer-4) 0;
+}
+
+.useCasesLabel {
+  color: var(--interface-light-gray-500);
+  font-size: 0.8rem;
+  display: block;
+  margin-bottom: var(--spacer-2);
+}
+
+.useCasesTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacer-1);
+}
+
+.useCaseTag {
+  background: var(--interface-dark-gray-700);
+  color: var(--interface-light-gray-300);
+  padding: var(--spacer-1) var(--spacer-2);
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.templateMeta {
+  margin-top: var(--spacer-4);
+  padding-top: var(--spacer-4);
+  border-top: 1px solid var(--interface-dark-gray-700);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacer-2);
+  }
+}
+
+.builder {
+  color: var(--interface-light-gray-400);
+  font-size: 0.8rem;
+}
+
+.updated {
+  color: var(--interface-light-gray-500);
+  font-size: 0.8rem;
+}
+
+.templateCardFooter {
+  padding: var(--spacer-4) var(--spacer-5) var(--spacer-5);
+  border-top: 1px solid var(--interface-dark-gray-700);
+  margin-top: auto;
+}
+
+.templateButtons {
+  display: flex;
+  gap: var(--spacer-2);
+  flex-wrap: nowrap;
+  
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+    gap: var(--spacer-3);
+  }
+}
+
+.primaryTemplateButton {
+  flex: 1 1 0;
+  min-width: min-content;
+  height: 51px;
+  padding: 0 var(--spacer-4);
+  white-space: nowrap;
+  
+  @include media-breakpoint-down(md) {
+    height: 60px;
+    padding: var(--spacer-3) var(--spacer-5);
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.secondaryTemplateButton {
+  flex: 1 1 0;
+  height: 51px;
+  padding: 0 var(--spacer-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacer-2);
+  white-space: nowrap;
+  
+  @include media-breakpoint-down(md) {
+    width: 100%;
+    height: 60px;
+    padding: var(--spacer-3) var(--spacer-4);
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(md) {
+  .templateCard {
+    margin-bottom: var(--spacer-4);
+  }
+  
+  .templateCardHeader,
+  .templateCardBody,
+  .templateCardFooter {
+    padding: var(--spacer-4);
+  }
+}
