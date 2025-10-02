@@ -1,0 +1,130 @@
+@import "../../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Category Card
+.categoryCard {
+  background: var(--interface-dark-gray-800);
+  border: 1px solid var(--interface-dark-gray-700);
+  border-radius: 12px;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--box-shadow-200);
+    border-color: var(--interface-blue-500);
+  }
+}
+
+.categoryCardHeader {
+  padding: var(--spacer-5) var(--spacer-5) var(--spacer-4);
+  border-bottom: 1px solid var(--interface-dark-gray-700);
+}
+
+.categoryTitle {
+  margin-bottom: var(--spacer-3);
+  color: var(--primary-white);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  
+  @include media-breakpoint-down(md) {
+    font-size: 1.5rem;
+  }
+}
+
+.categoryDescription {
+  color: var(--interface-light-gray-400);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.categoryCardBody {
+  padding: var(--spacer-4) var(--spacer-5);
+  flex: 1;
+}
+
+.categoryMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacer-4);
+  
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacer-2);
+  }
+}
+
+.templateCount {
+  color: var(--interface-blue-400);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.lastUpdated {
+  color: var(--interface-light-gray-500);
+  font-size: 0.8rem;
+}
+
+.featuredTemplates {
+  margin-top: var(--spacer-4);
+}
+
+.featuredLabel {
+  color: var(--interface-light-gray-500);
+  font-size: 0.8rem;
+  display: block;
+  margin-bottom: var(--spacer-2);
+}
+
+.featuredTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacer-1);
+}
+
+.featuredTag {
+  background: var(--interface-dark-gray-700);
+  color: var(--interface-light-gray-300);
+  padding: var(--spacer-1) var(--spacer-2);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.categoryCardFooter {
+  padding: var(--spacer-4) var(--spacer-5) var(--spacer-5);
+  border-top: 1px solid var(--interface-dark-gray-700);
+  margin-top: auto;
+}
+
+.categoryButton {
+  width: 100%;
+  height: 51px;
+  
+  @include media-breakpoint-down(md) {
+    height: 60px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(md) {
+  .categoryCard {
+    margin-bottom: var(--spacer-4);
+  }
+  
+  .categoryCardHeader,
+  .categoryCardBody,
+  .categoryCardFooter {
+    padding: var(--spacer-4);
+  }
+}
