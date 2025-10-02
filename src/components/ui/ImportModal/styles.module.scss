@@ -1,0 +1,185 @@
+@import "../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacer-5);
+  overflow: hidden;
+}
+
+.modalContent {
+  position: relative;
+  background: var(--interface-dark-gray-800);
+  border: 1px solid var(--interface-dark-gray-700);
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--spacer-5);
+  right: var(--spacer-5);
+  background: transparent;
+  border: none;
+  color: var(--interface-light-gray-400);
+  cursor: pointer;
+  padding: var(--spacer-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  z-index: 10;
+
+  &:hover {
+    background: var(--interface-dark-gray-700);
+    color: var(--primary-white);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.modalHeader {
+  padding: var(--spacer-6) var(--spacer-6) var(--spacer-5);
+  border-bottom: 1px solid var(--interface-dark-gray-700);
+}
+
+.modalTitle {
+  margin-bottom: var(--spacer-3);
+  color: var(--primary-white);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding-right: var(--spacer-8);
+  
+  @include media-breakpoint-down(md) {
+    font-size: 1.5rem;
+  }
+}
+
+.templateName {
+  color: var(--interface-light-gray-400);
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.modalBody {
+  padding: var(--spacer-5) var(--spacer-6) var(--spacer-6);
+}
+
+.instructions {
+  margin-bottom: var(--spacer-5);
+  
+  h4 {
+    color: var(--primary-white);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: var(--spacer-3);
+  }
+  
+  ol {
+    color: var(--interface-light-gray-300);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    margin: 0;
+    padding-left: var(--spacer-5);
+    
+    li {
+      margin-bottom: var(--spacer-2);
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.jsonHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacer-4);
+  background: var(--interface-dark-gray-700);
+  border: 1px solid var(--interface-dark-gray-600);
+  border-radius: 12px;
+  
+  span {
+    color: var(--interface-light-gray-200);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  button {
+    height: 44px;
+    padding: 0 var(--spacer-4);
+    display: flex;
+    align-items: center;
+    gap: var(--spacer-2);
+  }
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(md) {
+  .modalOverlay {
+    padding: var(--spacer-3);
+  }
+  
+  .modalContent {
+    border-radius: 12px;
+  }
+
+  .closeButton {
+    top: var(--spacer-4);
+    right: var(--spacer-4);
+  }
+  
+  .modalHeader,
+  .modalBody {
+    padding: var(--spacer-5);
+  }
+  
+  .modalTitle {
+    font-size: 1.5rem;
+    padding-right: var(--spacer-7);
+  }
+  
+  .instructions {
+    h4 {
+      font-size: 1.0625rem;
+    }
+    
+    ol {
+      font-size: 0.875rem;
+      padding-left: var(--spacer-4);
+    }
+  }
+  
+  .jsonHeader {
+    flex-direction: column;
+    gap: var(--spacer-3);
+    align-items: stretch;
+    padding: var(--spacer-3);
+    
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
