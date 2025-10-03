@@ -1,0 +1,167 @@
+/* Critical CSS for Partners page - Above the fold styles */
+
+/* Hero section critical styles */
+.hero {
+  position: relative;
+  width: 100%;
+  height: auto;
+  z-index: 0;
+  min-height: 700px;
+  padding-top: var(--spacer-4);
+  font-family: var(--font-body);
+  background-color: var(--primary-black);
+  background-image:
+    linear-gradient(
+      to bottom,
+      transparent 40%,
+      rgba(0, 0, 0, 0) 40%,
+      rgba(0, 0, 0, 0) 80%,
+      transparent 80%
+    ),
+    url("/images/new-desktop.png");
+  background-size: 100% 80%;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px !important;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 126px;
+  margin-bottom: 40px;
+}
+
+.hero .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  position: relative;
+  text-align: center;
+  max-width: 800px;
+}
+
+.hero .title {
+  font-family: var(--font-body);
+  font-size: 72px;
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: -0.72px;
+  color: var(--primary-white);
+  margin: 0;
+  text-align: center;
+}
+
+.hero .description {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 140%;
+  color: var(--primary-white);
+  opacity: 0.8;
+  max-width: 632px;
+  text-align: center;
+  margin: 0;
+}
+
+.hero .buttonGroup {
+  display: flex;
+  gap: var(--spacer-3);
+  margin-top: 40px;
+}
+
+.hero .buttonGroup a,
+.hero .buttonGroup button {
+  height: 51px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 28px;
+  min-width: 200px;
+  flex: 1;
+  max-width: 240px;
+  white-space: nowrap;
+}
+
+/* Primary CTA enhancement */
+.primaryCTA {
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.primaryCTA:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Sticky CTA for mobile */
+.stickyCTA {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--gray-200);
+  padding: 16px 20px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile responsive critical styles */
+@media (max-width: 768px) {
+  .hero {
+    background: none;
+    min-height: auto;
+  }
+  
+  .hero .container {
+    flex-direction: column;
+    margin-top: 80px;
+    padding: 0px 40px;
+  }
+  
+  .hero .title {
+    font-size: 48px;
+  }
+  
+  .hero .description {
+    font-size: 16px;
+  }
+  
+  .hero .buttonGroup {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: var(--spacer-2);
+  }
+  
+  .hero .buttonGroup a,
+  .hero .buttonGroup button {
+    width: 100%;
+    max-width: none;
+    white-space: normal;
+  }
+}

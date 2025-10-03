@@ -1,32 +1,25 @@
+import IconCheck from "@/components/ui/icons/IconCheck";
+import IconClock from "@/components/ui/icons/IconClock";
+import IconStar from "@/components/ui/icons/IconStar";
 import Text from "@/components/ui/text/Text";
 import { Weight } from "@/components/ui/text/types";
 import styles from "./styles.module.scss";
 
 const STEPS = [
   {
-    number: "01",
+    icon: <IconCheck />,
     title: "Apply",
-    description: "Submit your application with company details and project description."
+    description: "Submit your company details and case study PDF through our streamlined application process."
   },
   {
-    number: "02", 
-    title: "Review",
-    description: "Our team reviews your application and Langflow usage within 5-7 business days."
+    icon: <IconClock />,
+    title: "Review", 
+    description: "Our team reviews your application for technical fit and business alignment within 10 business days."
   },
   {
-    number: "03",
-    title: "Submit Case Study",
-    description: "Provide one detailed case study showcasing your Langflow implementation."
-  },
-  {
-    number: "04",
+    icon: <IconStar />,
     title: "Get Certified",
-    description: "Receive your official Langflow Certified Partner badge and welcome package."
-  },
-  {
-    number: "05",
-    title: "Get Listed",
-    description: "Your company appears in our official partner directory for maximum visibility."
+    description: "Receive your partner badge, get listed in our directory, and access exclusive partner resources."
   }
 ];
 
@@ -39,17 +32,15 @@ const HowItWorks = () => {
             How It Works
           </Text>
           <Text size={400} weight={Weight.Regular} className={styles.description}>
-            Join our partner program in just 5 simple steps. The entire process typically takes 1-2 weeks.
+            Join our partner program in just 3 simple steps. The entire process typically takes 10 business days.
           </Text>
         </div>
         
         <div className={styles.steps}>
           {STEPS.map((step, index) => (
             <div key={index} className={styles.step}>
-              <div className={styles.stepNumber}>
-                <Text size={500} weight={Weight.Bold} className={styles.number}>
-                  {step.number}
-                </Text>
+              <div className={styles.stepIcon}>
+                {step.icon}
               </div>
               <div className={styles.stepContent}>
                 <Text size={500} weight={Weight.Semibold} className={styles.stepTitle}>

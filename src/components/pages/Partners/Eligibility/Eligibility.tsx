@@ -13,9 +13,8 @@ const Eligibility = () => {
           
           <div className={styles.textContent}>
             <Text size={400} weight={Weight.Regular} className={styles.description}>
-              Our partner program is designed for companies and individuals who are actively using Langflow 
-              to build real-world solutions. There are no fees to join, and we welcome applications from 
-              businesses of all sizes.
+            For companies and teams. We certify organizations that deliver Langflow solutions in
+            production or client projects
             </Text>
             
             <div className={styles.requirements}>
@@ -25,22 +24,17 @@ const Eligibility = () => {
               <ul className={styles.requirementsList}>
                 <li>
                   <Text size={300} weight={Weight.Regular}>
-                    Demonstrated use of Langflow in production or client projects
+                    Verified use
                   </Text>
                 </li>
                 <li>
                   <Text size={300} weight={Weight.Regular}>
-                    Ability to provide a detailed case study of your Langflow implementation
+                    One detailed case study
                   </Text>
                 </li>
                 <li>
                   <Text size={300} weight={Weight.Regular}>
-                    Commitment to maintaining high-quality standards in your work
-                  </Text>
-                </li>
-                <li>
-                  <Text size={300} weight={Weight.Regular}>
-                    Willingness to participate in partner activities and feedback sessions
+                    Commitment to quality
                   </Text>
                 </li>
               </ul>

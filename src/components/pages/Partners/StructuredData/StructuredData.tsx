@@ -31,7 +31,7 @@ const StructuredData = () => {
       "benefits": [
         "Official listing on langflow.org",
         "Certified Partner badge",
-        "Visibility to potential customers",
+        "Visibility to enterprise buyers",
         "Case studies & spotlights",
         "Free to join"
       ],

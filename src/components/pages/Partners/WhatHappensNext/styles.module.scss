@@ -1,0 +1,142 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.whatHappensNext {
+  padding: 80px 0;
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+  font-family: var(--font-body);
+  position: relative;
+  min-height: 600px;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(107, 28, 150, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+    pointer-events: none;
+  }
+  
+  @include media-breakpoint-down(md) {
+    padding: 60px 0;
+    min-height: auto;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+  
+  @include media-breakpoint-down(md) {
+    margin-bottom: 40px;
+  }
+}
+
+.title {
+  color: var(--primary-white);
+  margin-bottom: 16px;
+  
+  @include media-breakpoint-down(md) {
+    font-size: 2.5rem;
+  }
+}
+
+.description {
+  color: var(--primary-white);
+  opacity: 0.8;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  
+  @include media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+.timelineItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 30px;
+  background: var(--interface-dark-gray-800);
+  border: 1px solid var(--interface-dark-gray-700);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-purple);
+  }
+  
+  @include media-breakpoint-down(md) {
+    padding: 20px;
+    gap: 16px;
+  }
+}
+
+.timelineIcon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  @include media-breakpoint-down(md) {
+    width: 40px;
+    height: 40px;
+    
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.timelineContent {
+  flex: 1;
+}
+
+.timelineTitle {
+  color: var(--primary-white);
+  margin-bottom: 8px;
+  
+  @include media-breakpoint-down(md) {
+    font-size: 1.125rem;
+  }
+}
+
+.timelineDescription {
+  color: var(--primary-white);
+  opacity: 0.8;
+  line-height: 1.6;
+}

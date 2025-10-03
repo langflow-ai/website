@@ -9,28 +9,24 @@ import styles from "./styles.module.scss";
 
 const FAQ_ITEMS = [
   {
-    question: "What file format and size should my project zip be?",
-    answer: "Please submit your project as a .zip file. Include your Langflow flows, documentation, and any relevant code or assets that demonstrate your implementation."
+    question: "Do I need to upload a .zip?",
+    answer: "No. Upload one Case Study PDF. Optional attachments like flows or code are welcome."
   },
   {
-    question: "Will my project information be kept confidential?",
-    answer: "Yes, all submitted materials are treated as confidential and used solely for partner evaluation purposes. We will not share your project details without your explicit consent."
+    question: "How long does review take?",
+    answer: "Up to 10 business days."
   },
   {
-    question: "How long does the review process take?",
-    answer: "We typically review applications within 5-7 business days. You'll receive an email notification once your application has been processed, regardless of the outcome."
-  },
- /*  {
-    question: "Can I update my partner profile after approval?",
-    answer: "Yes, you can update your partner profile, case studies, and company information at any time through our partner portal. We encourage keeping your information current."
-  }, */
-  {
-    question: "How can I use the Certified Partner badge?",
-    answer: "Once approved, you'll receive official badge assets and usage guidelines. You can display the badge on your website, marketing materials, and business cards following our brand guidelines."
+    question: "Will my info be confidential?", 
+    answer: "Yes. We only use submitted materials for evaluation. NDA available upon request."
   },
   {
-    question: "When will the public partner directory be available?",
-    answer: "The public partner directory will be launched in Q2 2024. All approved partners will be automatically included and can opt out if desired."
+    question: "How can I use the badge?",
+    answer: "On your website, proposals, and marketing collateral."
+  },
+  {
+    question: "When will the directory be live?",
+    answer: "After approval, your listing goes live within 3 business days."
   }
 ];
 

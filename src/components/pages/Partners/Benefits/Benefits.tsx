@@ -17,19 +17,9 @@ const BENEFITS = [
   },
   {
     icon: <IconCheck />,
-    title: "Visibility to potential customers",
+    title: "Visibility to enterprise buyers",
     description: "Reach thousands of developers and businesses looking for Langflow-powered solutions."
   },
-  {
-    icon: <IconCheck />,
-    title: "Case studies & spotlights",
-    description: "Showcase your success stories and get featured in our partner spotlights and case studies."
-  },
-  {
-    icon: <IconCheck />,
-    title: "Free to join",
-    description: "No fees or hidden costs. Join our partner program completely free of charge."
-  }
 ];
 
 const Benefits = () => {
