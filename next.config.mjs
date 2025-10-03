@@ -2,6 +2,12 @@ import { withSentryConfig } from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
+  // Basic image optimization
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
+  // Compression
+  compress: true,
   redirects: async () => {
     return [
       {

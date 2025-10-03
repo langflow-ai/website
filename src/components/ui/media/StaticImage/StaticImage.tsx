@@ -17,6 +17,7 @@ const StaticImage = ({
   alt,
   fallback,
   src,
+  priority = false,
   ...props
 }: ImageProps & {
   fallback?: string;
@@ -36,6 +37,9 @@ const StaticImage = ({
       alt={alt}
       loader={loader}
       src={hasError && fallback ? fallback : src}
+      priority={priority}
+      loading={priority ? "eager" : "lazy"}
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       {...props}
       onError={() => setHasError(true)}
     />
