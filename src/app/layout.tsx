@@ -91,6 +91,12 @@ export default function RootLayout({
         />
         <link
           rel="preload"
+          href="/images/new-desktop.webp"
+          as="image"
+          type="image/webp"
+        />
+        <link
+          rel="preload"
           href="/images/cardGradient.webp"
           as="image"
           type="image/webp"
