@@ -13,8 +13,7 @@ const Eligibility = () => {
           
           <div className={styles.textContent}>
             <Text size={400} weight={Weight.Regular} className={styles.description}>
-            For companies and teams. We certify organizations that deliver Langflow solutions in
-            production or client projects
+            For companies and teams. We certify organizations with proven track record of successfully implementing and deploying Langflow solutions in production environments and client projects
             </Text>
             
             <div className={styles.requirements}>

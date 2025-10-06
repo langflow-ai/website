@@ -12,7 +12,7 @@ import styles from "./styles.module.scss";
 const FAQ_ITEMS = [
   {
     question: "What do I need to send?",
-    answer: "No. Upload one Case Study PDF. Optional attachments like flows or code are welcome."
+    answer: "To apply, you'll need to provide company information, contact details, and at least one detailed case study demonstrating successful Langflow implementation. The case study should include business impact, technical architecture, and measurable results. Optional attachments like flow diagrams, code samples, or additional documentation are welcome to strengthen your application."
   },
   {
     question: "How long does review take?",
@@ -93,7 +93,7 @@ const FAQ = () => {
         <div className={styles.ctaSection}>
           <div className={styles.ctaContent}>
             <Text size={500} weight={Weight.Bold} className={styles.ctaTitle}>
-              Ready to Dominate the AI Market?
+              Ready to rule the AI market?
             </Text>
             <Text size={300} weight={Weight.Regular} className={styles.ctaDescription}>
               Stop waiting. Start building. Join the elite partners who are already winning with Langflow.

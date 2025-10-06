@@ -38,8 +38,9 @@ interface CaseStudyData {
   customerFeedback: string;
   referenceContact: string;
   publicLink: string;
+  videoUrl: string;
   caseStudyPdf: File | null;
-  optionalAttachments: File | null;
+  additionalFiles: File[] | null;
 }
 
 interface FormData {
@@ -90,8 +91,9 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       customerFeedback: "",
       referenceContact: "",
       publicLink: "",
+      videoUrl: "",
       caseStudyPdf: null,
-      optionalAttachments: null
+      additionalFiles: null
     },
     confidentiality: false,
     consentToContact: false
@@ -159,15 +161,9 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
         newErrors["company.twitterProfile"] = "Please enter a valid Twitter URL";
       }
     } else if (step === 2) {
-      // Validate case study data
-      if (!formData.caseStudy.painPoints.trim()) {
-        newErrors["caseStudy.painPoints"] = "Pain points are required";
-      }
+      // Validate case study data - keeping only the most critical fields as required
       if (!formData.caseStudy.businessImpact.trim()) {
         newErrors["caseStudy.businessImpact"] = "Business impact is required";
-      }
-      if (!formData.caseStudy.previousSolution.trim()) {
-        newErrors["caseStudy.previousSolution"] = "Previous solution information is required";
       }
       if (!formData.caseStudy.whyLangflow.trim()) {
         newErrors["caseStudy.whyLangflow"] = "Why Langflow is required";
@@ -175,26 +171,11 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       if (!formData.caseStudy.architectureOverview.trim()) {
         newErrors["caseStudy.architectureOverview"] = "Architecture overview is required";
       }
-      if (!formData.caseStudy.implementationTime.trim()) {
-        newErrors["caseStudy.implementationTime"] = "Implementation time is required";
-      }
-      if (!formData.caseStudy.timeToValue.trim()) {
-        newErrors["caseStudy.timeToValue"] = "Time to value is required";
-      }
-      if (!formData.caseStudy.efficiencyGains.trim()) {
-        newErrors["caseStudy.efficiencyGains"] = "Efficiency gains are required";
-      }
-      if (!formData.caseStudy.costSavings.trim()) {
-        newErrors["caseStudy.costSavings"] = "Cost savings information is required";
-      }
       if (!formData.caseStudy.successMetrics.trim()) {
         newErrors["caseStudy.successMetrics"] = "Success metrics are required";
       }
       if (!formData.caseStudy.financialImpact.trim()) {
         newErrors["caseStudy.financialImpact"] = "Financial impact is required";
-      }
-      if (!formData.caseStudy.customerFeedback.trim()) {
-        newErrors["caseStudy.customerFeedback"] = "Customer feedback is required";
       }
       if (!formData.caseStudy.caseStudyPdf) {
         newErrors["caseStudy.caseStudyPdf"] = "Case Study PDF is required";
@@ -202,6 +183,11 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
         newErrors["caseStudy.caseStudyPdf"] = "Please upload a PDF file";
       } else if (formData.caseStudy.caseStudyPdf.size > maxFileSize) {
         newErrors["caseStudy.caseStudyPdf"] = `File size must be less than ${process.env.NEXT_PUBLIC_PARTNERS_MAX_ZIP_MB || "100"}MB`;
+      }
+      
+      // Validate video URL format if provided
+      if (formData.caseStudy.videoUrl.trim() && !formData.caseStudy.videoUrl.match(/^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ./?%&=]*)?$/)) {
+        newErrors["caseStudy.videoUrl"] = "Please enter a valid URL";
       }
     }
 
@@ -239,10 +225,11 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
+    const files = e.target.files;
     const fieldName = e.target.name;
     
     if (fieldName === 'caseStudy.caseStudyPdf') {
+      const file = files?.[0] || null;
       setFormData(prev => ({
         ...prev,
         caseStudy: { ...prev.caseStudy, caseStudyPdf: file }
@@ -252,10 +239,11 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       if (file) {
         trackUploadPdf(file.size);
       }
-    } else if (fieldName === 'caseStudy.optionalAttachments') {
+    } else if (fieldName === 'caseStudy.additionalFiles') {
+      const fileList = files ? Array.from(files) : null;
       setFormData(prev => ({
         ...prev,
-        caseStudy: { ...prev.caseStudy, optionalAttachments: file }
+        caseStudy: { ...prev.caseStudy, additionalFiles: fileList }
       }));
     }
     
@@ -342,7 +330,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       
       // Add case study data (excluding files)
       Object.entries(formData.caseStudy).forEach(([key, value]) => {
-        if (key !== 'caseStudyPdf' && key !== 'optionalAttachments') {
+        if (key !== 'caseStudyPdf' && key !== 'additionalFiles') {
           formDataToSend.append(`caseStudy.${key}`, value);
         }
       });
@@ -351,8 +339,10 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       if (formData.caseStudy.caseStudyPdf) {
         formDataToSend.append("caseStudy.caseStudyPdf", formData.caseStudy.caseStudyPdf);
       }
-      if (formData.caseStudy.optionalAttachments) {
-        formDataToSend.append("caseStudy.optionalAttachments", formData.caseStudy.optionalAttachments);
+      if (formData.caseStudy.additionalFiles) {
+        formData.caseStudy.additionalFiles.forEach((file, index) => {
+          formDataToSend.append(`caseStudy.additionalFiles.${index}`, file);
+        });
       }
       
       // Add checkboxes
@@ -400,7 +390,8 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
             referenceContact: "",
             publicLink: "",
             caseStudyPdf: null,
-            optionalAttachments: null
+            additionalFiles: null,
+            videoUrl: ""
           },
           confidentiality: false,
           consentToContact: false
@@ -431,7 +422,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
             </Text>
             <Text size={300} weight={Weight.Regular} className={styles.timelineInfo}>
               <strong>What happens next:</strong><br/>
-              • You'll receive a decision by email within 10 business days<br/>
+              • You'll receive an approval by email within 10 business days<br/>
               • If approved, we'll publish your profile, share the badge kit, and occasionally invite you to spotlights and qualified customer introductions
             </Text>
             <Button
@@ -735,16 +726,16 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
     <div className={styles.stepContent}>
       <div className={styles.stepHeader}>
         <Text size={500} weight={Weight.Semibold} className={styles.stepTitle}>
-          Step 2: Case Study
+          Step 2: Technical Flow Description
         </Text>
         <Text size={300} weight={Weight.Regular} className={styles.stepDescription}>
-          Share details about your Langflow implementation
+          Share technical details about your Langflow implementation
         </Text>
       </div>
 
       <div className={styles.formGroup}>
         <label className={styles.label}>
-          Case Study PDF *
+          Technical Documentation PDF *
         </label>
         <div
           className={`${styles.fileUpload} ${dragActive ? styles.fileUploadActive : ""} ${errors["caseStudy.caseStudyPdf"] ? styles.fileUploadError : ""}`}
@@ -796,6 +787,27 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
         {errors["caseStudy.painPoints"] && (
           <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-painPoints-error">
             {errors["caseStudy.painPoints"]}
+          </Text>
+        )}
+      </div>
+
+      <div className={styles.formGroup}>
+        <label htmlFor="caseStudy.architectureOverview" className={styles.label}>
+          Architecture Overview *
+        </label>
+        <textarea
+          id="caseStudy.architectureOverview"
+          name="caseStudy.architectureOverview"
+          value={formData.caseStudy.architectureOverview}
+          onChange={handleInputChange}
+          className={`${styles.textarea} ${errors["caseStudy.architectureOverview"] ? styles.inputError : ""}`}
+          placeholder="Describe your technical architecture, how Langflow integrates, and any custom components or adaptations"
+          rows={4}
+          aria-describedby={errors["caseStudy.architectureOverview"] ? "caseStudy-architectureOverview-error" : undefined}
+        />
+        {errors["caseStudy.architectureOverview"] && (
+          <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-architectureOverview-error">
+            {errors["caseStudy.architectureOverview"]}
           </Text>
         )}
       </div>
@@ -859,27 +871,6 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
         {errors["caseStudy.whyLangflow"] && (
           <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-whyLangflow-error">
             {errors["caseStudy.whyLangflow"]}
-          </Text>
-        )}
-      </div>
-
-      <div className={styles.formGroup}>
-        <label htmlFor="caseStudy.architectureOverview" className={styles.label}>
-          Architecture Overview *
-        </label>
-        <textarea
-          id="caseStudy.architectureOverview"
-          name="caseStudy.architectureOverview"
-          value={formData.caseStudy.architectureOverview}
-          onChange={handleInputChange}
-          className={`${styles.textarea} ${errors["caseStudy.architectureOverview"] ? styles.inputError : ""}`}
-          placeholder="Describe your technical architecture, how Langflow integrates, and any custom components or adaptations"
-          rows={4}
-          aria-describedby={errors["caseStudy.architectureOverview"] ? "caseStudy-architectureOverview-error" : undefined}
-        />
-        {errors["caseStudy.architectureOverview"] && (
-          <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-architectureOverview-error">
-            {errors["caseStudy.architectureOverview"]}
           </Text>
         )}
       </div>
@@ -1064,6 +1055,56 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
             className={styles.input}
             placeholder="https://example.com/case-study (optional)"
           />
+        </div>
+      </div>
+
+      <div className={styles.formGroup}>
+        <label htmlFor="caseStudy.videoUrl" className={styles.label}>
+          Demo Video URL
+        </label>
+        <input
+          type="url"
+          id="caseStudy.videoUrl"
+          name="caseStudy.videoUrl"
+          value={formData.caseStudy.videoUrl}
+          onChange={handleInputChange}
+          className={`${styles.input} ${errors["caseStudy.videoUrl"] ? styles.inputError : ""}`}
+          placeholder="Link to your demo video (optional)"
+        />
+        {errors["caseStudy.videoUrl"] && (
+          <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-videoUrl-error">
+            {errors["caseStudy.videoUrl"]}
+          </Text>
+        )}
+      </div>
+
+      <div className={styles.formGroup}>
+        <label className={styles.label}>
+          Additional Files
+        </label>
+        <div
+          className={`${styles.fileUpload} ${dragActive ? styles.fileUploadActive : ""}`}
+          onClick={() => document.getElementById('additionalFiles')?.click()}
+        >
+          <input
+            type="file"
+            id="additionalFiles"
+            name="caseStudy.additionalFiles"
+            onChange={handleFileChange}
+            className={styles.fileInput}
+            multiple
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.json,.yaml,.yml,.txt"
+          />
+          <div className={styles.fileUploadContent}>
+            <Text size={400} weight={Weight.Semibold} className={styles.fileUploadText}>
+              {formData.caseStudy.additionalFiles?.length 
+                ? `${formData.caseStudy.additionalFiles.length} file(s) selected` 
+                : "Drop additional files here or click to browse"}
+            </Text>
+            <Text size={200} weight={Weight.Regular} className={styles.helpText}>
+              Upload any relevant files: project files, flows, results, sheets, etc.
+            </Text>
+          </div>
         </div>
       </div>
 

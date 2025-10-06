@@ -1,26 +1,25 @@
-import Github from "@/components/icons/github/Github";
 import Discord from "@/components/icons/discord/Discord";
+import Github from "@/components/icons/github/Github";
 import Twitter from "@/components/icons/Twitter/Twitter";
 import Youtube from "@/components/icons/youtube/Youtube";
 import CloudPlatform from "@/components/pages/Home/Notebook/CloudPlatform";
 import Langflow from "@/components/pages/Home/Notebook/Langflow";
 import Signup from "@/components/pages/Home/Notebook/Signup";
 // Import all logo components
-import FyxtLogo from "@/components/ui/icons/Fyxt";
-import SurveyHub from "@/components/ui/icons/SurveyHub";
-import Athena from "@/components/ui/icons/Athena";
-import Ecclesiasical from "@/components/ui/icons/Ecclesiasical";
-import Ik from "@/components/ui/icons/Ik";
-import Foqum from "@/components/ui/icons/Foqum";
-import PAP from "@/components/ui/icons/PAP";
-import IntimeGDT from "@/components/ui/icons/IntimeGDT";
-import ButterUp from "@/components/ui/icons/ButterUp";
 import Contact from "@/components/icons/contact/Contact";
 import Linkedin from "@/components/icons/linkedin/Linkedin";
-import WinWeb from "@/components/ui/icons/WinWeb";
 import Apple from "@/components/ui/icons/Apple";
+import Athena from "@/components/ui/icons/Athena";
+import ButterUp from "@/components/ui/icons/ButterUp";
+import Ecclesiasical from "@/components/ui/icons/Ecclesiasical";
+import Foqum from "@/components/ui/icons/Foqum";
+import FyxtLogo from "@/components/ui/icons/Fyxt";
+import Ik from "@/components/ui/icons/Ik";
+import IntimeGDT from "@/components/ui/icons/IntimeGDT";
+import PAP from "@/components/ui/icons/PAP";
+import SurveyHub from "@/components/ui/icons/SurveyHub";
 import Windows from "@/components/ui/icons/Windows";
-import Globe from "@/components/ui/icons/Globe";
+import WinWeb from "@/components/ui/icons/WinWeb";
 
 const LIST = [
   // {
@@ -122,6 +121,12 @@ const LIST = [
         download: false,
       },
     ],
+  },
+  {
+    title: "Partners",
+    link: "/partners",
+    icon: "",
+    comingSoon: false,
   },
   {
     title: "Download",
@@ -315,15 +320,6 @@ const DOWNLOAD_OPTIONS = [
 ];
 
 export {
-  LIST,
-  SOCIALS,
-  QUOTES_DATA,
-  HERO_CONTENT,
-  NOTEBOOK,
-  CARDS,
-  PARTNERS_STACK_TEXT,
-  STACK_TEXT,
-  STACK_LOGOS,
-  GET_STARTED,
-  DOWNLOAD_OPTIONS,
+    CARDS, DOWNLOAD_OPTIONS, GET_STARTED, HERO_CONTENT, LIST, NOTEBOOK, PARTNERS_STACK_TEXT, QUOTES_DATA, SOCIALS, STACK_LOGOS, STACK_TEXT
 };
+

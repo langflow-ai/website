@@ -103,15 +103,8 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px;
-  border: 2px dashed var(--interface-dark-gray-600);
-  border-radius: 12px;
   transition: all 0.3s ease;
   background: transparent;
-
-  &:hover {
-    border-color: var(--primary-purple);
-    background: rgba(107, 28, 150, 0.02);
-  }
 
   @include media-breakpoint-down(md) {
     padding: 32px 24px;
