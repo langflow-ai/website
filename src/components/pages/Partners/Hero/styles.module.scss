@@ -72,27 +72,22 @@
 .container {
   position: relative;
   z-index: 2;
-  max-width: 1280px !important;
-  padding: 0px;
+  max-width: 1300px !important;
+  padding: 0px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 24px;
-  margin-top: 126px;
+  margin-top: 80px;
   margin-bottom: 40px;
-
-  @include media-breakpoint-down(xlg) {
-    padding: 0px 20px;
-  }
 
   @include media-breakpoint-down(lg) {
     flex-direction: column;
-    margin-top: 80px;
-    padding: 0px 40px;
+    margin-top: 60px;
   }
 
-  @include media-breakpoint-down(md) {
-    padding: 0px 24px;
+  @include media-breakpoint-down(mlg) {
+    padding: 0px 16px;
   }
 }
 
@@ -104,25 +99,44 @@
   gap: 32px;
   position: relative;
   text-align: center;
-  max-width: 800px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+  border: 2px dashed var(--interface-dark-gray-600);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: transparent;
+
+  &:hover {
+    border-color: var(--primary-purple);
+    background: rgba(107, 28, 150, 0.02);
+  }
+
+  @include media-breakpoint-down(md) {
+    padding: 32px 24px;
+    gap: 24px;
+  }
 }
 
 .title {
   font-family: var(--font-body);
-  font-size: 72px;
+  font-size: clamp(32px, 8vw, 96px);
   font-weight: 500;
   line-height: 100%;
-  letter-spacing: -0.72px;
+  letter-spacing: -0.02em;
   color: var(--primary-white);
   margin: 0;
   text-align: center;
+  width: 100%;
+  max-width: 1200px;
 
   @include media-breakpoint-down(lg) {
-    font-size: 48px;
+    font-size: clamp(32px, 6vw, 72px);
   }
 
   @include media-breakpoint-down(md) {
-    font-size: 32px;
+    font-size: clamp(28px, 5vw, 48px);
   }
 }
 
@@ -145,7 +159,7 @@
 .buttonGroup {
   display: flex;
   gap: var(--spacer-3);
-  margin-top: 40px;
+  margin-top: 24px;
 
   a,
   button {
@@ -174,6 +188,7 @@
     align-items: center;
     width: 100%;
     gap: var(--spacer-2);
+    margin-top: 16px;
     
     a,
     button {

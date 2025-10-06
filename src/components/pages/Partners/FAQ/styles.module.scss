@@ -83,19 +83,24 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 800px;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 .faqItem {
-  background: var(--interface-dark-gray-800);
-  border: 1px solid var(--interface-dark-gray-700);
+  background: transparent;
+  border: 2px dashed var(--interface-dark-gray-600);
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
 
   &:hover {
-    border-color: var(--interface-dark-gray-600);
+    transform: translateY(-2px);
+    border-color: var(--primary-purple);
+    background: rgba(107, 28, 150, 0.05);
   }
 }
 
@@ -103,7 +108,7 @@
   width: 100%;
   background: none;
   border: none;
-  padding: 24px;
+  padding: 32px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -112,16 +117,15 @@
   transition: all 0.3s ease;
 
   &:hover {
-    background: var(--interface-dark-gray-750);
+    background: rgba(107, 28, 150, 0.05);
   }
 
   &:focus {
-    outline: 2px solid var(--interface-purple-400);
-    outline-offset: -2px;
+    outline: none;
   }
 
-  @include media-breakpoint-down(sm) {
-    padding: 20px;
+  @include media-breakpoint-down(md) {
+    padding: 24px 20px;
   }
 }
 
@@ -154,7 +158,7 @@
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
-  background: var(--interface-dark-gray-750);
+  background: transparent;
 }
 
 .answerOpen {
@@ -162,16 +166,20 @@
 }
 
 .answerText {
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 140%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 150%;
   color: var(--primary-white);
-  opacity: 0.8;
-  padding: 0 24px 24px 24px;
+  opacity: 0.7;
+  padding: 0 32px 32px 32px;
   margin: 0;
+  border-top: 1px solid var(--interface-dark-gray-600);
+  margin-top: 16px;
+  padding-top: 16px;
 
-  @include media-breakpoint-down(sm) {
-    padding: 0 20px 20px 20px;
+  @include media-breakpoint-down(md) {
+    font-size: 13px;
+    padding: 16px 24px 24px 24px;
   }
 }
 
@@ -197,7 +205,7 @@
   border-radius: 20px;
   padding: 40px;
   text-align: center;
-  max-width: 600px;
+  max-width: 1200px;
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -272,12 +280,17 @@
   background: var(--primary-black);
   border: none;
   border-radius: 8px;
-  padding: 16px 32px;
+  padding: 16px 28px;
+  min-width: 200px;
+  height: 51px;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   z-index: 2;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   
   &:hover {
     transform: translateY(-2px);
@@ -290,7 +303,8 @@
   }
   
   @include media-breakpoint-down(md) {
-    padding: 14px 28px;
+    width: 100%;
+    max-width: none;
   }
 }
 

@@ -46,7 +46,6 @@ interface FormData {
   company: CompanyData;
   caseStudy: CaseStudyData;
   confidentiality: boolean;
-  ndaRequest: boolean;
   consentToContact: boolean;
 }
 
@@ -95,7 +94,6 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       optionalAttachments: null
     },
     confidentiality: false,
-    ndaRequest: false,
     consentToContact: false
   });
   
@@ -359,7 +357,6 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       
       // Add checkboxes
       formDataToSend.append("confidentiality", formData.confidentiality.toString());
-      formDataToSend.append("ndaRequest", formData.ndaRequest.toString());
       formDataToSend.append("consentToContact", formData.consentToContact.toString());
 
       const response = await fetch("/api/partners/apply", {
@@ -406,7 +403,6 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
             optionalAttachments: null
           },
           confidentiality: false,
-          ndaRequest: false,
           consentToContact: false
         });
         setCurrentStep(1);
@@ -747,6 +743,43 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       </div>
 
       <div className={styles.formGroup}>
+        <label className={styles.label}>
+          Case Study PDF *
+        </label>
+        <div
+          className={`${styles.fileUpload} ${dragActive ? styles.fileUploadActive : ""} ${errors["caseStudy.caseStudyPdf"] ? styles.fileUploadError : ""}`}
+          onDragEnter={handleDragIn}
+          onDragLeave={handleDragOut}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            name="caseStudy.caseStudyPdf"
+            accept=".pdf"
+            onChange={handleFileChange}
+            className={styles.fileInput}
+            aria-describedby={errors["caseStudy.caseStudyPdf"] ? "caseStudy-caseStudyPdf-error" : "caseStudy-caseStudyPdf-help"}
+          />
+          <div className={styles.fileUploadContent}>
+            <Text size={400} weight={Weight.Semibold} className={styles.fileUploadText}>
+              {formData.caseStudy.caseStudyPdf ? formData.caseStudy.caseStudyPdf.name : "Drop your case study PDF here or click to browse"}
+            </Text>
+          </div>
+        </div>
+        {errors["caseStudy.caseStudyPdf"] && (
+          <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-caseStudyPdf-error">
+            {errors["caseStudy.caseStudyPdf"]}
+          </Text>
+        )}
+        <Text size={200} weight={Weight.Regular} className={styles.helpText} id="caseStudy-caseStudyPdf-help">
+          Please upload a detailed case study PDF (max {process.env.NEXT_PUBLIC_PARTNERS_MAX_ZIP_MB || "100"}MB)
+        </Text>
+      </div>
+
+      <div className={styles.formGroup}>
         <label htmlFor="caseStudy.painPoints" className={styles.label}>
           Pain Points and Challenges *
         </label>
@@ -1034,58 +1067,6 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
         </div>
       </div>
 
-      <div className={styles.formGroup}>
-        <label className={styles.label}>
-          Case Study PDF *
-        </label>
-        <div
-          className={`${styles.fileUpload} ${dragActive ? styles.fileUploadActive : ""} ${errors["caseStudy.caseStudyPdf"] ? styles.fileUploadError : ""}`}
-          onDragEnter={handleDragIn}
-          onDragLeave={handleDragOut}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-          onClick={() => fileInputRef.current?.click()}
-        >
-          <input
-            ref={fileInputRef}
-            type="file"
-            name="caseStudy.caseStudyPdf"
-            accept=".pdf"
-            onChange={handleFileChange}
-            className={styles.fileInput}
-            aria-describedby={errors["caseStudy.caseStudyPdf"] ? "caseStudy-caseStudyPdf-error" : "caseStudy-caseStudyPdf-help"}
-          />
-          <div className={styles.fileUploadContent}>
-            <Text size={400} weight={Weight.Semibold} className={styles.fileUploadText}>
-              {formData.caseStudy.caseStudyPdf ? formData.caseStudy.caseStudyPdf.name : "Drop your case study PDF here or click to browse"}
-            </Text>
-          </div>
-        </div>
-        {errors["caseStudy.caseStudyPdf"] && (
-          <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-caseStudyPdf-error">
-            {errors["caseStudy.caseStudyPdf"]}
-          </Text>
-        )}
-        <Text size={200} weight={Weight.Regular} className={styles.helpText} id="caseStudy-caseStudyPdf-help">
-          Please upload a detailed case study PDF (max {process.env.NEXT_PUBLIC_PARTNERS_MAX_ZIP_MB || "100"}MB)
-        </Text>
-      </div>
-
-      <div className={styles.formGroup}>
-        <label className={styles.label}>
-          Optional Attachments
-        </label>
-        <input
-          type="file"
-          name="caseStudy.optionalAttachments"
-          onChange={handleFileChange}
-          className={styles.input}
-          multiple
-        />
-        <Text size={200} weight={Weight.Regular} className={styles.helpText}>
-          Additional files, screenshots, or documentation (optional)
-        </Text>
-      </div>
 
       <div className={styles.checkboxGroup}>
         <label className={styles.checkboxLabel}>
@@ -1095,24 +1076,10 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
             checked={formData.confidentiality}
             onChange={handleCheckboxChange}
             className={styles.checkbox}
+            required
           />
           <span className={styles.checkboxText}>
-            I understand this information may be kept confidential
-          </span>
-        </label>
-      </div>
-
-      <div className={styles.checkboxGroup}>
-        <label className={styles.checkboxLabel}>
-          <input
-            type="checkbox"
-            name="ndaRequest"
-            checked={formData.ndaRequest}
-            onChange={handleCheckboxChange}
-            className={styles.checkbox}
-          />
-          <span className={styles.checkboxText}>
-            I request an NDA before sharing sensitive information
+            I confirm that I am voluntarily applying to the Langflow Partner Certification Program and consent to the processing of my personal and business information, including the use case submitted, for evaluation purposes.
           </span>
         </label>
       </div>
@@ -1128,7 +1095,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
             required
           />
           <span className={styles.checkboxText}>
-            I consent to be contacted regarding this application *
+            I understand that all information will be kept confidential during the review process and, if I am approved, Langflow may publicly share selected content from my submission to showcase my certified status.
           </span>
         </label>
       </div>

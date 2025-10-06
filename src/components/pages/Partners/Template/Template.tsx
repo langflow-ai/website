@@ -5,7 +5,6 @@ import FAQ from "../FAQ";
 import Hero from "../Hero";
 import HowItWorks from "../HowItWorks";
 import StructuredData from "../StructuredData";
-import TrustProof from "../TrustProof";
 
 const Template = () => {
   return (
@@ -17,7 +16,6 @@ const Template = () => {
       <HowItWorks />
       {/* <WhatHappensNext /> */}
       <Eligibility />
-      <TrustProof />
       <FAQ />
     </>
   );

@@ -31,7 +31,12 @@ const STEPS = [
   {
     icon: <IconStar />,
     title: "Get Certified",
-    description: "Receive your partner badge, get listed in our directory, and access exclusive partner resources."
+    description: "Receive your partner badge and get listed in our directory with verified status."
+  },
+  {
+    icon: <IconStar />,
+    title: "Access Benefits",
+    description: "Access exclusive partner resources, training materials, and marketing opportunities."
   }
 ];
 
@@ -68,7 +73,7 @@ const HowItWorks = () => {
           </div>
           
           <div className={styles.roadmapRow}>
-            {STEPS.slice(3, 5).map((step, index) => (
+            {STEPS.slice(3, 6).map((step, index) => (
               <div key={index + 3} className={styles.roadmapCard}>
                 <div className={styles.step}>
                   <div className={styles.stepIcon}>
@@ -83,7 +88,7 @@ const HowItWorks = () => {
                     </Text>
                   </div>
                 </div>
-                {index < 1 && <div className={styles.arrowRight} />}
+                {index < 2 && <div className={styles.arrowRight} />}
               </div>
             ))}
           </div>
