@@ -40,16 +40,6 @@ const Eligibility = () => {
               </ul>
             </div>
 
-            <div className={styles.timeline}>
-              <Text size={500} weight={Weight.Semibold} className={styles.timelineTitle}>
-                Timeline:
-              </Text>
-              <Text size={300} weight={Weight.Regular} className={styles.timelineText}>
-                We typically review applications within 5-7 business days. Once approved, 
-                you'll receive your certification materials and be listed in our partner directory.
-              </Text>
-            </div>
-
             <div className={styles.note}>
               <Text size={300} weight={Weight.Regular} className={styles.noteText}>
                 <strong>Note:</strong> We reserve the right to review and approve partner applications 

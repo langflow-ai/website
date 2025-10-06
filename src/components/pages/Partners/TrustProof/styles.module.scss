@@ -65,9 +65,8 @@
   gap: 24px;
   max-width: 800px;
   margin: 0 auto;
-  
+  grid-template-columns: repeat(2, 1fr);  
   @include media-breakpoint-down(md) {
-    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 }

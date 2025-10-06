@@ -1,0 +1,627 @@
+.modalFormContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 40px;
+  box-sizing: border-box;
+  z-index: 1000;
+  color: #ffffff;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 12px;
+  color: #ffffff;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+
+  &:focus {
+    outline: 2px solid var(--interface-purple-400);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.modalFormContainer {
+  :global(.formSection) {
+    padding: 0;
+    background: none;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  :global(.container) {
+    padding: 0;
+    max-width: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(.header) {
+    margin-bottom: 32px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  :global(.title) {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: var(--primary-white);
+    font-weight: 600;
+  }
+
+  :global(.description) {
+    font-size: 18px;
+    color: var(--primary-white);
+    opacity: 0.8;
+  }
+
+  :global(.stepIndicator) {
+    margin-bottom: 24px;
+    flex-shrink: 0;
+  }
+
+  :global(.form) {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    position: relative;
+    overflow-y: auto;
+  }
+
+  :global(.formGrid) {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 24px;
+    max-width: none;
+  }
+
+  :global(.formGroup) {
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  :global(.label) {
+    display: block;
+    color: var(--primary-white);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  :global(.input),
+  :global(.textarea) {
+    width: 100%;
+    background: var(--interface-dark-gray-900);
+    border: 1px solid var(--interface-dark-gray-600);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--primary-white);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-body);
+
+    &::placeholder {
+      color: var(--interface-light-gray-400);
+      font-size: 0.9rem;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--interface-purple-400);
+      box-shadow: 0 0 0 3px rgba(107, 28, 150, 0.1);
+    }
+
+    &.inputError {
+      border-color: var(--interface-red-400);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+  }
+
+  :global(.textarea) {
+    resize: vertical;
+    min-height: 80px;
+    font-family: var(--font-body);
+  }
+
+  :global(.fieldError) {
+    color: var(--interface-red-400);
+    margin-top: 4px;
+    display: block;
+    font-size: 0.75rem;
+  }
+
+  :global(.helpText) {
+    color: var(--interface-light-gray-400);
+    margin-top: 4px;
+    display: block;
+    font-size: 0.75rem;
+  }
+
+  :global(.fileUpload) {
+    border: 2px dashed var(--interface-dark-gray-600);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--interface-dark-gray-900);
+    position: relative;
+    z-index: 1;
+
+    &:hover {
+      border-color: var(--interface-purple-400);
+      background: var(--interface-dark-gray-850);
+    }
+
+    &.fileUploadActive {
+      border-color: var(--interface-purple-400);
+      background: var(--interface-dark-gray-850);
+    }
+
+    &.fileUploadError {
+      border-color: var(--interface-red-400);
+    }
+  }
+
+  :global(.fileInput) {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  :global(.fileUploadContent) {
+    pointer-events: none;
+  }
+
+  :global(.fileUploadText) {
+    color: var(--primary-white);
+    margin-bottom: 8px;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 140%;
+  }
+
+  :global(.checkboxGroup) {
+    margin: 12px 0;
+  }
+
+  :global(.checkboxLabel) {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    line-height: 1.5;
+  }
+
+  :global(.checkbox) {
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  :global(.checkboxText) {
+    color: var(--primary-white);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    font-weight: 300;
+    opacity: 0.8;
+  }
+
+  :global(.formActions) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    gap: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--interface-dark-gray-600);
+    flex-shrink: 0;
+  }
+
+  :global(.submitButton) {
+    flex: 1;
+    height: 48px;
+    position: relative;
+    z-index: 1;
+  }
+
+  :global(.errorMessage) {
+    background: var(--interface-red-300);
+    border: 1px solid var(--interface-red-400);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    color: var(--interface-red-600);
+    position: relative;
+    z-index: 1;
+  }
+
+  // Success message adjustments for modal
+  :global(.successMessage) {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--color-brand-Black, #000);
+    border: 1px solid var(--color-gray-Gray-700, #4a4a4a);
+    border-radius: 12px;
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(107, 28, 150, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+      border-radius: 12px;
+      pointer-events: none;
+    }
+  }
+
+  :global(.successTitle) {
+    margin-bottom: 16px;
+    color: var(--primary-white);
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  :global(.successDescription) {
+    margin-bottom: 24px;
+    color: var(--primary-white);
+    opacity: 0.8;
+    font-size: 16px;
+  }
+
+  :global(.timelineInfo) {
+    margin-bottom: 32px;
+    text-align: left;
+    background: var(--interface-dark-gray-900);
+    padding: 16px;
+    border-radius: 8px;
+    color: var(--primary-white);
+    font-size: 14px;
+  }
+
+  // Step content styles
+  :global(.stepContent) {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(.stepHeader) {
+    margin-bottom: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  :global(.stepTitle) {
+    color: var(--primary-white);
+    margin-bottom: 8px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  :global(.stepDescription) {
+    color: var(--primary-white);
+    opacity: 0.8;
+    font-size: 14px;
+  }
+}
+
+// Mobile adjustments
+@media (max-width: 768px) {
+  .modalFormContainer {
+    padding: 20px;
+    
+    :global(.header) {
+      margin-bottom: 20px;
+    }
+
+    :global(.title) {
+      font-size: 24px;
+    }
+
+    :global(.description) {
+      font-size: 16px;
+    }
+
+    :global(.stepIndicator) {
+      margin-bottom: 16px;
+    }
+
+    :global(.formGrid) {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    :global(.formGroup) {
+      margin-bottom: 8px;
+    }
+
+    :global(.formActions) {
+      margin-top: 20px;
+      padding-top: 20px;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    :global(.submitButton) {
+      width: 100%;
+    }
+  }
+
+  .closeButton {
+    top: 16px;
+    right: 16px;
+    padding: 10px;
+    
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+// Small mobile screens
+@media (max-width: 480px) {
+  .modalFormContainer {
+    :global(.form) {
+      padding: 12px;
+    }
+
+    :global(.header) {
+      margin-bottom: 8px;
+    }
+
+    :global(.title) {
+      font-size: 18px;
+    }
+
+    :global(.description) {
+      font-size: 13px;
+    }
+
+    :global(.stepIndicator) {
+      margin-bottom: 8px;
+    }
+
+    :global(.formGrid) {
+      gap: 8px;
+    }
+
+    :global(.formGroup) {
+      margin-bottom: 8px;
+    }
+  }
+
+  .closeButton {
+    top: 12px;
+    right: 12px;
+    padding: 8px;
+    
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+// Tablet screens - 2 columns
+@media (min-width: 768px) {
+  .modalFormContainer {
+    padding: 32px;
+    
+    :global(.formGrid) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    :global(.formGroup) {
+      margin-bottom: 16px;
+    }
+
+    // Full width for textarea fields
+    :global(.formGroup:has(.textarea)) {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+// Desktop screens - 3 columns
+@media (min-width: 1200px) {
+  .modalFormContainer {
+    padding: 40px;
+    
+    :global(.formGrid) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    :global(.stepHeader) {
+      margin-bottom: 40px;
+    }
+
+    :global(.stepTitle) {
+      font-size: 36px;
+    }
+
+    :global(.stepDescription) {
+      font-size: 20px;
+    }
+
+    :global(.formGroup) {
+      margin-bottom: 20px;
+    }
+
+    :global(.label) {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    :global(.input),
+    :global(.textarea) {
+      padding: 16px 20px;
+      font-size: 1.1rem;
+    }
+
+    :global(.formActions) {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+
+    // Full width for textarea fields
+    :global(.formGroup:has(.textarea)) {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+// Ultra wide screens - 4 columns
+@media (min-width: 1600px) {
+  .modalFormContainer {
+    padding: 48px;
+    
+    :global(.formGrid) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    :global(.stepHeader) {
+      margin-bottom: 48px;
+    }
+
+    :global(.stepTitle) {
+      font-size: 40px;
+    }
+
+    :global(.stepDescription) {
+      font-size: 22px;
+    }
+
+    :global(.formGroup) {
+      margin-bottom: 24px;
+    }
+
+    :global(.label) {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    :global(.input),
+    :global(.textarea) {
+      padding: 18px 24px;
+      font-size: 1.2rem;
+    }
+
+    :global(.formActions) {
+      margin-top: 40px;
+      padding-top: 40px;
+    }
+
+    // Full width for textarea fields
+    :global(.formGroup:has(.textarea)) {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+// Extra ultra wide screens - 5 columns
+@media (min-width: 2000px) {
+  .modalFormContainer {
+    padding: 56px;
+    
+    :global(.formGrid) {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 36px;
+    }
+
+    :global(.stepHeader) {
+      margin-bottom: 56px;
+    }
+
+    :global(.stepTitle) {
+      font-size: 44px;
+    }
+
+    :global(.stepDescription) {
+      font-size: 24px;
+    }
+
+    :global(.formGroup) {
+      margin-bottom: 28px;
+    }
+
+    :global(.label) {
+      font-size: 1.3rem;
+      margin-bottom: 14px;
+    }
+
+    :global(.input),
+    :global(.textarea) {
+      padding: 20px 28px;
+      font-size: 1.3rem;
+    }
+
+    :global(.formActions) {
+      margin-top: 48px;
+      padding-top: 48px;
+    }
+
+    // Full width for textarea fields
+    :global(.formGroup:has(.textarea)) {
+      grid-column: 1 / -1;
+    }
+  }
+}

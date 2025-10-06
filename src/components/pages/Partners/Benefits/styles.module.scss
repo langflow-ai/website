@@ -89,76 +89,85 @@
 }
 
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  width: 100%;
-  justify-items: center;
-
-  @include media-breakpoint-down(md) {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    justify-items: center;
-  }
-}
-
-.benefitCard {
+.benefitsList {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  width: 100%;
-  max-width: 416px;
+  gap: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.benefitItem {
   background: var(--interface-dark-gray-800);
   border: 1px solid var(--interface-dark-gray-700);
-  border-radius: 24px;
-  padding: 32px;
-  position: relative;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: var(--interface-purple-300);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(107, 28, 150, 0.1);
-  }
-
-  @include media-breakpoint-down(md) {
-    max-width: 100%;
-    width: 100%;
+    border-color: var(--interface-dark-gray-600);
+    background: var(--interface-dark-gray-750);
   }
 
   @include media-breakpoint-down(sm) {
-    padding: 24px;
+    padding: 20px;
+    gap: 16px;
   }
 }
 
-.icon {
+.benefitIcon {
+  flex-shrink: 0;
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, var(--interface-purple-400) 0%, var(--interface-blue-500) 100%);
+  background: transparent;
+  border: 2px solid var(--interface-dark-gray-500);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  transition: all 0.3s ease;
 
   svg {
     width: 24px;
     height: 24px;
-    color: var(--primary-white);
+    color: var(--interface-dark-gray-400);
+  }
+
+  .benefitItem:hover & {
+    border-color: var(--primary-purple);
+    background: rgba(107, 28, 150, 0.1);
+    
+    svg {
+      color: var(--primary-purple);
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 }
 
-.content {
+.benefitContent {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
 .benefitTitle {
-  font-size: 24px;
-  font-weight: 200;
-  line-height: 130%;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 140%;
   color: var(--primary-white);
   margin: 0;
 }

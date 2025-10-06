@@ -4,12 +4,14 @@ import IconChevdown from "@/components/ui/icons/IconChevdown";
 import IconChevup from "@/components/ui/icons/IconChevup";
 import Text from "@/components/ui/text/Text";
 import { Weight } from "@/components/ui/text/types";
+import { trackApplyClick } from "@/lib/utils/analytics";
 import { useState } from "react";
+import ApplicationFormModal from "../ApplicationFormModal/ApplicationFormModal";
 import styles from "./styles.module.scss";
 
 const FAQ_ITEMS = [
   {
-    question: "Do I need to upload a .zip?",
+    question: "What do I need to send?",
     answer: "No. Upload one Case Study PDF. Optional attachments like flows or code are welcome."
   },
   {
@@ -32,6 +34,7 @@ const FAQ_ITEMS = [
 
 const FAQ = () => {
   const [openItems, setOpenItems] = useState<number[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleItem = (index: number) => {
     setOpenItems(prev => 
@@ -39,6 +42,11 @@ const FAQ = () => {
         ? prev.filter(item => item !== index)
         : [...prev, index]
     );
+  };
+
+  const openApplicationModal = (source: string) => {
+    trackApplyClick(source);
+    setIsModalOpen(true);
   };
 
   return (
@@ -81,7 +89,28 @@ const FAQ = () => {
             </div>
           ))}
         </div>
+        
+        <div className={styles.ctaSection}>
+          <div className={styles.ctaContent}>
+            <Text size={500} weight={Weight.Bold} className={styles.ctaTitle}>
+              Ready to Dominate the AI Market?
+            </Text>
+            <Text size={300} weight={Weight.Regular} className={styles.ctaDescription}>
+              Stop waiting. Start building. Join the elite partners who are already winning with Langflow.
+            </Text>
+            <button className={styles.ctaButton} onClick={() => openApplicationModal('hero')}>
+              <Text size={300} weight={Weight.Semibold} className={styles.ctaButtonText}>
+                Apply Now - It Takes 2 Minutes
+              </Text>
+            </button>
+          </div>
+        </div>
       </div>
+      
+      <ApplicationFormModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </section>
   );
 };

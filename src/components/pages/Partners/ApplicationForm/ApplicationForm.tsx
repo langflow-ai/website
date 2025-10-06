@@ -44,7 +44,12 @@ interface FormErrors {
   [key: string]: string | undefined;
 }
 
-const ApplicationForm = () => {
+interface ApplicationFormProps {
+  onSubmitted?: () => void;
+  isModal?: boolean;
+}
+
+const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     company: {
@@ -313,6 +318,7 @@ const ApplicationForm = () => {
       if (response.ok) {
         trackFormSubmit(true, currentStep);
         setIsSubmitted(true);
+        onSubmitted?.();
         // Reset form
         setFormData({
           company: {
@@ -355,10 +361,8 @@ const ApplicationForm = () => {
   };
 
   if (isSubmitted) {
-    return (
-      <section id="apply" className={styles.formSection}>
-        <div className={`${styles.container} container-wide`}>
-          <div className={styles.successMessage}>
+    const content = (
+      <div className={styles.successMessage}>
             <Text size={600} weight={Weight.Bold} className={styles.successTitle}>
               Application Received!
             </Text>
@@ -380,6 +384,16 @@ const ApplicationForm = () => {
               Submit Another Application
             </Button>
           </div>
+    );
+
+    if (isModal) {
+      return content;
+    }
+
+    return (
+      <section id="apply" className={styles.formSection}>
+        <div className={`${styles.container} container-wide`}>
+          {content}
         </div>
       </section>
     );
@@ -840,76 +854,78 @@ const ApplicationForm = () => {
     </div>
   );
 
+  const formContent = (
+    <>
+
+      <div className={styles.stepIndicator}>
+        <div className={`${styles.step} ${currentStep >= 1 ? styles.stepActive : ""}`}>
+          <div className={styles.stepNumber}>1</div>
+          <Text size={300} weight={Weight.Regular}>Company</Text>
+        </div>
+        <div className={styles.stepDivider} />
+        <div className={`${styles.step} ${currentStep >= 2 ? styles.stepActive : ""}`}>
+          <div className={styles.stepNumber}>2</div>
+          <Text size={300} weight={Weight.Regular}>Case Study</Text>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className={styles.form}>
+        {errors.general && (
+          <div className={styles.errorMessage} role="alert">
+            <Text size={300} weight={Weight.Regular}>
+              {errors.general}
+            </Text>
+          </div>
+        )}
+
+        {currentStep === 1 && renderStep1()}
+        {currentStep === 2 && renderStep2()}
+
+        <div className={styles.formActions}>
+          {currentStep > 1 && (
+            <Button
+              type="button"
+              variant={ButtonTypes.BORDER}
+              onClick={prevStep}
+              data-attr="partners-form-prev-step"
+            >
+              Previous
+            </Button>
+          )}
+          
+          {currentStep < 2 ? (
+            <Button
+              type="button"
+              variant={ButtonTypes.FILLED}
+              onClick={nextStep}
+              data-attr="partners-form-next-step"
+            >
+              Next
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              variant={ButtonTypes.FILLED}
+              disabled={isSubmitting}
+              className={styles.submitButton}
+              data-attr="partners-form-submit"
+            >
+              {isSubmitting ? "Submitting..." : "Submit Application"}
+            </Button>
+          )}
+        </div>
+      </form>
+    </>
+  );
+
+  if (isModal) {
+    return formContent;
+  }
+
   return (
     <section id="apply" className={styles.formSection}>
       <div className={`${styles.container} container-wide`}>
-        <div className={styles.header}>
-          <Text size={600} weight={Weight.Bold} className={styles.title}>
-            Apply to Become a Partner
-          </Text>
-          <Text size={400} weight={Weight.Regular} className={styles.description}>
-            Complete the application form below. All fields marked with * are required.
-          </Text>
-        </div>
-
-        <div className={styles.stepIndicator}>
-          <div className={`${styles.step} ${currentStep >= 1 ? styles.stepActive : ""}`}>
-            <div className={styles.stepNumber}>1</div>
-            <Text size={300} weight={Weight.Regular}>Company</Text>
-          </div>
-          <div className={styles.stepDivider} />
-          <div className={`${styles.step} ${currentStep >= 2 ? styles.stepActive : ""}`}>
-            <div className={styles.stepNumber}>2</div>
-            <Text size={300} weight={Weight.Regular}>Case Study</Text>
-          </div>
-        </div>
-
-        <form onSubmit={handleSubmit} className={styles.form}>
-          {errors.general && (
-            <div className={styles.errorMessage} role="alert">
-              <Text size={300} weight={Weight.Regular}>
-                {errors.general}
-              </Text>
-            </div>
-          )}
-
-          {currentStep === 1 && renderStep1()}
-          {currentStep === 2 && renderStep2()}
-
-          <div className={styles.formActions}>
-            {currentStep > 1 && (
-              <Button
-                type="button"
-                variant={ButtonTypes.BORDER}
-                onClick={prevStep}
-                data-attr="partners-form-prev-step"
-              >
-                Previous
-              </Button>
-            )}
-            
-            {currentStep < 2 ? (
-              <Button
-                type="button"
-                variant={ButtonTypes.FILLED}
-                onClick={nextStep}
-                data-attr="partners-form-next-step"
-              >
-                Next
-              </Button>
-            ) : (
-              <Button
-                type="submit"
-                variant={ButtonTypes.FILLED}
-                disabled={isSubmitting}
-                className={styles.submitButton}
-                data-attr="partners-form-submit"
-              >
-                {isSubmitting ? "Submitting..." : "Submit Application"}
-              </Button>
-            )}
-          </div>
-        </form>
+        {formContent}
       </div>
     </section>
   );
