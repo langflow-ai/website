@@ -12,20 +12,30 @@ interface CompanyData {
   name: string;
   website: string;
   country: string;
-  industry: string;
   customerProfile: string;
   contactName: string;
   contactEmail: string;
   contactRole: string;
+  linkedinProfile: string;
+  githubProfile: string;
+  twitterProfile: string;
+  companySize: string;
+  yearsInBusiness: string;
 }
 
 interface CaseStudyData {
-  problemSolved: string;
+  painPoints: string;
+  businessImpact: string;
+  previousSolution: string;
   whyLangflow: string;
   architectureOverview: string;
+  implementationTime: string;
   timeToValue: string;
   successMetrics: string;
+  efficiencyGains: string;
+  costSavings: string;
   financialImpact: string;
+  customerFeedback: string;
   referenceContact: string;
   publicLink: string;
   caseStudyPdf: File | null;
@@ -56,19 +66,29 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       name: "",
       website: "",
       country: "",
-      industry: "",
       customerProfile: "",
       contactName: "",
       contactEmail: "",
-      contactRole: ""
+      contactRole: "",
+      linkedinProfile: "",
+      githubProfile: "",
+      twitterProfile: "",
+      companySize: "",
+      yearsInBusiness: ""
     },
     caseStudy: {
-      problemSolved: "",
+      painPoints: "",
+      businessImpact: "",
+      previousSolution: "",
       whyLangflow: "",
       architectureOverview: "",
+      implementationTime: "",
       timeToValue: "",
       successMetrics: "",
+      efficiencyGains: "",
+      costSavings: "",
       financialImpact: "",
+      customerFeedback: "",
       referenceContact: "",
       publicLink: "",
       caseStudyPdf: null,
@@ -109,9 +129,6 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       if (!formData.company.country.trim()) {
         newErrors["company.country"] = "Country is required";
       }
-      if (!formData.company.industry.trim()) {
-        newErrors["company.industry"] = "Industry is required";
-      }
       if (!formData.company.customerProfile.trim()) {
         newErrors["company.customerProfile"] = "Customer profile is required";
       }
@@ -126,10 +143,33 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       if (!formData.company.contactRole.trim()) {
         newErrors["company.contactRole"] = "Contact role is required";
       }
+      if (!formData.company.companySize.trim()) {
+        newErrors["company.companySize"] = "Company size is required";
+      }
+      if (!formData.company.yearsInBusiness.trim()) {
+        newErrors["company.yearsInBusiness"] = "Years in business is required";
+      }
+      if (!formData.company.linkedinProfile.trim()) {
+        newErrors["company.linkedinProfile"] = "LinkedIn profile is required";
+      } else if (!/^https?:\/\/.+/.test(formData.company.linkedinProfile)) {
+        newErrors["company.linkedinProfile"] = "Please enter a valid LinkedIn URL";
+      }
+      if (formData.company.githubProfile.trim() && !/^https?:\/\/.+/.test(formData.company.githubProfile)) {
+        newErrors["company.githubProfile"] = "Please enter a valid GitHub URL";
+      }
+      if (formData.company.twitterProfile.trim() && !/^https?:\/\/.+/.test(formData.company.twitterProfile)) {
+        newErrors["company.twitterProfile"] = "Please enter a valid Twitter URL";
+      }
     } else if (step === 2) {
       // Validate case study data
-      if (!formData.caseStudy.problemSolved.trim()) {
-        newErrors["caseStudy.problemSolved"] = "Problem solved is required";
+      if (!formData.caseStudy.painPoints.trim()) {
+        newErrors["caseStudy.painPoints"] = "Pain points are required";
+      }
+      if (!formData.caseStudy.businessImpact.trim()) {
+        newErrors["caseStudy.businessImpact"] = "Business impact is required";
+      }
+      if (!formData.caseStudy.previousSolution.trim()) {
+        newErrors["caseStudy.previousSolution"] = "Previous solution information is required";
       }
       if (!formData.caseStudy.whyLangflow.trim()) {
         newErrors["caseStudy.whyLangflow"] = "Why Langflow is required";
@@ -137,14 +177,26 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       if (!formData.caseStudy.architectureOverview.trim()) {
         newErrors["caseStudy.architectureOverview"] = "Architecture overview is required";
       }
+      if (!formData.caseStudy.implementationTime.trim()) {
+        newErrors["caseStudy.implementationTime"] = "Implementation time is required";
+      }
       if (!formData.caseStudy.timeToValue.trim()) {
         newErrors["caseStudy.timeToValue"] = "Time to value is required";
+      }
+      if (!formData.caseStudy.efficiencyGains.trim()) {
+        newErrors["caseStudy.efficiencyGains"] = "Efficiency gains are required";
+      }
+      if (!formData.caseStudy.costSavings.trim()) {
+        newErrors["caseStudy.costSavings"] = "Cost savings information is required";
       }
       if (!formData.caseStudy.successMetrics.trim()) {
         newErrors["caseStudy.successMetrics"] = "Success metrics are required";
       }
       if (!formData.caseStudy.financialImpact.trim()) {
         newErrors["caseStudy.financialImpact"] = "Financial impact is required";
+      }
+      if (!formData.caseStudy.customerFeedback.trim()) {
+        newErrors["caseStudy.customerFeedback"] = "Customer feedback is required";
       }
       if (!formData.caseStudy.caseStudyPdf) {
         newErrors["caseStudy.caseStudyPdf"] = "Case Study PDF is required";
@@ -325,19 +377,29 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
             name: "",
             website: "",
             country: "",
-            industry: "",
             customerProfile: "",
             contactName: "",
             contactEmail: "",
-            contactRole: ""
+            contactRole: "",
+            linkedinProfile: "",
+            githubProfile: "",
+            twitterProfile: "",
+            companySize: "",
+            yearsInBusiness: ""
           },
           caseStudy: {
-            problemSolved: "",
+            painPoints: "",
+            businessImpact: "",
+            previousSolution: "",
             whyLangflow: "",
             architectureOverview: "",
+            implementationTime: "",
             timeToValue: "",
             successMetrics: "",
+            efficiencyGains: "",
+            costSavings: "",
             financialImpact: "",
+            customerFeedback: "",
             referenceContact: "",
             publicLink: "",
             caseStudyPdf: null,
@@ -410,6 +472,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
         </Text>
       </div>
 
+      {/* First row - Company Basic Info */}
       <div className={styles.formGrid}>
         <div className={styles.formGroup}>
           <label htmlFor="company.name" className={styles.label}>
@@ -475,47 +538,29 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="company.industry" className={styles.label}>
-            Industry *
+          <label htmlFor="company.companySize" className={styles.label}>
+            Company Size *
           </label>
           <input
             type="text"
-            id="company.industry"
-            name="company.industry"
-            value={formData.company.industry}
+            id="company.companySize"
+            name="company.companySize"
+            value={formData.company.companySize}
             onChange={handleInputChange}
-            className={`${styles.input} ${errors["company.industry"] ? styles.inputError : ""}`}
-            placeholder="Technology, Healthcare, Finance, etc."
-            aria-describedby={errors["company.industry"] ? "company-industry-error" : undefined}
+            className={`${styles.input} ${errors["company.companySize"] ? styles.inputError : ""}`}
+            placeholder="e.g., 1-10, 11-50, 51-200, 201-500, 500+"
+            aria-describedby={errors["company.companySize"] ? "company-companySize-error" : undefined}
           />
-          {errors["company.industry"] && (
-            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="company-industry-error">
-              {errors["company.industry"]}
+          {errors["company.companySize"] && (
+            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="company-companySize-error">
+              {errors["company.companySize"]}
             </Text>
           )}
         </div>
+      </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="company.customerProfile" className={styles.label}>
-            Customer Profile *
-          </label>
-          <textarea
-            id="company.customerProfile"
-            name="company.customerProfile"
-            value={formData.company.customerProfile}
-            onChange={handleInputChange}
-            className={`${styles.textarea} ${errors["company.customerProfile"] ? styles.inputError : ""}`}
-            placeholder="Describe your typical customers and their needs"
-            rows={3}
-            aria-describedby={errors["company.customerProfile"] ? "company-customerProfile-error" : undefined}
-          />
-          {errors["company.customerProfile"] && (
-            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="company-customerProfile-error">
-              {errors["company.customerProfile"]}
-            </Text>
-          )}
-        </div>
-
+      {/* Second row - Contact Info */}
+      <div className={styles.formGrid}>
         <div className={styles.formGroup}>
           <label htmlFor="company.contactName" className={styles.label}>
             Contact Name *
@@ -578,6 +623,114 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
             </Text>
           )}
         </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="company.yearsInBusiness" className={styles.label}>
+            Years in Business *
+          </label>
+          <input
+            type="text"
+            id="company.yearsInBusiness"
+            name="company.yearsInBusiness"
+            value={formData.company.yearsInBusiness}
+            onChange={handleInputChange}
+            className={`${styles.input} ${errors["company.yearsInBusiness"] ? styles.inputError : ""}`}
+            placeholder="e.g., 2 years, 5+ years"
+            aria-describedby={errors["company.yearsInBusiness"] ? "company-yearsInBusiness-error" : undefined}
+          />
+          {errors["company.yearsInBusiness"] && (
+            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="company-yearsInBusiness-error">
+              {errors["company.yearsInBusiness"]}
+            </Text>
+          )}
+        </div>
+      </div>
+
+      {/* Third row - Social Media Profiles */}
+      <div className={styles.formGrid}>
+        <div className={styles.formGroup}>
+          <label htmlFor="company.linkedinProfile" className={styles.label}>
+            LinkedIn Profile *
+          </label>
+          <input
+            type="url"
+            id="company.linkedinProfile"
+            name="company.linkedinProfile"
+            value={formData.company.linkedinProfile}
+            onChange={handleInputChange}
+            className={`${styles.input} ${errors["company.linkedinProfile"] ? styles.inputError : ""}`}
+            placeholder="https://linkedin.com/company/your-company"
+            aria-describedby={errors["company.linkedinProfile"] ? "company-linkedinProfile-error" : undefined}
+          />
+          {errors["company.linkedinProfile"] && (
+            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="company-linkedinProfile-error">
+              {errors["company.linkedinProfile"]}
+            </Text>
+          )}
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="company.githubProfile" className={styles.label}>
+            GitHub Profile
+          </label>
+          <input
+            type="url"
+            id="company.githubProfile"
+            name="company.githubProfile"
+            value={formData.company.githubProfile}
+            onChange={handleInputChange}
+            className={`${styles.input} ${errors["company.githubProfile"] ? styles.inputError : ""}`}
+            placeholder="https://github.com/your-company"
+            aria-describedby={errors["company.githubProfile"] ? "company-githubProfile-error" : undefined}
+          />
+          {errors["company.githubProfile"] && (
+            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="company-githubProfile-error">
+              {errors["company.githubProfile"]}
+            </Text>
+          )}
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="company.twitterProfile" className={styles.label}>
+            Twitter/X Profile
+          </label>
+          <input
+            type="url"
+            id="company.twitterProfile"
+            name="company.twitterProfile"
+            value={formData.company.twitterProfile}
+            onChange={handleInputChange}
+            className={`${styles.input} ${errors["company.twitterProfile"] ? styles.inputError : ""}`}
+            placeholder="https://twitter.com/your-company"
+            aria-describedby={errors["company.twitterProfile"] ? "company-twitterProfile-error" : undefined}
+          />
+          {errors["company.twitterProfile"] && (
+            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="company-twitterProfile-error">
+              {errors["company.twitterProfile"]}
+            </Text>
+          )}
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="company.customerProfile" className={styles.label}>
+            Customer Profile *
+          </label>
+          <textarea
+            id="company.customerProfile"
+            name="company.customerProfile"
+            value={formData.company.customerProfile}
+            onChange={handleInputChange}
+            className={`${styles.textarea} ${errors["company.customerProfile"] ? styles.inputError : ""}`}
+            placeholder="Describe your typical customers and their needs"
+            rows={3}
+            aria-describedby={errors["company.customerProfile"] ? "company-customerProfile-error" : undefined}
+          />
+          {errors["company.customerProfile"] && (
+            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="company-customerProfile-error">
+              {errors["company.customerProfile"]}
+            </Text>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -594,22 +747,64 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="caseStudy.problemSolved" className={styles.label}>
-          Problem Solved *
+        <label htmlFor="caseStudy.painPoints" className={styles.label}>
+          Pain Points and Challenges *
         </label>
         <textarea
-          id="caseStudy.problemSolved"
-          name="caseStudy.problemSolved"
-          value={formData.caseStudy.problemSolved}
+          id="caseStudy.painPoints"
+          name="caseStudy.painPoints"
+          value={formData.caseStudy.painPoints}
           onChange={handleInputChange}
-          className={`${styles.textarea} ${errors["caseStudy.problemSolved"] ? styles.inputError : ""}`}
-          placeholder="Describe the business problem or challenge you solved using Langflow"
+          className={`${styles.textarea} ${errors["caseStudy.painPoints"] ? styles.inputError : ""}`}
+          placeholder="What specific pain points and challenges did your client/organization face before implementing Langflow?"
           rows={4}
-          aria-describedby={errors["caseStudy.problemSolved"] ? "caseStudy-problemSolved-error" : undefined}
+          aria-describedby={errors["caseStudy.painPoints"] ? "caseStudy-painPoints-error" : undefined}
         />
-        {errors["caseStudy.problemSolved"] && (
-          <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-problemSolved-error">
-            {errors["caseStudy.problemSolved"]}
+        {errors["caseStudy.painPoints"] && (
+          <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-painPoints-error">
+            {errors["caseStudy.painPoints"]}
+          </Text>
+        )}
+      </div>
+
+      <div className={styles.formGroup}>
+        <label htmlFor="caseStudy.businessImpact" className={styles.label}>
+          Business Impact *
+        </label>
+        <textarea
+          id="caseStudy.businessImpact"
+          name="caseStudy.businessImpact"
+          value={formData.caseStudy.businessImpact}
+          onChange={handleInputChange}
+          className={`${styles.textarea} ${errors["caseStudy.businessImpact"] ? styles.inputError : ""}`}
+          placeholder="How did these challenges affect business operations, productivity, or customer satisfaction?"
+          rows={4}
+          aria-describedby={errors["caseStudy.businessImpact"] ? "caseStudy-businessImpact-error" : undefined}
+        />
+        {errors["caseStudy.businessImpact"] && (
+          <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-businessImpact-error">
+            {errors["caseStudy.businessImpact"]}
+          </Text>
+        )}
+      </div>
+
+      <div className={styles.formGroup}>
+        <label htmlFor="caseStudy.previousSolution" className={styles.label}>
+          Previous Solution *
+        </label>
+        <textarea
+          id="caseStudy.previousSolution"
+          name="caseStudy.previousSolution"
+          value={formData.caseStudy.previousSolution}
+          onChange={handleInputChange}
+          className={`${styles.textarea} ${errors["caseStudy.previousSolution"] ? styles.inputError : ""}`}
+          placeholder="What solutions were tried before Langflow? What were their limitations?"
+          rows={3}
+          aria-describedby={errors["caseStudy.previousSolution"] ? "caseStudy-previousSolution-error" : undefined}
+        />
+        {errors["caseStudy.previousSolution"] && (
+          <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-previousSolution-error">
+            {errors["caseStudy.previousSolution"]}
           </Text>
         )}
       </div>
@@ -624,7 +819,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
           value={formData.caseStudy.whyLangflow}
           onChange={handleInputChange}
           className={`${styles.textarea} ${errors["caseStudy.whyLangflow"] ? styles.inputError : ""}`}
-          placeholder="Explain why you chose Langflow over other solutions"
+          placeholder="What made Langflow the right choice? What key features or capabilities were decisive?"
           rows={3}
           aria-describedby={errors["caseStudy.whyLangflow"] ? "caseStudy-whyLangflow-error" : undefined}
         />
@@ -645,7 +840,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
           value={formData.caseStudy.architectureOverview}
           onChange={handleInputChange}
           className={`${styles.textarea} ${errors["caseStudy.architectureOverview"] ? styles.inputError : ""}`}
-          placeholder="Describe your technical architecture and how Langflow fits in"
+          placeholder="Describe your technical architecture, how Langflow integrates, and any custom components or adaptations"
           rows={4}
           aria-describedby={errors["caseStudy.architectureOverview"] ? "caseStudy-architectureOverview-error" : undefined}
         />
@@ -658,6 +853,27 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
 
       <div className={styles.formGrid}>
         <div className={styles.formGroup}>
+          <label htmlFor="caseStudy.implementationTime" className={styles.label}>
+            Implementation Time *
+          </label>
+          <input
+            type="text"
+            id="caseStudy.implementationTime"
+            name="caseStudy.implementationTime"
+            value={formData.caseStudy.implementationTime}
+            onChange={handleInputChange}
+            className={`${styles.input} ${errors["caseStudy.implementationTime"] ? styles.inputError : ""}`}
+            placeholder="How long did it take to implement? e.g., 2 weeks"
+            aria-describedby={errors["caseStudy.implementationTime"] ? "caseStudy-implementationTime-error" : undefined}
+          />
+          {errors["caseStudy.implementationTime"] && (
+            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-implementationTime-error">
+              {errors["caseStudy.implementationTime"]}
+            </Text>
+          )}
+        </div>
+
+        <div className={styles.formGroup}>
           <label htmlFor="caseStudy.timeToValue" className={styles.label}>
             Time to Value *
           </label>
@@ -668,7 +884,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
             value={formData.caseStudy.timeToValue}
             onChange={handleInputChange}
             className={`${styles.input} ${errors["caseStudy.timeToValue"] ? styles.inputError : ""}`}
-            placeholder="2 weeks, 1 month, etc."
+            placeholder="When did you start seeing results? e.g., 1 month"
             aria-describedby={errors["caseStudy.timeToValue"] ? "caseStudy-timeToValue-error" : undefined}
           />
           {errors["caseStudy.timeToValue"] && (
@@ -677,27 +893,71 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
             </Text>
           )}
         </div>
+      </div>
 
+      <div className={styles.formGrid}>
         <div className={styles.formGroup}>
-          <label htmlFor="caseStudy.successMetrics" className={styles.label}>
-            Success Metrics *
+          <label htmlFor="caseStudy.efficiencyGains" className={styles.label}>
+            Efficiency Gains *
           </label>
           <input
             type="text"
-            id="caseStudy.successMetrics"
-            name="caseStudy.successMetrics"
-            value={formData.caseStudy.successMetrics}
+            id="caseStudy.efficiencyGains"
+            name="caseStudy.efficiencyGains"
+            value={formData.caseStudy.efficiencyGains}
             onChange={handleInputChange}
-            className={`${styles.input} ${errors["caseStudy.successMetrics"] ? styles.inputError : ""}`}
-            placeholder="50% efficiency gain, 30% cost reduction, etc."
-            aria-describedby={errors["caseStudy.successMetrics"] ? "caseStudy-successMetrics-error" : undefined}
+            className={`${styles.input} ${errors["caseStudy.efficiencyGains"] ? styles.inputError : ""}`}
+            placeholder="e.g., 50% faster processing, 3x throughput"
+            aria-describedby={errors["caseStudy.efficiencyGains"] ? "caseStudy-efficiencyGains-error" : undefined}
           />
-          {errors["caseStudy.successMetrics"] && (
-            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-successMetrics-error">
-              {errors["caseStudy.successMetrics"]}
+          {errors["caseStudy.efficiencyGains"] && (
+            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-efficiencyGains-error">
+              {errors["caseStudy.efficiencyGains"]}
             </Text>
           )}
         </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="caseStudy.costSavings" className={styles.label}>
+            Cost Savings *
+          </label>
+          <input
+            type="text"
+            id="caseStudy.costSavings"
+            name="caseStudy.costSavings"
+            value={formData.caseStudy.costSavings}
+            onChange={handleInputChange}
+            className={`${styles.input} ${errors["caseStudy.costSavings"] ? styles.inputError : ""}`}
+            placeholder="e.g., 30% reduction in operational costs"
+            aria-describedby={errors["caseStudy.costSavings"] ? "caseStudy-costSavings-error" : undefined}
+          />
+          {errors["caseStudy.costSavings"] && (
+            <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-costSavings-error">
+              {errors["caseStudy.costSavings"]}
+            </Text>
+          )}
+        </div>
+      </div>
+
+      <div className={styles.formGroup}>
+        <label htmlFor="caseStudy.successMetrics" className={styles.label}>
+          Success Metrics *
+        </label>
+        <textarea
+          id="caseStudy.successMetrics"
+          name="caseStudy.successMetrics"
+          value={formData.caseStudy.successMetrics}
+          onChange={handleInputChange}
+          className={`${styles.textarea} ${errors["caseStudy.successMetrics"] ? styles.inputError : ""}`}
+          placeholder="What KPIs improved? Include specific metrics and improvements (e.g., customer satisfaction up 40%, response time reduced by 60%)"
+          rows={3}
+          aria-describedby={errors["caseStudy.successMetrics"] ? "caseStudy-successMetrics-error" : undefined}
+        />
+        {errors["caseStudy.successMetrics"] && (
+          <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-successMetrics-error">
+            {errors["caseStudy.successMetrics"]}
+          </Text>
+        )}
       </div>
 
       <div className={styles.formGroup}>
@@ -710,13 +970,34 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
           value={formData.caseStudy.financialImpact}
           onChange={handleInputChange}
           className={`${styles.textarea} ${errors["caseStudy.financialImpact"] ? styles.inputError : ""}`}
-          placeholder="Describe the financial impact and ROI of your Langflow implementation"
+          placeholder="What was the overall financial impact? Include ROI, revenue increase, or cost savings in actual numbers when possible"
           rows={3}
           aria-describedby={errors["caseStudy.financialImpact"] ? "caseStudy-financialImpact-error" : undefined}
         />
         {errors["caseStudy.financialImpact"] && (
           <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-financialImpact-error">
             {errors["caseStudy.financialImpact"]}
+          </Text>
+        )}
+      </div>
+
+      <div className={styles.formGroup}>
+        <label htmlFor="caseStudy.customerFeedback" className={styles.label}>
+          Customer Feedback *
+        </label>
+        <textarea
+          id="caseStudy.customerFeedback"
+          name="caseStudy.customerFeedback"
+          value={formData.caseStudy.customerFeedback}
+          onChange={handleInputChange}
+          className={`${styles.textarea} ${errors["caseStudy.customerFeedback"] ? styles.inputError : ""}`}
+          placeholder="Share specific feedback from users or stakeholders about the impact of Langflow"
+          rows={3}
+          aria-describedby={errors["caseStudy.customerFeedback"] ? "caseStudy-customerFeedback-error" : undefined}
+        />
+        {errors["caseStudy.customerFeedback"] && (
+          <Text size={200} weight={Weight.Regular} className={styles.fieldError} id="caseStudy-customerFeedback-error">
+            {errors["caseStudy.customerFeedback"]}
           </Text>
         )}
       </div>
