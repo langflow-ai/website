@@ -7,12 +7,13 @@ import Text from "@/components/ui/text/Text";
 import { Weight } from "@/components/ui/text/types";
 import { trackApplyClick } from "@/lib/utils/analytics";
 import { useEffect, useState } from "react";
-import ScrollIndicator from "../ScrollIndicator";
+import ApplicationFormModal from "../ApplicationFormModal/ApplicationFormModal";
 import styles from "./styles.module.scss";
 
 const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -38,12 +39,9 @@ const Hero = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isMobile]);
 
-  const scrollToApply = (source: string) => {
+  const openApplicationModal = (source: string) => {
     trackApplyClick(source);
-    const element = document.getElementById("apply");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    setIsModalOpen(true);
   };
 
   const scrollToHowItWorks = () => {
@@ -67,7 +65,7 @@ const Hero = () => {
             <div className={styles.buttonGroup}>
               <Button
                 variant={ButtonTypes.FILLED}
-                onClick={() => scrollToApply('hero')}
+                onClick={() => openApplicationModal('hero')}
                 data-attr="partners-hero-apply"
                 className={styles.primaryCTA}
               >
@@ -83,30 +81,35 @@ const Hero = () => {
               </Button>
             </div>
             
-            <div className={styles.benefitsPreview}>
+         {/*    <div className={styles.benefitsPreview}>
               <Text size={400} weight={Weight.Regular} className={styles.benefitsDescription}>
               Get official recognition, appear in our partner directory, and showcase outcomes that matter to
               buyers
               </Text>
               <ScrollIndicator />
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
       
       {/* Sticky CTA for mobile */}
-      {isMobile && showStickyCTA && (
+     {/*  {isMobile && showStickyCTA && (
         <div className={styles.stickyCTA}>
           <Button
             variant={ButtonTypes.FILLED}
-            onClick={() => scrollToApply('sticky')}
+            onClick={() => openApplicationModal('sticky')}
             data-attr="partners-sticky-apply"
             className={styles.stickyButton}
           >
             Apply now
           </Button>
         </div>
-      )}
+      )} */}
+
+      <ApplicationFormModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </>
   );
 };
