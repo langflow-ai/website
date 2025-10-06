@@ -7,11 +7,16 @@
   background-color: #000;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
   padding: 40px;
   box-sizing: border-box;
   z-index: 1000;
   color: #ffffff;
+  
+  // Force all child elements to use full width
+  * {
+    box-sizing: border-box;
+  }
 }
 
 .closeButton {
@@ -49,19 +54,20 @@
 
 .modalFormContainer {
   :global(.formSection) {
-    padding: 0;
+    padding: 0 !important;
     background: none;
-    height: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 100% !important;
+    max-width: none !important;
   }
 
   :global(.container) {
-    padding: 0;
-    max-width: none;
-    width: 100%;
-    height: 100%;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -91,9 +97,9 @@
   }
 
   :global(.form) {
-    width: 100%;
-    max-width: none;
-    margin: 0;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -102,21 +108,25 @@
     border-radius: 0;
     padding: 0;
     position: relative;
-    overflow-y: auto;
+    min-height: 0;
   }
 
   :global(.formGrid) {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
     gap: 20px;
-    width: 100%;
+    width: 100% !important;
     margin-bottom: 24px;
-    max-width: none;
+    max-width: none !important;
+    grid-auto-flow: row;
+    box-sizing: border-box;
   }
 
   :global(.formGroup) {
     margin-bottom: 12px;
     position: relative;
+    width: 100% !important;
+    max-width: none !important;
   }
 
   :global(.label) {
@@ -126,6 +136,7 @@
     font-size: 0.875rem;
     margin-bottom: 6px;
     line-height: 1.4;
+    width: 100%;
   }
 
   :global(.input),
@@ -382,12 +393,15 @@
     }
 
     :global(.formGrid) {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr !important;
       gap: 16px;
+      width: 100% !important;
+      max-width: none !important;
     }
 
     :global(.formGroup) {
       margin-bottom: 8px;
+      width: 100% !important;
     }
 
     :global(.formActions) {
@@ -464,12 +478,15 @@
     padding: 32px;
     
     :global(.formGrid) {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr) !important;
       gap: 24px;
+      width: 100% !important;
+      max-width: none !important;
     }
 
     :global(.formGroup) {
       margin-bottom: 16px;
+      width: 100% !important;
     }
 
     // Full width for textarea fields
@@ -479,14 +496,75 @@
   }
 }
 
-// Desktop screens - 3 columns
+// Large tablets - 3 columns
+@media (min-width: 1024px) {
+  .modalFormContainer {
+    padding: 36px;
+    
+    :global(.formGrid) {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 26px;
+      width: 100% !important;
+      max-width: none !important;
+    }
+
+    :global(.formGroup) {
+      margin-bottom: 18px;
+      width: 100% !important;
+    }
+
+    // Full width for textarea fields
+    :global(.formGroup:has(.textarea)) {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+// Large desktop - 4 columns
+@media (min-width: 1400px) {
+  .modalFormContainer {
+    padding: 44px;
+    
+    :global(.formGrid) {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 30px;
+      width: 100% !important;
+      max-width: none !important;
+    }
+
+    :global(.formGroup) {
+      margin-bottom: 22px;
+      width: 100% !important;
+    }
+
+    :global(.label) {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    :global(.input),
+    :global(.textarea) {
+      padding: 18px 22px;
+      font-size: 1.05rem;
+    }
+
+    // Full width for textarea fields
+    :global(.formGroup:has(.textarea)) {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+// Desktop screens - 5 columns
 @media (min-width: 1200px) {
   .modalFormContainer {
     padding: 40px;
     
     :global(.formGrid) {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(5, 1fr) !important;
       gap: 28px;
+      width: 100% !important;
+      max-width: none !important;
     }
 
     :global(.stepHeader) {
@@ -528,14 +606,16 @@
   }
 }
 
-// Ultra wide screens - 4 columns
+// Ultra wide screens - 6 columns
 @media (min-width: 1600px) {
   .modalFormContainer {
     padding: 48px;
     
     :global(.formGrid) {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(6, 1fr) !important;
       gap: 32px;
+      width: 100% !important;
+      max-width: none !important;
     }
 
     :global(.stepHeader) {
@@ -577,14 +657,16 @@
   }
 }
 
-// Extra ultra wide screens - 5 columns
+// Extra ultra wide screens - 7 columns
 @media (min-width: 2000px) {
   .modalFormContainer {
     padding: 56px;
     
     :global(.formGrid) {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(7, 1fr) !important;
       gap: 36px;
+      width: 100% !important;
+      max-width: none !important;
     }
 
     :global(.stepHeader) {
