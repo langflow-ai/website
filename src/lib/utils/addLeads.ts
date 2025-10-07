@@ -1,9 +1,9 @@
 // Dependencies
 import { formatDate } from "date-fns";
 
-export const SEQUENCE_ID_1 = "93e9f15d874712fe3f3d89afcc80b183cc74cf13";
-export const SEQUENCE_ID_2 = "23ffc1c1dcb74820f879e628fc5f40d534c113bf";
-export const SEQUENCE_ID_3 = "056e8c4ff5c472e0ff4fb1ee55f97e7b347636a8";
+export const SEQUENCE_ID_1 = process.env.SEQUENCE_ID_1 || "";
+export const SEQUENCE_ID_2 = process.env.SEQUENCE_ID_2 || "";
+export const SEQUENCE_ID_3 = process.env.SEQUENCE_ID_3 || "";
 
 export interface AmpleMarketResponse {
   message: string;

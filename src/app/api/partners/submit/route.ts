@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
       apiUrl: process.env.NEXT_PUBLIC_PARTNERS_API_URL,
       hasToken: !!process.env.PARTNERS_API_TOKEN,
       tokenLength: process.env.PARTNERS_API_TOKEN?.length || 0,
-      tokenPreview: process.env.PARTNERS_API_TOKEN ? `${process.env.PARTNERS_API_TOKEN.substring(0, 8)}...` : 'UNDEFINED'
+      tokenPreview: process.env.PARTNERS_API_TOKEN ? '***MASKED***' : 'UNDEFINED'
     });
     
     if (!process.env.NEXT_PUBLIC_PARTNERS_API_URL || !process.env.PARTNERS_API_TOKEN) {
@@ -285,10 +285,10 @@ export async function POST(req: NextRequest) {
       method: "POST",
       hasToken: !!authToken,
       tokenLength: authToken?.length || 0,
-      tokenPreview: authToken ? `${authToken.substring(0, 8)}...` : 'UNDEFINED',
+      tokenPreview: authToken ? '***MASKED***' : 'UNDEFINED',
       formDataSize: Array.from(transformedFormData.entries()).length,
       headers: {
-        "Authorization": `Bearer ${authToken?.substring(0, 8)}...`,
+        "Authorization": "Bearer ***MASKED***",
         "X-Request-ID": requestId
       }
     });

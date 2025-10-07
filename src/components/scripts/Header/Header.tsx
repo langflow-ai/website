@@ -1,7 +1,7 @@
 // Dependencies
 import Script from "next/script";
 
-const segmentWriteKey = process.env.NEXT_PUBLIC_SEGMENT_WRITE_KEY || "Eqt9jQ2FWQz2HYogszsQHfodPWehAVGs";
+const segmentWriteKey = process.env.NEXT_PUBLIC_SEGMENT_WRITE_KEY || "";
 
 const Header = () => {
   return (
