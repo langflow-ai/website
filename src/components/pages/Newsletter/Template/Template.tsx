@@ -1,8 +1,19 @@
+// Dependencies
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+
 // Components
-import { KitForm } from "../KitForm/KitForm";
 import Display from "@/components/ui/Display";
 import Button from "@/components/ui/button/Button";
 import { ButtonTypes } from "@/components/ui/button/types";
+
+// Dynamic imports for better code splitting
+const KitForm = dynamic(
+  () => import("../KitForm/KitForm").then((mod) => ({ default: mod.KitForm })),
+  {
+    loading: () => <div style={{ height: "300px" }} />,
+  }
+);
 
 // Styles
 import styles from "./styles.module.scss";
@@ -42,7 +53,9 @@ const Template = () => {
           </Button>
         </div>
         <div className="col">
-          <KitForm />
+          <Suspense fallback={<div style={{ height: "300px" }} />}>
+            <KitForm />
+          </Suspense>
         </div>
       </div>
     </section>
