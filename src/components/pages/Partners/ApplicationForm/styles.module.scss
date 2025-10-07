@@ -420,7 +420,7 @@
   line-height: 140%;
   color: var(--primary-white);
   opacity: 0.8;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -429,6 +429,60 @@
   @include media-breakpoint-down(lg) {
     font-size: 16px;
   }
+}
+
+.timelineSection {
+  margin-bottom: 40px;
+  text-align: left;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.timelineTitle {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 140%;
+  color: var(--primary-white);
+  margin-bottom: 16px;
+  font-family: var(--font-body);
+  display: block;
+}
+
+.timelineList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.timelineItem {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 150%;
+  color: var(--primary-white);
+  opacity: 0.9;
+  margin-bottom: 12px;
+  padding-left: 20px;
+  position: relative;
+  font-family: var(--font-body);
+
+  &::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-brand-Purple-500, #6b1c96);
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.submitAgainButton {
+  margin-top: 8px;
 }
 
 // Step Indicator Styles

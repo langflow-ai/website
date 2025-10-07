@@ -321,35 +321,104 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
     setErrors({});
 
     try {
+      console.log("🚀 [FRONTEND] Starting form submission...");
+      console.log("📊 [FRONTEND] Current form data state:", {
+        company: formData.company,
+        caseStudy: {
+          ...formData.caseStudy,
+          caseStudyPdf: formData.caseStudy.caseStudyPdf ? {
+            name: formData.caseStudy.caseStudyPdf.name,
+            size: formData.caseStudy.caseStudyPdf.size,
+            type: formData.caseStudy.caseStudyPdf.type
+          } : null,
+          additionalFiles: formData.caseStudy.additionalFiles?.map(f => ({
+            name: f.name,
+            size: f.size,
+            type: f.type
+          })) || null
+        },
+        confidentiality: formData.confidentiality,
+        consentToContact: formData.consentToContact
+      });
+      
       const formDataToSend = new FormData();
       
       // Add company data
+      console.log("🏢 [FRONTEND] Adding company data to FormData...");
       Object.entries(formData.company).forEach(([key, value]) => {
-        formDataToSend.append(`company.${key}`, value);
+        const fieldName = `company.${key}`;
+        formDataToSend.append(fieldName, value);
+        console.log(`  ✓ Added ${fieldName}:`, {
+          value: typeof value === 'string' ? value.substring(0, 100) : value,
+          type: typeof value,
+          isEmpty: value === '' || value === null || value === undefined
+        });
       });
       
       // Add case study data (excluding files)
+      console.log("📋 [FRONTEND] Adding case study data to FormData...");
       Object.entries(formData.caseStudy).forEach(([key, value]) => {
         if (key !== 'caseStudyPdf' && key !== 'additionalFiles') {
-          formDataToSend.append(`caseStudy.${key}`, value);
+          const fieldName = `caseStudy.${key}`;
+          formDataToSend.append(fieldName, value);
+          console.log(`  ✓ Added ${fieldName}:`, {
+            value: typeof value === 'string' ? value.substring(0, 100) : value,
+            type: typeof value,
+            isEmpty: value === '' || value === null || value === undefined
+          });
         }
       });
       
       // Add files
+      console.log("📁 [FRONTEND] Processing files...");
       if (formData.caseStudy.caseStudyPdf) {
-        formDataToSend.append("caseStudy.caseStudyPdf", formData.caseStudy.caseStudyPdf);
-      }
-      if (formData.caseStudy.additionalFiles) {
-        formData.caseStudy.additionalFiles.forEach((file, index) => {
-          formDataToSend.append(`caseStudy.additionalFiles.${index}`, file);
+        const pdfFile = formData.caseStudy.caseStudyPdf;
+        const fieldName = "caseStudy.caseStudyPdf";
+        formDataToSend.append(fieldName, pdfFile);
+        console.log(`  ✓ Added ${fieldName}:`, {
+          name: pdfFile.name,
+          type: pdfFile.type,
+          size: `${(pdfFile.size / (1024 * 1024)).toFixed(2)}MB`
         });
+      } else {
+        console.log("  ⚠️ No case study PDF found");
+      }
+      
+      if (formData.caseStudy.additionalFiles && formData.caseStudy.additionalFiles.length > 0) {
+        console.log(`  📎 Adding ${formData.caseStudy.additionalFiles.length} additional files...`);
+        formData.caseStudy.additionalFiles.forEach((file, index) => {
+          const fieldName = `caseStudy.additionalFiles.${index}`;
+          formDataToSend.append(fieldName, file);
+          console.log(`  ✓ Added ${fieldName}:`, {
+            name: file.name,
+            type: file.type,
+            size: `${(file.size / (1024 * 1024)).toFixed(2)}MB`
+          });
+        });
+      } else {
+        console.log("  ⚠️ No additional files found");
       }
       
       // Add checkboxes
+      console.log("✅ [FRONTEND] Adding consent data...");
       formDataToSend.append("confidentiality", formData.confidentiality.toString());
       formDataToSend.append("consentToContact", formData.consentToContact.toString());
+      console.log("  ✓ Consent values:", {
+        confidentiality: formData.confidentiality,
+        consentToContact: formData.consentToContact
+      });
 
-      const response = await fetch("/api/partners/apply", {
+      // Log final FormData contents
+      console.log("📤 [FRONTEND] Final FormData contents:");
+      for (const [key, value] of formDataToSend.entries()) {
+        if (value instanceof File) {
+          console.log(`  ${key}: File(${value.name}, ${value.size} bytes, ${value.type})`);
+        } else {
+          console.log(`  ${key}: ${value} (${typeof value})`);
+        }
+      }
+
+      const response = await fetch("/api/partners/submit", {
         method: "POST",
         body: formDataToSend,
       });
@@ -400,7 +469,29 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       } else {
         trackFormSubmit(false, currentStep);
         const errorData = await response.json();
-        setErrors({ general: errorData.message || "Something went wrong. Please try again." });
+        console.error('Form submission failed:', {
+          status: response.status,
+          error: errorData.error,
+          validation_errors: errorData.validation_errors,
+          requestId: errorData.requestId
+        });
+
+        if (errorData.validation_errors) {
+          // Create a map of field errors
+          const fieldErrors: { [key: string]: string } = {};
+          errorData.validation_errors.forEach((error: { field: string; message: string }) => {
+            fieldErrors[error.field] = error.message;
+          });
+          setErrors({
+            ...fieldErrors,
+            general: "Please check the form for errors and try again."
+          });
+        } else {
+          setErrors({ 
+            general: errorData.error || "Something went wrong. Please try again.",
+            requestId: errorData.requestId // Store requestId for reference
+          });
+        }
       }
     } catch (error) {
       setErrors({ general: "Network error. Please check your connection and try again." });
@@ -420,15 +511,24 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
               and will review it within 10 business days. You'll receive an email notification once 
               your application has been processed.
             </Text>
-            <Text size={300} weight={Weight.Regular} className={styles.timelineInfo}>
-              <strong>What happens next:</strong><br/>
-              • You'll receive an approval by email within 10 business days<br/>
-              • If approved, we'll publish your profile, share the badge kit, and occasionally invite you to spotlights and qualified customer introductions
-            </Text>
+            <div className={styles.timelineSection}>
+              <Text size={300} weight={Weight.Bold} className={styles.timelineTitle}>
+                What happens next:
+              </Text>
+              <ul className={styles.timelineList}>
+                <li className={styles.timelineItem}>
+                  You'll receive an approval by email within 10 business days
+                </li>
+                <li className={styles.timelineItem}>
+                  If approved, we'll publish your profile, share the badge kit, and occasionally invite you to spotlights and qualified customer introductions
+                </li>
+              </ul>
+            </div>
             <Button
               variant={ButtonTypes.FILLED}
               onClick={() => setIsSubmitted(false)}
               data-attr="partners-form-apply-again"
+              className={styles.submitAgainButton}
             >
               Submit Another Application
             </Button>
@@ -772,7 +872,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
 
       <div className={styles.formGroup}>
         <label htmlFor="caseStudy.painPoints" className={styles.label}>
-          Pain Points and Challenges *
+          Pain Points and Challenges
         </label>
         <textarea
           id="caseStudy.painPoints"
@@ -835,7 +935,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
 
       <div className={styles.formGroup}>
         <label htmlFor="caseStudy.previousSolution" className={styles.label}>
-          Previous Solution *
+          Previous Solution
         </label>
         <textarea
           id="caseStudy.previousSolution"
@@ -878,7 +978,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       <div className={styles.formGrid}>
         <div className={styles.formGroup}>
           <label htmlFor="caseStudy.implementationTime" className={styles.label}>
-            Implementation Time *
+            Implementation Time
           </label>
           <input
             type="text"
@@ -899,7 +999,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
 
         <div className={styles.formGroup}>
           <label htmlFor="caseStudy.timeToValue" className={styles.label}>
-            Time to Value *
+            Time to Value
           </label>
           <input
             type="text"
@@ -922,7 +1022,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
       <div className={styles.formGrid}>
         <div className={styles.formGroup}>
           <label htmlFor="caseStudy.efficiencyGains" className={styles.label}>
-            Efficiency Gains *
+            Efficiency Gains
           </label>
           <input
             type="text"
@@ -943,7 +1043,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
 
         <div className={styles.formGroup}>
           <label htmlFor="caseStudy.costSavings" className={styles.label}>
-            Cost Savings *
+            Cost Savings
           </label>
           <input
             type="text"
@@ -1007,7 +1107,7 @@ const ApplicationForm = ({ onSubmitted, isModal = false }: ApplicationFormProps)
 
       <div className={styles.formGroup}>
         <label htmlFor="caseStudy.customerFeedback" className={styles.label}>
-          Customer Feedback *
+          Customer Feedback
         </label>
         <textarea
           id="caseStudy.customerFeedback"
