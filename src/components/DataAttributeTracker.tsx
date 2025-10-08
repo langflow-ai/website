@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { trackEvent, saveUTMDataToSegment } from '@/lib/utils/tracking';
+import { trackEvent, saveUTMDataToSegment, trackPage } from '@/lib/utils/tracking';
 
 let isDataAttributeTrackingInitialized = false;
 
@@ -11,25 +11,31 @@ let isDataAttributeTrackingInitialized = false;
  * Usage: Add data-event and other data-* attributes to any clickable element.
  * The tracker will automatically send events to Segment when clicked.
  *
- * Example:
+ * Example - CTA Clicked:
  * <Button
- *   data-event="Langflow.org - CTA Clicked"
+ *   data-event="CTA Clicked"
+ *   data-cta="Get Started"
+ *   data-channel="webpage"
  *   data-text="Get Started for Free"
- *   data-section="get-started"
  * >
  *   Get Started for Free
  * </Button>
  *
- * This will automatically call:
- * trackEvent("Langflow.org - CTA Clicked", {
- *   text: "Get Started for Free",
- *   section: "get-started"
- * })
+ * Example - UI Interaction:
+ * <Link
+ *   data-event="UI Interaction"
+ *   data-action="clicked"
+ *   data-channel="webpage"
+ *   data-element-id="nav-docs"
+ *   data-namespace="header"
+ * >
+ *   Documentation
+ * </Link>
  *
  * Note:
  * - data-event is required (becomes the event name)
  * - All other data-* attributes become event properties
- * - CamelCase is converted to snake_case (dataButtonType → button_type)
+ * - Follows IBM Segment Common Schema standards
  * - No onClick handler needed for tracking
  */
 export function initializeDataAttributeTracking() {
@@ -50,9 +56,16 @@ export function initializeDataAttributeTracking() {
 
     Object.keys(trackingElement.dataset).forEach(key => {
       if (key !== 'event') {
-        // Convert camelCase to snake_case for consistency
-        const snakeKey = key.replace(/([A-Z])/g, '_$1').toLowerCase();
-        properties[snakeKey] = trackingElement.dataset[key];
+        // Map to IBM Segment property names (preserve exact casing per schema)
+        let propertyKey = key;
+
+        // Handle special IBM property mappings
+        if (key === 'cta') propertyKey = 'CTA';
+        else if (key === 'elementId') propertyKey = 'elementId';
+        else if (key === 'topLevel') propertyKey = 'topLevel';
+        else if (key === 'subLevel') propertyKey = 'subLevel';
+
+        properties[propertyKey] = trackingElement.dataset[key];
       }
     });
 
@@ -73,6 +86,19 @@ export function DataAttributeTracker() {
   useEffect(() => {
     initializeDataAttributeTracking();
     saveUTMDataToSegment();
+
+    // Track page view with friendly name after IBM common.js loads Segment
+    const trackPageView = () => {
+      if (window.analytics) {
+        trackPage();
+      } else {
+        // Wait for Segment to load
+        setTimeout(trackPageView, 100);
+      }
+    };
+
+    // Start trying to track page view
+    trackPageView();
   }, []);
 
   return null; // This component renders nothing

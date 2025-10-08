@@ -48,10 +48,6 @@ export type MixPanelWindow = Window & {
   mixpanel: any;
 };
 
-export type RedditWindow = Window & {
-  rdt: any;
-};
-
 export type ChiliPiperWindow = Window & {
   ChiliPiper: any;
 };
@@ -68,13 +64,9 @@ export type LinkedInInsightWindow = Window & {
   lintrk: any;
 };
 
-export type KetchWindow = Window & {
-  ketch: any;
-  semaphore: any;
-  ketchConsentLoaded: boolean;
-  ketchConsent: {
-    purposes: { [key: string]: boolean };
-  };
+export type IBMAnalyticsWindow = Window & {
+  _ibmAnalytics: any;
+  digitalData: any;
 };
 
 export type SequelWindow = Window & {
@@ -92,11 +84,10 @@ export type CustomWindow = AnalyticsWindow &
   JqueryWindow &
   IntercomWindow &
   MixPanelWindow &
-  RedditWindow &
   ChiliPiperWindow &
   RingLeadInstantBookType &
   GreCAPTCHAWindow &
   DemandbaseWindow &
-  KetchWindow &
+  IBMAnalyticsWindow &
   SequelWindow &
   LinkedInInsightWindow;

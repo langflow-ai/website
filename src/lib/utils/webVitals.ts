@@ -1,4 +1,5 @@
 import { onCLS, onFCP, onLCP, onTTFB, onINP, Metric } from "web-vitals";
+import { trackEvent } from "./tracking";
 
 // Type declarations for global objects
 declare global {
@@ -25,9 +26,9 @@ export function reportWebVitals() {
       });
     }
 
-    // Also send to Segment if available
+    // Also send to Segment with IBM properties
     if (typeof window !== "undefined" && window.analytics) {
-      window.analytics.track("Web Vitals", {
+      trackEvent("Web Vitals", {
         metric: "CLS",
         value: metric.value,
         id: metric.id,
@@ -50,7 +51,7 @@ export function reportWebVitals() {
     }
 
     if (typeof window !== "undefined" && window.analytics) {
-      window.analytics.track("Web Vitals", {
+      trackEvent("Web Vitals", {
         metric: "INP",
         value: metric.value,
         id: metric.id,
@@ -73,7 +74,7 @@ export function reportWebVitals() {
     }
 
     if (typeof window !== "undefined" && window.analytics) {
-      window.analytics.track("Web Vitals", {
+      trackEvent("Web Vitals", {
         metric: "FCP",
         value: metric.value,
         id: metric.id,
@@ -96,7 +97,7 @@ export function reportWebVitals() {
     }
 
     if (typeof window !== "undefined" && window.analytics) {
-      window.analytics.track("Web Vitals", {
+      trackEvent("Web Vitals", {
         metric: "LCP",
         value: metric.value,
         id: metric.id,
@@ -119,7 +120,7 @@ export function reportWebVitals() {
     }
 
     if (typeof window !== "undefined" && window.analytics) {
-      window.analytics.track("Web Vitals", {
+      trackEvent("Web Vitals", {
         metric: "TTFB",
         value: metric.value,
         id: metric.id,
