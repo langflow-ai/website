@@ -74,8 +74,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* <link
+          rel="preload"
+          href="../styles/fonts/Chivo/Chivo-VariableFont_wght.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        /> */}
         {/* Preload critical fonts with highest priority */}
-        <link
+        {/* <link
           rel="preload"
           href="/_next/static/media/Inter-VariableFont_opsz,wght.ttf"
           as="font"
@@ -88,7 +95,7 @@ export default function RootLayout({
           as="font"
           type="font/ttf"
           crossOrigin="anonymous"
-        />
+        /> */}
         {/* Preload critical images with fetchpriority */}
         <link
           rel="preload"
@@ -102,21 +109,18 @@ export default function RootLayout({
           href="/images/new-desktop.webp"
           as="image"
           type="image/webp"
-          fetchPriority="high"
         />
         <link
           rel="preload"
           href="/images/cardGradient.webp"
           as="image"
           type="image/webp"
-          fetchPriority="high"
         />
         <link
           rel="preload"
           href="/images/og-image.png"
           as="image"
           type="image/png"
-          fetchPriority="high"
         />
         {/* DNS prefetch for external domains */}
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
@@ -148,14 +152,14 @@ export default function RootLayout({
         />
 
         {/* Preload critical CSS */}
-        <link
+        {/* <link
           rel="preload"
           href="/_next/static/css/app/layout.css"
           as="style"
         />
         <noscript>
           <link rel="stylesheet" href="/_next/static/css/app/layout.css" />
-        </noscript>
+        </noscript> */}
 
         <HeaderScripts />
         <script
