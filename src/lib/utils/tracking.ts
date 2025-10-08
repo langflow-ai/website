@@ -17,6 +17,11 @@ export const SEGMENT_COMMON_PROPERTIES = {
   productCode: "5900BUB",
   productCodeType: "WWPC",
   ut30: "30AS5",
+  instanceId: "marketing-site",
+  subscriptionId: "public-access",
+  productPlanName: "Public",
+  productPlanType: "freemium",
+  userId: "IBMid-ANONYMOUS",
 } as const;
 
 /**
@@ -29,8 +34,10 @@ export function homepageHeroTracking(event: SyntheticEvent): void {
   const target = event.target as HTMLButtonElement;
 
   if (window.analytics) {
-    trackEvent("www - Hero CTA Clicked", {
-      cta: target.dataset.label,
+    trackEvent("CTA Clicked", {
+      CTA: target.dataset.label,
+      channel: "webpage",
+      location: "hero",
     });
   }
 
@@ -49,7 +56,11 @@ export function workshopRegistrationTracking(
 ): void {
   event.preventDefault();
   const target = event.target as HTMLAnchorElement;
-  trackEvent("www - Workshop CTA Clicked", { name: name });
+  trackEvent("CTA Clicked", {
+    CTA: "Register for Workshop",
+    channel: "webpage",
+    workshopName: name,
+  });
   window.location.href = target.href;
 }
 
@@ -126,6 +137,9 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
   }
 
   if (window.analytics) {
+    // IBM requires identify() call before track events
+    window.analytics.identify(SEGMENT_COMMON_PROPERTIES.userId, SEGMENT_COMMON_PROPERTIES);
+
     // Get current UTM parameters for attribution
     const urlParams = new URLSearchParams(window.location.search);
     const utmData: Record<string, string | null> = {
@@ -153,12 +167,7 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
       ...SEGMENT_COMMON_PROPERTIES,
     };
 
-    // Set userId to null for anonymous users (anonymousId will be auto-generated)
-    window.analytics.track(name, updatedPayload, {
-      context: {
-        userId: null,
-      },
-    });
+    window.analytics.track(name, updatedPayload);
   }
 
   if (name.includes("Form Submitted")) {
@@ -213,6 +222,31 @@ export const trackLinkedInEvent = (conversionId: number) => {
     window.lintrk("track", { conversion_id: conversionId });
   }
 };
+
+/**
+ * Track page view with friendly name
+ * IBM requires page events to have a friendly "page" property
+ */
+export function trackPage(pageName?: string) {
+  if (typeof window === "undefined") {
+    return; // Exit early during SSR
+  }
+
+  if (window.analytics) {
+    // IBM requires identify() call before page events
+    window.analytics.identify(SEGMENT_COMMON_PROPERTIES.userId, SEGMENT_COMMON_PROPERTIES);
+
+    // Get friendly page name from title or pathname
+    const friendlyName = pageName || document.title.split('|')[0].trim();
+
+    window.analytics.page(friendlyName, {
+      ...SEGMENT_COMMON_PROPERTIES,
+      path: window.location.pathname,
+      url: window.location.href,
+      title: document.title,
+    });
+  }
+}
 
 /**
  * Get UTM parameters from URL and send them to Segment.

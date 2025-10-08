@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { trackEvent, saveUTMDataToSegment } from '@/lib/utils/tracking';
+import { trackEvent, saveUTMDataToSegment, trackPage } from '@/lib/utils/tracking';
 
 let isDataAttributeTrackingInitialized = false;
 
@@ -86,6 +86,19 @@ export function DataAttributeTracker() {
   useEffect(() => {
     initializeDataAttributeTracking();
     saveUTMDataToSegment();
+
+    // Track page view with friendly name after IBM common.js loads Segment
+    const trackPageView = () => {
+      if (window.analytics) {
+        trackPage();
+      } else {
+        // Wait for Segment to load
+        setTimeout(trackPageView, 100);
+      }
+    };
+
+    // Start trying to track page view
+    trackPageView();
   }, []);
 
   return null; // This component renders nothing
