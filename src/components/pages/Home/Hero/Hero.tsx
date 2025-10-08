@@ -108,13 +108,13 @@ const Hero = () => {
       </div>
       <Stack />
       <DrawLine lines={lines} instanceId="hero" />
-      {/* <StaticImage
+      <StaticImage
         src={HERO_CONTENT.image.src}
         alt={HERO_CONTENT.image.alt}
         fill={HERO_CONTENT.image.fill}
         priority={HERO_CONTENT.image.priority}
         className={styles.gradient_overlay}
-      /> */}
+      />
     </section>
   );
 };

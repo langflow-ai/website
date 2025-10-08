@@ -126,9 +126,26 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//js.chilipiper.com" />
         <link rel="dns-prefetch" href="//code.jquery.com" />
 
-        {/* Preconnect to critical external domains */}
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://cdn.segment.com" />
+        <link
+          rel="preconnect"
+          href="https://www.googletagmanager.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preconnect"
+          href="https://cdn.segment.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preconnect"
+          href="https://munchkin.marketo.net"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preconnect"
+          href="https://app-ab17.marketo.com"
+          crossOrigin="anonymous"
+        />
 
         {/* Preload critical CSS */}
         <link
