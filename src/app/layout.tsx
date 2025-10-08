@@ -74,38 +74,49 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Preload only the most critical font */}
+        {/* Preload critical fonts with highest priority */}
         <link
           rel="preload"
-          href="/fonts/Chivo/Chivo-VariableFont_wght.ttf"
+          href="/_next/static/media/Inter-VariableFont_opsz,wght.ttf"
           as="font"
           type="font/ttf"
           crossOrigin="anonymous"
         />
-        {/* Preload critical images */}
+        <link
+          rel="preload"
+          href="/_next/static/media/Chivo-VariableFont_wght.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        {/* Preload critical images with fetchpriority */}
         <link
           rel="preload"
           href="/images/GradientBg.webp"
           as="image"
           type="image/webp"
+          fetchPriority="high"
         />
         <link
           rel="preload"
           href="/images/new-desktop.webp"
           as="image"
           type="image/webp"
+          fetchPriority="high"
         />
         <link
           rel="preload"
           href="/images/cardGradient.webp"
           as="image"
           type="image/webp"
+          fetchPriority="high"
         />
         <link
           rel="preload"
           href="/images/og-image.png"
           as="image"
           type="image/png"
+          fetchPriority="high"
         />
         {/* DNS prefetch for external domains */}
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
@@ -118,6 +129,16 @@ export default function RootLayout({
         {/* Preconnect to critical external domains */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://cdn.segment.com" />
+
+        {/* Preload critical CSS */}
+        <link
+          rel="preload"
+          href="/_next/static/css/app/layout.css"
+          as="style"
+        />
+        <noscript>
+          <link rel="stylesheet" href="/_next/static/css/app/layout.css" />
+        </noscript>
 
         <HeaderScripts />
         <script

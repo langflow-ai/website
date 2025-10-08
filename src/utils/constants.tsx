@@ -241,19 +241,19 @@ const CARDS = [
     text: "Deploy yourself or sign up for a free cloud account",
     Component: Signup,
     background: true,
-    image: "/images/card-1.png",
+    image: "/images/card-1.webp",
   },
   {
     text: "Deploy and scale on an enterprise-grade, secure cloud platform",
     Component: CloudPlatform,
     background: false,
-    image: "/images/card-2.png",
+    image: "/images/card-2.webp",
   },
   {
     text: "Same Langflow whether you’re using OSS or Cloud",
     Component: Langflow,
     background: false,
-    image: "/images/card-3.png",
+    image: "/images/card-3.webp",
   },
 ];
 const PARTNERS_STACK_TEXT = {

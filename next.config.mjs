@@ -5,9 +5,36 @@ const nextConfig = {
   // Basic image optimization
   images: {
     formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 31536000, // 1 year
   },
   // Compression
   compress: true,
+  // // Font optimization
+  optimizeFonts: true,
+  // // Bundle optimization
+  webpack: (config, { isServer }) => {
+    // Optimize bundle splitting
+    if (!isServer) {
+      config.optimization.splitChunks = {
+        chunks: "all",
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendors",
+            priority: 10,
+            reuseExistingChunk: true,
+          },
+          common: {
+            name: "common",
+            minChunks: 2,
+            priority: 5,
+            reuseExistingChunk: true,
+          },
+        },
+      };
+    }
+    return config;
+  },
   redirects: async () => {
     return [
       {
