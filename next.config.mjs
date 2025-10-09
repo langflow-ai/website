@@ -10,7 +10,7 @@ const nextConfig = {
   // Compression
   compress: true,
   // // Font optimization
-  // optimizeFonts: true,
+  optimizeFonts: true,
   // // Bundle optimization
   // webpack: (config, { isServer }) => {
   //   // Optimize bundle splitting

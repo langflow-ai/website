@@ -74,35 +74,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* <link
-          rel="preload"
-          href="../styles/fonts/Chivo/Chivo-VariableFont_wght.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        /> */}
-        {/* Preload critical fonts with highest priority */}
-        {/* <link
-          rel="preload"
-          href="/_next/static/media/Inter-VariableFont_opsz,wght.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/_next/static/media/Chivo-VariableFont_wght.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        /> */}
-        {/* Preload critical images with fetchpriority */}
-        <link
-          rel="preload"
-          href="/images/HeroBackground.webp"
-          as="image"
-          type="image/webp"
-        />
         {/* DNS prefetch for external domains */}
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//cdn.segment.com" />
@@ -131,16 +102,6 @@ export default function RootLayout({
           href="https://app-ab17.marketo.com"
           crossOrigin="anonymous"
         />
-
-        {/* Preload critical CSS */}
-        {/* <link
-          rel="preload"
-          href="/_next/static/css/app/layout.css"
-          as="style"
-        />
-        <noscript>
-          <link rel="stylesheet" href="/_next/static/css/app/layout.css" />
-        </noscript> */}
 
         <HeaderScripts />
         <script
