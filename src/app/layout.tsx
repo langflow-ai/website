@@ -49,7 +49,7 @@ export const generateMetadata = (): Metadata => {
       siteName: "Langflow",
       images: [
         {
-          url: "/images/og-image.png",
+          url: "/images/og-image.webp",
           width: 1200,
           height: 630,
           alt: "Langflow - Low-code AI builder",
@@ -61,7 +61,7 @@ export const generateMetadata = (): Metadata => {
       title: `${SITE_NAME} | ${DEFAULT_TAGLINE}`,
       description:
         "Langflow is a low-code AI builder for agentic and retrieval-augmented generation (RAG) apps. Code in Python and use any LLM or vector database.",
-      images: ["/images/og-image.png"],
+      images: ["/images/og-image.webp"],
     },
   };
 };
@@ -97,26 +97,14 @@ export default function RootLayout({
           crossOrigin="anonymous"
         /> */}
         {/* Preload critical images with fetchpriority */}
-        {/* <link
+        <link
           rel="preload"
           href="/images/HeroBackground.webp"
           as="image"
           type="image/webp"
         />
-        <link
-          rel="preload"
-          href="/images/cardGradient.webp"
-          as="image"
-          type="image/webp"
-        />
-        <link
-          rel="preload"
-          href="/images/og-image.png"
-          as="image"
-          type="image/png"
-        /> */}
         {/* DNS prefetch for external domains */}
-        {/* <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//cdn.segment.com" />
         <link rel="dns-prefetch" href="//munchkin.marketo.net" />
         <link rel="dns-prefetch" href="//www.redditstatic.com" />
@@ -142,7 +130,7 @@ export default function RootLayout({
           rel="preconnect"
           href="https://app-ab17.marketo.com"
           crossOrigin="anonymous"
-        /> */}
+        />
 
         {/* Preload critical CSS */}
         {/* <link
