@@ -97,7 +97,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         /> */}
         {/* Preload critical images with fetchpriority */}
-        <link
+        {/* <link
           rel="preload"
           href="/images/HeroBackground.webp"
           as="image"
@@ -114,9 +114,9 @@ export default function RootLayout({
           href="/images/og-image.png"
           as="image"
           type="image/png"
-        />
+        /> */}
         {/* DNS prefetch for external domains */}
-        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        {/* <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//cdn.segment.com" />
         <link rel="dns-prefetch" href="//munchkin.marketo.net" />
         <link rel="dns-prefetch" href="//www.redditstatic.com" />
@@ -142,7 +142,7 @@ export default function RootLayout({
           rel="preconnect"
           href="https://app-ab17.marketo.com"
           crossOrigin="anonymous"
-        />
+        /> */}
 
         {/* Preload critical CSS */}
         {/* <link
