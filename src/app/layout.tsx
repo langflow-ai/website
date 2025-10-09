@@ -99,13 +99,6 @@ export default function RootLayout({
         {/* Preload critical images with fetchpriority */}
         <link
           rel="preload"
-          href="/images/GradientBg.webp"
-          as="image"
-          type="image/webp"
-          fetchPriority="high"
-        />
-        <link
-          rel="preload"
           href="/images/HeroBackground.webp"
           as="image"
           type="image/webp"

@@ -9,7 +9,7 @@ export function BackgroundGradient() {
         decoding="async"
         data-nimg="fill"
         srcSet="/images/HeroBackground.webp?w=16&q=75 1x"
-        src="/images/GradientBg.webp?w=16&q=75"
+        src="/images/HeroBackground.webp?w=16&q=75"
         style={{
           position: "absolute",
           width: "100%",
