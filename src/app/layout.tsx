@@ -74,13 +74,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* DNS prefetch for external domains */}
+        {/* DNS prefetch for external domains
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//cdn.segment.com" />
         <link rel="dns-prefetch" href="//munchkin.marketo.net" />
         <link rel="dns-prefetch" href="//www.redditstatic.com" />
         <link rel="dns-prefetch" href="//js.chilipiper.com" />
-        <link rel="dns-prefetch" href="//code.jquery.com" />
+        <link rel="dns-prefetch" href="//code.jquery.com" /> */}
 
         <link
           rel="preconnect"
