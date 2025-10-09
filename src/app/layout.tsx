@@ -116,7 +116,7 @@ export default function RootLayout({
           type="image/png"
         /> */}
         {/* DNS prefetch for external domains */}
-        {/* <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//cdn.segment.com" />
         <link rel="dns-prefetch" href="//munchkin.marketo.net" />
         <link rel="dns-prefetch" href="//www.redditstatic.com" />
@@ -142,7 +142,7 @@ export default function RootLayout({
           rel="preconnect"
           href="https://app-ab17.marketo.com"
           crossOrigin="anonymous"
-        /> */}
+        />
 
         {/* Preload critical CSS */}
         {/* <link
