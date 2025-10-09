@@ -214,7 +214,7 @@ const HERO_CONTENT = {
   description:
     "Langflow is a powerful tool to build and deploy AI agents and MCP servers. It comes with batteries included and supports all major LLMs, vector databases and a growing library of AI tools.",
   image: {
-    src: "/images/GradientBg.webp",
+    src: "/images/HeroBackground.webp",
     alt: "gradient",
     fill: true,
     priority: true,

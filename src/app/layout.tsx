@@ -106,7 +106,7 @@ export default function RootLayout({
         />
         <link
           rel="preload"
-          href="/images/new-desktop.webp"
+          href="/images/HeroBackground.webp"
           as="image"
           type="image/webp"
         />

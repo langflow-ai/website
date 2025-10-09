@@ -8,7 +8,7 @@ export function BackgroundGradient() {
         loading="lazy"
         decoding="async"
         data-nimg="fill"
-        srcSet="/images/GradientBg.webp?w=16&q=75 1x"
+        srcSet="/images/HeroBackground.webp?w=16&q=75 1x"
         src="/images/GradientBg.webp?w=16&q=75"
         style={{
           position: "absolute",
