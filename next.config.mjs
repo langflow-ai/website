@@ -9,6 +9,8 @@ const nextConfig = {
   },
   // Compression
   compress: true,
+  // Font optimization
+  optimizeFonts: true,
   redirects: async () => {
     return [
       {
