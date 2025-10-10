@@ -1,0 +1,43 @@
+@import "../../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Hero Section
+.hero {
+  padding-top: 4rem; // spacer-6: 64px - comfortable spacing like home page
+  padding-bottom: 4rem; // spacer-6: 64px - consistent spacing
+  text-align: center;
+}
+
+.heroTitle {
+  margin-bottom: 2rem; // spacer-4: 32px - reduced for better flow
+  color: var(--primary-white);
+  font-size: 4.5rem;
+  font-weight: 600;
+  line-height: 1.1;
+  
+  @include media-breakpoint-down(md) {
+    font-size: 2.5rem;
+  }
+}
+
+.heroDescription {
+  margin-bottom: 3rem; // spacer-5: 48px - reduced but still spacious
+  color: var(--interface-light-gray-300);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  
+  @include media-breakpoint-down(md) {
+    font-size: 1.25rem;
+  }
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(md) {
+  .hero {
+    padding-top: 3rem; // spacer-5: 48px - mobile adjustment
+    padding-bottom: 3rem; // spacer-5: 48px
+  }
+}

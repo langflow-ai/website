@@ -1,0 +1,16 @@
+@import "../../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Search Section
+.searchSection {
+  padding-top: 3rem; // spacer-5: 48px - good spacing
+  padding-bottom: 3rem; // spacer-5: 48px - reduced for consistency
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(md) {
+  .searchSection {
+    padding-top: 2rem; // spacer-4: 32px
+    padding-bottom: 2rem; // spacer-4: 32px
+  }
+}
