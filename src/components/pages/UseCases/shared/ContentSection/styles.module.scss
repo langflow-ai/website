@@ -3,14 +3,14 @@
 
 // Content Section
 .contentSection {
-  padding-top: var(--spacer-5);
+  padding-top: var(--spacer-8);
   padding-bottom: var(--spacer-9);
 }
 
 // Responsive adjustments
 @include media-breakpoint-down(md) {
   .contentSection {
-    padding-top: var(--spacer-4);
+    padding-top: var(--spacer-6);
     padding-bottom: var(--spacer-7);
   }
 }

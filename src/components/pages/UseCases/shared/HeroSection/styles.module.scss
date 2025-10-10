@@ -3,13 +3,13 @@
 
 // Hero Section
 .hero {
-  padding-top: var(--spacer-9);
-  padding-bottom: var(--spacer-6);
+  padding-top: var(--spacer-10);
+  padding-bottom: var(--spacer-9);
   text-align: center;
 }
 
 .heroTitle {
-  margin-bottom: var(--spacer-4);
+  margin-bottom: var(--spacer-5);
   color: var(--primary-white);
   font-size: 4.5rem;
   font-weight: 600;
@@ -21,7 +21,7 @@
 }
 
 .heroDescription {
-  margin-bottom: var(--spacer-6);
+  margin-bottom: var(--spacer-7);
   color: var(--interface-light-gray-300);
   max-width: 800px;
   margin-left: auto;
@@ -37,7 +37,7 @@
 // Responsive adjustments
 @include media-breakpoint-down(md) {
   .hero {
-    padding-top: var(--spacer-7);
-    padding-bottom: var(--spacer-5);
+    padding-top: var(--spacer-8);
+    padding-bottom: var(--spacer-7);
   }
 }
