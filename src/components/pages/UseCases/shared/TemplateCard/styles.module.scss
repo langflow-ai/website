@@ -21,12 +21,12 @@
 }
 
 .templateCardHeader {
-  padding: var(--spacer-5) var(--spacer-5) var(--spacer-4);
+  padding: 3rem 3rem 2rem;
   border-bottom: 1px solid var(--interface-dark-gray-700);
 }
 
 .templateTitle {
-  margin-bottom: var(--spacer-3);
+  margin-bottom: 1.5rem;
   color: var(--primary-white);
   font-size: 2rem;
   font-weight: 600;
@@ -45,19 +45,19 @@
 }
 
 .templateCardBody {
-  padding: var(--spacer-4) var(--spacer-5);
+  padding: 2rem 3rem;
   flex: 1;
 }
 
 .templateBadges {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacer-2);
-  margin-bottom: var(--spacer-4);
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .statusBadge {
-  padding: var(--spacer-1) var(--spacer-3);
+  padding: 0.5rem 1.5rem;
   border-radius: 12px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -90,7 +90,7 @@
 }
 
 .difficultyBadge {
-  padding: var(--spacer-1) var(--spacer-3);
+  padding: 0.5rem 1.5rem;
   border-radius: 12px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -117,33 +117,33 @@
 }
 
 .useCases {
-  margin: var(--spacer-4) 0;
+  margin: 2rem 0;
 }
 
 .useCasesLabel {
   color: var(--interface-light-gray-500);
   font-size: 0.8rem;
   display: block;
-  margin-bottom: var(--spacer-2);
+  margin-bottom: 1rem;
 }
 
 .useCasesTags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacer-1);
+  gap: 0.5rem;
 }
 
 .useCaseTag {
   background: var(--interface-dark-gray-700);
   color: var(--interface-light-gray-300);
-  padding: var(--spacer-1) var(--spacer-2);
+  padding: 0.5rem 1rem;
   border-radius: 4px;
   font-size: 0.75rem;
 }
 
 .templateMeta {
-  margin-top: var(--spacer-4);
-  padding-top: var(--spacer-4);
+  margin-top: 2rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--interface-dark-gray-700);
   display: flex;
   justify-content: space-between;
@@ -152,7 +152,7 @@
   @include media-breakpoint-down(md) {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacer-2);
+    gap: 1rem;
   }
 }
 
@@ -167,19 +167,19 @@
 }
 
 .templateCardFooter {
-  padding: var(--spacer-4) var(--spacer-5) var(--spacer-5);
+  padding: 2rem 3rem 3rem;
   border-top: 1px solid var(--interface-dark-gray-700);
   margin-top: auto;
 }
 
 .templateButtons {
   display: flex;
-  gap: var(--spacer-2);
+  gap: 1rem;
   flex-wrap: nowrap;
   
   @include media-breakpoint-down(md) {
     flex-direction: column;
-    gap: var(--spacer-3);
+    gap: 1.5rem;
   }
 }
 
@@ -187,12 +187,12 @@
   flex: 1 1 0;
   min-width: min-content;
   height: 51px;
-  padding: 0 var(--spacer-4);
+  padding: 0 2rem;
   white-space: nowrap;
   
   @include media-breakpoint-down(md) {
     height: 60px;
-    padding: var(--spacer-3) var(--spacer-5);
+    padding: 1.5rem 3rem;
     font-size: 16px;
     font-weight: 600;
   }
@@ -201,17 +201,17 @@
 .secondaryTemplateButton {
   flex: 1 1 0;
   height: 51px;
-  padding: 0 var(--spacer-3);
+  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacer-2);
+  gap: 1rem;
   white-space: nowrap;
   
   @include media-breakpoint-down(md) {
     width: 100%;
     height: 60px;
-    padding: var(--spacer-3) var(--spacer-4);
+    padding: 1.5rem 2rem;
     font-size: 16px;
     font-weight: 600;
   }
@@ -220,12 +220,12 @@
 // Responsive adjustments
 @include media-breakpoint-down(md) {
   .templateCard {
-    margin-bottom: var(--spacer-4);
+    margin-bottom: 2rem;
   }
   
   .templateCardHeader,
   .templateCardBody,
   .templateCardFooter {
-    padding: var(--spacer-4);
+    padding: 2rem;
   }
 }

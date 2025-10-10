@@ -3,14 +3,14 @@
 
 // Search Section
 .searchSection {
-  padding-top: var(--spacer-5);
-  padding-bottom: var(--spacer-6);
+  padding-top: 3rem; // spacer-5: 48px
+  padding-bottom: 4rem; // spacer-6: 64px
 }
 
 // Responsive adjustments
 @include media-breakpoint-down(md) {
   .searchSection {
-    padding-top: var(--spacer-4);
-    padding-bottom: var(--spacer-5);
+    padding-top: 2rem; // spacer-4: 32px
+    padding-bottom: 3rem; // spacer-5: 48px
   }
 }

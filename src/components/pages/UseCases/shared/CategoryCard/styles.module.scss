@@ -21,12 +21,12 @@
 }
 
 .categoryCardHeader {
-  padding: var(--spacer-5) var(--spacer-5) var(--spacer-4);
+  padding: 3rem 3rem 2rem; // spacer-5: 48px, spacer-4: 32px
   border-bottom: 1px solid var(--interface-dark-gray-700);
 }
 
 .categoryTitle {
-  margin-bottom: var(--spacer-3);
+  margin-bottom: 1.5rem; // spacer-3: 24px
   color: var(--primary-white);
   font-size: 2rem;
   font-weight: 600;
@@ -45,7 +45,7 @@
 }
 
 .categoryCardBody {
-  padding: var(--spacer-4) var(--spacer-5);
+  padding: 2rem 3rem; // spacer-4: 32px, spacer-5: 48px
   flex: 1;
 }
 
@@ -53,12 +53,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacer-4);
+  margin-bottom: 2rem; // spacer-4: 32px
   
   @include media-breakpoint-down(md) {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacer-2);
+    gap: 1rem; // spacer-2: 16px
   }
 }
 
@@ -74,33 +74,33 @@
 }
 
 .featuredTemplates {
-  margin-top: var(--spacer-4);
+  margin-top: 2rem; // spacer-4: 32px
 }
 
 .featuredLabel {
   color: var(--interface-light-gray-500);
   font-size: 0.8rem;
   display: block;
-  margin-bottom: var(--spacer-2);
+  margin-bottom: 1rem; // spacer-2: 16px
 }
 
 .featuredTags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacer-1);
+  gap: 0.5rem; // spacer-1: 8px
 }
 
 .featuredTag {
   background: var(--interface-dark-gray-700);
   color: var(--interface-light-gray-300);
-  padding: var(--spacer-1) var(--spacer-2);
+  padding: 0.5rem 1rem; // spacer-1: 8px, spacer-2: 16px
   border-radius: 4px;
   font-size: 0.75rem;
   text-transform: capitalize;
 }
 
 .categoryCardFooter {
-  padding: var(--spacer-4) var(--spacer-5) var(--spacer-5);
+  padding: 2rem 3rem 3rem; // spacer-4: 32px, spacer-5: 48px
   border-top: 1px solid var(--interface-dark-gray-700);
   margin-top: auto;
 }
@@ -119,12 +119,12 @@
 // Responsive adjustments
 @include media-breakpoint-down(md) {
   .categoryCard {
-    margin-bottom: var(--spacer-4);
+    margin-bottom: 2rem; // spacer-4: 32px
   }
   
   .categoryCardHeader,
   .categoryCardBody,
   .categoryCardFooter {
-    padding: var(--spacer-4);
+    padding: 2rem; // spacer-4: 32px
   }
 }

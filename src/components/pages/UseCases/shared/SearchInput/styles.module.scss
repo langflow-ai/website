@@ -8,7 +8,7 @@
 .searchInput {
   width: 100%;
   height: 51px;
-  padding: 0 var(--spacer-4);
+  padding: 0 2rem; // spacer-4: 32px
   background: var(--interface-dark-gray-800);
   border: 1px solid var(--interface-dark-gray-700);
   border-radius: 8px;
