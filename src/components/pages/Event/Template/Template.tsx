@@ -1,12 +1,17 @@
 // Dependencies
-import { FC } from "react";
+import { FC, Suspense } from "react";
+import dynamic from "next/dynamic";
 
 // Types
 import type { Event } from "@/lib/types/sanity.types";
 
 // Components
 import Hero from "../Hero";
-import Content from "@/components/pages/Event/Content";
+
+// Dynamic imports for better code splitting
+const Content = dynamic(() => import("@/components/pages/Event/Content"), {
+  loading: () => <div style={{ height: "400px" }} />,
+});
 
 // Props types
 type Props = {
@@ -22,7 +27,11 @@ const Template: FC<Props> = ({ event }) => {
         type={event.type}
       />
 
-      {event.body && <Content content={event.body} />}
+      {event.body && (
+        <Suspense fallback={<div style={{ height: "400px" }} />}>
+          <Content content={event.body} />
+        </Suspense>
+      )}
     </>
   );
 };

@@ -52,6 +52,12 @@ export const generateMetadata = async ({
       description: post.excerpt,
       images: featureImageUrl ? [featureImageUrl] : undefined,
     },
+    twitter: {
+      card: "summary_large_image",
+      title: formatOpenGraphTitle(post.title),
+      description: post.excerpt,
+      images: featureImageUrl ? [featureImageUrl] : undefined,
+    },
   };
 };
 
@@ -110,10 +116,7 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
             <Display size={700} tagName="h1" className="m-0">
               {post.title}
             </Display>
-            <Byline
-              authors={authors}
-              publishedAt={post.publishedAt || ""}
-            />
+            <Byline authors={authors} publishedAt={post.publishedAt || ""} />
           </div>
         </div>
       </header>
