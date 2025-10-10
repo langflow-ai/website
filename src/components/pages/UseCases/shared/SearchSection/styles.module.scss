@@ -3,14 +3,14 @@
 
 // Search Section
 .searchSection {
-  padding-top: 3rem; // spacer-5: 48px
-  padding-bottom: 4rem; // spacer-6: 64px
+  padding-top: 3rem; // spacer-5: 48px - good spacing
+  padding-bottom: 3rem; // spacer-5: 48px - reduced for consistency
 }
 
 // Responsive adjustments
 @include media-breakpoint-down(md) {
   .searchSection {
     padding-top: 2rem; // spacer-4: 32px
-    padding-bottom: 3rem; // spacer-5: 48px
+    padding-bottom: 2rem; // spacer-4: 32px
   }
 }

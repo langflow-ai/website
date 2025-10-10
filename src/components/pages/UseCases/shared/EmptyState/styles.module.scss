@@ -4,11 +4,11 @@
 // Empty State
 .emptyState {
   text-align: center;
-  padding: 7.5rem 0;
+  padding: 4rem 0; // spacer-6: 64px - consistent with sections
 }
 
 .emptyTitle {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem; // spacer-3: 24px
   color: var(--primary-white);
   font-size: 2rem;
   font-weight: 600;
@@ -20,7 +20,7 @@
 }
 
 .emptyDescription {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem; // spacer-4: 32px - reduced
   color: var(--interface-light-gray-400);
   font-size: 1.25rem;
   line-height: 1.4;

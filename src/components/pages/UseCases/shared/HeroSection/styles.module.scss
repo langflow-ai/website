@@ -3,13 +3,13 @@
 
 // Hero Section
 .hero {
-  padding-top: 11rem; // spacer-10: 176px
-  padding-bottom: 7.5rem; // spacer-9: 120px
+  padding-top: 4rem; // spacer-6: 64px - comfortable spacing like home page
+  padding-bottom: 4rem; // spacer-6: 64px - consistent spacing
   text-align: center;
 }
 
 .heroTitle {
-  margin-bottom: 3rem; // spacer-5: 48px
+  margin-bottom: 2rem; // spacer-4: 32px - reduced for better flow
   color: var(--primary-white);
   font-size: 4.5rem;
   font-weight: 600;
@@ -21,7 +21,7 @@
 }
 
 .heroDescription {
-  margin-bottom: 5rem; // spacer-7: 80px
+  margin-bottom: 3rem; // spacer-5: 48px - reduced but still spacious
   color: var(--interface-light-gray-300);
   max-width: 800px;
   margin-left: auto;
@@ -37,7 +37,7 @@
 // Responsive adjustments
 @include media-breakpoint-down(md) {
   .hero {
-    padding-top: 6rem; // spacer-8: 96px
-    padding-bottom: 5rem; // spacer-7: 80px
+    padding-top: 3rem; // spacer-5: 48px - mobile adjustment
+    padding-bottom: 3rem; // spacer-5: 48px
   }
 }
