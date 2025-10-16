@@ -1,18 +1,10 @@
 // Dependencies
-import { FC, PropsWithChildren, Suspense } from "react";
-import dynamic from "next/dynamic";
+import { FC, PropsWithChildren } from "react";
 
 // Components
+import DownloadButton from "@/components/ui/Buttons";
+import PrizeBadge from "@/components/ui/prizeBadge";
 import Display from "@/components/ui/Display";
-
-// Dynamic imports for better code splitting
-const DownloadButton = dynamic(() => import("@/components/ui/Buttons"), {
-  loading: () => <div style={{ height: "60px" }} />,
-});
-
-const PrizeBadge = dynamic(() => import("@/components/ui/prizeBadge"), {
-  loading: () => <div style={{ height: "40px" }} />,
-});
 
 // Styles
 import styles from "./styles.module.scss";
@@ -25,9 +17,7 @@ const Template: FC<PropsWithChildren> = () => {
           <div className="col">
             <div className={styles.content}>
               <div>
-                <Suspense fallback={<div style={{ height: "40px" }} />}>
-                  <PrizeBadge />
-                </Suspense>
+                <PrizeBadge />
               </div>
               <div className={styles.title}>
                 <Display
@@ -38,10 +28,8 @@ const Template: FC<PropsWithChildren> = () => {
                     "Join thousands of developers accelerating their AI workflows. Start your first Langflow project now."
                   }
                 </Display>
-
-                <Suspense fallback={<div style={{ height: "60px" }} />}>
-                  <DownloadButton url="/desktop-form" />
-                </Suspense>
+                
+                <DownloadButton url="/desktop-form" />
               </div>
             </div>
           </div>

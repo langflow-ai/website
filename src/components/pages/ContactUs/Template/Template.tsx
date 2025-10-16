@@ -1,6 +1,5 @@
 // Dependencies
 import { FC, PropsWithChildren, Suspense } from "react";
-import dynamic from "next/dynamic";
 
 // Components
 import Display from "@/components/ui/Display";
@@ -12,6 +11,7 @@ const UrxForms = dynamic(() => import("@/components/ui/UrxForms/UrxForms"), {
 
 // Styles
 import styles from "./styles.module.scss";
+import dynamic from "next/dynamic";
 
 const Template: FC<PropsWithChildren> = () => {
   return (
