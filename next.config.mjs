@@ -2,15 +2,6 @@ import { withSentryConfig } from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
-  // Basic image optimization
-  images: {
-    formats: ["image/avif", "image/webp"],
-    minimumCacheTTL: 31536000, // 1 year
-  },
-  // Compression
-  compress: true,
-  // Font optimization
-  optimizeFonts: true,
   redirects: async () => {
     return [
       {
