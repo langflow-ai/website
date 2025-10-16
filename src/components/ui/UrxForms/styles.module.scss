@@ -1,0 +1,99 @@
+.urx {
+  label {
+    color: var(--primary-white);
+    font-family: var(--font-body);
+    font-weight: 600;
+    line-height: 1.43em;
+    margin-bottom: var(--spacer-1);
+    display: flex;
+    flex-direction: row-reverse;
+    width: fit-content !important;
+  }
+
+  :global(.cds--list-box__wrapper) {
+    div {
+      -webkit-border-after: none !important;
+      background: transparent !important;
+      height: 2.75em !important;
+    }
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="search"],
+  input[type="default"],
+  input[type="url"],
+  select,
+  textarea {
+    border-radius: 6px;
+    border: 1px solid #52525b;
+    color: var(--primary-white);
+    font-family: var(--font-inter);
+    font-size: 14px !important;
+    line-height: 1.5;
+    outline-offset: 0;
+    padding: 0.5rem 0.75rem;
+    height: 2.75em;
+
+    &:focus,
+    &:focus-visible {
+      outline: none !important;
+      border-color: #0099ff;
+    }
+
+    &:disabled {
+      background: var(--interface-light-gray-100);
+      border-color: var(--interface-light-gray-100);
+    }
+  }
+
+  :global(.button-container) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  button[type="submit"] {
+    background: linear-gradient(
+      to right,
+      rgb(134, 239, 172),
+      rgb(59, 130, 246)
+    );
+    border-radius: 6px;
+    box-shadow: rgba(134, 239, 172, 0.3) 0px 0px 20px;
+    background-color: var(--primary-black) !important;
+    font-size: 16px !important;
+    font-family: var(--font-body) !important;
+    font-weight: 600;
+    padding: calc(1.125rem - 1px) var(--spacer-3) calc(1rem - 1px);
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex;
+    justify-content: center;
+    color: var(--primary-black) !important;
+
+    border: none;
+
+    &:hover:not(:disabled) {
+      box-shadow: 0px 4px 0px rgba(var(--primary-black-rgb), 0.15);
+      opacity: 0.8 !important;
+    }
+
+    &:focus:not(:disabled),
+    &:focus-visible:not(:disabled) {
+      background: var(interface-purple-300);
+      color: var(--primary-black) !important;
+    }
+
+    &:active:not(:disabled) {
+      background: var(--interface-purple-500);
+      box-shadow: none;
+      color: var(--primary-white);
+    }
+
+    &:disabled {
+      background: var(--interface-light-gray-400);
+      color: var(--interface-dark-gray-300);
+    }
+  }
+}

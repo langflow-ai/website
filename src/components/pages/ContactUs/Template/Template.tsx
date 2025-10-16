@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import Display from "@/components/ui/Display";
 
 // Dynamic imports for better code splitting
-const ContactForm = dynamic(() => import("@/components/ui/ContactForm"), {
+const UrxForms = dynamic(() => import("@/components/ui/UrxForms/UrxForms"), {
   loading: () => <div style={{ height: "400px" }} />,
 });
 
@@ -37,7 +37,7 @@ const Template: FC<PropsWithChildren> = () => {
           <div className={styles.content}>
             <div className={styles.form}>
               <Suspense fallback={<div style={{ height: "400px" }} />}>
-                <ContactForm />
+                <UrxForms formId="urx-36641" instanceId="urx-form-1" />
               </Suspense>
             </div>
           </div>
