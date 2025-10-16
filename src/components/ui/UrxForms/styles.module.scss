@@ -1,7 +1,11 @@
 .urx {
+  :global(.form-heading-container) {
+    display: none !important;
+  }
+
   label {
     color: var(--primary-white);
-    font-family: var(--font-body);
+    font-family: var(--font-inter) !important;
     font-weight: 600;
     line-height: 1.43em;
     margin-bottom: var(--spacer-1);
@@ -29,7 +33,7 @@
     border-radius: 6px;
     border: 1px solid #52525b;
     color: var(--primary-white);
-    font-family: var(--font-inter);
+    font-family: var(--font-inter) !important;
     font-size: 14px !important;
     line-height: 1.5;
     outline-offset: 0;
