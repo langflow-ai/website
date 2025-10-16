@@ -3,6 +3,16 @@
     display: none !important;
   }
 
+  :global(.cds--select-input__wrapper) {
+    background: var(--primary-black) !important;
+    background-color: var(--primary-black) !important;
+
+    select {
+      background: var(--primary-black) !important;
+      background-color: var(--primary-black) !important;
+    }
+  }
+
   label {
     color: var(--primary-white);
     font-family: var(--font-inter) !important;
@@ -31,19 +41,21 @@
   select,
   textarea {
     border-radius: 6px;
-    border: 1px solid #52525b;
+    border: 1px solid var(--interface-dark-gray-250);
     color: var(--primary-white);
     font-family: var(--font-inter) !important;
     font-size: 14px !important;
+    background: var(--primary-black) !important;
     line-height: 1.5;
     outline-offset: 0;
     padding: 0.5rem 0.75rem;
     height: 2.75em;
+    background-color: var(--primary-black) !important;
 
     &:focus,
     &:focus-visible {
       outline: none !important;
-      border-color: #0099ff;
+      border-color: var(--interface-blue-200);
     }
 
     &:disabled {
