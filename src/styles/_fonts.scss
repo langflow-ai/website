@@ -1,18 +1,14 @@
 @font-face {
   font-family: "Chivo";
   font-display: swap;
-  font-weight: 100 900;
-  src: url("./fonts/Chivo/Chivo-VariableFont_wght.ttf")
-    format("truetype-variations");
+  src: url("./fonts/Chivo/Chivo-VariableFont_wght.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Chivo";
   font-display: swap;
   font-style: italic;
-  font-weight: 100 900;
-  src: url("./fonts/Chivo/Chivo-Italic-VariableFont_wght.ttf")
-    format("truetype-variations");
+  src: url("./fonts/Chivo/Chivo-Italic-VariableFont_wght.ttf") format("truetype");
 }
 
 @font-face {
@@ -23,17 +19,30 @@
 
 @font-face {
   font-family: "Inter";
-  font-weight: 100 800;
+  font-weight: 500;
   font-display: swap;
-  src: url("./fonts/Inter/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+  src: url("./fonts/Inter/static/Inter_18pt-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/Inter/static/Inter_18pt-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 600;
+  font-display: swap;
+  src: url("./fonts/Inter/static/Inter_18pt-SemiBold.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "JetBrains Mono";
-  font-weight: 100 800;
+  font-weight: 700;
   font-display: swap;
-  src: url("./fonts/JetBrains/JetBrainsMono-VariableFont_wght.ttf")
-    format("truetype-variations");
+  src: url("./fonts/JetBrains/JetBrainsMono-VariableFont_wght.ttf") format("truetype");
 }
 
 $font-body: "Chivo", sans-serif;

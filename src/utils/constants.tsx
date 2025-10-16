@@ -214,7 +214,7 @@ const HERO_CONTENT = {
   description:
     "Langflow is a powerful tool to build and deploy AI agents and MCP servers. It comes with batteries included and supports all major LLMs, vector databases and a growing library of AI tools.",
   image: {
-    src: "/images/HeroBackground.webp",
+    src: "/images/Gradient.png",
     alt: "gradient",
     fill: true,
     priority: true,
@@ -241,19 +241,19 @@ const CARDS = [
     text: "Deploy yourself or sign up for a free cloud account",
     Component: Signup,
     background: true,
-    image: "/images/card-1.webp",
+    image: "/images/card-1.png",
   },
   {
     text: "Deploy and scale on an enterprise-grade, secure cloud platform",
     Component: CloudPlatform,
     background: false,
-    image: "/images/card-2.webp",
+    image: "/images/card-2.png",
   },
   {
     text: "Same Langflow whether you’re using OSS or Cloud",
     Component: Langflow,
     background: false,
-    image: "/images/card-3.webp",
+    image: "/images/card-3.png",
   },
 ];
 const PARTNERS_STACK_TEXT = {

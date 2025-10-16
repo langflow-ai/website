@@ -1,14 +1,6 @@
-// Dependencies
-import { Suspense } from "react";
-import dynamic from "next/dynamic";
-
 // Components
+import MarketoForm from "@/components/ui/form";
 import Display from "@/components/ui/Display";
-
-// Dynamic imports for better code splitting
-const MarketoForm = dynamic(() => import("@/components/ui/form"), {
-  loading: () => <div style={{ height: "400px" }} />,
-});
 
 // Styles
 import styles from "./styles.module.scss";
@@ -38,13 +30,11 @@ const Template = () => {
                   }
                 </Display>
 
-                <Suspense fallback={<div style={{ height: "400px" }} />}>
-                  <MarketoForm
-                    showFootNote={false}
-                    successRedirect={"/desktop-form-complete"}
-                    id={5302}
-                  />
-                </Suspense>
+                <MarketoForm
+                  showFootNote={false}
+                  successRedirect={"/desktop-form-complete"}
+                  id={5302}
+                />
               </div>
             </div>
           </div>
