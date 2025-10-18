@@ -3,7 +3,7 @@ export const revalidate = 60 * 60; // 1 hour
 
 import { sanityFetch } from "@/lib/backend/sanity/client";
 import { POST_BY_SLUG_QUERY } from "@/lib/backend/sanity/queries";
-import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
+import { HOST } from "@/utils/constants";
 import type { NextRequest } from "next/server";
 
 interface Post {
@@ -37,10 +37,7 @@ export async function GET(
     return new Response("Post not found", { status: 404 });
   }
 
-  const host = process.env.NEXT_PUBLIC_VERCEL_URL
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : "https://langflow.org";
-  const url = `${host}/blog/${post.slug?.current ?? params.slug}`;
+  const url = `${HOST}/blog/${post.slug?.current ?? params.slug}`;
 
   const content =
     `Post title: ${post.title ?? "Untitled"}` +

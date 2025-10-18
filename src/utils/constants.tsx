@@ -357,3 +357,7 @@ export {
   DOWNLOAD_OPTIONS,
   NEWSLETTER_BLURB,
 };
+
+export const HOST = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : "https://langflow.org";
