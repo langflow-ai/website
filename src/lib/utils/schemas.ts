@@ -3,7 +3,7 @@ import { AuthorClip, BlogPost } from "../types/sanity";
 import { HOST } from "@/utils/constants";
 
 function imageToUrl(image?: SanityImageSource) {
-  if (image === undefined) {
+  if (image === undefined || image === null) {
     return "";
   }
   if (typeof image === "string") {
