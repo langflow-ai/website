@@ -5,6 +5,7 @@ import { sanityFetch } from "@/lib/backend/sanity/client";
 import { BLOG_POSTS_QUERY } from "@/lib/backend/sanity/queries";
 import { BlogPost } from "@/lib/types/sanity";
 import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
+import { HOST } from "@/utils/constants";
 import type { NextRequest } from "next/server";
 
 /**
@@ -22,14 +23,10 @@ Here are the latest insightful posts from the Langflow blog about how to build A
 
 `;
 
-  const host = process.env.NEXT_PUBLIC_VERCEL_URL
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : "https://langflow.org";
-
   const records = (
     await Promise.all(
       posts.map(async (post) => {
-        const url = `${host}/blog/${post.slug?.current ?? ""}`;
+        const url = `${HOST}/blog/${post.slug?.current ?? ""}`;
 
         const summary =
           post.excerpt?.trim() ||

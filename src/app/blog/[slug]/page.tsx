@@ -18,6 +18,8 @@ import { BlogPost } from "@/lib/types/sanity";
 import { Markdown } from "@/components/ui/Blog/Markdown";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
 import { formatOpenGraphTitle } from "@/lib/utils/titles";
+import { HOST } from "@/utils/constants";
+import { blogPostSchema } from "@/lib/utils/schemas";
 
 export async function generateStaticParams() {
   const slugs = await sanityFetch<string[]>(BLOG_POSTS_SLUGS_QUERY);
@@ -153,6 +155,12 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
               ))}
             </div>
           </div>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(blogPostSchema(post)),
+            }}
+          ></script>
         </section>
       )}
     </PageLayout>
