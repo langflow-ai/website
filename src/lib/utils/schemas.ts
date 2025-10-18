@@ -37,7 +37,6 @@ export const blogPostSchema = (post: BlogPost) => ({
 export const authorSchema = (author: AuthorClip) => ({
   "@type": "Person",
   name: author.name,
-  worksFor: "Langflow",
   image: imageToUrl(author.avatar),
 });
 
