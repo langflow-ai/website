@@ -1,0 +1,201 @@
+@import "../../styles/variables";
+
+.templatesHero {
+  position: relative;
+  padding: 0;
+  width: 100vw; // Full viewport width
+  margin-left: calc(-50vw + 50%); // Center background
+  margin-right: calc(-50vw + 50%); // Center background
+
+  .backgroundNoise {
+    position: absolute;
+    inset: 0;
+    
+    height: 150%;
+    background: transparent; // Removed black background
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.8) 1px, transparent 0);
+    background-size: 30px 30px;
+    opacity: 0.4;
+    z-index: -1; // Behind gradient
+    
+    // Mask to make noise fade gradually
+    mask: linear-gradient(to bottom, 
+      rgba(0,0,0,0.8) 0%, 
+      rgba(0,0,0,0.6) 30%, 
+      rgba(0,0,0,0.6) 60%, 
+      rgba(0,0,0,0.4) 100%);
+    -webkit-mask: linear-gradient(to bottom, 
+      rgba(0,0,0,0.8) 0%, 
+      rgba(0,0,0,0.6) 30%, 
+      rgba(0,0,0,0.6) 60%, 
+      rgba(0,0,0,0.4) 100%);
+  }
+
+  
+
+  .backgroundGradient {
+    position: absolute;
+    top: 30%; // Starts at middle of hero
+    left: 0;
+    right: 0;
+    height: 180%; // Extends 50% below hero
+    background-image: url('/images/Gradient.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: -2; // Behind everything
+    pointer-events: none;
+    
+    // Mask to control where gradient appears - darker in vertical middle
+    mask: linear-gradient(to bottom, 
+      rgba(0,0,0,0) 0%, 
+      rgba(0,0,0,1) 20%, 
+      rgba(0,0,0,1) 50%, 
+      rgba(0,0,0,0) 80%, 
+      rgba(0,0,0,0) 100%);
+    -webkit-mask: linear-gradient(to bottom, 
+      rgba(0,0,0,0) 0%, 
+      rgba(0,0,0,1) 20%, 
+      rgba(0,0,0,1) 50%, 
+      rgba(0,0,0,0) 80%, 
+      rgba(0,0,0,0) 100%);
+  }
+
+  .container {
+    position: relative;
+    z-index: 20;
+    padding: 0;
+    margin: 0;
+    max-width: 1280px; // Largura máxima para o conteúdo
+    margin: 0 auto; // Centraliza o conteúdo
+    padding: 0 20px; // Padding mínimo
+
+    @media (min-width: 480px) {
+      padding: 0 40px;
+    }
+
+    @media (min-width: 768px) {
+      padding: 0 60px;
+    }
+
+    @media (min-width: 1024px) {
+      padding: 0 80px;
+    }
+
+    @media (min-width: 1440px) {
+      padding: 0 80px; // 80px de recuo em telas de 1440px
+    }
+  }
+
+  .content {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column; // Duas linhas: título/subtítulo e input/botões
+    gap: 2rem; // Espaço entre as duas linhas
+    padding: 120px 0 60px 0; // Apenas padding vertical
+
+    @media (min-width: 768px) {
+      gap: 1.5rem;
+    }
+
+    // Primeira linha: título e subtítulo
+    .headerContent {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .title {
+      font-family: 'Chivo', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 48px;
+      line-height: 120%;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+      margin: 60px 0 0 0;
+      width: 232px;
+
+      @media (max-width: 768px) {
+        font-size: 36px;
+        width: auto;
+      }
+    }
+
+    .subtitle {
+      font-family: 'Chivo', sans-serif;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 140%;
+      color: #FFFFFF;
+      margin: 24px 0 0 0; // 24px abaixo do título
+      width: 513px;
+
+      @media (max-width: 768px) {
+        font-size: 16px;
+        width: auto;
+      }
+    }
+
+    // Segunda linha: input e botões
+    .searchAndFiltersRow {
+      display: flex;
+      justify-content: space-between; // Input à esquerda, botões à direita
+      align-items: center; // Alinhados na mesma altura
+      width: 100%;
+      gap: 2rem; // Espaço entre input e botões
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+    }
+
+    .searchContainer {
+      flex-shrink: 0; // Não encolhe o input
+      width: 500px; // Largura reduzida para dar espaço aos segmentos
+
+      @media (max-width: 768px) {
+        width: 100%;
+      }
+    }
+
+    .filtersRight {
+      display: flex;
+      flex-direction: row; // Horizontal
+      gap: 12px; // 12px entre os botões
+      align-items: center; // Alinhados na mesma altura do input
+      flex-wrap: nowrap; // Sem quebra de linha - SEMPRE
+      overflow-x: auto; // Permite scroll horizontal
+      overflow-y: hidden; // Sem scroll vertical
+      scrollbar-width: none; // Esconde scrollbar no Firefox
+      -ms-overflow-style: none; // Esconde scrollbar no IE/Edge
+      flex-shrink: 1; // Pode encolher se necessário
+      min-width: 0; // Permite que o container encolha
+      
+      // Esconde scrollbar no Webkit (Chrome, Safari)
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      // Em telas grandes, sempre horizontal com scroll
+      @media (min-width: 769px) {
+        flex-wrap: nowrap; // SEMPRE horizontal em desktop
+        max-width: calc(100% - 500px - 2rem); // Largura máxima baseada no input reduzido
+        overflow-x: auto; // Scroll horizontal quando necessário
+      }
+
+      @media (max-width: 768px) {
+        flex-wrap: nowrap; // Mantém horizontal mesmo em mobile
+        width: 100%;
+        justify-content: flex-start;
+        overflow-x: auto; // Scroll horizontal em mobile também
+        max-width: 100%;
+      }
+    }
+  }
+}

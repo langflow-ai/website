@@ -41,19 +41,57 @@ const TemplateDetailTemplate = ({ template }: TemplateDetailTemplateProps) => {
       <ContentSection>
         <div className="row justify-content-center">
           <div className="col-lg-10">
+            {/* Langflow Flow Demo */}
+            {template.mapped_use_cases.some(useCase => useCase.includes('<iframe')) && (
+              <div className={styles.section}>
+                <div style={{ 
+                  width: "100%",
+                  position: "relative",
+                  aspectRatio: "16/9",
+                  margin: "0 0 20px 0",
+                  border: "1px solid #e1e5e9",
+                  borderRadius: "8px",
+                  overflow: "hidden"
+                }}>
+                  <iframe
+                    src="/api/langflow-proxy?path=flow&mode=run"
+                    width="100%"
+                    height="100%"
+                    title="Langflow Flow Demo"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    allow="clipboard-read; clipboard-write; fullscreen; autoplay; encrypted-media; camera; microphone; geolocation"
+                    style={{ 
+                      border: "none", 
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%"
+                    }}
+                    allowFullScreen
+                    onLoad={() => console.log('Langflow flow loaded successfully')}
+                    onError={(e) => console.error('Langflow flow failed to load:', e)}
+                  />
+                </div>
+              </div>
+            )}
+
             {/* Use Cases */}
             <div className={styles.section}>
               <h3 className={styles.sectionTitle}>Use Cases</h3>
               <div className={styles.useCasesList}>
-                {template.mapped_use_cases.map((useCase, index) => (
-                  <div key={index} className={styles.useCaseItem}>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.5"/>
-                      <path d="M7 10L9 12L13 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <span>{useCase}</span>
-                  </div>
-                ))}
+                {template.mapped_use_cases
+                  .filter(useCase => !useCase.includes('<iframe'))
+                  .map((useCase, index) => (
+                    <div key={index} className={styles.useCaseItem}>
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.5"/>
+                        <path d="M7 10L9 12L13 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span>{useCase}</span>
+                    </div>
+                  ))}
               </div>
             </div>
 
@@ -64,11 +102,13 @@ const TemplateDetailTemplate = ({ template }: TemplateDetailTemplateProps) => {
                 <div className={styles.exampleBlock}>
                   <h4 className={styles.exampleLabel}>Use Cases</h4>
                   <div className={styles.exampleText}>
-                    {template.mapped_use_cases.map((useCase, index) => (
-                      <div key={index} style={{ marginBottom: '8px' }}>
-                        • {useCase}
-                      </div>
-                    ))}
+                    {template.mapped_use_cases
+                      .filter(useCase => !useCase.includes('<iframe'))
+                      .map((useCase, index) => (
+                        <div key={index} style={{ marginBottom: '8px' }}>
+                          • {useCase}
+                        </div>
+                      ))}
                   </div>
                 </div>
                 <svg className={styles.exampleArrow} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

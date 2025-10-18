@@ -1,0 +1,46 @@
+@import "../../../../styles/variables";
+
+.trending {
+  background: transparent; // Sem background - se estende por toda a largura
+  padding: 60px 0; // 60px de distância entre seções
+}
+
+.container {
+  max-width: 1280px; // Largura máxima consistente
+  margin: 0 auto; // Centraliza horizontalmente
+  padding: 0; // Sem padding horizontal, já está no container principal
+}
+
+.sectionTitle {
+  font-family: 'Chivo', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  margin: 0 0 32px 0; // 32px gap dos cards
+  text-align: left;
+  width: 232px; // Mesma largura do título Templates
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+    width: auto;
+  }
+}
+
+.templatesContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px; // 16px entre os cards
+  max-width: 1280px; // Mesma largura máxima
+  margin: 0 auto; // Centraliza os cards
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, 1fr); // 2 cards na primeira linha
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; // 1 card por linha
+  }
+}

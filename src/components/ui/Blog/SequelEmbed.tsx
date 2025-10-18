@@ -19,7 +19,7 @@ export const SequelEmbed = ({ id }: { id: string }) => {
         width="100%"
         height="90vh"
         frameBorder="0"
-        src={`https://embed.sequel.io/event/${id}?${searchParams.toString()}`}
+        src={`https://embed.sequel.io/event/${id}?${searchParams?.toString() ?? ""}`}
         style={{
           height: "90vh",
           borderRadius: "12px",

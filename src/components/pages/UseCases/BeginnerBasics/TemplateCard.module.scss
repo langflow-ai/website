@@ -1,0 +1,91 @@
+@import "../../../../styles/variables";
+
+.templateCard {
+  width: 100%;
+  max-width: 416px;
+  height: 287px;
+  background: var(--primary-black);
+  border: 0.5px solid #3f3f46; // Borda zinc-700 como os botões do hero
+  border-radius: 12px; // Bordas mais arredondadas
+  display: flex;
+  position: relative;
+  margin: 0 auto; // Centraliza cada card
+
+  @media (max-width: 1000px) {
+    height: auto;
+    min-height: 250px;
+  }
+
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 200px;
+  }
+}
+
+.leftContent {
+  width: 100%;
+  padding: 24px; // Padding menor para cards pequenos
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.iconContainer {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px; // 24px abaixo do ícone
+}
+
+.cardTitle {
+  font-family: 'Chivo', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 120%;
+  color: #FFFFFF; // Texto branco
+  margin: 0 0 8px 0; // 8px abaixo do título
+  text-align: left;
+}
+
+.cardDescription {
+  font-family: 'Chivo', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 140%;
+  color: #FFFFFF; // Texto branco
+  margin: 0 0 24px 0; // 24px abaixo da descrição
+  text-align: left;
+  text-align: justify; // Texto justificado
+  max-width: 380px; // Para controlar a quebra de linha
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+.categoryButtons {
+  display: flex;
+  gap: 12px; // 12px entre os botões
+  align-items: flex-start;
+}
+
+.categoryButton {
+  padding: 0.5rem 1rem; // Mesmo padding dos botões do hero
+  background: transparent;
+  border: 0.5px solid #3f3f46; // Borda zinc-700 como os botões do hero
+  color: rgba(255, 255, 255, 0.7); // Texto branco com transparência como os botões do hero
+  border-radius: 1rem; // Border radius dos botões do hero
+  font-size: 0.875rem; // Mesmo tamanho dos botões do hero
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #FFFFFF; // Texto branco no hover
+  }
+}

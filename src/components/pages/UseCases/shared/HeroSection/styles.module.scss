@@ -3,8 +3,8 @@
 
 // Hero Section
 .hero {
-  padding-top: 4rem; // spacer-6: 64px - comfortable spacing like home page
-  padding-bottom: 4rem; // spacer-6: 64px - consistent spacing
+  background: var(--primary-black); // Fundo preto
+  padding: 4rem 0; // Sem recuo horizontal interno
   text-align: center;
 }
 
@@ -37,7 +37,6 @@
 // Responsive adjustments
 @include media-breakpoint-down(md) {
   .hero {
-    padding-top: 3rem; // spacer-5: 48px - mobile adjustment
-    padding-bottom: 3rem; // spacer-5: 48px
+    padding: 3rem 20px; // 20px em mobile
   }
 }

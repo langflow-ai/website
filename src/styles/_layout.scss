@@ -11,7 +11,7 @@ body:has(.layout) {
 .container-wide {
   @include make-container(48px);
   max-width: 1300px;
-  padding: 0px 40px;
+  padding: 0px 80px; // 80px nas laterais para consistência
   @include media-breakpoint-down(xxll) {
     max-width: 1180px;
   }
@@ -20,6 +20,6 @@ body:has(.layout) {
   }
   @include media-breakpoint-down(mlg) {
     max-width: 100%;
-    padding: 0px 16px;
+    padding: 0px 20px; // 20px em mobile para consistência
   }
 }

@@ -1,0 +1,15 @@
+@import "../../../styles/variables";
+
+.page {
+  min-height: 100vh;
+  background: $templates-bg;
+  color: $templates-text;
+}
+
+.section {
+  padding: 3rem 0;
+
+  @media (min-width: 992px) {
+    padding: 4rem 0;
+  }
+}

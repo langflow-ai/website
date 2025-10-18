@@ -1,0 +1,84 @@
+@import "../../styles/variables";
+
+.page {
+  min-height: 100vh;
+  background: transparent; // Removed black background
+  color: $templates-text;
+  // Main container with max width of 1280px
+  max-width: 1280px;
+  margin: 0 auto; // Center content
+  padding: 0 20px; // Minimum padding
+
+  @media (min-width: 480px) {
+    padding: 0 40px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 0 60px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 0 80px;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 0 80px; // 80px indent on 1440px screens
+  }
+
+}
+
+.section {
+  padding: 3rem 0; // Only vertical padding, horizontal already in main container
+
+  @media (min-width: 1024px) {
+    padding: 4rem 0;
+  }
+}
+
+.filteredSection {
+  padding: 3rem 0; // Only vertical padding, horizontal already in main container
+
+  @media (min-width: 1024px) {
+    padding: 4rem 0;
+  }
+}
+
+.filteredEmptyState {
+  text-align: center;
+  padding: 4rem 0;
+  color: $templates-muted;
+  display: grid;
+  gap: 1rem;
+}
+
+.filteredEmptyStateTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $templates-text;
+}
+
+.filteredEmptyStateDescription {
+  max-width: 28rem;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.clearButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: $templates-radius-lg;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: $templates-text;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+  }
+}

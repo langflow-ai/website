@@ -3,14 +3,13 @@
 
 // Content Section
 .contentSection {
-  padding-top: 4rem; // spacer-6: 64px - consistent with hero
-  padding-bottom: 4rem; // spacer-6: 64px - consistent spacing
+  background: var(--primary-black); // Fundo preto
+  padding: 4rem 0; // Sem recuo horizontal interno
 }
 
 // Responsive adjustments
 @include media-breakpoint-down(md) {
   .contentSection {
-    padding-top: 3rem; // spacer-5: 48px
-    padding-bottom: 3rem; // spacer-5: 48px
+    padding: 3rem 20px; // 20px em mobile
   }
 }

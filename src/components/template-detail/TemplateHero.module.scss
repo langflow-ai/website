@@ -1,0 +1,155 @@
+@import "../../styles/variables";
+
+.templateHero {
+  position: relative;
+  padding: 4rem 0 3rem;
+  overflow: hidden;
+
+  @media (min-width: 992px) {
+    padding: 5rem 0 4rem;
+  }
+}
+
+.backgroundGradient {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(1200px 600px at 50% 0%, rgba(124, 77, 255, 0.25), transparent 60%),
+    radial-gradient(800px 400px at 20% 30%, rgba(79, 70, 229, 0.25), transparent 60%);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $templates-muted;
+  font-size: 0.875rem;
+  margin-bottom: 2rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &:hover {
+    color: $templates-text;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 2.5rem;
+
+  @media (min-width: 992px) {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $templates-text;
+  margin-bottom: 1.5rem;
+
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
+}
+
+.summary {
+  font-size: 1.125rem;
+  color: $templates-muted;
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  @media (min-width: 576px) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2.5rem;
+  border-radius: $templates-radius-lg;
+  background: linear-gradient(135deg, $templates-brand-1, $templates-brand-2);
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 35px rgba(124, 77, 255, 0.35);
+  }
+}
+
+.secondaryActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  button {
+    background: transparent;
+    border: none;
+    color: $templates-muted;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+    transition: color 0.2s ease, background 0.2s ease;
+
+    &:hover {
+      color: $templates-text;
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+}
+
+.sidebar {
+  display: grid;
+  gap: 1.5rem;
+  color: $templates-text;
+}
+
+.sidebarBlock {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.sidebarLabel {
+  font-size: 0.875rem;
+  color: $templates-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.lastUpdate {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

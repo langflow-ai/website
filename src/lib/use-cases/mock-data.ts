@@ -164,6 +164,7 @@ export const mockTemplates: Template[] = [
     ],
     mapped_use_cases: [
       "Extract specific parts of contracts and store the structured information in an external table.",
+      "<iframe>", // Marker for Langflow demo
       "Extract, label, normalize and disambiguate entities from documents or news articles.",
       "Event Extraction: use news to discover parent events and their related children events"
     ],
