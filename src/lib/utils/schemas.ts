@@ -1,4 +1,6 @@
+import { client } from "@/lib/backend/sanity/client";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { useNextSanityImage } from "next-sanity-image";
 import { AuthorClip, BlogPost } from "../types/sanity";
 import { HOST } from "@/utils/constants";
 
@@ -6,13 +8,8 @@ function imageToUrl(image?: SanityImageSource) {
   if (image === undefined || image === null) {
     return "";
   }
-  if (typeof image === "string") {
-    return image;
-  }
-  if ("url" in image) {
-    return image.url;
-  }
-  return "";
+  const sanityImage = useNextSanityImage(client, image);
+  return sanityImage.src;
 }
 
 export const blogPostSchema = (post: BlogPost) => ({
