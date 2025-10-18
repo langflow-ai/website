@@ -1,5 +1,19 @@
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { AuthorClip, BlogPost } from "../types/sanity";
 import { HOST } from "@/utils/constants";
+
+function imageToUrl(image?: SanityImageSource) {
+  if (image === undefined) {
+    return "";
+  }
+  if (typeof image === "string") {
+    return image;
+  }
+  if ("url" in image) {
+    return image.url;
+  }
+  return "";
+}
 
 export const blogPostSchema = (post: BlogPost) => ({
   "@context": "https://schema.org",
@@ -9,11 +23,7 @@ export const blogPostSchema = (post: BlogPost) => ({
   headline: post.title,
   datePublished: post.publishedAt,
   description: post.excerpt,
-  image: {
-    "@type": "ImageObject",
-    "@id": post.featureImage,
-    url: post.featureImage,
-  },
+  image: imageToUrl(post.featureImage),
   articleBody: post.body,
   isPartOf: {
     "@type": "Blog",
@@ -28,7 +38,7 @@ export const authorSchema = (author: AuthorClip) => ({
   "@type": "Person",
   name: author.name,
   worksFor: "Langflow",
-  image: author.avatar,
+  image: imageToUrl(author.avatar),
 });
 
 export const publisherSchema = {
