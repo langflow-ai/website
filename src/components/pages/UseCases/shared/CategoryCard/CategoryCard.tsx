@@ -51,7 +51,7 @@ const CategoryCard = ({ category, onViewCategory, className = "" }: CategoryCard
       <div className={styles.categoryCardFooter}>
         <Button 
           variant={ButtonTypes.BORDER} 
-          href={`/use-cases/category/${category.slug}`}
+          href="/templates/basic-prompting"
           onClick={handleViewCategory}
           className={styles.categoryButton}
         >

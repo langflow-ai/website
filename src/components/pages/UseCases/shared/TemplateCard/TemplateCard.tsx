@@ -71,7 +71,7 @@ const TemplateCard = ({ template, onOpenInLangflow, onViewDetails, className = "
           </Button>
           <Button 
             variant={ButtonTypes.BORDER} 
-            href={`/use-cases/template/${template.slug}`}
+            href="/templates/basic-prompting"
             onClick={handleViewDetails}
             className={styles.secondaryTemplateButton}
           >

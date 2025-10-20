@@ -24,42 +24,48 @@ const MOCK_TEMPLATES = [
     name: "Memory Chatbot",
     description: "Create a chatbot that saves and references previous messages.",
     categories: ["Category", "Sub-category"],
-    iconType: "robot" as const
+    iconType: "robot" as const,
+    slug: "memory-chatbot"
   },
   {
     id: "2",
     name: "Basic Prompting",
     description: "Perform basic prompting with an OpenAI model.",
     categories: ["Category", "Sub-category"],
-    iconType: "basic" as const
+    iconType: "basic" as const,
+    slug: "basic-prompting"
   },
   {
     id: "3",
-    name: "Memory Chatbot",
-    description: "Create a chatbot that saves and references previous messages.",
+    name: "Advanced Chatbot",
+    description: "Create an advanced chatbot with memory and context.",
     categories: ["Category", "Sub-category"],
-    iconType: "robot" as const
+    iconType: "robot" as const,
+    slug: "advanced-chatbot"
   },
   {
     id: "4",
-    name: "Basic Prompting",
-    description: "Perform basic prompting with an OpenAI model.",
+    name: "Content Generator",
+    description: "Generate content using AI models.",
     categories: ["Category", "Sub-category"],
-    iconType: "basic" as const
+    iconType: "basic" as const,
+    slug: "content-generator"
   },
   {
     id: "5",
-    name: "Memory Chatbot",
-    description: "Create a chatbot that saves and references previous messages.",
+    name: "Data Processor",
+    description: "Process and analyze data with AI assistance.",
     categories: ["Category", "Sub-category"],
-    iconType: "robot" as const
+    iconType: "robot" as const,
+    slug: "data-processor"
   },
   {
     id: "6",
-    name: "Basic Prompting",
-    description: "Perform basic prompting with an OpenAI model.",
+    name: "Email Assistant",
+    description: "AI-powered email management and responses.",
     categories: ["Category", "Sub-category"],
-    iconType: "basic" as const
+    iconType: "basic" as const,
+    slug: "email-assistant"
   },
 ];
 
@@ -251,6 +257,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
                   description={template.description}
                   categories={template.categories}
                   iconType={template.iconType}
+                  slug={template.slug}
                 />
               ))}
             </div>

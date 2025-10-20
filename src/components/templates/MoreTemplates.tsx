@@ -32,6 +32,7 @@ export default function MoreTemplates({
               description={template.summary}
               categories={template.segments.map(seg => seg.charAt(0).toUpperCase() + seg.slice(1))}
               iconType="basic"
+              slug={template.slug}
             />
           ))}
         </div>

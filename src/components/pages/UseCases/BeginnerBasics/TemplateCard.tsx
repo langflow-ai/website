@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./TemplateCard.module.scss";
 
 interface TemplateCardProps {
@@ -8,6 +9,7 @@ interface TemplateCardProps {
   description: string;
   categories: string[];
   iconType: "basic" | "robot";
+  slug?: string;
   className?: string;
 }
 
@@ -16,14 +18,18 @@ export default function TemplateCard({
   description, 
   categories, 
   iconType,
+  slug,
   className = "" 
 }: TemplateCardProps) {
   const iconSrc = iconType === "basic" ? "/images/basic.png" : "/images/robot.png";
   const iconAlt = iconType === "basic" ? "Basic Prompting icon" : "Memory Chatbot icon";
   const iconBgColor = iconType === "basic" ? "rgb(139, 92, 246)" : "rgb(254, 89, 194)"; // Purple for basic, Pink for robot
+  
+  // Redirect all cards to basic-prompting template for now
+  const href = `/templates/basic-prompting`;
 
   return (
-    <div className={`${styles.templateCard} ${className}`}>
+    <Link href={href} className={`${styles.templateCard} ${className}`}>
       <div className={styles.leftContent}>
         <div 
           className={styles.iconContainer}
@@ -48,6 +54,6 @@ export default function TemplateCard({
           ))}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
