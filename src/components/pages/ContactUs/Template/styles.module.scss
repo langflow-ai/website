@@ -24,6 +24,10 @@
     min-height: calc(100vh - 240px);
     background: none;
   }
+
+  :global(.notice-choice) {
+    margin-top: var(--spacer-1) !important;
+  }
 }
 
 .container {

@@ -69,7 +69,12 @@
     max-width: 100% !important;
   }
 
+  :global(.c4d--nc__pre-text) {
+    margin-top: 0px !important;
+  }
+
   button[type="submit"] {
+    margin-top: var(--spacer-1);
     background: linear-gradient(
       to right,
       rgb(134, 239, 172),
