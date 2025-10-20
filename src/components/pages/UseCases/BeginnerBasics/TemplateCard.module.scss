@@ -5,8 +5,8 @@
   max-width: 416px;
   height: 287px;
   background: var(--primary-black);
-  border: 0.5px solid #3f3f46; // Borda zinc-700 como os botões do hero
-  border-radius: 12px; // Bordas mais arredondadas
+  border: 0.5px solid #3f3f46; // zinc-700 border like hero buttons
+  border-radius: 12px; // More rounded borders
   display: flex;
   position: relative;
   margin: 0 auto; // Centraliza cada card
@@ -54,7 +54,7 @@
   font-weight: 400;
   font-size: 24px;
   line-height: 120%;
-  color: #FFFFFF; // Texto branco
+  color: #FFFFFF; // White text
   margin: 0 0 8px 0; // 8px abaixo do título
   text-align: left;
 }
@@ -65,7 +65,7 @@
   font-weight: 300;
   font-size: 16px;
   line-height: 140%;
-  color: #FFFFFF; // Texto branco
+  color: #FFFFFF; // White text
   margin: 0 0 24px 0; // 24px abaixo da descrição
   text-align: left;
   text-align: justify; // Texto justificado
@@ -83,7 +83,7 @@
 .categoryButton {
   padding: 0.5rem 1rem; // Mesmo padding dos botões do hero
   background: transparent;
-  border: 0.5px solid #3f3f46; // Borda zinc-700 como os botões do hero
+  border: 0.5px solid #3f3f46; // zinc-700 border like hero buttons
   color: rgba(255, 255, 255, 0.7); // Texto branco com transparência como os botões do hero
   border-radius: 1rem; // Border radius dos botões do hero
   font-size: 0.875rem; // Mesmo tamanho dos botões do hero
@@ -93,6 +93,6 @@
 
   &:hover {
     border-color: rgba(255, 255, 255, 0.4);
-    color: #FFFFFF; // Texto branco no hover
+    color: #FFFFFF; // White text no hover
   }
 }
