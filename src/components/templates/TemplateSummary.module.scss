@@ -5,6 +5,7 @@
   gap: 3rem;
   margin-left: 216px; // 216px from left edge of generic section limit
   margin-top: 72px; // 72px below iframe
+  color: #ffffff; // Ensure text color consistency
 
   @media (max-width: 1024px) {
     margin-left: 2rem; // Reduced margin on smaller screens
