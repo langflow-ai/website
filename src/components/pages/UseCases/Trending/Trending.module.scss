@@ -43,16 +43,9 @@
   gap: 16px; // 16px entre os cards
   max-width: 1280px; // Mesma largura máxima
   margin: 0 auto; // Centraliza os cards
-  padding: 0 1rem; // Base padding for mobile
 
-  @media (min-width: 640px) {
-    padding: 0 1.5rem; // sm: 24px
-  }
 
-  @media (min-width: 768px) {
-    padding: 0 2rem; // md: 32px
-  }
-
+/* 
   @media (min-width: 1024px) {
     padding: 0 2.5rem; // lg: 40px
   }
@@ -63,9 +56,6 @@
 
   @media (max-width: 1000px) {
     grid-template-columns: repeat(2, 1fr); // 2 cards na primeira linha
-  }
+  } */
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr; // 1 card por linha
-  }
 }
