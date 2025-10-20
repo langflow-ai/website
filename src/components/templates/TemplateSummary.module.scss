@@ -27,6 +27,7 @@
   letter-spacing: 0;
   color: #FFFFFF;
   margin-bottom: 1.5rem;
+  text-align: center; // Center the section titles
 
   @media (max-width: 768px) {
     font-size: 24px;
@@ -37,7 +38,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin: 0;
+  margin: 0 auto; // Center the list
   padding: 0;
   list-style: none;
   font-family: 'Chivo', sans-serif;
@@ -45,6 +46,7 @@
   font-weight: 400;
   color: #FFFFFF;
   line-height: 0.8;
+  max-width: 600px; // Limit width for better readability when centered
 }
 
 .listItem {
@@ -93,7 +95,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  margin: 0;
+  margin: 0 auto; // Center the learn grid
   padding: 0;
   list-style: none;
   font-family: 'Chivo', sans-serif;
@@ -101,6 +103,7 @@
   font-weight: 400;
   color: #FFFFFF;
   line-height: 1.2;
+  max-width: 600px; // Limit width for better readability when centered
 }
 
 .whyItMatters {
@@ -109,14 +112,15 @@
   font-family: 'Chivo', sans-serif;
   font-size: 16px;
   font-weight: 400;
-  margin: 0;
+  margin: 0 auto; // Center the why it matters text
   max-width: 720px;
+  text-align: center; // Center the text content
 }
 
 .categoriesSection {
   margin-top: 56px; // 56px below "Why it matters" section
   display: flex;
-  justify-content: flex-start; // Center the categories container
+  justify-content: center; // Center the categories container
   align-items: flex-start;
   gap: 1rem;
 }
