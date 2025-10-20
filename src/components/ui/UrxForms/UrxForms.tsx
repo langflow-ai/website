@@ -1,8 +1,8 @@
 "use client";
 
 // Dependencies
-import { useEffect, useState } from "react";
 import Script from "next/script";
+import { useEffect, useState } from "react";
 
 // Styles
 import styles from "./styles.module.scss";
