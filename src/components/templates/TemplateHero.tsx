@@ -136,7 +136,7 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
             </div>
 
             {/* Right side - Sidebar positioned 149px from right edge */}
-            <aside className={styles.rightSidebar}>
+           {/*  <aside className={styles.rightSidebar}>
               <div className={styles.sidebarBlock}>
                 <span className={styles.sidebarLabel}>Last update</span>
                 <span className={styles.lastUpdate}>{formatDate(template.updatedAt)}</span>
@@ -150,7 +150,7 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
                   <span className={styles.automationText}>Automation</span>
                 </div>
               </div>
-            </aside>
+            </aside> */}
           </div>
 
           {/* Iframe section - 96px below CTA and share buttons */}

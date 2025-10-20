@@ -25,7 +25,7 @@ const mockTemplates: Template[] = [
       "How to use the Set node to structure and map data",
       "How to connect Gmail to send the data"
     ],
-    whyItMatters: "This workflow shows you the n8n basics step by step - no code required. By the end, you'll know how to build, test, and share automations that run on their own, giving you the confidence to explore more advanced use cases."
+    whyItMatters: "This workflow shows you the Langflow basics step by step - no code required. By the end, you'll know how to build, test, and share automations that run on their own, giving you the confidence to explore more advanced use cases."
   },
   {
     id: "2",
@@ -47,7 +47,7 @@ const mockTemplates: Template[] = [
       "Prompt engineering fundamentals",
       "Response handling and formatting"
     ],
-    whyItMatters: "Master the fundamentals of AI prompting to build more effective applications."
+    whyItMatters: "This workflow shows you the Langflow basics step by step - no code required. By the end, you’ll know how to build, test, and share automations that run on their own, giving you the confidence to explore more advanced use cases"
   },
   {
     id: "3",
