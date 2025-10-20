@@ -18,6 +18,8 @@ import { BlogPost } from "@/lib/types/sanity";
 import { Markdown } from "@/components/ui/Blog/Markdown";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
 import { formatOpenGraphTitle } from "@/lib/utils/titles";
+import { blogPostSchema } from "@/lib/utils/schemas";
+import { HOST } from "@/utils/constants";
 
 export async function generateStaticParams() {
   const slugs = await sanityFetch<string[]>(BLOG_POSTS_SLUGS_QUERY);
@@ -153,6 +155,47 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
               ))}
             </div>
           </div>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify([
+                blogPostSchema(post),
+                {
+                  "@context": "https://schema.org",
+                  "@type": "BreadcrumbList",
+                  itemListElement: [
+                    {
+                      "@type": "ListItem",
+                      position: 1,
+                      item: {
+                        "@type": "WebPage",
+                        name: "Home",
+                        url: HOST,
+                      },
+                    },
+                    {
+                      "@type": "ListItem",
+                      position: 2,
+                      item: {
+                        "@type": "WebPage",
+                        name: "Blog",
+                        url: `${HOST}/blog`,
+                      },
+                    },
+                    {
+                      "@type": "ListItem",
+                      position: 3,
+                      item: {
+                        "@type": "WebPage",
+                        name: post.title,
+                        url: `${HOST}/blog/${post.slug.current}`,
+                      },
+                    },
+                  ],
+                },
+              ]),
+            }}
+          ></script>
         </section>
       )}
     </PageLayout>

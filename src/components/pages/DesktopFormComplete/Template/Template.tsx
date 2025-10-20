@@ -1,14 +1,9 @@
 // Dependencies
-import { FC, PropsWithChildren, Suspense } from "react";
-import dynamic from "next/dynamic";
+import { FC, PropsWithChildren } from "react";
 
 // Components
+import DownloadButton from "@/components/ui/Buttons";
 import Display from "@/components/ui/Display";
-
-// Dynamic imports for better code splitting
-const DownloadButton = dynamic(() => import("@/components/ui/Buttons"), {
-  loading: () => <div style={{ height: "60px" }} />,
-});
 
 // Styles
 import styles from "./styles.module.scss";
@@ -26,13 +21,11 @@ const Template: FC<PropsWithChildren> = () => {
               <Display size={100} className="text-center text-white ">
                 {"Your download link is now available!"}
               </Display>
-              <Suspense fallback={<div style={{ height: "60px" }} />}>
-                <DownloadButton
-                  url={
-                    "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_aarch64.dmg"
-                  }
-                />
-              </Suspense>
+              <DownloadButton
+                url={
+                  "https://github.com/langflow-ai/langflow/releases/download/1.4.2/Langflow_aarch64.dmg"
+                }
+              />
             </div>
           </div>
         </div>

@@ -1,14 +1,9 @@
 // Dependencies
-import { FC, PropsWithChildren, Suspense } from "react";
-import dynamic from "next/dynamic";
+import { FC, PropsWithChildren } from "react";
 
 // Components
 import Display from "@/components/ui/Display";
-
-// Dynamic imports for better code splitting
-const ContactForm = dynamic(() => import("@/components/ui/ContactForm"), {
-  loading: () => <div style={{ height: "400px" }} />,
-});
+import ContactForm from "@/components/ui/ContactForm";
 
 // Styles
 import styles from "./styles.module.scss";
@@ -36,9 +31,7 @@ const Template: FC<PropsWithChildren> = () => {
         <div className={`col ${styles.right}`}>
           <div className={styles.content}>
             <div className={styles.form}>
-              <Suspense fallback={<div style={{ height: "400px" }} />}>
-                <ContactForm />
-              </Suspense>
+              <ContactForm />
             </div>
           </div>
         </div>

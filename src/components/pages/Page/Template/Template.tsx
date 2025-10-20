@@ -1,6 +1,5 @@
 // Dependencies
-import { type FC, Suspense } from "react";
-import dynamic from "next/dynamic";
+import { type FC } from "react";
 
 // Types
 import type { Page as PageType } from "@/lib/types/sanity.types";
@@ -8,18 +7,8 @@ import type { Page as PageType } from "@/lib/types/sanity.types";
 // Components
 import Text from "@/components/ui/text";
 import Display from "@/components/ui/Display";
+import { Markdown } from "@/components/ui/Blog/Markdown";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
-
-// Dynamic imports for better code splitting
-const Markdown = dynamic(
-  () =>
-    import("@/components/ui/Blog/Markdown").then((mod) => ({
-      default: mod.Markdown,
-    })),
-  {
-    loading: () => <div style={{ height: "200px" }} />,
-  }
-);
 
 // Styles
 import styles from "./styles.module.scss";
@@ -46,11 +35,7 @@ const Template: FC<Props> = ({ page }) => {
         <div className="row justify-content-center">
           <div className="col">
             <Text size={300} tagName="div" className="article d-grid gap-4">
-              {body && (
-                <Suspense fallback={<div style={{ height: "200px" }} />}>
-                  <Markdown>{body}</Markdown>
-                </Suspense>
-              )}
+              {body && <Markdown>{body}</Markdown>}
             </Text>
           </div>
         </div>

@@ -1,22 +1,14 @@
 // Dependencies
-import { FC, PropsWithChildren, Suspense } from "react";
-import dynamic from "next/dynamic";
+import { FC, PropsWithChildren } from 'react';
 
 // Components
-import Display from "@/components/ui/Display";
+import Display from '@/components/ui/Display';
 
 // Styles
-import styles from "./styles.module.scss";
-import Image from "next/image";
-
-// Dynamic imports for better code splitting
-const TopBadge = dynamic(() => import("@/components/ui/icons/TopBadge"), {
-  loading: () => <div style={{ height: "40px" }} />,
-});
-
-const DownloadForm = dynamic(() => import("@/components/ui/DownloadForm"), {
-  loading: () => <div style={{ height: "400px" }} />,
-});
+import styles from './styles.module.scss';
+import TopBadge from '@/components/ui/icons/TopBadge';
+import Image from 'next/image';
+import DownloadForm from '@/components/ui/DownloadForm';
 
 const Template: FC<PropsWithChildren> = () => {
   return (
@@ -26,17 +18,9 @@ const Template: FC<PropsWithChildren> = () => {
           <Display size={200} className={`${styles.heading} text-white`}>
             Langflow for Desktop
           </Display>
-          <Suspense fallback={<div style={{ height: "40px" }} />}>
-            <TopBadge />
-          </Suspense>
+          <TopBadge />
           <div className={styles.imageContainer}>
-            <Image
-              src="/images/desktop-hero.png"
-              alt="Langflow for Desktop"
-              width={680}
-              height={442}
-              className={styles.imageHero}
-            />
+            <Image src="/images/desktop-hero.png" alt="Langflow for Desktop" width={680} height={442} className={styles.imageHero} />
           </div>
         </div>
         <div className={`col ${styles.right}`}>
@@ -45,9 +29,7 @@ const Template: FC<PropsWithChildren> = () => {
               <Display className="text-white" size={400} weight={500}>
                 Download the App
               </Display>
-              <Suspense fallback={<div style={{ height: "400px" }} />}>
-                <DownloadForm />
-              </Suspense>
+              <DownloadForm />
             </div>
           </div>
         </div>
