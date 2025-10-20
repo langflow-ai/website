@@ -3,7 +3,7 @@
 
 .browseTemplates {
   background: var(--primary-black);
-  padding: 60px 0; // 60px de distância entre seções
+  padding: 64px 0; // 64px = 4 * 16px grid
 }
 
 .container {
@@ -24,9 +24,9 @@
   line-height: 120%;
   letter-spacing: -0.01em;
   color: #FFFFFF;
-  margin: 0 0 32px 0;
+  margin: 0 0 32px 0; // 32px = 2 * 16px
   text-align: left;
-  width: 232px;
+  width: 240px; // 240px = 15 * 16px
   white-space: nowrap;
 
   @media (max-width: 768px) {
@@ -39,28 +39,28 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
-  margin-bottom: 32px; // 32px between search/filters and results/sort
+  gap: 32px; // 32px = 2 * 16px
+  margin-bottom: 32px; // 32px = 2 * 16px
   flex-wrap: wrap;
 
   @include media-breakpoint-down(md) {
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
+    gap: 16px; // 16px = 1 * 16px
   }
 }
 
 .searchContainer {
   position: relative;
   flex: 1;
-  min-width: 300px;
+  min-width: 304px; // 304px = 19 * 16px
 }
 
 .searchInput {
   width: 100%;
-  height: 48px;
-  padding: 0 1rem;
-  padding-right: 3rem;
+  height: 48px; // 48px = 3 * 16px
+  padding: 0 16px; // 16px = 1 * 16px
+  padding-right: 48px; // 48px = 3 * 16px
   background: var(--primary-black);
   border: 0.25px solid rgba(255, 255, 255, 0.1);
   border-radius: 0;
@@ -79,7 +79,7 @@
 
 .searchIcon {
   position: absolute;
-  right: 1rem;
+  right: 16px; // 16px = 1 * 16px
   top: 50%;
   transform: translateY(-50%);
   color: rgba(255, 255, 255, 0.5);
@@ -88,16 +88,16 @@
 
 .filterPills {
   display: flex;
-  gap: 0.5rem;
+  gap: 8px; // 8px = 0.5 * 16px
   flex-wrap: wrap;
 }
 
 .filterPill {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
+  gap: 8px; // 8px = 0.5 * 16px
+  padding: 8px 16px; // 8px = 0.5 * 16px, 16px = 1 * 16px
+  background: #18181B;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   color: var(--primary-white);
@@ -106,12 +106,12 @@
   transition: all 0.2s;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: #1f1f23;
   }
 
   &.active {
-    background: #10B981; // Green background for active state
-    border-color: #10B981;
+    background: linear-gradient(to right, rgba(124, 77, 255, 0.9), rgba(79, 70, 229, 0.9));
+    border-color: transparent;
   }
 }
 
@@ -154,7 +154,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   color: var(--primary-white);
-  padding: 0.5rem 2rem 0.5rem 0.5rem;
+  padding: 8px 32px 8px 12px; // 8px = 0.5 * 16px, 32px = 2 * 16px, 12px = 0.75 * 16px
   font-size: 0.9rem;
   cursor: pointer;
   appearance: none;
@@ -167,7 +167,7 @@
 
 .sortIcon {
   position: absolute;
-  right: 0.5rem;
+  right: 8px; // 8px = 0.5 * 16px
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.8rem;
   pointer-events: none;
@@ -177,7 +177,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px; // 32px between results/sort and main content
+  margin-bottom: 32px; // 32px = 2 * 16px
+
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+    gap: 16px; // 16px = 1 * 16px
+    align-items: flex-start;
+  }
 }
 
 .resultsCount {
@@ -189,7 +195,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px; // 8px = 0.5 * 16px
 }
 
 .sortLabel {
@@ -210,37 +216,37 @@
 
 .sortIcon {
   position: absolute;
-  right: 0.5rem;
+  right: 8px; // 8px = 0.5 * 16px
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.8rem;
   pointer-events: none;
 }
 
+// Browse grid: 2 cards per row so sidebar (1 card) + 2 cards = 3 total width
 .templatesContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); // 2 columns as per image
-  gap: 16px; // 16px between cards
-  max-width: 1280px; // Same max width
-  margin: 0 auto; // Center cards
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 1280px;
+  margin: 0 auto;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr; // with sidebar at 50%, results in 1 + 1 layout
+  }
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr; // 1 card per row on mobile
+    grid-template-columns: 1fr; // stacked on mobile
   }
 }
 
+// Layout: sidebar width equals one card width from a 3-col grid
 .mainContent {
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 32px; // 32px between sidebar and templates area
-
-  @include media-breakpoint-down(lg) {
-    grid-template-columns: 200px 1fr;
-    gap: 24px;
-  }
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
 
   @include media-breakpoint-down(md) {
-    grid-template-columns: 1fr;
-    gap: 24px;
+    flex-direction: column;
   }
 }
 
@@ -249,40 +255,72 @@
   border: none;
   padding: 0;
   height: fit-content;
+  // one-card width when main grid shows 2 cards -> total equals Trending width (3 cards)
+  flex: 0 0 calc((100% - 2 * 16px) / 3);
+
+  @media (max-width: 1000px) {
+    // when templates become 1 col, make sidebar equal to one card (half)
+    flex-basis: calc((100% - 1 * 16px) / 2);
+  }
+
+  @media (max-width: 768px) {
+    flex-basis: 100%;
+  }
+}
+
+// Panel background for categories
+.categoriesPanel {
+  background: #18181B;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+// All Types pill always uses gradient background
+.allTypes {
+  background: linear-gradient(to right, #7c4dff, #4f46e5);
+  border-color: transparent;
+  color: #ffffff;
+
+  &:hover {
+    background: linear-gradient(to right, #7c4dff, #4f46e5);
+  }
 }
 
 .sidebarTitle {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #FFFFFF;
-  margin-bottom: 32px; // 32px between title and first category
-
+  position: absolute; // visually hidden to align top with cards
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .categoriesList {
   display: flex;
   flex-direction: column;
-  gap: 16px; // 16px between main categories
 }
 
 .categoryItem {
   display: flex;
   flex-direction: column;
-  gap: 8px; // 8px between subcategories
 }
 
 .categoryButton {
   display: flex;
-  justify-content: space-between;
+  gap: 8px; // 8px = 0.5 * 16px
   align-items: center;
   width: 100%;
-  padding: 0.5rem 0;
-  background: transparent;
+  padding: 0px 0px 0px 64px; // 64px = 4 * 16px (adjusted from 62px to align with grid)
+  background: none;
   border: none;
-  color: #FFFFFF;
-  font-size: 0.875rem;
-  text-align: left;
+  color: var(--primary-white);
+  font-size: 0.9rem;
   cursor: pointer;
+  text-align: left;
   transition: color 0.2s;
 
   &:hover {
@@ -307,7 +345,6 @@
 }
 
 .subcategoryButton {
-  padding: 0.25rem 0;
   background: transparent;
   border: none;
   color: rgba(255, 255, 255, 0.7);
@@ -324,7 +361,8 @@
 .templatesArea {
   display: flex;
   flex-direction: column;
-  gap: 32px; // 32px between grid and View More button
+  gap: 32px;
+  flex: 1 1 auto;
 }
 
 .viewMoreContainer {
@@ -370,10 +408,10 @@
 
 .categoryButton {
   display: flex;
-  justify-content: space-between;
+  gap: 0.5rem;
   align-items: center;
   width: 100%;
-  padding: 0.75rem 0;
+  padding: 0.75rem 0 0.75rem 62px; // 62px from category to left border
   background: none;
   border: none;
   color: var(--primary-white);
@@ -397,15 +435,15 @@
 }
 
 .subcategories {
-  margin-left: 1rem;
-  margin-top: 0.5rem;
+  margin-left: 96px; // 96px = 6 * 16px (adjusted from 92px to align with grid)
+  margin-top: 24px; // 24px = 1.5 * 16px
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 24px; // 24px = 1.5 * 16px
 }
 
 .subcategoryButton {
-  padding: 0.5rem 0;
+  padding: 0;
   background: none;
   border: none;
   color: rgba(255, 255, 255, 0.7);
@@ -437,6 +475,10 @@
 .viewMoreContainer {
   display: flex;
   justify-content: center;
-  margin-top: 3rem;
+  margin-top: 48px; // 48px = 3 * 16px
+}
+
+.upArrowIcon {
+  transform: rotate(180deg);
 }
 

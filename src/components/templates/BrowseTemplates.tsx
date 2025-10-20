@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
+import DownArrow from "../icons/downArrow/DownArrow";
 import TemplateCard from "../pages/UseCases/BeginnerBasics/TemplateCard";
 import styles from "./BrowseTemplates.module.scss";
 
@@ -65,7 +67,7 @@ const CATEGORIES = [
   {
     name: "Category 1",
     expanded: false,
-    subcategories: [],
+    subcategories: ["Sub-category 1", "Sub-category 2", "Sub-category 3"],
   },
   {
     name: "Category 2",
@@ -79,22 +81,22 @@ const CATEGORIES = [
   {
     name: "Category 3",
     expanded: false,
-    subcategories: [],
+    subcategories: ["Sub-category 1", "Sub-category 2"],
   },
   {
     name: "Category 4",
     expanded: false,
-    subcategories: [],
+    subcategories: ["Sub-category 1", "Sub-category 2"],
   },
   {
     name: "Category 5",
     expanded: false,
-    subcategories: [],
+    subcategories: ["Sub-category 1", "Sub-category 2"],
   },
   {
     name: "Category 6",
     expanded: false,
-    subcategories: [],
+    subcategories: ["Sub-category 1", "Sub-category 2"],
   },
 ];
 
@@ -160,15 +162,31 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
             
             <div className={styles.filterPills}>
               {FILTER_TYPES.map((filter) => (
-                  <button
-                    key={filter.value}
-                    className={`${styles.filterPill} ${
-                      activeFilter === filter.value ? styles.active : ""
-                    }`}
-                    onClick={() => handleFilterChange(filter.value as FilterType)}
-                  >
-                    {filter.label}
-                  </button>
+                <button
+                  key={filter.value}
+                  className={`${styles.filterPill} ${
+                    activeFilter === filter.value ? styles.active : ""
+                  } ${filter.value === "all-types" ? styles.allTypes : ""}`}
+                  onClick={() => handleFilterChange(filter.value as FilterType)}
+                >
+                  {filter.value === "automation" && (
+                    <Image
+                      src="/images/robot.png"
+                      alt="Automation"
+                      width={24}
+                      height={24}
+                    />
+                  )}
+                  {filter.value === "chat" && (
+                    <Image
+                      src="/images/chat.png"
+                      alt="Chat"
+                      width={24}
+                      height={24}
+                    />
+                  )}
+                  {filter.label}
+                </button>
               ))}
             </div>
           </div>
@@ -192,7 +210,8 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
         <div className={styles.mainContent}>
           <div className={styles.sidebar}>
             <h3 className={styles.sidebarTitle}>Categories</h3>
-            <div className={styles.categoriesList}>
+            <div className={styles.categoriesPanel}>
+              <div className={styles.categoriesList}>
               {CATEGORIES.map((category) => (
                 <div key={category.name} className={styles.categoryItem}>
                   <button
@@ -200,12 +219,13 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
                     onClick={() => toggleCategory(category.name)}
                     aria-expanded={expandedCategories.has(category.name)}
                   >
-                    <span className={styles.categoryName}>{category.name}</span>
-                    {category.subcategories.length > 0 && (
-                      <span className={styles.categoryIcon}>
-                        {expandedCategories.has(category.name) ? "▲" : "▼"}
-                      </span>
-                    )}
+                      {category.subcategories.length > 0 && (
+                        <span className={styles.categoryIcon}>
+                          {expandedCategories.has(category.name) ? 
+                          <DownArrow /> : <div className={styles.upArrowIcon}><DownArrow /></div>}
+                        </span>
+                      )}
+                      <span className={styles.categoryName}>{category.name}</span>
                   </button>
                   {category.subcategories.length > 0 && expandedCategories.has(category.name) && (
                     <div className={styles.subcategories}>
@@ -218,6 +238,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
                   )}
                 </div>
               ))}
+              </div>
             </div>
           </div>
           
