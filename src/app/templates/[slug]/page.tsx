@@ -1,8 +1,9 @@
 // Template Detail Page
 
-import { CreateYourFirstFlow } from "@/components/ctas";
 import PageLayout from "@/components/layout/page";
-import { MoreTemplates, TemplateHero, TemplateSummary, TemplateViewer } from "@/components/template-detail";
+import GetStarted from "@/components/pages/Home/GetStarted";
+import Trending from "@/components/pages/UseCases/Trending/Trending";
+import { TemplateHero, TemplateSummary } from "@/components/templates";
 import { fetchTemplates, getTemplate } from "@/data/templates";
 import { notFound } from "next/navigation";
 import styles from "./page.module.scss";
@@ -30,16 +31,12 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
         <TemplateHero template={template} />
 
         <section className={`container ${styles.section}`}>
-          <TemplateViewer />
-        </section>
-
-        <section className={`container ${styles.section}`}>
           <TemplateSummary template={template} />
         </section>
 
-        <MoreTemplates currentSlug={template.slug} templates={relatedTemplates} />
+        <Trending />
 
-        <CreateYourFirstFlow />
+        <GetStarted />
       </div>
     </PageLayout>
   );

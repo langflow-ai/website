@@ -1,6 +1,7 @@
 // Template and Use Cases Types
 
 export type Segment =
+  | "agents"
   | "assistants"
   | "classification"
   | "coding"
@@ -55,6 +56,7 @@ export type FilterState = {
 
 // Segment display labels
 export const SEGMENT_LABELS: Record<Segment, string> = {
+  agents: "Agents",
   assistants: "Assistants",
   classification: "Classification", 
   coding: "Coding",

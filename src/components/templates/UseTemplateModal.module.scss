@@ -1,0 +1,151 @@
+@import "../../styles/variables";
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: 
+    radial-gradient(circle at center, rgba(117, 40, 252, 0.3) 0%, rgba(117, 40, 252, 0.1) 40%, rgba(0, 0, 0, 0.8) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.modalContainer {
+  position: relative;
+  width: 628px;
+  background: #000000;
+  border: 2px solid transparent;
+  border-radius: 24px;
+  padding: 48px;
+  box-shadow: 
+    0 0 80px rgba(117, 40, 252, 0.6),
+    0 0 120px rgba(117, 40, 252, 0.4),
+    0 0 200px rgba(117, 40, 252, 0.2);
+  animation: modalFadeIn 0.3s ease;
+  
+  // Gradient border using same technique as buttons
+  background: 
+    linear-gradient(#000000, #000000) padding-box,
+    linear-gradient(90deg, #2F10FE 0%, #98F4FE 100%) border-box;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    max-width: 628px;
+    padding: 32px;
+  }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.modalTitle {
+  font-family: 'Chivo', sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 120%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  margin: 0 0 48px 0; // 48px below title
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+  }
+}
+
+.primaryButton,
+.secondaryButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 64px;
+  padding: 0 32px;
+  font-family: 'Chivo', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 16px; // More rounded like View More button
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  position: relative;
+
+  img {
+    flex-shrink: 0;
+  }
+}
+
+.primaryButton {
+  background: #000000;
+  color: #FFFFFF;
+  margin-bottom: 32px; // 32px below to next button
+  
+  // Gradient border - inverted colors (cyan to blue)
+  background: 
+    linear-gradient(#000000, #000000) padding-box,
+    linear-gradient(90deg, #98F4FE 0%, #2F10FE 100%) border-box;
+
+  &:hover {
+    background: 
+      linear-gradient(rgba(152, 244, 254, 0.1), rgba(152, 244, 254, 0.1)) padding-box,
+      linear-gradient(90deg, #98F4FE 0%, #2F10FE 100%) border-box;
+    box-shadow: 0 0 20px rgba(152, 244, 254, 0.3);
+  }
+}
+
+.secondaryButton {
+  background: #000000;
+  color: #FFFFFF;
+  
+  // Gradient border - inverted colors (cyan to blue)
+  background: 
+    linear-gradient(#000000, #000000) padding-box,
+    linear-gradient(90deg, #98F4FE 0%, #2F10FE 100%) border-box;
+
+  &:hover {
+    background: 
+      linear-gradient(rgba(152, 244, 254, 0.1), rgba(152, 244, 254, 0.1)) padding-box,
+      linear-gradient(90deg, #98F4FE 0%, #2F10FE 100%) border-box;
+    box-shadow: 0 0 20px rgba(152, 244, 254, 0.3);
+  }
+}
+

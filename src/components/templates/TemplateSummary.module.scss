@@ -1,0 +1,186 @@
+@import "../../styles/variables";
+
+.templateSummary {
+  display: grid;
+  gap: 3rem;
+  margin-left: 216px; // 216px from left edge of generic section limit
+  margin-top: 72px; // 72px below iframe
+
+  @media (max-width: 1024px) {
+    margin-left: 2rem; // Reduced margin on smaller screens
+  }
+
+  @media (max-width: 768px) {
+    margin-left: 1rem; // Further reduced margin on mobile
+    margin-top: 2rem; // Reduced top margin on mobile
+  }
+}
+
+.sectionTitle {
+  font-family: 'Chivo', sans-serif;
+  font-size: 28px;
+  font-weight: 500; // Medium
+  line-height: 140%;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: 'Chivo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 0.8;
+}
+
+.listItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1;
+  font-family: 'Chivo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+
+.checkIcon,
+.dotIcon,
+.starIcon {
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkIcon {
+  background: rgba(124, 77, 255, 0.15);
+  color: $templates-brand-1;
+}
+
+.dotIcon {
+  background: rgba(79, 70, 229, 0.15);
+  color: $templates-brand-2;
+}
+
+.dotIconInner {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.learnGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: 'Chivo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.whyItMatters {
+  color: #FFFFFF;
+  line-height: 1.8;
+  font-family: 'Chivo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  max-width: 720px;
+}
+
+.categoriesSection {
+  margin-top: 56px; // 56px below "Why it matters" section
+  display: flex;
+  justify-content: flex-start; // Center the categories container
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.categoriesContainer {
+  width: 848px; // 848px width on desktop
+  height: 83px; // 83px height
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+
+  @media (max-width: 1024px) {
+    width: 90%;
+    max-width: 848px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+}
+
+.categoriesLabel {
+  color: $templates-text;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 32px; // 32px from left margin
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    text-align: center;
+  }
+}
+
+.categoriesButtons {
+  display: flex;
+  align-items: center;
+  gap: 12px; // 12px gap between buttons
+  margin-right: 32px; // 32px from right margin
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.categoryButton {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 36px;
+  color: $templates-text;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 9px 12px; // 9px top/bottom, 12px left/right
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}

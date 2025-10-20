@@ -1,9 +1,12 @@
 // TemplateHero Component for Template Detail Page
 
+"use client";
+
 import { Template } from "@/lib/types/templates";
 import Link from "next/link";
-import IconBadge from "../common/IconBadge";
+import { useState } from "react";
 import styles from "./TemplateHero.module.scss";
+import UseTemplateModal from "./UseTemplateModal";
 
 interface TemplateHeroProps {
   template: Template;
@@ -42,6 +45,8 @@ const BADGE_ICONS: Record<string, React.ReactNode> = {
 };
 
 export default function TemplateHero({ template, className = "" }: TemplateHeroProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const getBadgeIcon = (badge: string) => {
     return BADGE_ICONS[badge] || (
       <span style={{ fontSize: "0.75rem", fontWeight: 600 }}>
@@ -51,28 +56,34 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
   };
 
   const formatDate = (isoDate: string) => {
-    const date = new Date(isoDate);
-    const now = new Date();
-    const difference = now.getTime() - date.getTime();
-    const days = Math.max(1, Math.round(difference / (1000 * 60 * 60 * 24)));
+    // For now, return "2 months ago" as requested
+    return "2 months ago";
+    
+    // Original date calculation (commented out for now)
+    // const date = new Date(isoDate);
+    // const now = new Date();
+    // const difference = now.getTime() - date.getTime();
+    // const days = Math.max(1, Math.round(difference / (1000 * 60 * 60 * 24)));
 
-    if (days < 30) {
-      return `${days} day${days > 1 ? "s" : ""} ago`;
-    }
-    if (days < 365) {
-      const months = Math.round(days / 30);
-      return `${months} month${months > 1 ? "s" : ""} ago`;
-    }
-    const years = Math.round(days / 365);
-    return `${years} year${years > 1 ? "s" : ""} ago`;
+    // if (days < 30) {
+    //   return `${days} day${days > 1 ? "s" : ""} ago`;
+    // }
+    // if (days < 365) {
+    //   const months = Math.round(days / 30);
+    //   return `${months} month${months > 1 ? "s" : ""} ago`;
+    // }
+    // const years = Math.round(days / 365);
+    // return `${years} year${years > 1 ? "s" : ""} ago`;
   };
 
   return (
     <section className={`${styles.templateHero} ${className}`}>
+      <div className={styles.backgroundNoise} />
       <div className={styles.backgroundGradient} />
 
-      <div className="container">
-        <div className={styles.inner}>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          {/* Back to templates link - 96px from header */}
           <Link href="/use-cases" className={styles.backLink}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -80,24 +91,42 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
             Back to templates
           </Link>
 
-          <div className={styles.grid}>
-            <div>
-              <h1 className={styles.title}>{template.title}</h1>
-              <p className={styles.summary}>{template.summary}</p>
+          {/* Main content area */}
+          <div className={styles.mainContent}>
+            {/* Left side - Title, description, CTA and share */}
+            <div className={styles.leftContent}>
+              {/* Title - 48px below back link */}
+              <h1 className={styles.title}>Build Your First AI Agent</h1>
+              
+              {/* Description - 32px below title */}
+              <p className={styles.description}>
+                This simple tutorial is the perfect way to get started. In just a few minutes, you'll build your first automation that runs on a schedule, fetches fresh data from the internet and delivers it straight to your inbox.
+              </p>
 
+              {/* CTA and Share buttons on same line */}
               <div className={styles.actions}>
-                <button type="button" className={styles.primaryButton}>
+                {/* CTA button */}
+                <button 
+                  type="button" 
+                  className={styles.primaryButton}
+                  onClick={() => setIsModalOpen(true)}
+                >
                   Use for Free
                 </button>
 
-                <div className={styles.secondaryActions}>
-                  <button type="button">Share</button>
-                  <button type="button" aria-label="Share on X">
+                {/* Share buttons */}
+                <div className={styles.shareButtons}>
+                  <button type="button" className={styles.shareButton}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+                    </svg>
+                  </button>
+                  <button type="button" className={styles.shareButton} aria-label="Share on X">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                     </svg>
                   </button>
-                  <button type="button" aria-label="Share on LinkedIn">
+                  <button type="button" className={styles.shareButton} aria-label="Share on LinkedIn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                     </svg>
@@ -106,26 +135,44 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
               </div>
             </div>
 
-            <aside className={styles.sidebar}>
+            {/* Right side - Sidebar positioned 149px from right edge */}
+            <aside className={styles.rightSidebar}>
               <div className={styles.sidebarBlock}>
                 <span className={styles.sidebarLabel}>Last update</span>
                 <span className={styles.lastUpdate}>{formatDate(template.updatedAt)}</span>
               </div>
 
-              {template.badges && template.badges.length > 0 && (
-                <div className={styles.sidebarBlock}>
-                  <span className={styles.sidebarLabel}>Integrations</span>
-                  <div className={styles.badges}>
-                    {template.badges.map((badge, index) => (
-                      <IconBadge key={`${badge}-${index}`} icon={getBadgeIcon(badge)} tooltip={badge} />
-                    ))}
+              <div className={styles.sidebarBlock}>
+                <div className={styles.automationBadge}>
+                  <div className={styles.automationIcon}>
+                    <img src="/images/Robot.png" alt="Robot icon" width="24" height="24" />
                   </div>
+                  <span className={styles.automationText}>Automation</span>
                 </div>
-              )}
+              </div>
             </aside>
+          </div>
+
+          {/* Iframe section - 96px below CTA and share buttons */}
+          <div className={styles.iframeSection}>
+            <div className={styles.preview}>
+              <iframe
+                src="https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12"
+                title="Memory Chatbot Flow Preview"
+                allow="clipboard-write"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                className={styles.templateIframe}
+              />
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Use Template Modal */}
+      <UseTemplateModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </section>
   );
 }

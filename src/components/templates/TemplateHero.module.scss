@@ -1,0 +1,371 @@
+@import "../../styles/variables";
+
+
+.templateHero {
+  position: relative;
+  padding: 0;
+  width: 100vw; // Full viewport width
+  margin-left: calc(-50vw + 50%); // Center background
+  margin-right: calc(-50vw + 50%); // Center background
+  background: #000000; // Black background for hero section
+
+  .backgroundNoise {
+    position: absolute;
+    inset: 0;
+    
+    height: 100%; // Only cover the hero section
+    background: transparent;
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.8) 1px, transparent 0);
+    background-size: 30px 30px;
+    opacity: 0.4;
+    z-index: 1; // Above gradient, below content
+    
+    // Mask to make noise fade gradually within hero bounds
+    mask: linear-gradient(to bottom, 
+      rgba(0,0,0,0.8) 0%, 
+      rgba(0,0,0,0.6) 30%, 
+      rgba(0,0,0,0.6) 60%, 
+      rgba(0,0,0,0.2) 100%);
+    -webkit-mask: linear-gradient(to bottom, 
+      rgba(0,0,0,0.8) 0%, 
+      rgba(0,0,0,0.6) 30%, 
+      rgba(0,0,0,0.6) 60%, 
+      rgba(0,0,0,0.2) 100%);
+  }
+
+  .backgroundGradient {
+    position: absolute;
+    top: 0; // Start from top of hero
+    left: 0;
+    right: 0;
+    height: 100%; // Only cover the hero section
+    background-image: url('/images/Gradient.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 0; // Behind noise, below content
+    pointer-events: none;
+    
+    // Mask to control where gradient appears within hero bounds
+    mask: linear-gradient(to bottom, 
+      rgba(0,0,0,0) 0%, 
+      rgba(0,0,0,0.3) 20%, 
+      rgba(0,0,0,1) 40%, 
+      rgba(0,0,0,1) 60%, 
+      rgba(0,0,0,0.3) 80%, 
+      rgba(0,0,0,0) 100%);
+    -webkit-mask: linear-gradient(to bottom, 
+      rgba(0,0,0,0) 0%, 
+      rgba(0,0,0,0.3) 20%, 
+      rgba(0,0,0,1) 40%, 
+      rgba(0,0,0,1) 60%, 
+      rgba(0,0,0,0.3) 80%, 
+      rgba(0,0,0,0) 100%);
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    padding: 0;
+    margin: 0;
+    max-width: 1280px; // Largura máxima para o conteúdo
+    margin: 0 auto; // Centraliza o conteúdo
+    padding: 0 20px; // Padding mínimo
+
+    @media (min-width: 480px) {
+      padding: 0 40px;
+    }
+
+    @media (min-width: 768px) {
+      padding: 0 60px;
+    }
+
+    @media (min-width: 1024px) {
+      padding: 0 80px;
+    }
+
+    @media (min-width: 1440px) {
+      padding: 0 80px; // 80px de recuo em telas de 1440px
+    }
+  }
+
+  .content {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 120px 0 60px 0; // Same padding as use-cases
+  }
+
+  .backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #FFFFFF;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 2rem; // Added margin bottom
+    padding-top: 2rem; // Added padding top
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  .mainContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-top: 48px; // 48px below back link
+
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+
+  .leftContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; // 32px between elements
+  }
+
+  .title {
+    font-family: 'Chivo', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 120%;
+    letter-spacing: -0.01em;
+    color: #FFFFFF;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: 36px;
+    }
+  }
+
+  .description {
+    font-family: 'Chivo', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 140%;
+    color: #FFFFFF;
+    margin: 0;
+    max-width: 600px;
+
+    @media (max-width: 768px) {
+      font-size: 16px;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem; // 32px between CTA and share buttons
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+
+  .primaryButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 51px; // Same height as home page CTA
+    padding: 16px 24px;
+    border-radius: 8px;
+    background: linear-gradient(
+      to right,
+      rgb(134, 239, 172),
+      rgb(59, 130, 246),
+      rgb(134, 239, 172)
+    );
+    background-size: 300% 100%;
+    background-position: 0% 50%;
+    border: none;
+    color: #000000;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: normal;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-body);
+    box-shadow:
+      0px 0px 10px rgba(52, 211, 153, 0.5),
+      0px 0px 15px rgba(52, 211, 153, 0.6);
+    animation: boxShadowAnimation 1.5s infinite alternate;
+
+    &:hover {
+      animation: waveGradient 5s ease-in-out infinite;
+    }
+
+    @keyframes boxShadowAnimation {
+      0% {
+        box-shadow:
+          0px 0px 10px rgba(52, 211, 153, 0.5),
+          0px 0px 15px rgba(52, 211, 153, 0.6);
+      }
+      100% {
+        box-shadow:
+          0px 0px 15px rgba(52, 211, 153, 0.6),
+          0px 0px 20px rgba(52, 211, 153, 0.7);
+      }
+    }
+
+    @keyframes waveGradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+  }
+
+  .shareButtons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .shareButton {
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    min-width: 3rem;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, background 0.2s ease;
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  .rightSidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    color: #FFFFFF;
+    text-align: right;
+    margin-right: 149px; // 149px from right edge
+    flex-shrink: 0;
+
+    @media (max-width: 1024px) {
+      text-align: left;
+      margin-right: 0;
+      margin-top: 2rem;
+    }
+  }
+
+  .sidebarBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .sidebarLabel {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .lastUpdate {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    color: #FFFFFF;
+  }
+
+  .automationBadge {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: flex-end;
+    height: 4rem;
+
+    @media (max-width: 1024px) {
+      justify-content: flex-start;
+    }
+  }
+
+  .automationIcon {
+    width: 48px;
+    height: 48px;
+    background: #FF3276;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .automationText {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 1.5rem;
+  }
+
+  .iframeSection {
+    margin-top: 64px; // 64px below CTA and share buttons (reduced since they're on same line)
+    width: 100%;
+  }
+
+  .preview {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    @media (max-width: 768px) {
+      height: 400px;
+    }
+  }
+
+  .templateIframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: inherit;
+    background: #f0f0f0;
+  }
+}
+
+

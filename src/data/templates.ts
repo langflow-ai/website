@@ -10,7 +10,7 @@ const mockTemplates: Template[] = [
     title: "Build Your First AI Agent",
     summary: "This simple tutorial is the perfect way to get started. In just a few minutes, you'll build your first automation that runs on a schedule, fetches fresh data from the internet and delivers it straight to your inbox.",
     thumbnailUrl: "/images/card-1.webp",
-    segments: ["assistants"],
+    segments: ["agents", "assistants"],
     methodologies: ["agents", "prompting-basics"],
     badges: ["openai", "gmail", "schedule"],
     updatedAt: "2024-01-15T10:00:00Z",

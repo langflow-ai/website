@@ -1,5 +1,7 @@
-// Templates Components Exports
+// Template Detail Components Exports
 
-export { default as BrowseBy } from './BrowseBy';
-export { default as TemplatesHero } from './TemplatesHero';
+export { default as MoreTemplates } from './MoreTemplates';
+export { default as TemplateHero } from './TemplateHero';
+export { default as TemplateSummary } from './TemplateSummary';
+export { default as UseTemplateModal } from './UseTemplateModal';
 
