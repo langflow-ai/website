@@ -8,23 +8,7 @@
 .container {
   max-width: 1280px; // Largura máxima consistente
   margin: 0 auto; // Centraliza horizontalmente
-  padding: 0 1rem; // Base padding for mobile
-
-  @media (min-width: 640px) {
-    padding: 0 1.5rem; // sm: 24px
-  }
-
-  @media (min-width: 768px) {
-    padding: 0 2rem; // md: 32px
-  }
-
-  @media (min-width: 1024px) {
-    padding: 0 2.5rem; // lg: 40px
-  }
-
-  @media (min-width: 1280px) {
-    padding: 0; // xl: no padding for full width
-  }
+  padding: 0; // Sem padding horizontal, igual à Beginner basics
 }
 
 .sectionTitle {
@@ -38,6 +22,14 @@
   margin: 0 0 32px 0; // 32px gap dos cards
   text-align: left;
   width: 232px; // Mesma largura do título Templates
+  word-wrap: nowrap;
+  white-space: nowrap;
+  display: block;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  z-index: 10;
 
   @media (max-width: 768px) {
     font-size: 36px;
