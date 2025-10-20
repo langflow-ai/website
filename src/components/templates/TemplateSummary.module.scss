@@ -3,16 +3,18 @@
 .templateSummary {
   display: grid;
   gap: 3rem;
-  margin-left: 216px; // 216px from left edge of generic section limit
-  margin-top: 72px; // 72px below iframe
+  max-width: 1280px; // Match Trending section max-width
+  margin: 72px auto 0 auto; // Center and match Trending spacing
   color: #ffffff; // Ensure text color consistency
 
   @media (max-width: 1024px) {
     margin-left: 2rem; // Reduced margin on smaller screens
+    margin-right: 2rem;
   }
 
   @media (max-width: 768px) {
     margin-left: 1rem; // Further reduced margin on mobile
+    margin-right: 1rem;
     margin-top: 2rem; // Reduced top margin on mobile
   }
 }
