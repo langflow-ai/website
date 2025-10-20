@@ -10,6 +10,13 @@
   display: flex;
   position: relative;
   margin: 0 auto; // Centraliza cada card
+  text-decoration: none; // Remove underline from Link
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
 
   @media (max-width: 1000px) {
     height: auto;
