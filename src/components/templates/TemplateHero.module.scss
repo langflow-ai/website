@@ -69,7 +69,23 @@
     z-index: 10;
     max-width: 1280px; // Same max-width as Trending section
     margin: 0 auto; // Center horizontally
-    padding: 0; // No horizontal padding to match Trending
+    padding: 0 1rem; // Base padding for mobile
+
+    @media (min-width: 640px) {
+      padding: 0 1.5rem; // sm: 24px
+    }
+
+    @media (min-width: 768px) {
+      padding: 0 2rem; // md: 32px
+    }
+
+    @media (min-width: 1024px) {
+      padding: 0 2.5rem; // lg: 40px
+    }
+
+    @media (min-width: 1280px) {
+      padding: 0; // xl: no padding for full width
+    }
   }
 
   .content {
@@ -77,7 +93,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: 100px 0 60px 0; // Increased top padding by 40px (60px + 40px = 100px)
+    padding: 140px 0 60px 0; 
   }
 
   .backLink {

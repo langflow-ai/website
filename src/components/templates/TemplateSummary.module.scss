@@ -6,15 +6,30 @@
   max-width: 1280px; // Match Trending section max-width
   margin: 72px auto 0 auto; // Center and match Trending spacing
   color: #ffffff; // Ensure text color consistency
+  padding: 0 1rem; // Base padding for mobile
+
+  @media (min-width: 640px) {
+    padding: 0 1.5rem; // sm: 24px
+  }
+
+  @media (min-width: 768px) {
+    padding: 0 2rem; // md: 32px
+  }
+
+  @media (min-width: 1024px) {
+    padding: 0 2.5rem; // lg: 40px
+  }
+
+  @media (min-width: 1280px) {
+    padding: 0; // xl: no padding for full width
+  }
 
   @media (max-width: 1024px) {
-    margin-left: 2rem; // Reduced margin on smaller screens
-    margin-right: 2rem;
+    margin-left: auto; // Remove fixed margins
+    margin-right: auto;
   }
 
   @media (max-width: 768px) {
-    margin-left: 1rem; // Further reduced margin on mobile
-    margin-right: 1rem;
     margin-top: 2rem; // Reduced top margin on mobile
   }
 }
