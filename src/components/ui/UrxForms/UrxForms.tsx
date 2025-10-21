@@ -33,6 +33,12 @@ const UrxForms: React.FC<UrxFormsProps> = ({
   const isProduction = process.env.NODE_ENV === "production";
 
   useEffect(() => {
+    if (document.loadWidgets && !scriptsLoaded) {
+      setScriptsLoaded(true);
+    }
+  }, [scriptsLoaded]);
+
+  useEffect(() => {
     // Initialize success callback
     if (!window.onUrxFormSubmitSuccessMultiple) {
       window.onUrxFormSubmitSuccessMultiple = {};
@@ -45,8 +51,6 @@ const UrxForms: React.FC<UrxFormsProps> = ({
 
   useEffect(() => {
     if (scriptsLoaded && document.loadWidgets) {
-      console.log("Loading URX widget for form:", formId);
-
       const widget = {
         instanceId: instanceId,
         formid: formId,
@@ -82,7 +86,6 @@ const UrxForms: React.FC<UrxFormsProps> = ({
         },
       };
 
-      console.log("Calling loadWidgets with:", widget);
       document.loadWidgets([widget]);
     } else if (scriptsLoaded && !document.loadWidgets) {
       console.error("Scripts loaded but loadWidgets function not found!");
@@ -90,12 +93,7 @@ const UrxForms: React.FC<UrxFormsProps> = ({
   }, [scriptsLoaded, formId, instanceId]);
 
   const handleMainScriptLoad = () => {
-    console.log("Main script loaded");
     setScriptsLoaded(true);
-  };
-
-  const handleLoaderScriptLoad = () => {
-    console.log("Loader script loaded");
   };
 
   return (
@@ -103,7 +101,6 @@ const UrxForms: React.FC<UrxFormsProps> = ({
       <Script
         src={`https://www${isProduction ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/loader.js`}
         strategy="afterInteractive"
-        onLoad={handleLoaderScriptLoad}
         onError={(e) => console.error("Loader script failed to load:", e)}
       />
       <Script
