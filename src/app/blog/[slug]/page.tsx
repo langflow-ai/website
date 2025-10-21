@@ -20,6 +20,7 @@ import { BackgroundGradient } from "@/components/BackgroundGradient";
 import { formatOpenGraphTitle } from "@/lib/utils/titles";
 import { blogPostSchema } from "@/lib/utils/schemas";
 import { HOST } from "@/utils/constants";
+import { KitForm } from "@/components/pages/Newsletter/KitForm/KitForm";
 
 export async function generateStaticParams() {
   const slugs = await sanityFetch<string[]>(BLOG_POSTS_SLUGS_QUERY);
@@ -123,17 +124,23 @@ const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
         </div>
       </header>
 
-      <article className="container blog-article">
-        <div className="row">
-          <Text
-            size={300}
-            tagName="div"
-            className="col d-flex flex-column gap-4"
-          >
-            <Markdown>{post.body}</Markdown>
-          </Text>
-        </div>
-      </article>
+      <div className="container blog-article-container">
+        <article className="blog-article">
+          <div className="row">
+            <Text
+              size={300}
+              tagName="div"
+              className="col d-flex flex-column gap-4"
+            >
+              <Markdown>{post.body}</Markdown>
+            </Text>
+          </div>
+        </article>
+
+        <aside>
+          <KitForm newsletterBlurb="Keep up with the latest in AI, Agents, and MCP with the AI++ newsletter." />
+        </aside>
+      </div>
 
       {otherPosts && (
         <section className="container">
