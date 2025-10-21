@@ -66,7 +66,7 @@ export const Markdown = ({ children }: { children: string }) => {
             <pre
               style={{
                 fontSize: "inherit",
-                maxWidth: "calc(100vw - 4rem)",
+                whiteSpace: "pre-wrap",
                 verticalAlign: "middle",
               }}
               className={clsx(
