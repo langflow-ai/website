@@ -62,17 +62,16 @@ export const Markdown = ({ children }: { children: string }) => {
           />
         ),
         code: ({ node, ...props }) => {
+          const shouldBeInline = !props.children!.toString().includes("\n");
           return (
             <pre
               style={{
                 fontSize: "inherit",
-                maxWidth: "calc(100vw - 4rem)",
+                whiteSpace: shouldBeInline ? "pre-wrap" : "pre",
                 verticalAlign: "middle",
               }}
               className={clsx(
-                !props.children!.toString().includes("\n")
-                  ? "d-inline-block m-0 p-1"
-                  : "d-block p-4",
+                shouldBeInline ? "d-inline-block m-0 p-1" : "d-block p-4",
                 "border overflow-x-auto text-overflow-ellipsis border-dark text-white rounded-2"
               )}
             >

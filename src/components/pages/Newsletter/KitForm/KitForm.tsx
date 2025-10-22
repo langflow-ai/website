@@ -9,7 +9,11 @@ import { useEffect } from "react";
 import { trackEvent } from "@/lib/utils/tracking";
 import Display from "@/components/ui/Display";
 
-export function KitForm() {
+type KitFormProps = {
+  newsletterBlurb?: string;
+};
+
+export function KitForm({ newsletterBlurb }: Readonly<KitFormProps>) {
   let referrer = "";
   useEffect(() => {
     if (window && window.location) {
@@ -43,11 +47,13 @@ export function KitForm() {
       {!state.success ? (
         <form action={formAction} data-bs-theme="dark" className={styles.form}>
           <Display className="text-white" size={400} weight={500}>
-            Sign up for the newsletter
+            Sign up for the
+            <br /> AI++ newsletter
           </Display>
 
           <Display size={100} weight={400}>
-            Enter your details to start receiving AI++
+            {newsletterBlurb ??
+              "Enter your details below to start receiving AI++"}
           </Display>
 
           <div className="mb-5">
