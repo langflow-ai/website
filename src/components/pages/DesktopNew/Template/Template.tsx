@@ -35,7 +35,7 @@ const Template: FC<PropsWithChildren> = () => {
               <Display className="text-white" size={400} weight={500}>
                 Download the App
               </Display>
-              <UrxForms formId="urx-36641" instanceId="urx-form-2" />
+              <UrxForms formId="urx-54089" instanceId="urx-form-2" />
             </div>
           </div>
         </div>
