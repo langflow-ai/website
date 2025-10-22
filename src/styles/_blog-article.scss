@@ -1,19 +1,17 @@
 .blog-article-container {
-  display: flex;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--spacer-3);
 
   @include media-breakpoint-down(lg) {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 }
 
 .blog-article {
-  width: 83.33%;
-  max-width: 800px;
-
-  @include media-breakpoint-down(lg) {
-    width: 100%;
-  }
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 
   p {
     font-size: 1.2rem;
