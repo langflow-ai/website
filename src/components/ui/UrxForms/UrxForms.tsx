@@ -30,7 +30,7 @@ const UrxForms: React.FC<UrxFormsProps> = ({
 }) => {
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
 
-  const isProduction = process.env.NODE_ENV === "production";
+  // const isProduction = process.env.NODE_ENV === "production";
 
   useEffect(() => {
     if (document.loadWidgets && !scriptsLoaded) {
@@ -55,7 +55,7 @@ const UrxForms: React.FC<UrxFormsProps> = ({
         instanceId: instanceId,
         formid: formId,
         locale: "us-en",
-        environment: isProduction ? "production" : "stage",
+        environment: false ? "production" : "stage",
         onRenderFinish: function () {
           console.log(`Form ${formId} rendered`);
         },
@@ -99,18 +99,18 @@ const UrxForms: React.FC<UrxFormsProps> = ({
   return (
     <div className={styles.urx}>
       <Script
-        src={`https://www${isProduction ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/loader.js`}
+        src={`https://www${false ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/loader.js`}
         strategy="afterInteractive"
         onError={(e) => console.error("Loader script failed to load:", e)}
       />
       <Script
-        src={`https://www${isProduction ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/main.js`}
+        src={`https://www${false ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/main.js`}
         strategy="afterInteractive"
         onLoad={handleMainScriptLoad}
         onError={(e) => console.error("Main script failed to load:", e)}
       />
 
-      {isProduction && (
+      {false && (
         <Script
           src="https://www.ibm.com/common/stats/ida_stats.js"
           strategy="lazyOnload"
