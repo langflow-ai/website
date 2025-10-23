@@ -8,7 +8,11 @@
 .section {
   padding: 3rem 0;
 
-  @media (min-width: 992px) {
-    padding: 4rem 0;
+}
+
+.trendingContainer {
+  @media (max-width: 767px) {
+    margin-left: 24px;
+    padding-right: 24px;
   }
 }

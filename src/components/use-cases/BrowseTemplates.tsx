@@ -144,7 +144,28 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCategory(e.target.value);
+    const value = e.target.value;
+    setSelectedCategory(value);
+  };
+
+  const getTypeDisplayValue = () => {
+    if (selectedType === "all-types") {
+      return "Type: All Types";
+    }
+    return `Type: ${selectedType.charAt(0).toUpperCase() + selectedType.slice(1)}`;
+  };
+
+  const getCategoryDisplayValue = () => {
+    if (selectedCategory === "all-categories") {
+      return "Categories: All Categories";
+    }
+    
+    if (selectedCategory.includes("-")) {
+      const [category, subcategory] = selectedCategory.split("-");
+      return `Category: ${category}, ${subcategory}`;
+    }
+    
+    return `Categories: ${selectedCategory}`;
   };
 
   const toggleCategory = (categoryName: string) => {
@@ -292,9 +313,13 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
                   >
                     <option value="all-categories">Categories: All Categories</option>
                     {CATEGORIES.map((category) => (
-                      <option key={category.name} value={category.name}>
-                        {category.name}
-                      </option>
+                      <optgroup key={category.name} label={category.name}>
+                        {category.subcategories.map((subcategory) => (
+                          <option key={`${category.name}-${subcategory}`} value={`${category.name}-${subcategory}`}>
+                            {subcategory}
+                          </option>
+                        ))}
+                      </optgroup>
                     ))}
                   </select>
                 </div>

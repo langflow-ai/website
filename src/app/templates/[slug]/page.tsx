@@ -34,7 +34,9 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
           <TemplateSummary template={template} />
         </section>
 
-        <Trending />
+        <div className={styles.trendingContainer}>
+            <Trending />
+            </div>
 
         <GetStarted />
       </div>
