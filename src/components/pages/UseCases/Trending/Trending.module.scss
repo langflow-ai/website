@@ -9,6 +9,9 @@
   max-width: 1280px; // Consistent maximum width
   margin: 0 auto; // Center horizontally
   padding: 0; // No horizontal padding, same as Beginner basics
+  @media (max-width: 768px) {
+    padding: 0 24px;
+  }
 }
 
 .sectionTitle {

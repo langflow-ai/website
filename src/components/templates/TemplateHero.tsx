@@ -103,6 +103,23 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
                 This simple tutorial is the perfect way to get started. In just a few minutes, you'll build your first automation that runs on a schedule, fetches fresh data from the internet and delivers it straight to your inbox.
               </p>
 
+              {/* Mobile: Sidebar info before CTA */}
+              <aside className={styles.mobileSidebar}>
+                <div className={styles.mobileSidebarBlock}>
+                  <span className={styles.sidebarLabel}>Last update</span>
+                  <span className={styles.lastUpdate}>{formatDate(template.updatedAt)}</span>
+                </div>
+
+                <div className={styles.mobileSidebarBlock}>
+                  <div className={styles.mobileAutomationBadge}>
+                    <div className={styles.mobileAutomationIcon}>
+                      <img src="/images/Robot.png" alt="Robot icon" width="20" height="20" />
+                    </div>
+                    <span className={styles.automationText}>Automation</span>
+                  </div>
+                </div>
+              </aside>
+
               {/* CTA and Share buttons on same line */}
               <div className={styles.actions}>
                 {/* CTA button */}
@@ -116,6 +133,7 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
 
                 {/* Share buttons */}
                 <div className={styles.shareButtons}>
+                  <span className={styles.shareLabel}>Share</span>
                   <button type="button" className={styles.shareButton}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
@@ -135,8 +153,8 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
               </div>
             </div>
 
-            {/* Right side - Sidebar positioned 149px from right edge */}
-           {/*  <aside className={styles.rightSidebar}>
+            {/* Desktop: Right side - Sidebar positioned 149px from right edge */}
+            <aside className={styles.rightSidebar}>
               <div className={styles.sidebarBlock}>
                 <span className={styles.sidebarLabel}>Last update</span>
                 <span className={styles.lastUpdate}>{formatDate(template.updatedAt)}</span>
@@ -150,7 +168,7 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
                   <span className={styles.automationText}>Automation</span>
                 </div>
               </div>
-            </aside> */}
+            </aside>
           </div>
 
           {/* Iframe section - 96px below CTA and share buttons */}

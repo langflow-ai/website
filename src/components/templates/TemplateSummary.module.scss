@@ -31,6 +31,7 @@
 
   @media (max-width: 768px) {
     margin-top: 2rem; // Reduced top margin on mobile
+    margin-left: 24px;
   }
 }
 
@@ -162,6 +163,7 @@
     flex-direction: column;
     padding: 1rem;
     gap: 1rem;
+    align-items: flex-start;
   }
 }
 
@@ -173,7 +175,7 @@
 
   @media (max-width: 768px) {
     margin-left: 0;
-    text-align: center;
+    text-align: left;
   }
 }
 
@@ -185,7 +187,7 @@
 
   @media (max-width: 768px) {
     margin-right: 0;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
   }
 }

@@ -4,6 +4,12 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+
+  // Mobile-specific alignment
+  @media (max-width: 767px) {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
 }
 
 .filterPill {

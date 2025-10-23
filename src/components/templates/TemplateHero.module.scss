@@ -9,6 +9,12 @@
   margin-right: calc(-50vw + 50%); // Center background
   background: #000000; // Black background for hero section
 
+  // Mobile-specific background
+  @media (max-width: 767px) {
+    background: #000000;
+    padding: 0 24px 0 24px;
+  }
+
   .backgroundNoise {
     position: absolute;
     inset: 0;
@@ -32,6 +38,9 @@
       rgba(0,0,0,0.6) 30%, 
       rgba(0,0,0,0.6) 60%, 
       rgba(0,0,0,0.2) 100%);
+      @media (max-width: 767px) {
+        background: #000000;
+      }
   }
 
   .backgroundGradient {
@@ -62,6 +71,10 @@
       rgba(0,0,0,1) 60%, 
       rgba(0,0,0,0.3) 80%, 
       rgba(0,0,0,0) 100%);
+      
+      @media (max-width: 767px) {
+        background: #000000;
+      }
   }
 
   .container {
@@ -70,6 +83,11 @@
     max-width: 1280px; // Same max-width as Trending section
     margin: 0 auto; // Center horizontally
     padding: 0 1rem; // Base padding for mobile
+
+    // Mobile-specific padding (24px minimum)
+    @media (max-width: 767px) {
+      padding: 0 24px; // 24px margin on each side
+    }
 
     @media (min-width: 640px) {
       padding: 0 1.5rem; // sm: 24px
@@ -129,6 +147,12 @@
       flex-direction: column;
       gap: 2rem;
     }
+
+    // Mobile-specific layout
+    @media (max-width: 767px) {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
   }
 
   .leftContent {
@@ -136,6 +160,11 @@
     display: flex;
     flex-direction: column;
     gap: 2rem; // 32px between elements
+
+    // Mobile-specific layout
+    @media (max-width: 767px) {
+      gap: 1.5rem;
+    }
   }
 
   .title {
@@ -157,11 +186,13 @@
     font-size: 18px;
     line-height: 140%;
     color: #FFFFFF;
-    margin: 0;
+    margin: 0 ;
     max-width: 600px;
 
-    @media (max-width: 768px) {
-      font-size: 16px;
+    @media (max-width: 767px) {
+      font-size: 18px; // Keep 18px for mobile
+      text-align: left;
+      margin-right: 24px;
     }
   }
 
@@ -171,10 +202,13 @@
     gap: 2rem; // 32px between CTA and share buttons
     flex-wrap: wrap;
 
-    @media (max-width: 768px) {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
+
+    // Mobile-specific: keep CTA and share buttons on same line
+    @media (max-width: 767px) {
+      flex-direction: row;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: nowrap;
     }
   }
 
@@ -206,6 +240,14 @@
       0px 0px 10px rgba(52, 211, 153, 0.5),
       0px 0px 15px rgba(52, 211, 153, 0.6);
     animation: boxShadowAnimation 1.5s infinite alternate;
+
+    @media (max-width: 767px) {
+      white-space: nowrap;
+      padding: 12px 20px;
+      height: 44px;
+      font-size: 14px;
+
+    }
 
     &:hover {
       animation: waveGradient 5s ease-in-out infinite;
@@ -241,6 +283,25 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    // Mobile-specific: condensed and left-aligned
+    @media (max-width: 767px) {
+      gap: 0.5rem;
+      justify-content: flex-start;
+    }
+  }
+
+  .shareLabel {
+    color: #FFFFFF;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+
+    // Mobile-specific: smaller font and reduced margin
+    @media (max-width: 767px) {
+      font-size: 0.875rem;
+      margin-right: 0.25rem;
+    }
   }
 
   .shareButton {
@@ -256,6 +317,14 @@
     align-items: center;
     justify-content: center;
     transition: color 0.2s ease, background 0.2s ease;
+
+    // Mobile-specific: smaller and more condensed
+    @media (max-width: 767px) {
+      padding: 0.5rem;
+      min-width: 2.5rem;
+      min-height: 2.5rem;
+      border-radius: 0.5rem;
+    }
 
     &:hover {
       color: rgba(255, 255, 255, 0.8);
@@ -277,6 +346,22 @@
       margin-right: 0;
       margin-top: 2rem;
     }
+
+    // Mobile-specific: horizontal layout before CTA
+    @media (max-width: 767px) {
+      flex-direction: row;
+      gap: 1.5rem;
+      text-align: left;
+      margin-right: 0;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+
+    // Hide desktop sidebar on mobile
+    @media (max-width: 767px) {
+      display: none;
+    }
   }
 
   .sidebarBlock {
@@ -284,6 +369,13 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+
+    // Mobile-specific: horizontal layout
+    @media (max-width: 767px) {
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+    }
   }
 
   .sidebarLabel {
@@ -292,6 +384,12 @@
     line-height: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+
+    // Mobile-specific styling
+    @media (max-width: 767px) {
+      font-size: 0.75rem;
+      line-height: 1rem;
+    }
   }
 
   .lastUpdate {
@@ -299,6 +397,12 @@
     font-weight: 500;
     line-height: 1.5rem;
     color: #FFFFFF;
+
+    // Mobile-specific styling
+    @media (max-width: 767px) {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
   }
 
   .automationBadge {
@@ -310,6 +414,14 @@
 
     @media (max-width: 1024px) {
       justify-content: flex-start;
+    }
+
+    // Mobile-specific styling
+    @media (max-width: 767px) {
+      height: auto;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+      gap: 0.5rem;
     }
   }
 
@@ -323,6 +435,12 @@
     justify-content: center;
     color: white;
     flex-shrink: 0;
+
+    // Mobile-specific styling
+    @media (max-width: 767px) {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   .automationText {
@@ -330,6 +448,12 @@
     font-weight: 500;
     color: #FFFFFF;
     line-height: 1.5rem;
+
+    // Mobile-specific styling
+    @media (max-width: 767px) {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
   }
 
   .iframeSection {
@@ -363,6 +487,73 @@
     border: 0;
     border-radius: inherit;
     background: #f0f0f0;
+  }
+}
+
+// Mobile sidebar (inside leftContent)
+.mobileSidebar {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    text-align: left;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+// Mobile-specific sidebar block styling
+.mobileSidebarBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+// Mobile-specific automation badge with centered icon
+.mobileAutomationBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: auto;
+  margin-bottom: 0;
+  font-size: 0.875rem;
+
+  @media (max-width: 767px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+}
+
+// Mobile-specific automation icon with more padding
+.mobileAutomationIcon {
+  width: 24px;
+  height: 24px;
+  background: #FF3276;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+  padding: 0.25rem;
+
+  @media (max-width: 767px) {
+    width: 32px;
+    height: 32px;
+    padding: 0.375rem;
   }
 }
 
