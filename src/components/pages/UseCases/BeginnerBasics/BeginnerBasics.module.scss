@@ -3,6 +3,10 @@
 .beginnerBasics {
   background: transparent; // Removido background preto
   padding: 60px 0; // 60px de distância entre seções
+
+  @media (max-width: 768px) {
+    padding:  0;
+  }
 }
 
 .container {

@@ -7,6 +7,11 @@
   margin-left: calc(-50vw + 50%); // Center background
   margin-right: calc(-50vw + 50%); // Center background
 
+  // Black background for mobile screens
+  @media (max-width: 767px) {
+    background: #000000;
+  }
+
   .backgroundNoise {
     position: absolute;
     inset: 0;
@@ -118,8 +123,7 @@
       margin: 60px 0 0 0;
       width: 232px;
 
-      @media (max-width: 768px) {
-        font-size: 36px;
+      @media (max-width: 767px) {
         width: auto;
       }
     }
@@ -134,7 +138,7 @@
       margin: 24px 0 0 0; // 24px abaixo do título
       width: 513px;
 
-      @media (max-width: 768px) {
+      @media (max-width: 767px) {
         font-size: 16px;
         width: auto;
       }
@@ -148,7 +152,7 @@
       width: 100%;
       gap: 2rem; // Espaço entre input e botões
 
-      @media (max-width: 768px) {
+      @media (max-width: 767px) {
         flex-direction: column;
         gap: 1rem;
         align-items: flex-start;
@@ -159,7 +163,7 @@
       flex-shrink: 0; // Não encolhe o input
       width: 500px; // Largura reduzida para dar espaço aos segmentos
 
-      @media (max-width: 768px) {
+      @media (max-width: 767px) {
         width: 100%;
       }
     }
@@ -189,7 +193,7 @@
         overflow-x: auto; // Scroll horizontal quando necessário
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 767px) {
         flex-wrap: nowrap; // Mantém horizontal mesmo em mobile
         width: 100%;
         justify-content: flex-start;

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DownArrow from "../icons/downArrow/DownArrow";
 import TemplateCard from "../pages/UseCases/BeginnerBasics/TemplateCard";
 import styles from "./BrowseTemplates.module.scss";
@@ -111,6 +111,21 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("most-recent");
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(["Category 2"]));
+  const [isMobile, setIsMobile] = useState(false);
+  const [selectedType, setSelectedType] = useState("all-types");
+  const [selectedCategory, setSelectedCategory] = useState("all-categories");
+
+  // Check if mobile screen
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleFilterChange = (filter: FilterType) => {
     setActiveFilter(filter);
@@ -122,6 +137,14 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortBy(e.target.value);
+  };
+
+  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedType(e.target.value);
+  };
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(e.target.value);
   };
 
   const toggleCategory = (categoryName: string) => {
@@ -155,76 +178,156 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
         <div className={styles.header}>
           <h2 className={styles.title}>Browse templates</h2>
           
-          <div className={styles.searchAndFilters}>
-            <div className={styles.searchContainer}>
-              <input
-                type="text"
-                placeholder="Search use cases, methodology, integrations..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className={styles.searchInput}
-              />
-            </div>
-            
-            <div className={styles.filterPills}>
-              {FILTER_TYPES.map((filter) => (
-                <button
-                  key={filter.value}
-                  className={`${styles.filterPill} ${
-                    activeFilter === filter.value ? styles.active : ""
-                  } ${filter.value === "all-types" ? styles.allTypes : ""}`}
-                  onClick={() => handleFilterChange(filter.value as FilterType)}
-                >
-                  {filter.value === "automation" && (
-                    <Image
-                      src="/images/robot.png"
-                      alt="Automation"
-                      width={24}
-                      height={24}
-                    />
-                  )}
-                  {filter.value === "chat" && (
-                    <Image
-                      src="/images/chat.png"
-                      alt="Chat"
-                      width={24}
-                      height={24}
-                    />
-                  )}
-                  {filter.label}
-                </button>
-              ))}
-            </div>
-          </div>
+          {/* Desktop Layout */}
+          {!isMobile && (
+            <>
+              <div className={styles.searchAndFilters}>
+                <div className={styles.searchContainer}>
+                  <input
+                    type="text"
+                    placeholder="Search use cases, methodology, integrations..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    className={styles.searchInput}
+                  />
+                </div>
+                
+                <div className={styles.filterPills}>
+                  {FILTER_TYPES.map((filter) => (
+                    <button
+                      key={filter.value}
+                      className={`${styles.filterPill} ${
+                        activeFilter === filter.value ? styles.active : ""
+                      } ${filter.value === "all-types" ? styles.allTypes : ""}`}
+                      onClick={() => handleFilterChange(filter.value as FilterType)}
+                    >
+                      {filter.value === "automation" && (
+                        <Image
+                          src="/images/robot.png"
+                          alt="Automation"
+                          width={24}
+                          height={24}
+                        />
+                      )}
+                      {filter.value === "chat" && (
+                        <Image
+                          src="/images/chat.png"
+                          alt="Chat"
+                          width={24}
+                          height={24}
+                        />
+                      )}
+                      {filter.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-          <div className={styles.resultsAndSort}>
-            <div className={styles.resultsCount}>
-              Showing 1 - {filteredTemplates.length} of {MOCK_TEMPLATES.length} results in All Templates
-            </div>
-            <div className={styles.sortContainer}>
-              <label htmlFor="sort-by" className={styles.sortLabel}>Sort by</label>
-              <select id="sort-by" className={styles.sortSelect} value={sortBy} onChange={handleSortChange}>
-                <option value="most-recent">Most Recent</option>
-                <option value="most-popular">Most Popular</option>
-                <option value="alphabetical">Alphabetical</option>
-              </select>
-              <div className={styles.sortIcon}>▼</div>
-            </div>
-          </div>
+              <div className={styles.resultsAndSort}>
+                <div className={styles.resultsCount}>
+                  Showing 1 - {filteredTemplates.length} of {MOCK_TEMPLATES.length} results in All Templates
+                </div>
+                <div className={styles.sortContainer}>
+                  <label htmlFor="sort-by" className={styles.sortLabel}>Sort by</label>
+                  <select id="sort-by" className={styles.sortSelect} value={sortBy} onChange={handleSortChange}>
+                    <option value="most-recent">Most Recent</option>
+                    <option value="most-popular">Most Popular</option>
+                    <option value="alphabetical">Alphabetical</option>
+                  </select>
+                  <div className={styles.sortIcon}>▼</div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Mobile Layout */}
+          {isMobile && (
+            <>
+              <div className={styles.mobileSearchContainer}>
+                <div className={styles.mobileSearchInput}>
+                  <div className={styles.searchIcon}>
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search use cases..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    className={styles.mobileSearchField}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.mobileSelectors}>
+                <div className={styles.mobileSelector}>
+                  <select 
+                    id="type-select" 
+                    className={styles.mobileSelect} 
+                    value={selectedType} 
+                    onChange={handleTypeChange}
+                  >
+                    <option value="all-types">Type: All Types</option>
+                    <option value="automation">Automation</option>
+                    <option value="chat">Chat</option>
+                  </select>
+                </div>
+
+                <div className={styles.mobileSelector}>
+                  <select 
+                    id="category-select" 
+                    className={styles.mobileSelect} 
+                    value={selectedCategory} 
+                    onChange={handleCategoryChange}
+                  >
+                    <option value="all-categories">Categories: All Categories</option>
+                    {CATEGORIES.map((category) => (
+                      <option key={category.name} value={category.name}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className={styles.mobileResultsAndSort}>
+                <div className={styles.mobileResultsCount}>
+                  6866 Results
+                </div>
+                <div className={styles.mobileSortContainer}>
+                  <span className={styles.mobileSortText}>Most Recent</span>
+                  <div className={styles.mobileSortIcon}>
+                    <DownArrow />
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         <div className={styles.mainContent}>
-          <div className={styles.sidebar}>
-            <h3 className={styles.sidebarTitle}>Categories</h3>
-            <div className={styles.categoriesPanel}>
-              <div className={styles.categoriesList}>
-              {CATEGORIES.map((category) => (
-                <div key={category.name} className={styles.categoryItem}>
-                  <button
-                    className={styles.categoryButton}
-                    onClick={() => toggleCategory(category.name)}
-                    aria-expanded={expandedCategories.has(category.name)}
-                  >
+          {!isMobile && (
+            <div className={styles.sidebar}>
+              <h3 className={styles.sidebarTitle}>Categories</h3>
+              <div className={styles.categoriesPanel}>
+                <div className={styles.categoriesList}>
+                {CATEGORIES.map((category) => (
+                  <div key={category.name} className={styles.categoryItem}>
+                    <button
+                      className={styles.categoryButton}
+                      onClick={() => toggleCategory(category.name)}
+                      aria-expanded={expandedCategories.has(category.name)}
+                    >
                       {category.subcategories.length > 0 && (
                         <span className={styles.categoryIcon}>
                           {expandedCategories.has(category.name) ? 
@@ -232,21 +335,22 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
                         </span>
                       )}
                       <span className={styles.categoryName}>{category.name}</span>
-                  </button>
-                  {category.subcategories.length > 0 && expandedCategories.has(category.name) && (
-                    <div className={styles.subcategories}>
-                      {category.subcategories.map((sub) => (
-                        <button key={sub} className={styles.subcategoryButton}>
-                          {sub}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                    </button>
+                    {category.subcategories.length > 0 && expandedCategories.has(category.name) && (
+                      <div className={styles.subcategories}>
+                        {category.subcategories.map((sub) => (
+                          <button key={sub} className={styles.subcategoryButton}>
+                            {sub}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
                 </div>
-              ))}
               </div>
             </div>
-          </div>
+          )}
           
           <div className={styles.templatesArea}>
             <div className={styles.templatesContainer}>

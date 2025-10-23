@@ -40,6 +40,11 @@
 .templatesContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; 
+  }
+
   gap: 16px; // 16px between cards
   max-width: 1280px; // Same maximum width
   margin: 0 auto; // Center cards

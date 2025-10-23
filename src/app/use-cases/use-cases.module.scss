@@ -9,6 +9,11 @@
   margin: 0 auto; // Center content
   padding: 0 20px; // Minimum padding
 
+  // Black background for mobile screens
+  @media (max-width: 767px) {
+    background: #000000;
+  }
+
   @media (min-width: 480px) {
     padding: 0 40px;
   }

@@ -30,9 +30,25 @@ export default function SearchWithSuggest({
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [filteredSuggestions, setFilteredSuggestions] = useState<SuggestionGroup[]>(suggestions);
+  const [isMobile, setIsMobile] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const listboxId = useId();
+
+  // Check if mobile screen
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Dynamic placeholder based on screen size
+  const dynamicPlaceholder = isMobile ? "Search use cases..." : placeholder;
 
   // Filter suggestions based on input
   useEffect(() => {
@@ -156,7 +172,7 @@ export default function SearchWithSuggest({
           onKeyDown={handleKeyDown}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
-          placeholder={placeholder}
+          placeholder={dynamicPlaceholder}
           className={styles.searchInput}
         />
         <div className={styles.searchIcon}>
