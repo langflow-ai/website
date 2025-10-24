@@ -95,8 +95,12 @@ const Header = () => {
                     {item?.link ? (
                       <Link
                         href={item.link}
-                        data-event="Langflow.org - Nav Clicked"
-                        data-top-level={item.title}
+                        data-event="UI Interaction"
+                        data-action="clicked"
+                        data-channel="webpage"
+                        data-element-id={`drawer-nav-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                        data-namespace="drawer"
+                        data-platform-title="Langflow"
                       >
                         <Display
                           size={100}
@@ -126,9 +130,12 @@ const Header = () => {
                                 }}
                                 download="brandkit.zip"
                                 className={styles.downloadLink}
-                                data-event="Langflow.org - Nav Clicked"
-                                data-top-level={item.title}
-                                data-sub-level={sub.title}
+                                data-event="UI Interaction"
+                                data-action="clicked"
+                                data-channel="webpage"
+                                data-element-id={`drawer-${sub.title.toLowerCase().replace(/\s+/g, '-')}`}
+                                data-namespace="drawer"
+                                data-platform-title="Langflow"
                               >
                                 {sub.icon}
                                 <Display size={100}>{sub.title}</Display>
@@ -137,9 +144,12 @@ const Header = () => {
                               <Link
                                 key={sub.title}
                                 href={sub.url}
-                                data-event="Langflow.org - Nav Clicked"
-                                data-top-level={item.title}
-                                data-sub-level={sub.title}
+                                data-event="UI Interaction"
+                                data-action="clicked"
+                                data-channel="webpage"
+                                data-element-id={`drawer-${sub.title.toLowerCase().replace(/\s+/g, '-')}`}
+                                data-namespace="drawer"
+                                data-platform-title="Langflow"
                               >
                                 {sub.icon}
                                 {sub.title}
@@ -158,8 +168,12 @@ const Header = () => {
         <div className={styles.left}>
           <Link
             href={"/"}
-            data-event="Langflow.org - Logo Clicked"
-            data-text="Langflow"
+            data-event="UI Interaction"
+            data-action="clicked"
+            data-channel="webpage"
+            data-element-id="logo"
+            data-namespace="header"
+            data-platform-title="Langflow"
           >
             <Image
               src={Logo}
@@ -188,8 +202,12 @@ const Header = () => {
                   {item?.link ? (
                     <Link
                       href={item.link}
-                      data-event="Langflow.org - Nav Clicked"
-                      data-top-level={item.title}
+                      data-event="UI Interaction"
+                      data-action="clicked"
+                      data-channel="webpage"
+                      data-element-id={`nav-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                      data-namespace="header"
+                      data-platform-title="Langflow"
                     >
                       <Display size={100} className={styles.drawerItem_heading}>
                         {item.title}
@@ -229,6 +247,12 @@ const Header = () => {
                               }}
                               download="brandkit.zip"
                               className={styles.downloadLink}
+                              data-event="UI Interaction"
+                              data-action="clicked"
+                              data-channel="webpage"
+                              data-element-id={`nav-${sub.title.toLowerCase().replace(/\s+/g, '-')}`}
+                              data-namespace="header"
+                              data-platform-title="Langflow"
                             >
                               {sub.icon}
                               <Display size={100}>{sub.title}</Display>
@@ -237,9 +261,12 @@ const Header = () => {
                             <Link
                               key={sub.title}
                               href={sub.url}
-                              data-event="Langflow.org - Nav Clicked"
-                              data-top-level={item.title}
-                              data-sub-level={sub.title}
+                              data-event="UI Interaction"
+                              data-action="clicked"
+                              data-channel="webpage"
+                              data-element-id={`nav-${sub.title.toLowerCase().replace(/\s+/g, '-')}`}
+                              data-namespace="header"
+                              data-platform-title="Langflow"
                             >
                               {sub.icon}
                               {sub.title}
