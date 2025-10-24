@@ -102,14 +102,15 @@ const MarketoForm = ({
 
   const handleSuccess = (values?: any) => {
     try {
-      const action = successTracking?.action || "www - Form Submitted";
       const payload = {
-        category: "All",
-        label: window.location.pathname,
+        formId: `mktoForm_${id}`,
+        fieldType: "button",
+        field: "submit",
+        ...(title && typeof title === "string" && { title }),
         ...(successTracking?.payload || {}),
       };
 
-      trackEvent(action, payload);
+      trackEvent("User Form", payload);
 
       // Fire GA4 desktop_download event for form submissions on desktop page
       if (window.gtag && window.location.pathname === "/desktop") {

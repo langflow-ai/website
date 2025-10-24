@@ -179,9 +179,9 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
     window.analytics.track(name, updatedPayload);
   }
 
-  if (name.includes("Form Submitted")) {
+  if (name === "User Form") {
     trackLinkedInEvent(LINKEDIN_DEFAULT_FORM_SUBMITTED_CONVERSION_ID);
-    // Event snippet for www_-_Form_Submitted conversion page
+    // Event snippet for User Form conversion page
     window.gtag &&
       window.gtag("event", "conversion", {
         send_to: "AW-995363228/p-_QCNfuqM8aEJyT0NoD",
