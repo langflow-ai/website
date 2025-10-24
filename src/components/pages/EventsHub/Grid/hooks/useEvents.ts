@@ -34,7 +34,7 @@ const useEvents = (type: "upcoming" | "past") => {
     let mounted = true;
     const abortController = new AbortController();
 
-    const page = searchParams.get("page");
+    const page = searchParams?.get("page") ?? null;
     fetchEvents(page, abortController.signal)
       .then((data) => {
         if (mounted) {

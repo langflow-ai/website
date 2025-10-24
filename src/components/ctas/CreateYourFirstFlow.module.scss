@@ -1,0 +1,110 @@
+@import "../../styles/variables";
+
+.createYourFirstFlow {
+  position: relative;
+  padding: 6rem 0;
+
+  .backgroundGradient {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(1200px 600px at 50% 0%, rgba(124,77,255,.25), transparent 60%), 
+                radial-gradient(800px 400px at 20% 30%, rgba(79,70,229,.25), transparent 60%);
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 64rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .content {
+    .title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: $templates-text;
+      margin-bottom: 1.5rem;
+
+      @media (min-width: 768px) {
+        font-size: 3rem;
+      }
+
+      @media (min-width: 1024px) {
+        font-size: 3.75rem;
+      }
+    }
+
+    .description {
+      font-size: 1.25rem;
+      color: $templates-muted;
+      margin-bottom: 3rem;
+      max-width: 32rem;
+      margin-left: auto;
+      margin-right: auto;
+
+      @media (min-width: 768px) {
+        font-size: 1.5rem;
+      }
+    }
+
+    .ctaButtons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      justify-content: center;
+
+      @media (min-width: 640px) {
+        flex-direction: row;
+      }
+
+      .primaryButton {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        background: linear-gradient(to right, $templates-brand-1, $templates-brand-2);
+        color: white;
+        font-weight: 600;
+        border-radius: 1rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+        &:hover {
+          background: linear-gradient(to right, rgba(124, 77, 255, 0.9), rgba(79, 70, 229, 0.9));
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+      }
+
+      .secondaryButton {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        background: transparent;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        color: $templates-text;
+        font-weight: 600;
+        border-radius: 1rem;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+          border-color: rgba(255, 255, 255, 0.4);
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        .githubIcon {
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+      }
+    }
+  }
+}

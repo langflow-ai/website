@@ -1,0 +1,18 @@
+@import "../../../styles/variables";
+
+.page {
+  min-height: 100vh;
+  color: $templates-text;
+}
+
+.section {
+  padding: 3rem 0;
+
+}
+
+.trendingContainer {
+  @media (max-width: 767px) {
+    margin-left: 24px;
+    padding-right: 24px;
+  }
+}

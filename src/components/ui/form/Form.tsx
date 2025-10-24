@@ -1,9 +1,9 @@
 "use client";
 
 // Dependencies
-import { ReactElement, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Script from "next/script";
+import { ReactElement, useEffect, useRef, useState } from "react";
 
 // Types
 import {
@@ -24,8 +24,8 @@ import { isFunction } from "@/lib/utils/str";
 import { trackEvent } from "@/lib/utils/tracking";
 
 // Components
-import Markup from "@/components/ui/markup";
 import Footnote from "@/components/ui/footnote";
+import Markup from "@/components/ui/markup";
 import Text from "@/components/ui/text";
 
 // Globals
@@ -240,8 +240,8 @@ const MarketoForm = ({
 
   useEffect(() => {
     if (
-      (allowBypass && searchParams.get("bypass")) ||
-      searchParams.get("aliId")
+      (allowBypass && searchParams?.get("bypass")) ||
+      searchParams?.get("aliId")
     ) {
       handleSuccess();
     }

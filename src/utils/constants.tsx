@@ -38,6 +38,12 @@ const LIST = [
     comingSoon: false,
   },
   {
+    title: "Use Cases",
+    link: "/use-cases",
+    icon: "/assets/icons/use-cases.svg",
+    comingSoon: false,
+  },
+  {
     title: "Resources",
     link: "",
     icon: "/assets/icons/resources.svg",

@@ -1,14 +1,15 @@
 "use client";
 
 // Dependencies
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
 import Link from "@/components/ui/Link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 // Components
-import Badge from "@/components/ui/Header/Badge";
-import Display from "@/components/ui/Display";
 import DownArrow from "@/components/icons/downArrow/DownArrow";
+import Display from "@/components/ui/Display";
+import Badge from "@/components/ui/Header/Badge";
 import Social from "../Social";
 // Utils
 import { LIST } from "@/utils/constants";
@@ -22,7 +23,12 @@ import styles from "./styles.module.scss";
 const Header = () => {
   const [isActive, setIsActive] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const leaveTimeout = useRef<any>(null);
+  const pathname = usePathname();
+  
+  // Check if we're on use-cases or template pages
+  const isTransparentPage = pathname?.startsWith('/use-cases') || pathname?.startsWith('/templates');
 
   useEffect(() => {
     if (isActive) {
@@ -32,6 +38,19 @@ const Header = () => {
     }
     return () => document.body.classList.remove("no-scroll");
   }, [isActive]);
+
+  // Handle scroll detection for transparent pages
+  useEffect(() => {
+    if (!isTransparentPage) return;
+
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 50); // Show background after 50px scroll
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isTransparentPage]);
 
   const toggleMenu = () => {
     setIsActive(!isActive);
@@ -60,7 +79,7 @@ const Header = () => {
   };
 
   return (
-    <section className={styles.header}>
+    <section className={`${styles.header} ${isTransparentPage && !isScrolled ? styles.transparent : ''}`}>
       <div className={styles.container}>
         {isActive && (
           <div

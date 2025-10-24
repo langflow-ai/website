@@ -1,0 +1,40 @@
+@import "../../styles/variables";
+
+.filterPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px $templates-ring;
+  }
+
+  &.selected {
+    background: rgba(255, 255, 255, 0.15);
+    color: #FFFFFF; // Texto branco
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  &:not(.selected) {
+    color: rgba(255, 255, 255, 0.7); // Texto branco com transparência
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.4);
+      color: #FFFFFF; // Texto branco no hover
+    }
+  }
+
+  .icon {
+    flex-shrink: 0;
+  }
+}

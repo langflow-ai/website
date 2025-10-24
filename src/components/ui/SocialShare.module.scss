@@ -1,0 +1,100 @@
+@import "../../styles/variables";
+
+.socialShare {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  &.small {
+    gap: 8px;
+    
+    .shareLabel {
+      font-size: 0.75rem;
+    }
+    
+    .shareButton {
+      width: 32px;
+      height: 32px;
+      
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  &.medium {
+    gap: 12px;
+    
+    .shareLabel {
+      font-size: 0.875rem;
+    }
+    
+    .shareButton {
+      width: 40px;
+      height: 40px;
+      
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  &.large {
+    gap: 16px;
+    
+    .shareLabel {
+      font-size: 1rem;
+    }
+    
+    .shareButton {
+      width: 48px;
+      height: 48px;
+      
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}
+
+.shareLabel {
+  font-family: 'Chivo', sans-serif;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
+
+.shareButtons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.shareButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}

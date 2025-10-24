@@ -1,0 +1,61 @@
+@import "../../styles/variables";
+
+.toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10000;
+  animation: slideIn 0.3s ease-out;
+  
+  @media (max-width: 768px) {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+  }
+}
+
+.toastContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: #FFFFFF;
+  font-family: 'Chivo', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  
+  svg {
+    flex-shrink: 0;
+    color: #10B981; // Green checkmark
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
