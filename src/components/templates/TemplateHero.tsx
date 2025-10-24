@@ -144,7 +144,7 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
                 <div className={styles.mobileSidebarBlock}>
                   <div className={styles.mobileAutomationBadge}>
                     <div className={styles.mobileAutomationIcon}>
-                      <img src="/images/Robot.png" alt="Robot icon" width="20" height="20" />
+                      <img src="/images/robot.png" alt="Robot icon" width="20" height="20" />
                     </div>
                     <span className={styles.automationText}>Automation</span>
                   </div>
@@ -212,7 +212,7 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
               <div className={styles.sidebarBlock}>
                 <div className={styles.automationBadge}>
                   <div className={styles.automationIcon}>
-                    <img src="/images/Robot.png" alt="Robot icon" width="24" height="24" />
+                    <img src="/images/robot.png" alt="Robot icon" width="24" height="24" />
                   </div>
                   <span className={styles.automationText}>Automation</span>
                 </div>
