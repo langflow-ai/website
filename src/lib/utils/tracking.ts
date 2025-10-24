@@ -9,6 +9,22 @@ import { LINKEDIN_DEFAULT_FORM_SUBMITTED_CONVERSION_ID } from "@/lib/utils/linke
 declare let window: CustomWindow;
 
 /**
+ * IBM Segment Common Properties
+ * Required properties that must be included with all Segment events
+ */
+export const SEGMENT_COMMON_PROPERTIES = {
+  productTitle: "IBM Elite Support for Langflow",
+  productCode: "5900BUB",
+  productCodeType: "WWPC",
+  UT30: "30AS5",
+  instanceId: "marketing-site",
+  subscriptionId: "public-access",
+  productPlanName: "Public",
+  productPlanType: "freemium",
+  userId: "IBMid-ANONYMOUS",
+} as const;
+
+/**
  * Track Homepage hero clicks
  *
  * @param {SyntheticEvent} event
@@ -18,8 +34,10 @@ export function homepageHeroTracking(event: SyntheticEvent): void {
   const target = event.target as HTMLButtonElement;
 
   if (window.analytics) {
-    trackEvent("www - Hero CTA Clicked", {
-      cta: target.dataset.label,
+    trackEvent("CTA Clicked", {
+      CTA: target.dataset.label,
+      channel: "webpage",
+      location: "hero",
     });
   }
 
@@ -38,7 +56,11 @@ export function workshopRegistrationTracking(
 ): void {
   event.preventDefault();
   const target = event.target as HTMLAnchorElement;
-  trackEvent("www - Workshop CTA Clicked", { name: name });
+  trackEvent("CTA Clicked", {
+    CTA: "Register for Workshop",
+    channel: "webpage",
+    workshopName: name,
+  });
   window.location.href = target.href;
 }
 
@@ -115,6 +137,11 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
   }
 
   if (window.analytics) {
+    // IBM requires identify() call before track events
+    // Exclude productPlanName and productPlanType from identify traits
+    const { productPlanName, productPlanType, ...identifyTraits } = SEGMENT_COMMON_PROPERTIES;
+    window.analytics.identify(SEGMENT_COMMON_PROPERTIES.userId, identifyTraits);
+
     // Get current UTM parameters for attribution
     const urlParams = new URLSearchParams(window.location.search);
     const utmData: Record<string, string | null> = {
@@ -130,6 +157,13 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
       Object.entries(utmData).filter(([_, value]) => value !== null)
     );
 
+    // For UI Interaction events, exclude userId from properties
+    let commonProperties = SEGMENT_COMMON_PROPERTIES;
+    if (name === "UI Interaction") {
+      const { userId, ...propertiesWithoutUserId } = SEGMENT_COMMON_PROPERTIES;
+      commonProperties = propertiesWithoutUserId as typeof SEGMENT_COMMON_PROPERTIES;
+    }
+
     const updatedPayload = {
       ...(payload?.label !== undefined && {
         event_label: payload?.label,
@@ -139,13 +173,14 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
       }),
       ...payload,
       ...cleanedUtmData,
+      ...commonProperties,
     };
+
     window.analytics.track(name, updatedPayload);
   }
 
   if (name.includes("Form Submitted")) {
     trackLinkedInEvent(LINKEDIN_DEFAULT_FORM_SUBMITTED_CONVERSION_ID);
-    window.rdt && window.rdt("track", "Lead");
     // Event snippet for www_-_Form_Submitted conversion page
     window.gtag &&
       window.gtag("event", "conversion", {
@@ -154,49 +189,8 @@ export function trackEvent(name: string, payload?: Record<string, unknown>) {
   }
 }
 
-function getConsentGrantedState(
-  consent: string,
-  defaultValue: "granted" | "denied"
-): "granted" | "denied" {
-  if (window.ketchConsent) {
-    const purposes = window.ketchConsent.purposes || {};
-    return purposes[consent] === true ? "granted" : "denied";
-  }
-
-  return defaultValue;
-}
-
-export function addKetchConsentToContextMiddleware() {
-  if (window.analytics) {
-    window.analytics.addSourceMiddleware(({ payload, next }: any) => {
-      if (window.ketchConsent) {
-        payload.obj.properties = {
-          ...(payload.obj.properties || {}),
-          analyticsStorageConsentState: getConsentGrantedState(
-            "analytics",
-            "granted"
-          ),
-          adsStorageConsentState: getConsentGrantedState(
-            "targeted_advertising",
-            "granted"
-          ),
-          adUserDataConsentState: getConsentGrantedState(
-            "targeted_advertising",
-            "granted"
-          ),
-          adPersonalizationConsentState: getConsentGrantedState(
-            "targeted_advertising",
-            "granted"
-          ),
-        };
-        payload.obj.context.consent = {
-          categoryPreferences: window.ketchConsent?.purposes,
-        };
-      }
-      next(payload);
-    });
-  }
-}
+// IBM TrustArc consent is now handled by IBM common.js
+// No additional middleware needed as consent is managed at the IBM level
 
 export function checkLinkByHref(
   validHrefs: { [key: string]: any },
@@ -237,6 +231,36 @@ export const trackLinkedInEvent = (conversionId: number) => {
     window.lintrk("track", { conversion_id: conversionId });
   }
 };
+
+/**
+ * Track page view with friendly name
+ * IBM requires page events to have a friendly "page" property
+ */
+export function trackPage(pageName?: string) {
+  if (typeof window === "undefined") {
+    return; // Exit early during SSR
+  }
+
+  if (window.analytics) {
+    // IBM requires identify() call before page events
+    // Exclude productPlanName and productPlanType from identify traits
+    const { productPlanName, productPlanType, userId, ...identifyTraits } = SEGMENT_COMMON_PROPERTIES;
+    window.analytics.identify(SEGMENT_COMMON_PROPERTIES.userId, identifyTraits);
+
+    // Get friendly page name from title or pathname
+    const friendlyName = pageName || document.title.split('|')[0].trim();
+
+    // Exclude userId from page properties (only needed in track events)
+    const pageProperties = identifyTraits;
+
+    window.analytics.page(friendlyName, {
+      ...pageProperties,
+      path: window.location.pathname,
+      url: window.location.href,
+      title: document.title,
+    });
+  }
+}
 
 /**
  * Get UTM parameters from URL and send them to Segment.
