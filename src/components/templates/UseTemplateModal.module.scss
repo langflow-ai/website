@@ -15,7 +15,7 @@
 
 .modalContainer {
   position: relative;
-  width: 628px;
+  width: 500px; // Reduced width for buttons-only modal
   background: #000000;
   border: 2px solid transparent;
   border-radius: 24px;
@@ -33,7 +33,7 @@
 
   @media (max-width: 768px) {
     width: 90%;
-    max-width: 628px;
+    max-width: 500px;
     padding: 32px;
   }
 }
@@ -90,6 +90,7 @@
     font-size: 36px;
   }
 }
+
 
 .primaryButton,
 .secondaryButton {

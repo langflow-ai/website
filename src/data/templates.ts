@@ -1,8 +1,36 @@
 // Mock Data and API Functions for Templates
 
 import { FilterState, Template, TemplateCollections } from "@/lib/types/templates";
+import { mockTemplates as useCaseTemplates } from "@/lib/use-cases/mock-data";
 
-// Mock templates data
+// Convert use-case templates to the format expected by the templates system
+const convertUseCaseTemplate = (template: any): Template => ({
+  id: template.slug,
+  slug: template.slug,
+  title: template.topic,
+  summary: template.summary.length > 120 ? template.summary.substring(0, 120) + "..." : template.summary,
+  thumbnailUrl: template.flow?.image_url || "/images/card-1.webp",
+  segments: template.category || [],
+  methodologies: template.mapped_use_cases?.length > 0 ? ["rag", "prompting-basics"] : ["prompting-basics"],
+  badges: ["openai"],
+  updatedAt: template.updated_at || "2024-01-01T00:00:00Z",
+  whatYouDo: template.mapped_use_cases?.slice(0, 3) || [
+    "Run the workflow to process your data",
+    "See how data flows through each node",
+    "Review and validate the results"
+  ],
+  whatYouLearn: [
+    "How to build AI workflows with Langflow",
+    "How to process and analyze data",
+    "How to integrate with external services"
+  ],
+  whyItMatters: template.summary,
+  // Add classification flags
+  isBeginner: template.difficulty === "Beginner" || template.slug.includes("basic") || template.slug.includes("first"),
+  isTrending: template.slug.includes("assistant") || template.slug.includes("generation") || template.slug.includes("chat")
+});
+
+// Mock templates data - combining original templates with new use cases
 const mockTemplates: Template[] = [
   {
     id: "1",
@@ -25,7 +53,9 @@ const mockTemplates: Template[] = [
       "How to use the Set node to structure and map data",
       "How to connect Gmail to send the data"
     ],
-    whyItMatters: "This workflow shows you the Langflow basics step by step - no code required. By the end, you'll know how to build, test, and share automations that run on their own, giving you the confidence to explore more advanced use cases."
+    whyItMatters: "This workflow shows you the Langflow basics step by step - no code required. By the end, you'll know how to build, test, and share automations that run on their own, giving you the confidence to explore more advanced use cases.",
+    isBeginner: true,
+    isTrending: true
   },
   {
     id: "2",
@@ -47,7 +77,9 @@ const mockTemplates: Template[] = [
       "Prompt engineering fundamentals",
       "Response handling and formatting"
     ],
-    whyItMatters: "This workflow shows you the Langflow basics step by step - no code required. By the end, you’ll know how to build, test, and share automations that run on their own, giving you the confidence to explore more advanced use cases"
+    whyItMatters: "This workflow shows you the Langflow basics step by step - no code required. By the end, you'll know how to build, test, and share automations that run on their own, giving you the confidence to explore more advanced use cases",
+    isBeginner: true,
+    isTrending: false
   },
   {
     id: "3",
@@ -69,7 +101,9 @@ const mockTemplates: Template[] = [
       "Text classification techniques",
       "Quality assurance processes"
     ],
-    whyItMatters: "Streamline document management with intelligent classification."
+    whyItMatters: "Streamline document management with intelligent classification.",
+    isBeginner: false,
+    isTrending: true
   },
   {
     id: "4",
@@ -91,7 +125,9 @@ const mockTemplates: Template[] = [
       "Code generation best practices",
       "Integration with development tools"
     ],
-    whyItMatters: "Accelerate development with AI-powered code generation."
+    whyItMatters: "Accelerate development with AI-powered code generation.",
+    isBeginner: false,
+    isTrending: true
   },
   {
     id: "5",
@@ -113,7 +149,9 @@ const mockTemplates: Template[] = [
       "AI writing techniques",
       "Content quality assessment"
     ],
-    whyItMatters: "Scale content creation with AI assistance while maintaining quality."
+    whyItMatters: "Scale content creation with AI assistance while maintaining quality.",
+    isBeginner: true,
+    isTrending: true
   },
   {
     id: "6",
@@ -135,14 +173,18 @@ const mockTemplates: Template[] = [
       "Vector database integration",
       "Knowledge base management"
     ],
-    whyItMatters: "Create intelligent Q&A systems that understand your specific domain."
-  }
+    whyItMatters: "Create intelligent Q&A systems that understand your specific domain.",
+    isBeginner: false,
+    isTrending: false
+  },
+  // Add converted use-case templates
+  ...useCaseTemplates.map(convertUseCaseTemplate)
 ];
 
 // Mock collections data
 const mockCollections: TemplateCollections = {
-  beginnerBasics: mockTemplates.filter(t => t.methodologies.includes("prompting-basics")),
-  trending: mockTemplates.slice(0, 3),
+  beginnerBasics: mockTemplates.filter(t => t.isBeginner),
+  trending: mockTemplates.filter(t => t.isTrending),
   featured: mockTemplates.filter(t => t.badges?.includes("openai")),
   recentlyAdded: mockTemplates.slice(-3)
 };

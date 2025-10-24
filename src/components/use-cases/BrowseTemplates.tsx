@@ -1,5 +1,6 @@
 "use client";
 
+import { FLOWS, Flow, getCategoriesFromFlows, getTypesFromFlows } from "@/data/flows";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import DownArrow from "../icons/downArrow/DownArrow";
@@ -10,125 +11,58 @@ interface BrowseTemplatesProps {
   className?: string;
 }
 
-type FilterType = "all-types" | "automation" | "chat";
+type FilterType = "all-types" | "Getting Started" | "Development" | "Research" | "Customer Support";
 
-const FILTER_TYPES = [
-  { value: "all-types", label: "All Types" },
-  { value: "automation", label: "Automation" },
-  { value: "chat", label: "Chat" },
-];
+// Get real categories and types from flows
+const FILTER_TYPES = getTypesFromFlows();
+const CATEGORIES = getCategoriesFromFlows().map((cat, index) => ({
+  name: cat.name,
+  expanded: index === 0, // First category expanded by default
+  subcategories: cat.subcategories,
+}));
 
-const MOCK_TEMPLATES = [
-  {
-    id: "1",
-    name: "Memory Chatbot",
-    description: "Create a chatbot that saves and references previous messages.",
-    categories: ["Category", "Sub-category"],
-    iconType: "robot" as const,
-    slug: "memory-chatbot"
-  },
-  {
-    id: "2",
-    name: "Basic Prompting",
-    description: "Perform basic prompting with an OpenAI model.",
-    categories: ["Category", "Sub-category"],
-    iconType: "basic" as const,
-    slug: "basic-prompting"
-  },
-  {
-    id: "3",
-    name: "Advanced Chatbot",
-    description: "Create an advanced chatbot with memory and context.",
-    categories: ["Category", "Sub-category"],
-    iconType: "robot" as const,
-    slug: "advanced-chatbot"
-  },
-  {
-    id: "4",
-    name: "Content Generator",
-    description: "Generate content using AI models.",
-    categories: ["Category", "Sub-category"],
-    iconType: "basic" as const,
-    slug: "content-generator"
-  },
-  {
-    id: "5",
-    name: "Data Processor",
-    description: "Process and analyze data with AI assistance.",
-    categories: ["Category", "Sub-category"],
-    iconType: "robot" as const,
-    slug: "data-processor"
-  },
-  {
-    id: "6",
-    name: "Email Assistant",
-    description: "AI-powered email management and responses.",
-    categories: ["Category", "Sub-category"],
-    iconType: "basic" as const,
-    slug: "email-assistant"
-  },
-];
-
-const CATEGORIES = [
-  {
-    name: "Category 1",
-    expanded: false,
-    subcategories: ["Sub-category 1", "Sub-category 2", "Sub-category 3"],
-  },
-  {
-    name: "Category 2",
-    expanded: true,
-    subcategories: [
-      "Sub-category 1",
-      "Sub-category 2", 
-      "Sub-category 3",
-    ],
-  },
-  {
-    name: "Category 3",
-    expanded: false,
-    subcategories: ["Sub-category 1", "Sub-category 2"],
-  },
-  {
-    name: "Category 4",
-    expanded: false,
-    subcategories: ["Sub-category 1", "Sub-category 2"],
-  },
-  {
-    name: "Category 5",
-    expanded: false,
-    subcategories: ["Sub-category 1", "Sub-category 2"],
-  },
-  {
-    name: "Category 6",
-    expanded: false,
-    subcategories: ["Sub-category 1", "Sub-category 2"],
-  },
+// Create category filter buttons with icons
+const CATEGORY_FILTERS = [
+  { value: "all-types", label: "All Types", icon: null },
+  { value: "Getting Started", label: "Getting Started", icon: "basic" },
+  { value: "Development", label: "Development", icon: "automation" },
+  { value: "Research", label: "Research", icon: "research" },
+  { value: "Customer Support", label: "Customer Support", icon: "support" },
 ];
 
 const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all-types");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("most-recent");
-  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(["Category 2"]));
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(["Getting Started"]));
   const [isMobile, setIsMobile] = useState(false);
   const [selectedType, setSelectedType] = useState("all-types");
   const [selectedCategory, setSelectedCategory] = useState("all-categories");
+  const [templates, setTemplates] = useState<Flow[]>([]);
+  const [filteredTemplates, setFilteredTemplates] = useState<Flow[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Check if mobile screen
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Load flows on component mount
+  useEffect(() => {
+    setTemplates(FLOWS);
+    setFilteredTemplates(FLOWS);
   }, []);
 
   const handleFilterChange = (filter: FilterType) => {
     setActiveFilter(filter);
+    setSelectedCategory("all-categories"); // Reset sidebar selection when button is used
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -146,6 +80,25 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setSelectedCategory(value);
+    
+    // Filter flows based on category selection
+    let filtered = [...templates];
+    
+    if (value !== "all-categories") {
+      if (value.includes("-")) {
+        const [category, subcategory] = value.split("-");
+        filtered = filtered.filter(flow => 
+          flow.category.toLowerCase() === category.toLowerCase() &&
+          flow.subcategory.toLowerCase() === subcategory.toLowerCase()
+        );
+      } else {
+        filtered = filtered.filter(flow => 
+          flow.category.toLowerCase() === value.toLowerCase()
+        );
+      }
+    }
+    
+    setFilteredTemplates(filtered);
   };
 
   const getTypeDisplayValue = () => {
@@ -180,18 +133,74 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
     });
   };
 
-  // Filter templates based on active filter and search query
-  const filteredTemplates = MOCK_TEMPLATES.filter((template) => {
-    const matchesFilter = activeFilter === "all-types" || 
-      (activeFilter === "automation" && template.iconType === "basic") ||
-      (activeFilter === "chat" && template.iconType === "robot");
+  const handleCategoryClick = (categoryName: string) => {
+    setSelectedCategory(categoryName);
+    setActiveFilter("all-types"); // Reset button filter when sidebar is used
+  };
+
+  const handleSubcategoryClick = (categoryName: string, subcategoryName: string) => {
+    setSelectedCategory(`${categoryName}-${subcategoryName}`);
+    setActiveFilter("all-types"); // Reset button filter when sidebar is used
+  };
+
+  const clearFilters = () => {
+    setSelectedCategory("all-categories");
+    setSelectedType("all-types");
+    setSearchQuery("");
+    setActiveFilter("all-types");
+  };
+
+  // Apply additional filtering based on active filter and search query
+  useEffect(() => {
+    let filtered = [...templates];
     
-    const matchesSearch = searchQuery === "" || 
-      template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      template.description.toLowerCase().includes(searchQuery.toLowerCase());
+    // Apply search filter
+    if (searchQuery.trim()) {
+      filtered = filtered.filter(flow =>
+        flow.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        flow.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        flow.topic.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        flow.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        flow.subcategory.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
     
-    return matchesFilter && matchesSearch;
-  });
+    // Apply type filter
+    if (selectedType !== "all-types") {
+      filtered = filtered.filter(flow => flow.type === selectedType);
+    }
+    
+    // Apply category filters - prioritize sidebar selection over button selection
+    if (selectedCategory !== "all-categories") {
+      // If sidebar has a specific selection, use that
+      if (selectedCategory.includes("-")) {
+        const [category, subcategory] = selectedCategory.split("-");
+        filtered = filtered.filter(flow => 
+          flow.category.toLowerCase() === category.toLowerCase() &&
+          flow.subcategory.toLowerCase() === subcategory.toLowerCase()
+        );
+      } else {
+        filtered = filtered.filter(flow => 
+          flow.category.toLowerCase() === selectedCategory.toLowerCase()
+        );
+      }
+    } else if (activeFilter !== "all-types") {
+      // If no sidebar selection, use button selection
+      filtered = filtered.filter(flow => flow.category === activeFilter);
+    }
+    
+    console.log('Filtering debug:', {
+      selectedCategory,
+      activeFilter,
+      selectedType,
+      searchQuery,
+      originalCount: templates.length,
+      filteredCount: filtered.length,
+      filteredTitles: filtered.map(f => f.title)
+    });
+    
+    setFilteredTemplates(filtered);
+  }, [templates, searchQuery, selectedType, selectedCategory, activeFilter]);
 
   return (
     <section className={`${styles.browseTemplates} ${className}`}>
@@ -214,7 +223,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
                 </div>
                 
                 <div className={styles.filterPills}>
-                  {FILTER_TYPES.map((filter) => (
+                  {CATEGORY_FILTERS.map((filter) => (
                     <button
                       key={filter.value}
                       className={`${styles.filterPill} ${
@@ -222,7 +231,15 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
                       } ${filter.value === "all-types" ? styles.allTypes : ""}`}
                       onClick={() => handleFilterChange(filter.value as FilterType)}
                     >
-                      {filter.value === "automation" && (
+                      {filter.icon === "basic" && (
+                        <Image
+                          src="/images/basic.png"
+                          alt="Basic"
+                          width={24}
+                          height={24}
+                        />
+                      )}
+                      {filter.icon === "automation" && (
                         <Image
                           src="/images/robot.png"
                           alt="Automation"
@@ -230,13 +247,15 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
                           height={24}
                         />
                       )}
-                      {filter.value === "chat" && (
-                        <Image
-                          src="/images/chat.png"
-                          alt="Chat"
-                          width={24}
-                          height={24}
-                        />
+                      {filter.icon === "research" && (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg>
+                      )}
+                      {filter.icon === "support" && (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                        </svg>
                       )}
                       {filter.label}
                     </button>
@@ -246,7 +265,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
 
               <div className={styles.resultsAndSort}>
                 <div className={styles.resultsCount}>
-                  Showing 1 - {filteredTemplates.length} of {MOCK_TEMPLATES.length} results in All Templates
+                  Showing 1 - {filteredTemplates.length} of {templates.length} results in All Templates
                 </div>
                 <div className={styles.sortContainer}>
                   <label htmlFor="sort-by" className={styles.sortLabel}>Sort by</label>
@@ -298,9 +317,11 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
                     value={selectedType} 
                     onChange={handleTypeChange}
                   >
-                    <option value="all-types">Type: All Types</option>
-                    <option value="automation">Automation</option>
-                    <option value="chat">Chat</option>
+                    {FILTER_TYPES.map((type) => (
+                      <option key={type.value} value={type.value}>
+                        {type.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -327,7 +348,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
 
               <div className={styles.mobileResultsAndSort}>
                 <div className={styles.mobileResultsCount}>
-                  6866 Results
+                  {filteredTemplates.length} Results
                 </div>
                 <div className={styles.mobileSortContainer}>
                   <span className={styles.mobileSortText}>Most Recent</span>
@@ -343,14 +364,30 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
         <div className={styles.mainContent}>
           {!isMobile && (
             <div className={styles.sidebar}>
-              <h3 className={styles.sidebarTitle}>Categories</h3>
+              <div className={styles.sidebarHeader}>
+                <h3 className={styles.sidebarTitle}>Categories</h3>
+                {(selectedCategory !== "all-categories" || selectedType !== "all-types" || searchQuery || activeFilter !== "all-types") && (
+                  <button 
+                    className={styles.clearFiltersButton}
+                    onClick={clearFilters}
+                    title="Clear all filters"
+                  >
+                    Clear Filters
+                  </button>
+                )}
+              </div>
               <div className={styles.categoriesPanel}>
                 <div className={styles.categoriesList}>
                 {CATEGORIES.map((category) => (
                   <div key={category.name} className={styles.categoryItem}>
                     <button
-                      className={styles.categoryButton}
-                      onClick={() => toggleCategory(category.name)}
+                      className={`${styles.categoryButton} ${
+                        selectedCategory === category.name ? styles.selected : ""
+                      }`}
+                      onClick={() => {
+                        toggleCategory(category.name);
+                        handleCategoryClick(category.name);
+                      }}
                       aria-expanded={expandedCategories.has(category.name)}
                     >
                       {category.subcategories.length > 0 && (
@@ -364,7 +401,13 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
                     {category.subcategories.length > 0 && expandedCategories.has(category.name) && (
                       <div className={styles.subcategories}>
                         {category.subcategories.map((sub) => (
-                          <button key={sub} className={styles.subcategoryButton}>
+                          <button 
+                            key={sub} 
+                            className={`${styles.subcategoryButton} ${
+                              selectedCategory === `${category.name}-${sub}` ? styles.selected : ""
+                            }`}
+                            onClick={() => handleSubcategoryClick(category.name, sub)}
+                          >
                             {sub}
                           </button>
                         ))}
@@ -379,20 +422,32 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
           
           <div className={styles.templatesArea}>
             <div className={styles.templatesContainer}>
-              {filteredTemplates.map((template) => (
-                <TemplateCard
-                  key={template.id}
-                  title={template.name}
-                  description={template.description}
-                  categories={template.categories}
-                  iconType={template.iconType}
-                  slug={template.slug}
-                />
-              ))}
+              {isLoading ? (
+                <div className={styles.loadingState}>
+                  <p>Loading templates...</p>
+                </div>
+              ) : filteredTemplates.length > 0 ? (
+                filteredTemplates.map((flow) => (
+                  <TemplateCard
+                    key={flow.slug}
+                    title={flow.title}
+                    description={flow.shortDescription}
+                    categories={[flow.category, flow.subcategory]}
+                    iconType={flow.iconType}
+                    slug={flow.slug}
+                  />
+                ))
+              ) : (
+                <div className={styles.emptyState}>
+                  <p>No templates found matching your criteria.</p>
+                </div>
+              )}
             </div>
-            <div className={styles.viewMoreContainer}>
-              <button className={styles.viewMoreButton}>View More</button>
-            </div>
+            {filteredTemplates.length > 0 && (
+              <div className={styles.viewMoreContainer}>
+                <button className={styles.viewMoreButton}>View More</button>
+              </div>
+            )}
           </div>
         </div>
       </div>

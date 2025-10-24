@@ -306,6 +306,46 @@
   border: 0;
 }
 
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.sidebarHeader .sidebarTitle {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  font-family: 'Chivo', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--primary-white);
+  text-align: left;
+}
+
+.clearFiltersButton {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+}
+
 .categoriesList {
   display: flex;
   flex-direction: column;
@@ -332,6 +372,11 @@
 
   &:hover {
     color: rgba(255, 255, 255, 0.8);
+  }
+
+  &.selected {
+    color: #98F4FE; // Cyan color for selected state
+    font-weight: 600;
   }
 }
 
@@ -362,6 +407,11 @@
 
   &:hover {
     color: #FFFFFF;
+  }
+
+  &.selected {
+    color: #98F4FE; // Cyan color for selected state
+    font-weight: 600;
   }
 }
 
@@ -606,5 +656,17 @@
     display: flex;
     align-items: center;
   }
+}
+
+// Loading and empty states
+.loadingState,
+.emptyState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  grid-column: 1 / -1;
 }
 

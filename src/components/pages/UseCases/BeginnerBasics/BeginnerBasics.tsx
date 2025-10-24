@@ -1,36 +1,22 @@
 "use client";
 
+import { FLOWS } from "@/data/flows";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./BeginnerBasics.module.scss";
 import TemplateCard from "./TemplateCard";
 
-const mockTemplates = [
-  {
-    id: "1",
-    name: "Basic Prompting",
-    description: "Perform basic prompting with an OpenAI model.",
-    categories: ["Category", "Sub-category"],
-    iconType: "basic" as const,
-    slug: "basic-prompting"
-  },
-  {
-    id: "2", 
-    name: "Memory Chatbot",
-    description: "Create a chatbot that saves and references previous messages.",
-    categories: ["Category", "Sub-category"],
-    iconType: "robot" as const,
-    slug: "memory-chatbot"
-  },
-  {
-    id: "3",
-    name: "Advanced Prompting",
-    description: "Advanced prompting techniques with OpenAI models.",
-    categories: ["Category", "Sub-category"],
-    iconType: "basic" as const,
-    slug: "advanced-prompting"
-  }
-];
+// Small cards with the 3 flows (excluding basic-prompting)
+const smallCards = FLOWS
+  .filter(flow => flow.slug !== "basic-prompting")
+  .map(flow => ({
+    id: flow.slug,
+    name: flow.title,
+    description: flow.shortDescription,
+    categories: [flow.category, flow.subcategory],
+    iconType: flow.iconType,
+    slug: flow.slug
+  }));
 
 export default function BeginnerBasics() {
   return (
@@ -44,25 +30,25 @@ export default function BeginnerBasics() {
             <div className={styles.leftContent}>
               <div className={styles.iconContainer}>
                 <Image
-                  src="/images/robot.png"
-                  alt="Robot icon"
+                  src="/images/basic.png"
+                  alt="Basic Prompting icon"
                   width={24}
                   height={24}
                 />
               </div>
-              <h3 className={styles.cardTitle}>Memory Chatbot</h3>
+              <h3 className={styles.cardTitle}>Basic Prompting</h3>
               <p className={styles.cardDescription}>
-                Create a chatbot that saves and references previous messages.
+                Perform basic prompting with an OpenAI model.
               </p>
               <div className={styles.categoryButtons}>
-                <button className={styles.categoryButton}>Category</button>
-                <button className={styles.categoryButton}>Sub-category</button>
+                <button className={styles.categoryButton}>Basic</button>
+                <button className={styles.categoryButton}>Prompting</button>
               </div>
             </div>
             <div className={styles.rightContent}>
               <iframe
                 src="https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12"
-                title="Memory Chatbot Flow Preview"
+                title="Basic Prompting Flow Preview"
                 className={styles.iframe}
                 allow="clipboard-write"
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
@@ -72,7 +58,7 @@ export default function BeginnerBasics() {
 
           {/* Small Cards */}
           <div className={styles.smallCards}>
-            {mockTemplates.map((template) => (
+            {smallCards.map((template) => (
               <TemplateCard
                 key={template.id}
                 title={template.name}

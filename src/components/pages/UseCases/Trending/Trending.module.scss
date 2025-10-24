@@ -41,27 +41,15 @@
 .templatesContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr; 
-  }
-
   gap: 16px; // 16px between cards
   max-width: 1280px; // Same maximum width
   margin: 0 auto; // Center cards
 
-
-/* 
-  @media (min-width: 1024px) {
-    padding: 0 2.5rem; // lg: 40px
-  }
-
-  @media (min-width: 1280px) {
-    padding: 0; // xl: no padding for full width
-  }
-
   @media (max-width: 1000px) {
     grid-template-columns: repeat(2, 1fr); // 2 cards on first line
-  } */
+  }
 
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; // 1 card per line
+  }
 }

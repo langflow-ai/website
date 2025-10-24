@@ -50,7 +50,7 @@
 .largeCard {
   width: 100%;
   max-width: 1280px;
-  height: 287px;
+  height: 320px; // Increased to match small cards
   background: var(--primary-black);
   border: 0.5px solid #3f3f46; // Borda zinc-700 como os botões do hero
   border-radius: 12px; // Bordas mais arredondadas
@@ -61,7 +61,7 @@
 
   @media (max-width: 1200px) {
     height: auto;
-    min-height: 287px;
+    min-height: 320px; // Increased to match small cards
   }
 
   @media (max-width: 768px) {

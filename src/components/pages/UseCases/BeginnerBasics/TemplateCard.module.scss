@@ -2,14 +2,12 @@
 
 .templateCard {
   width: 100%;
-  max-width: 416px;
-  height: 287px;
+  height: 320px; // Increased from 287px to accommodate categories
   background: var(--primary-black);
   border: 0.5px solid #3f3f46; // zinc-700 border like hero buttons
   border-radius: 12px; // More rounded borders
   display: flex;
   position: relative;
-  margin: 0 auto; // Center each card
   text-decoration: none; // Remove underline from Link
   transition: all 0.2s ease-in-out;
 
@@ -20,12 +18,12 @@
 
   @media (max-width: 1000px) {
     height: auto;
-    min-height: 250px;
+    min-height: 280px; // Increased from 250px
   }
 
   @media (max-width: 768px) {
     height: auto;
-    min-height: 200px;
+    min-height: 230px; // Increased from 200px
   }
 }
 
@@ -35,7 +33,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: space-between; // Distribute content evenly
+  height: 100%; // Take full height of card
 }
 
 .iconContainer {
@@ -46,6 +45,8 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 24px; // 24px abaixo do ícone
+  flex-shrink: 0; // Prevent shrinking
+  aspect-ratio: 1; // Ensure perfect circle
 }
 
 .cardTitle {
@@ -76,20 +77,28 @@
 
 .categoryButtons {
   display: flex;
-  gap: 12px; // 12px entre os botões
+  gap: 8px; // Reduced gap to fit better
   align-items: flex-start;
+  margin-top: auto; // Push to bottom of card
+  flex-wrap: nowrap; // Prevent wrapping to keep on same line
+  overflow: hidden; // Hide overflow if text is too long
 }
 
 .categoryButton {
-  padding: 0.5rem 1rem; // Mesmo padding dos botões do hero
+  padding: 0.25rem 0.75rem; // Reduced padding to fit better
   background: transparent;
   border: 0.5px solid #3f3f46; // zinc-700 border like hero buttons
   color: rgba(255, 255, 255, 0.7); // Texto branco com transparência como os botões do hero
-  border-radius: 1rem; // Border radius dos botões do hero
-  font-size: 0.875rem; // Mesmo tamanho dos botões do hero
+  border-radius: 0.75rem; // Slightly smaller border radius
+  font-size: 0.75rem; // Smaller font size to fit better
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  white-space: nowrap; // Prevent text wrapping
+  flex-shrink: 0; // Prevent shrinking
+  max-width: 120px; // Limit max width
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:hover {
     border-color: rgba(255, 255, 255, 0.4);

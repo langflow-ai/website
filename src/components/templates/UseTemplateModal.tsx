@@ -1,14 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
+import { Flow, isPlaceholderUrl } from "@/data/flows";
+import { useEffect, useState } from "react";
 import styles from "./UseTemplateModal.module.scss";
 
 interface UseTemplateModalProps {
   isOpen: boolean;
   onClose: () => void;
+  flow?: Flow;
 }
 
-export default function UseTemplateModal({ isOpen, onClose }: UseTemplateModalProps) {
+export default function UseTemplateModal({ isOpen, onClose, flow }: UseTemplateModalProps) {
+  const [isCopying, setIsCopying] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
+
   // Close modal on Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -37,13 +42,66 @@ export default function UseTemplateModal({ isOpen, onClose }: UseTemplateModalPr
   };
 
   const handleDownload = () => {
-    // Handle download logic
-    console.log("Download Langflow Desktop");
+    if (!flow) return;
+    if (isPlaceholderUrl(flow.githubDownloadUrl)) {
+      // Show "Coming soon" tooltip or message
+      console.log("Download coming soon");
+      return;
+    }
+    // Create a temporary link element with download attribute
+    const link = document.createElement('a');
+    link.href = flow.githubDownloadUrl;
+    link.download = `${flow.slug}.json`; // Set filename for download
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
-  const handleCopyToClipboard = () => {
-    // Handle copy to clipboard logic
-    console.log("Copy Template to Clipboard");
+  const handleCopyToClipboard = async () => {
+    if (!flow) return;
+    
+    setIsCopying(true);
+    setCopySuccess(false);
+    
+    try {
+      // Fetch the JSON content from the local file
+      const response = await fetch(flow.githubDownloadUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.statusText}`);
+      }
+      
+      const jsonContent = await response.text();
+      
+      // Copy to clipboard
+      await navigator.clipboard.writeText(jsonContent);
+      
+      // Show success feedback
+      setCopySuccess(true);
+      console.log("Template copied to clipboard successfully!");
+      
+      // Reset success state after 2 seconds
+      setTimeout(() => {
+        setCopySuccess(false);
+      }, 2000);
+      
+    } catch (error) {
+      console.error("Failed to copy template to clipboard:", error);
+      
+      // Fallback: try to copy the URL instead
+      try {
+        await navigator.clipboard.writeText(flow.githubDownloadUrl);
+        console.log("Download URL copied to clipboard as fallback");
+        setCopySuccess(true);
+        setTimeout(() => {
+          setCopySuccess(false);
+        }, 2000);
+      } catch (fallbackError) {
+        console.error("Fallback copy also failed:", fallbackError);
+      }
+    } finally {
+      setIsCopying(false);
+    }
   };
 
   return (
@@ -64,17 +122,35 @@ export default function UseTemplateModal({ isOpen, onClose }: UseTemplateModalPr
         <button 
           className={styles.primaryButton}
           onClick={handleDownload}
+          title={flow && isPlaceholderUrl(flow.githubDownloadUrl) ? "Coming soon" : ""}
         >
           <img src="/images/download.png" alt="Download" width="20" height="20" />
-          Download Langflow Desktop
+          {flow && isPlaceholderUrl(flow.githubDownloadUrl) ? "Download Flow (Coming Soon)" : "Download Flow"}
         </button>
 
         <button 
           className={styles.secondaryButton}
           onClick={handleCopyToClipboard}
+          disabled={isCopying}
         >
-          <img src="/images/copy.png" alt="Copy" width="20" height="20" />
-          Copy Template to Clipboard
+          {isCopying ? (
+            <>
+              <div className={styles.spinner}></div>
+              Copying...
+            </>
+          ) : copySuccess ? (
+            <>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              Copied!
+            </>
+          ) : (
+            <>
+              <img src="/images/copy.png" alt="Copy" width="20" height="20" />
+              Copy Template to Clipboard
+            </>
+          )}
         </button>
       </div>
     </div>

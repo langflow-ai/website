@@ -30,6 +30,9 @@ export type Template = {
   whatYouDo?: string[];
   whatYouLearn?: string[];
   whyItMatters?: string;
+  // Classification flags
+  isBeginner?: boolean;
+  isTrending?: boolean;
 };
 
 export type TemplateCollections = {

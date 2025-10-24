@@ -2,14 +2,18 @@
 
 "use client";
 
+import { Flow } from "@/data/flows";
+import { useShare } from "@/hooks/useShare";
 import { Template } from "@/lib/types/templates";
 import Link from "next/link";
 import { useState } from "react";
+import Toast from "../ui/Toast";
 import styles from "./TemplateHero.module.scss";
 import UseTemplateModal from "./UseTemplateModal";
 
 interface TemplateHeroProps {
   template: Template;
+  flow: Flow;
   className?: string;
 }
 
@@ -44,8 +48,35 @@ const BADGE_ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-export default function TemplateHero({ template, className = "" }: TemplateHeroProps) {
+export default function TemplateHero({ template, flow, className = "" }: TemplateHeroProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const { share, shareToTwitter, shareToLinkedIn } = useShare();
+
+  // Get current URL for sharing
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const shareText = `Check out this ${flow.title} template on Langflow: ${flow.shortDescription}`;
+
+  // Share functions
+  const handleNativeShare = async () => {
+    const result = await share({
+      title: flow.title,
+      text: flow.shortDescription,
+      url: currentUrl,
+    });
+    
+    if (result.success && result.method === 'clipboard') {
+      setShowToast(true);
+    }
+  };
+
+  const handleTwitterShare = () => {
+    shareToTwitter(shareText, currentUrl);
+  };
+
+  const handleLinkedInShare = () => {
+    shareToLinkedIn(currentUrl);
+  };
 
   const getBadgeIcon = (badge: string) => {
     return BADGE_ICONS[badge] || (
@@ -96,11 +127,11 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
             {/* Left side - Title, description, CTA and share */}
             <div className={styles.leftContent}>
               {/* Title - 48px below back link */}
-              <h1 className={styles.title}>Build Your First AI Agent</h1>
+              <h1 className={styles.title}>{flow.title}</h1>
               
               {/* Description - 32px below title */}
               <p className={styles.description}>
-                This simple tutorial is the perfect way to get started. In just a few minutes, you'll build your first automation that runs on a schedule, fetches fresh data from the internet and delivers it straight to your inbox.
+                {flow.shortDescription}
               </p>
 
               {/* Mobile: Sidebar info before CTA */}
@@ -134,17 +165,35 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
                 {/* Share buttons */}
                 <div className={styles.shareButtons}>
                   <span className={styles.shareLabel}>Share</span>
-                  <button type="button" className={styles.shareButton}>
+                  <button 
+                    type="button" 
+                    className={styles.shareButton}
+                    onClick={handleNativeShare}
+                    aria-label="Share template"
+                    title="Share template"
+                  >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
                     </svg>
                   </button>
-                  <button type="button" className={styles.shareButton} aria-label="Share on X">
+                  <button 
+                    type="button" 
+                    className={styles.shareButton} 
+                    onClick={handleTwitterShare}
+                    aria-label="Share on X (Twitter)"
+                    title="Share on X (Twitter)"
+                  >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                     </svg>
                   </button>
-                  <button type="button" className={styles.shareButton} aria-label="Share on LinkedIn">
+                  <button 
+                    type="button" 
+                    className={styles.shareButton} 
+                    onClick={handleLinkedInShare}
+                    aria-label="Share on LinkedIn"
+                    title="Share on LinkedIn"
+                  >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                     </svg>
@@ -175,12 +224,24 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
           <div className={styles.iframeSection}>
             <div className={styles.preview}>
               <iframe
-                src="https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12"
-                title="Memory Chatbot Flow Preview"
-                allow="clipboard-write"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                src={flow.iframeSrc}
+                title={`${flow.title} Flow Preview`}
+                allow="clipboard-write; clipboard-read; web-share"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
                 className={styles.templateIframe}
+                loading="lazy"
+                onError={(e) => {
+                  console.error('Iframe load error for', flow.title, ':', e);
+                  console.error('URL:', flow.iframeSrc);
+                }}
+                onLoad={() => {
+                  console.log('Iframe loaded successfully for', flow.title, ':', flow.iframeSrc);
+                }}
               />
+              {/* Fallback message if iframe fails to load */}
+              <div className={styles.iframeFallback}>
+                <p>If the flow preview doesn't load, you can <a href={flow.iframeSrc} target="_blank" rel="noopener noreferrer">open it in a new tab</a>.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -189,7 +250,15 @@ export default function TemplateHero({ template, className = "" }: TemplateHeroP
       {/* Use Template Modal */}
       <UseTemplateModal 
         isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+        onClose={() => setIsModalOpen(false)}
+        flow={flow}
+      />
+
+      {/* Toast notification */}
+      <Toast
+        message="Link copied to clipboard!"
+        isVisible={showToast}
+        onClose={() => setShowToast(false)}
       />
     </section>
   );

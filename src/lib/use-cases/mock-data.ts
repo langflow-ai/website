@@ -2006,6 +2006,208 @@ export const mockTemplates: Template[] = [
       version: "1.0.0",
     },
     comment: "nan"
+  },
+  {
+    slug: "how-to-use-langflow-to-build-a-changelog-summarizer",
+    topic: "build a changelog summarizer",
+    summary: "Automatically generate polished release notes and changelogs from GitHub commits, pull requests, and issues using AI-powered summarization workflows. Save hours per release while maintaining professional documentation standards.",
+    category: [
+      "content-generation",
+      "document-intelligence"
+    ],
+    mapped_use_cases: [
+      "Automatically generate polished release notes and changelogs from GitHub commits, pull requests, and issues using AI-powered summarization workflows. Save hours per release while maintaining professional documentation standards."
+    ],
+    status: "DONE",
+    difficulty: "Intermediate",
+    builder: {
+      name: "Langflow Team",
+      url: "https://docs.google.com/document/d/1gF-0N3fWrwUoqrqMpnR1KasmJcW-Q8eur99BAiCO9lg",
+    },
+    updated_at: "2024-01-01",
+    example: {
+      input: "GitHub commits, pull requests, and issues",
+      output: "Polished release notes and changelogs",
+    },
+    flow: {
+      json_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-build-a-changelog-summarizer.json",
+      image_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-build-a-changelog-summarizer.png",
+      version: "1.0.0",
+    },
+    comment: "Changelog summarizer workflow"
+  },
+  {
+    slug: "how-to-use-langflow-to-build-a-personal-research-assistant",
+    topic: "build a personal research assistant",
+    summary: "Build a conversational AI research assistant using Langflow's visual interface to transform scattered documents and web sources into a queryable knowledge base. Create RAG pipelines without coding to get accurate, cited responses from your personal research materials.",
+    category: [
+      "assistants",
+      "document-intelligence"
+    ],
+    mapped_use_cases: [
+      "Build a conversational AI research assistant using Langflow's visual interface to transform scattered documents and web sources into a queryable knowledge base. Create RAG pipelines without coding to get accurate, cited responses from your personal research materials."
+    ],
+    status: "DONE",
+    difficulty: "Intermediate",
+    builder: {
+      name: "Langflow Team",
+      url: "https://docs.google.com/document/d/1S9qZ6J4YI3fMeBlKbuplqjZx94OEsxDBktryKe0mYXs",
+    },
+    updated_at: "2024-01-01",
+    example: {
+      input: "Scattered documents and web sources",
+      output: "Queryable knowledge base with accurate, cited responses",
+    },
+    flow: {
+      json_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-build-a-personal-research-assistant.json",
+      image_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-build-a-personal-research-assistant.png",
+      version: "1.0.0",
+    },
+    comment: "Personal research assistant workflow"
+  },
+  {
+    slug: "how-to-use-langflow-to-build-a-personalized-learning-tutor",
+    topic: "build a personalized learning tutor",
+    summary: "Build AI-powered educational applications with Langflow's visual, low-code platform. Create personalized learning tutors using RAG technology that grounds responses in course materials, reduces hallucination, and adapts to individual student needs without extensive coding.",
+    category: [
+      "assistants",
+      "content-generation"
+    ],
+    mapped_use_cases: [
+      "Build AI-powered educational applications with Langflow's visual, low-code platform. Create personalized learning tutors using RAG technology that grounds responses in course materials, reduces hallucination, and adapts to individual student needs without extensive coding."
+    ],
+    status: "DONE",
+    difficulty: "Intermediate",
+    builder: {
+      name: "Langflow Team",
+      url: "https://docs.google.com/document/d/1_lOsqU8VFUC47-b2gUh4nrjacJ5VOYpFVrnElvu2Ouc",
+    },
+    updated_at: "2024-01-01",
+    example: {
+      input: "Course materials and student queries",
+      output: "Personalized learning responses grounded in materials",
+    },
+    flow: {
+      json_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-build-a-personalized-learning-tutor.json",
+      image_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-build-a-personalized-learning-tutor.png",
+      version: "1.0.0",
+    },
+    comment: "Personalized learning tutor workflow"
+  },
+  {
+    slug: "how-to-use-langflow-to-generate-blog-post-outlines",
+    topic: "generate blog post outlines",
+    summary: "Generate comprehensive blog post outlines from simple topic descriptions using Langflow's visual AI workflow builder. Transform content briefs into structured outlines with headings, word counts, and SEO considerations through an intuitive interface accessible to non-technical content teams.",
+    category: [
+      "content-generation"
+    ],
+    mapped_use_cases: [
+      "Generate comprehensive blog post outlines from simple topic descriptions using Langflow's visual AI workflow builder. Transform content briefs into structured outlines with headings, word counts, and SEO considerations through an intuitive interface accessible to non-technical content teams."
+    ],
+    status: "DONE",
+    difficulty: "Beginner",
+    builder: {
+      name: "Langflow Team",
+      url: "https://docs.google.com/document/d/1xJmzid0mOdJsJXaI-hQivZyaV7HGKoc_Swc6tARSNP8",
+    },
+    updated_at: "2024-01-01",
+    example: {
+      input: "Simple topic descriptions",
+      output: "Structured outlines with headings, word counts, and SEO considerations",
+    },
+    flow: {
+      json_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-generate-blog-post-outlines.json",
+      image_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-generate-blog-post-outlines.png",
+      version: "1.0.0",
+    },
+    comment: "Blog post outline generator workflow"
+  },
+  {
+    slug: "how-to-use-langflow-to-label-support-tickets-by-type-or-topic",
+    topic: "label support tickets by type or topic",
+    summary: "Automatically classify support tickets by category using Langflow's visual workflow builder. Create efficient ticket routing systems with LLM prompting or RAG-based classification for better support team productivity and accuracy.",
+    category: [
+      "classification",
+      "customer-support-operations"
+    ],
+    mapped_use_cases: [
+      "Automatically classify support tickets by category using Langflow's visual workflow builder. Create efficient ticket routing systems with LLM prompting or RAG-based classification for better support team productivity and accuracy."
+    ],
+    status: "DONE",
+    difficulty: "Intermediate",
+    builder: {
+      name: "Langflow Team",
+      url: "https://docs.google.com/document/d/12oJzVD4btNTHjWhxzLxMXA9rNyiDDvwhwQ3JKmdfGfo",
+    },
+    updated_at: "2024-01-01",
+    example: {
+      input: "Support tickets",
+      output: "Classified tickets by category for efficient routing",
+    },
+    flow: {
+      json_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-label-support-tickets-by-type-or-topic.json",
+      image_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-label-support-tickets-by-type-or-topic.png",
+      version: "1.0.0",
+    },
+    comment: "Support ticket classification workflow"
+  },
+  {
+    slug: "how-to-use-langflow-to-explain-or-flag-problems-in-code",
+    topic: "explain or flag problems in code",
+    summary: "Automated code review and problem detection transforms development workflows by combining deterministic analysis tools with AI explanations to catch issues early, provide educational feedback, and streamline quality assurance processes through visual workflow building.",
+    category: [
+      "coding",
+      "classification"
+    ],
+    mapped_use_cases: [
+      "Automated code review and problem detection transforms development workflows by combining deterministic analysis tools with AI explanations to catch issues early, provide educational feedback, and streamline quality assurance processes through visual workflow building."
+    ],
+    status: "DONE",
+    difficulty: "Advanced",
+    builder: {
+      name: "Langflow Team",
+      url: "https://docs.google.com/document/d/1fbY9mHQ4c2l9uQ50rxZS-jkALqj8CPRbw6jXxZTTDXk",
+    },
+    updated_at: "2024-01-01",
+    example: {
+      input: "Code files",
+      output: "Flagged problems with AI explanations and educational feedback",
+    },
+    flow: {
+      json_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-explain-or-flag-problems-in-code.json",
+      image_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-explain-or-flag-problems-in-code.png",
+      version: "1.0.0",
+    },
+    comment: "Code review and problem detection workflow"
+  },
+  {
+    slug: "how-to-use-langflow-to-track-spikes-in-complaints-or-praise",
+    topic: "track spikes in complaints or praise",
+    summary: "Automate customer feedback monitoring with spike detection flows that process messages from multiple channels, classify sentiment using language models, and trigger alerts when complaint or praise volumes exceed statistical baselines for faster response times.",
+    category: [
+      "classification",
+      "customer-support-operations"
+    ],
+    mapped_use_cases: [
+      "Automate customer feedback monitoring with spike detection flows that process messages from multiple channels, classify sentiment using language models, and trigger alerts when complaint or praise volumes exceed statistical baselines for faster response times."
+    ],
+    status: "DONE",
+    difficulty: "Advanced",
+    builder: {
+      name: "Langflow Team",
+      url: "https://docs.google.com/document/d/1ZGAJ_kV42vXfJWimtZCAp7LdZdnjthFCR_fHKVhI7G0",
+    },
+    updated_at: "2024-01-01",
+    example: {
+      input: "Customer feedback messages from multiple channels",
+      output: "Alerts when complaint or praise volumes exceed baselines",
+    },
+    flow: {
+      json_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-track-spikes-in-complaints-or-praise.json",
+      image_url: "https://cdn.langflow.org/templates/how-to-use-langflow-to-track-spikes-in-complaints-or-praise.png",
+      version: "1.0.0",
+    },
+    comment: "Customer feedback spike detection workflow"
   }
 ];
 
