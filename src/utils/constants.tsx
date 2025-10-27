@@ -38,17 +38,17 @@ const LIST = [
     comingSoon: false,
   },
   {
-    title: "Use Cases",
-    link: "/use-cases",
-    icon: "/assets/icons/use-cases.svg",
-    comingSoon: false,
-  },
-  {
     title: "Resources",
     link: "",
     icon: "/assets/icons/resources.svg",
     comingSoon: false,
     subTabs: [
+      {
+        title: "Use Cases",
+        url: "/use-cases",
+        icon: null,
+        download: false,
+      },
       {
         title: "Changelog",
         url: "https://github.com/langflow-ai/langflow/releases",
