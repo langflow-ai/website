@@ -57,7 +57,7 @@
   display: flex;
   position: relative;
   margin: 0 auto; // Centraliza o card
-  overflow: hidden; // Esconde qualquer conteúdo que saia do card
+  overflow: visible; // Allow tooltip to appear outside card
   transition: all 0.2s ease-in-out;
 
   &:hover {
@@ -84,6 +84,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  overflow: visible; // Allow tooltip to be visible
 
   @media (max-width: 768px) {
     order: 1; // Mantém conteúdo à esquerda em cima em mobile
