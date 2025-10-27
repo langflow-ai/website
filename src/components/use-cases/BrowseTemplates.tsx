@@ -1,6 +1,7 @@
 "use client";
 
 import { FLOWS, Flow, getCategoriesFromFlows, getTypesFromFlows } from "@/data/flows";
+import { FilterState } from "@/lib/types/templates";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import DownArrow from "../icons/downArrow/DownArrow";
@@ -9,6 +10,7 @@ import styles from "./BrowseTemplates.module.scss";
 
 interface BrowseTemplatesProps {
   className?: string;
+  initialFilters?: FilterState;
 }
 
 type FilterType = "all-types" | "Getting Started" | "Development" | "Research" | "Customer Support";
@@ -30,9 +32,9 @@ const CATEGORY_FILTERS = [
   { value: "Customer Support", label: "Customer Support", icon: "support" },
 ];
 
-const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => {
+const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initialFilters }) => {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all-types");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(initialFilters?.q || "");
   const [sortBy, setSortBy] = useState("most-recent");
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(["Getting Started"]));
   const [isMobile, setIsMobile] = useState(false);
@@ -59,6 +61,22 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
     setTemplates(FLOWS);
     setFilteredTemplates(FLOWS);
   }, []);
+
+  // Sync search query when initialFilters changes from hero
+  useEffect(() => {
+    if (initialFilters?.q) {
+      setSearchQuery(initialFilters.q);
+    }
+  }, [initialFilters?.q]);
+
+  // Sync category filter when initialFilters changes from hero
+  useEffect(() => {
+    if (initialFilters?.categories && initialFilters.categories.size > 0) {
+      const firstCategory = Array.from(initialFilters.categories)[0];
+      setActiveFilter(firstCategory as FilterType);
+      setSelectedCategory(firstCategory);
+    }
+  }, [initialFilters?.categories]);
 
   const handleFilterChange = (filter: FilterType) => {
     setActiveFilter(filter);
@@ -203,7 +221,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "" }) => 
   }, [templates, searchQuery, selectedType, selectedCategory, activeFilter]);
 
   return (
-    <section className={`${styles.browseTemplates} ${className}`}>
+    <section id="browse-templates-section" className={`${styles.browseTemplates} ${className}`}>
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title}>Browse templates</h2>

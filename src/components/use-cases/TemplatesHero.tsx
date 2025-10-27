@@ -4,17 +4,17 @@
 
 import { suggestionGroups } from "@/data/templates";
 import {
-  FilterState,
-  Methodology,
-  METHODOLOGY_LABELS,
-  Segment,
-  SEGMENT_LABELS,
+    FilterState,
+    Methodology,
+    METHODOLOGY_LABELS,
+    Segment,
+    SEGMENT_LABELS,
 } from "@/lib/types/templates";
 import { writeFiltersToURL } from "@/utils/query";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import CategoryBar from "../common/CategoryBar";
 import SearchWithSuggest from "../common/SearchWithSuggest";
-import SegmentBar from "../common/SegmentBar";
 import styles from "./TemplatesHero.module.scss";
 
 interface TemplatesHeroProps {
@@ -28,8 +28,12 @@ type FilterSequenceItem = {
 
 export default function TemplatesHero({ initialFilters }: TemplatesHeroProps) {
   const router = useRouter();
-  const [filters, setFilters] = useState<FilterState>(initialFilters);
+  const [filters, setFilters] = useState<FilterState>(() => ({
+    ...initialFilters,
+    categories: initialFilters.categories || new Set()
+  }));
   const [searchValue, setSearchValue] = useState(initialFilters.q);
+  const isMounted = useRef(false);
   const [_filterSequence, setFilterSequence] = useState<FilterSequenceItem[]>(() => {
     const sequence: FilterSequenceItem[] = [];
     initialFilters.segments.forEach((segment) =>
@@ -41,15 +45,41 @@ export default function TemplatesHero({ initialFilters }: TemplatesHeroProps) {
     return sequence;
   });
 
+  // Helper function to scroll to Browse Templates section
+  const scrollToBrowseTemplates = () => {
+    // Wait for DOM to update and layout to stabilize
+    setTimeout(() => {
+      const browseSection = document.getElementById('browse-templates-section');
+      if (browseSection) {
+        const yOffset = 40; // Offset to scroll down a bit into the section
+        const y = browseSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 400);
+  };
+
   // Update URL when filters change
   useEffect(() => {
     writeFiltersToURL(router, filters);
+    
+    // Mark as mounted after first render
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return; // Don't scroll on initial mount
+    }
+    
+    // Scroll to Browse Templates section when filters are applied (after mount)
+    if (filters.q || filters.segments.size > 0 || filters.methodologies.size > 0 || (filters.categories?.size || 0) > 0) {
+      scrollToBrowseTemplates();
+    }
   }, [filters, router]);
 
   // Sync local state if the initialFilters change (e.g., via navigation)
   useEffect(() => {
     setFilters(initialFilters);
     setSearchValue(initialFilters.q);
+    // Reset mounted state when initialFilters change to prevent unwanted scrolling
+    isMounted.current = false;
     const sequence: FilterSequenceItem[] = [];
     initialFilters.segments.forEach((segment) =>
       sequence.push({ type: "segment", value: segment })
@@ -66,6 +96,21 @@ export default function TemplatesHero({ initialFilters }: TemplatesHeroProps) {
 
   const handleSearchSubmit = (value: string) => {
     setFilters((prev) => ({ ...prev, q: value.trim() }));
+  };
+
+  const toggleCategory = (category: string) => {
+    setFilters((prev) => {
+      const newCategories = new Set(prev.categories || []);
+      const isSelected = newCategories.has(category);
+
+      if (isSelected) {
+        newCategories.delete(category);
+      } else {
+        newCategories.add(category);
+      }
+
+      return { ...prev, categories: newCategories };
+    });
   };
 
   const toggleSegment = (segment: Segment) => {
@@ -241,15 +286,16 @@ export default function TemplatesHero({ initialFilters }: TemplatesHeroProps) {
                 suggestions={suggestionGroups}
                 onSuggestionSelect={handleSuggestionSelect}
                 onBackspaceAtEmpty={handleBackspaceAtEmpty}
+                showSuggestions={false}
               />
             </div>
 
             {/* Filters Right Side */}
             <div className={styles.filtersRight}>
               <div className={styles.segmentBarContainer}>
-                <SegmentBar
-                  selectedSegments={filters.segments}
-                  onSegmentToggle={toggleSegment}
+                <CategoryBar
+                  selectedCategories={filters.categories || new Set()}
+                  onCategoryToggle={toggleCategory}
                 />
               </div>
             </div>

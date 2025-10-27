@@ -55,6 +55,7 @@ export type FilterState = {
   q: string;
   segments: Set<Segment>;
   methodologies: Set<Methodology>;
+  categories?: Set<string>; // Categories from FLOWS: Getting Started, Development, Research, Customer Support
 };
 
 // Segment display labels

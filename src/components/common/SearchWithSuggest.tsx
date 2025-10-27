@@ -15,6 +15,7 @@ interface SearchWithSuggestProps {
   onBackspaceAtEmpty?: () => void;
   placeholder?: string;
   className?: string;
+  showSuggestions?: boolean;
 }
 
 export default function SearchWithSuggest({
@@ -25,7 +26,8 @@ export default function SearchWithSuggest({
   onSuggestionSelect,
   onBackspaceAtEmpty,
   placeholder = "Search use cases, methodology, integrations...",
-  className = ""
+  className = "",
+  showSuggestions = true
 }: SearchWithSuggestProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -144,8 +146,10 @@ export default function SearchWithSuggest({
   };
 
   const handleInputFocus = () => {
-    setIsOpen(true);
-    setActiveIndex(-1);
+    if (showSuggestions) {
+      setIsOpen(true);
+      setActiveIndex(-1);
+    }
   };
 
   const handleInputBlur = () => {
@@ -192,7 +196,7 @@ export default function SearchWithSuggest({
       </div>
 
       {/* Suggestions Dropdown */}
-      {isOpen && filteredSuggestions.length > 0 && (
+      {showSuggestions && isOpen && filteredSuggestions.length > 0 && (
         <div
           ref={listRef}
           id={listboxId}

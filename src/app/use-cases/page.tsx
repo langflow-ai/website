@@ -23,7 +23,7 @@ export default async function UseCasesPage({ searchParams }: UseCasesPageProps) 
   const hasFilters = hasActiveFilter(filters);
   
   // Check if we're in "Browse templates" mode (has search query or specific filters)
-  const isBrowseTemplatesMode = filters.q || filters.segments.size > 0 || filters.methodologies.size > 0;
+  const isBrowseTemplatesMode = filters.q || filters.segments.size > 0 || filters.methodologies.size > 0 || (filters.categories?.size || 0) > 0;
 
   const [items, collections] = await Promise.all([
     fetchTemplates(filters),
@@ -58,7 +58,7 @@ export default async function UseCasesPage({ searchParams }: UseCasesPageProps) 
           </section>
         ) : isBrowseTemplatesMode ? (
           // Browse templates mode - show filtered results without hiding other sections
-          <BrowseTemplates />
+          <BrowseTemplates initialFilters={filters} />
         ) : (
           // Default view - show all sections
           <>
@@ -66,7 +66,7 @@ export default async function UseCasesPage({ searchParams }: UseCasesPageProps) 
 
             <Trending />
 
-            <BrowseTemplates />
+            <BrowseTemplates initialFilters={filters} />
           </>
         )}
       </div>
