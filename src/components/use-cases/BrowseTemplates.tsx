@@ -243,8 +243,6 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
     <section id="browse-templates-section" className={`${styles.browseTemplates} ${className}`}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h2 className={styles.title}>Browse templates</h2>
-          
           {/* Desktop Layout */}
           {!isMobile && (
             <>
@@ -342,8 +340,11 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
               </div>
 
               <div className={styles.resultsAndSort}>
-                <div className={styles.resultsCount}>
-                  Showing 1 - {filteredTemplates.length} of {templates.length} results in All Templates
+                <div className={styles.resultsHeader}>
+                  <h2 className={styles.title}>Categories</h2>
+                  <div className={styles.resultsCount}>
+                    Showing 1 - {filteredTemplates.length} of {templates.length} results in All Templates
+                  </div>
                 </div>
                 <div className={styles.sortContainer}>
                   <label htmlFor="sort-by" className={styles.sortLabel}>Sort by</label>
@@ -442,7 +443,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
         <div className={styles.mainContent}>
           {!isMobile && (
             <div className={styles.sidebar}>
-              <div className={styles.sidebarHeader}>
+              {/* <div className={styles.sidebarHeader}>
                 <h3 className={styles.sidebarTitle}>Categories</h3>
                 {(selectedCategory !== "all-categories" || selectedType !== "all-types" || searchQuery || activeFilter !== "all-types") && (
                   <button 
@@ -453,7 +454,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                     Clear Filters
                   </button>
                 )}
-              </div>
+              </div> */}
               <div className={styles.categoriesPanel}>
                 <div className={styles.categoriesList}>
                 {CATEGORIES.map((category) => (
