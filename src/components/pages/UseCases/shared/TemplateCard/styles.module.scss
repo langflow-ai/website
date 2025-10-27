@@ -1,0 +1,232 @@
+@import "../../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Template Card
+.templateCard {
+  background: var(--interface-dark-gray-800);
+  border: 1px solid var(--interface-dark-gray-700);
+  border-radius: 12px;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  overflow: hidden;
+
+  &:hover {
+    background: #11182780;
+    transform: translateY(-4px);
+    box-shadow: var(--box-shadow-200);
+    border-color: var(--interface-blue-500);
+  }
+}
+
+.templateCardHeader {
+  padding: 3rem 3rem 2rem;
+  border-bottom: 1px solid var(--interface-dark-gray-700);
+}
+
+.templateTitle {
+  margin-bottom: 1.5rem;
+  color: var(--primary-white);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  
+  @include media-breakpoint-down(md) {
+    font-size: 1.5rem;
+  }
+}
+
+.templateSummary {
+  color: var(--interface-light-gray-400);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.templateCardBody {
+  padding: 2rem 3rem;
+  flex: 1;
+}
+
+.templateBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.statusBadge {
+  padding: 0.5rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-done {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-improved {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3B82F6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.status-still-limited {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-not-possible {
+  background: rgba(107, 114, 128, 0.2);
+  color: #6B7280;
+  border: 1px solid rgba(107, 114, 128, 0.3);
+}
+
+.difficultyBadge {
+  padding: 0.5rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.difficulty-beginner {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.difficulty-intermediate {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.difficulty-advanced {
+  background: rgba(239, 68, 68, 0.2);
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.useCases {
+  margin: 2rem 0;
+}
+
+.useCasesLabel {
+  color: var(--interface-light-gray-500);
+  font-size: 0.8rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.useCasesTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.useCaseTag {
+  background: var(--interface-dark-gray-700);
+  color: var(--interface-light-gray-300);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.templateMeta {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--interface-dark-gray-700);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+.builder {
+  color: var(--interface-light-gray-400);
+  font-size: 0.8rem;
+}
+
+.updated {
+  color: var(--interface-light-gray-500);
+  font-size: 0.8rem;
+}
+
+.templateCardFooter {
+  padding: 2rem 3rem 3rem;
+  border-top: 1px solid var(--interface-dark-gray-700);
+  margin-top: auto;
+}
+
+.templateButtons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.primaryTemplateButton {
+  flex: 1 1 0;
+  min-width: min-content;
+  height: 51px;
+  padding: 0 2rem;
+  white-space: nowrap;
+  
+  @include media-breakpoint-down(md) {
+    height: 60px;
+    padding: 1.5rem 3rem;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.secondaryTemplateButton {
+  flex: 1 1 0;
+  height: 51px;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  white-space: nowrap;
+  
+  @include media-breakpoint-down(md) {
+    width: 100%;
+    height: 60px;
+    padding: 1.5rem 2rem;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(md) {
+  .templateCard {
+    margin-bottom: 2rem;
+  }
+  
+  .templateCardHeader,
+  .templateCardBody,
+  .templateCardFooter {
+    padding: 2rem;
+  }
+}

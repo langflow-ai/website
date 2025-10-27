@@ -1,0 +1,103 @@
+@import "../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Hero Section styles are now in shared component
+
+.buttonGroup {
+  display: flex;
+  gap: 1.5rem; // spacer-3: 24px
+  justify-content: center;
+  flex-wrap: wrap;
+  
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+    align-items: center;
+    
+    button {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+}
+
+.primaryButton,
+.secondaryButton {
+  height: 51px;
+  padding: 0 3rem; // spacer-5: 48px
+  
+  @include media-breakpoint-down(md) {
+    height: 60px;
+    padding: 1.5rem 4rem; // spacer-3: 24px, spacer-6: 64px
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+// Featured Section
+// ContentSection handles padding
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 3rem; // spacer-5: 48px - reduced for better flow
+  color: var(--primary-white);
+  font-size: 3.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  
+  @include media-breakpoint-down(md) {
+    font-size: 2.5rem;
+  }
+}
+
+// Category Cards styles are now in shared component
+
+// CTA Section
+// HeroSection handles styling
+
+.ctaButton {
+  height: 51px;
+  padding: 0 4rem; // spacer-6: 64px
+  
+  @include media-breakpoint-down(md) {
+    height: 60px;
+    padding: 1.5rem 5rem; // spacer-3: 24px, spacer-7: 80px
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(md) {
+  .hero {
+    padding-top: 5rem; // spacer-7: 80px
+    padding-bottom: 5rem; // spacer-7: 80px
+  }
+  
+  .featuredSection {
+    padding-top: 5rem; // spacer-7: 80px
+    padding-bottom: 5rem; // spacer-7: 80px
+  }
+  
+  .ctaSection {
+    padding-top: 5rem; // spacer-7: 80px
+    padding-bottom: 5rem; // spacer-7: 80px
+  }
+  
+  .categoryCard {
+    margin-bottom: 2rem; // spacer-4: 32px
+  }
+  
+  .categoryCardHeader,
+  .categoryCardBody,
+  .categoryCardFooter {
+    padding: 2rem; // spacer-4: 32px
+  }
+  
+  .categoryMeta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem; // spacer-2: 16px
+  }
+}

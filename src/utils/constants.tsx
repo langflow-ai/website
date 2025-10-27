@@ -44,6 +44,12 @@ const LIST = [
     comingSoon: false,
     subTabs: [
       {
+        title: "Use Cases",
+        url: "/use-cases",
+        icon: null,
+        download: false,
+      },
+      {
         title: "Changelog",
         url: "https://github.com/langflow-ai/langflow/releases",
         icon: null,

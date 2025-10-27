@@ -1,0 +1,15 @@
+@import "../../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Content Section
+.contentSection {
+  background: var(--primary-black); // Fundo preto
+  padding: 4rem 0; // Sem recuo horizontal interno
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(md) {
+  .contentSection {
+    padding: 3rem 20px; // 20px em mobile
+  }
+}

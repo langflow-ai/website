@@ -1,0 +1,135 @@
+@import "../../../../styles/variables";
+
+.templateCard {
+  width: 100%;
+  height: 320px; // Increased from 287px to accommodate categories
+  background: var(--primary-black);
+  border: 0.5px solid #3f3f46; // zinc-700 border like hero buttons
+  border-radius: 12px; // More rounded borders
+  display: flex;
+  position: relative;
+  text-decoration: none; // Remove underline from Link
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: #11182780;
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 1000px) {
+    height: auto;
+    min-height: 280px; // Increased from 250px
+  }
+
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 230px; // Increased from 200px
+  }
+}
+
+.leftContent {
+  width: 100%;
+  padding: 24px; // Padding menor para cards pequenos
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between; // Distribute content evenly
+  height: 100%; // Take full height of card
+}
+
+.iconContainer {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px; // 24px abaixo do ícone
+  flex-shrink: 0; // Prevent shrinking
+  aspect-ratio: 1; // Ensure perfect circle
+  position: relative; // For tooltip positioning
+}
+
+.tooltip {
+  position: absolute;
+  top: -40px; // Position above the icon
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000000;
+  color: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+  
+  // Optional: add a small arrow pointing down
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: #000000;
+  }
+}
+
+.cardTitle {
+  font-family: 'Chivo', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 120%;
+  color: #FFFFFF; // White text
+  margin: 0 0 8px 0; // 8px abaixo do título
+  text-align: left;
+}
+
+.cardDescription {
+  font-family: 'Chivo', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 140%;
+  color: #FFFFFF; // White text
+  margin: 0 0 24px 0; // 24px abaixo da descrição
+  text-align: left;
+  text-align: justify; // Texto justificado
+  max-width: 380px; // Para controlar a quebra de linha
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+.categoryButtons {
+  display: flex;
+  gap: 8px; // Reduced gap to fit better
+  align-items: flex-start;
+  margin-top: auto; // Push to bottom of card
+  flex-wrap: nowrap; // Prevent wrapping to keep on same line
+  overflow: hidden; // Hide overflow if text is too long
+}
+
+.categoryButton {
+  padding: 0.25rem 0.75rem; // Reduced padding to fit better
+  background: transparent;
+  border: 0.5px solid #3f3f46; // zinc-700 border like hero buttons
+  color: rgba(255, 255, 255, 0.7); // Texto branco com transparência como os botões do hero
+  border-radius: 0.75rem; // Slightly smaller border radius
+  font-size: 0.75rem; // Smaller font size to fit better
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap; // Prevent text wrapping
+  flex-shrink: 0; // Prevent shrinking
+  max-width: 120px; // Limit max width
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #FFFFFF; // White text no hover
+  }
+}

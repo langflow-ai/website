@@ -1,0 +1,226 @@
+@import "../../../../styles/variables";
+
+.beginnerBasics {
+  background: transparent; // Removido background preto
+  padding: 60px 0; // 60px de distância entre seções
+
+  @media (max-width: 768px) {
+    padding:  0;
+  }
+}
+
+.container {
+  max-width: 1280px; // Largura máxima consistente
+  margin: 0 auto; // Centraliza horizontalmente
+  padding: 0; // Sem padding horizontal, já está no container principal
+  
+}
+
+.sectionTitle {
+  font-family: 'Chivo', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  margin: 0 0 32px 0;
+  width: 232px;
+  word-wrap: nowrap;
+  white-space: nowrap;
+  display: block;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  z-index: 10;
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+    width: auto;
+  }
+}
+
+.templatesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; // 16px entre o card grande e os pequenos
+}
+
+.largeCard {
+  width: 100%;
+  max-width: 1280px;
+  height: 320px; // Increased to match small cards
+  background: var(--primary-black);
+  border: 0.5px solid #3f3f46; // Borda zinc-700 como os botões do hero
+  border-radius: 12px; // Bordas mais arredondadas
+  display: flex;
+  position: relative;
+  margin: 0 auto; // Centraliza o card
+  overflow: visible; // Allow tooltip to appear outside card
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: #11182780;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  @media (max-width: 1200px) {
+    height: auto;
+    min-height: 320px; // Increased to match small cards
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    min-height: 400px; // Altura maior para acomodar iframe embaixo
+  }
+}
+
+.leftContent {
+  flex: 0 0 45%; // Largura fixa de 45% - não cresce nem encolhe
+  padding: 32px; // 32px de padding interno
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow: visible; // Allow tooltip to be visible
+
+  @media (max-width: 768px) {
+    order: 1; // Mantém conteúdo à esquerda em cima em mobile
+    flex: 1; // Volta a ocupar toda a largura em mobile
+  }
+}
+
+.iconContainer {
+  width: 48px;
+  height: 48px;
+  background: rgb(254, 89, 194); // Cor especificada
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px; // 24px abaixo do ícone
+  position: relative; // For tooltip positioning
+}
+
+.tooltip {
+  position: absolute;
+  top: -40px; // Position above the icon
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000000;
+  color: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1000;
+  
+  // Optional: add a small arrow pointing down
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: #000000;
+  }
+}
+
+.cardTitle {
+  font-family: 'Chivo', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 120%;
+  color: #FFFFFF; // Texto branco
+  margin: 0 0 8px 0; // 8px abaixo do título
+  text-align: left;
+}
+
+.cardDescription {
+  font-family: 'Chivo', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 140%;
+  color: #FFFFFF; // Texto branco
+  margin: 0 0 24px 0; // 24px abaixo da descrição
+  text-align: left;
+  text-align: justify; // Texto justificado
+  max-width: 380px; // Para controlar a quebra de linha
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+.categoryButtons {
+  display: flex;
+  gap: 12px; // 12px entre os botões
+  align-items: flex-start;
+}
+
+.categoryButton {
+  padding: 0.5rem 1rem; // Mesmo padding dos botões do hero
+  background: transparent;
+  border: 0.5px solid #3f3f46; // Borda zinc-700 como os botões do hero
+  color: rgba(255, 255, 255, 0.7); // Texto branco com transparência como os botões do hero
+  border-radius: 1rem; // Border radius dos botões do hero
+  font-size: 0.875rem; // Mesmo tamanho dos botões do hero
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #FFFFFF; // Texto branco no hover
+  }
+}
+
+.rightContent {
+  flex: 1;
+  height: 100%;
+  padding: 32px 32px 32px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 1200px) {
+    min-width: 300px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 200px;
+    padding: 16px 32px 32px 32px;
+    order: 2;
+  }
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+  display: block;
+  z-index: 100;
+}
+
+.smallCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px; // 16px entre os cards pequenos
+  max-width: 1280px; // Mesma largura máxima do card grande
+  margin: 0 auto; // Centraliza os cards
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, 1fr); // 2 cards na primeira linha
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; // 1 card por linha
+  }
+}
+
