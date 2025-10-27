@@ -14,6 +14,7 @@
   overflow: hidden;
 
   &:hover {
+    background: #11182780;
     transform: translateY(-4px);
     box-shadow: var(--box-shadow-200);
     border-color: var(--interface-blue-500);
