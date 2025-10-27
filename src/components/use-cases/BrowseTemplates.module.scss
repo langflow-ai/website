@@ -494,7 +494,7 @@
   gap: 0.5rem;
   align-items: center;
   width: 100%;
-  padding: 0.75rem 0 0.75rem 62px; // 62px from category to left border
+  padding: 0.75rem 0 0.75rem 32px; // 32px from category to left border
   background: none;
   border: none;
   color: var(--primary-white);
@@ -518,7 +518,7 @@
 }
 
 .subcategories {
-  margin-left: 96px; // 96px = 6 * 16px (adjusted from 92px to align with grid)
+  margin-left: 32px; // 32px additional indent from category text start
   margin-top: 24px; // 24px = 1.5 * 16px
   display: flex;
   flex-direction: column;
