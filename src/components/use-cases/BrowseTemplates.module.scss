@@ -518,7 +518,7 @@
 }
 
 .subcategories {
-  margin-left: 32px; // 32px additional indent from category text start
+  margin-left: 64px; // 64px (32px + 32px) additional indent from category text start
   margin-top: 24px; // 24px = 1.5 * 16px
   display: flex;
   flex-direction: column;
