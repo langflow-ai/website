@@ -3,6 +3,7 @@
 import { FLOWS } from "@/data/flows";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import styles from "./BeginnerBasics.module.scss";
 import TemplateCard from "./TemplateCard";
 
@@ -19,6 +20,8 @@ const smallCards = FLOWS
   }));
 
 export default function BeginnerBasics() {
+  const [showTooltip, setShowTooltip] = useState(false);
+
   return (
     <section className={styles.beginnerBasics}>
       <div className={styles.container}>
@@ -28,13 +31,22 @@ export default function BeginnerBasics() {
           {/* Large Card */}  
           <Link href="/templates/basic-prompting" className={styles.largeCard}>
             <div className={styles.leftContent}>
-              <div className={styles.iconContainer}>
+              <div 
+                className={styles.iconContainer}
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+              >
                 <Image
                   src="/images/basic.png"
                   alt="Basic Prompting icon"
                   width={24}
                   height={24}
                 />
+                {showTooltip && (
+                  <div className={styles.tooltip}>
+                    Chat
+                  </div>
+                )}
               </div>
               <h3 className={styles.cardTitle}>Basic Prompting</h3>
               <p className={styles.cardDescription}>
