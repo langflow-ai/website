@@ -12,6 +12,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1); // Borda sutil conforme imagem
 
   &:hover {
+    background: #11182780;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     transform: translateY(-2px);
     border-color: rgba(255, 255, 255, 0.2); // Borda mais visível no hover

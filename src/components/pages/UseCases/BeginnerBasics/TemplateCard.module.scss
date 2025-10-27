@@ -12,6 +12,7 @@
   transition: all 0.2s ease-in-out;
 
   &:hover {
+    background: #11182780;
     border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
   }
@@ -47,6 +48,33 @@
   margin-bottom: 24px; // 24px abaixo do ícone
   flex-shrink: 0; // Prevent shrinking
   aspect-ratio: 1; // Ensure perfect circle
+  position: relative; // For tooltip positioning
+}
+
+.tooltip {
+  position: absolute;
+  top: -40px; // Position above the icon
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000000;
+  color: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+  
+  // Optional: add a small arrow pointing down
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: #000000;
+  }
 }
 
 .cardTitle {

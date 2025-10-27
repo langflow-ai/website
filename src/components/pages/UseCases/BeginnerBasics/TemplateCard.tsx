@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import styles from "./TemplateCard.module.scss";
 
 interface TemplateCardProps {
@@ -21,6 +22,8 @@ export default function TemplateCard({
   slug,
   className = "" 
 }: TemplateCardProps) {
+  const [showTooltip, setShowTooltip] = useState(false);
+
   const getIconConfig = (type: string) => {
     switch (type) {
       case "basic":
@@ -85,6 +88,21 @@ export default function TemplateCard({
   };
 
   const abbreviatedCategories = categories.map(abbreviateCategory);
+  const primaryCategory = categories[0] || 'Template';
+
+  // Map icon types to tooltip labels
+  const getTooltipLabel = (iconType: string) => {
+    const mapping: { [key: string]: string } = {
+      'basic': 'Chat',
+      'robot': 'Automation',
+      'automation': 'Automation',
+      'research': 'Research',
+      'support': 'Support'
+    };
+    return mapping[iconType] || primaryCategory;
+  };
+
+  const tooltipLabel = getTooltipLabel(iconType);
 
   return (
     <Link href={href} className={`${styles.templateCard} ${className}`}>
@@ -92,6 +110,8 @@ export default function TemplateCard({
         <div 
           className={styles.iconContainer}
           style={{ backgroundColor: iconConfig.bgColor }}
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
         >
           <Image
             src={iconConfig.src}
@@ -99,6 +119,11 @@ export default function TemplateCard({
             width={24}
             height={24}
           />
+          {showTooltip && (
+            <div className={styles.tooltip}>
+              {tooltipLabel}
+            </div>
+          )}
         </div>
         <h3 className={styles.cardTitle}>{title}</h3>
         <p className={styles.cardDescription}>
