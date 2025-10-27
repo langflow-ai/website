@@ -69,6 +69,14 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
     }
   }, [initialFilters?.q]);
 
+  // Reset activeFilter to all-types when search query is cleared
+  useEffect(() => {
+    if (!searchQuery && activeFilter === "all-types") {
+      // Keep all-types selected when there's no query
+      return;
+    }
+  }, [searchQuery]);
+
   // Sync category filter when initialFilters changes from hero
   useEffect(() => {
     if (initialFilters?.categories && initialFilters.categories.size > 0) {
@@ -288,14 +296,18 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                 </div>
                 
                 <div className={styles.filterPills}>
-                  {CATEGORY_FILTERS.map((filter) => (
-                    <button
-                      key={filter.value}
-                      className={`${styles.filterPill} ${
-                        activeFilter === filter.value ? styles.active : ""
-                      } ${filter.value === "all-types" ? styles.allTypes : ""}`}
-                      onClick={() => handleFilterChange(filter.value as FilterType)}
-                    >
+                  {CATEGORY_FILTERS.map((filter) => {
+                    // Determine if this filter should be active
+                    const isActive = activeFilter === filter.value && !searchQuery;
+                    
+                    return (
+                      <button
+                        key={filter.value}
+                        className={`${styles.filterPill} ${
+                          isActive ? styles.active : ""
+                        } ${filter.value === "all-types" && isActive ? styles.allTypes : ""}`}
+                        onClick={() => handleFilterChange(filter.value as FilterType)}
+                      >
                       {filter.icon === "basic" && (
                         <Image
                           src="/images/basic.png"
@@ -324,7 +336,8 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                       )}
                       {filter.label}
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
