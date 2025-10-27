@@ -79,7 +79,18 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
   }, [initialFilters?.categories]);
 
   const handleFilterChange = (filter: FilterType) => {
-    setActiveFilter(filter);
+    // If clicking on "All Types" when already selected, do nothing
+    if (filter === "all-types" && activeFilter === "all-types") {
+      return;
+    }
+    // If clicking on a specific category, set activeFilter to that category
+    if (filter !== "all-types") {
+      setActiveFilter(filter);
+    }
+    // If clicking on "All Types" when another filter is selected, reset to "all-types"
+    if (filter === "all-types" && activeFilter !== "all-types") {
+      setActiveFilter("all-types");
+    }
     setSelectedCategory("all-categories"); // Reset sidebar selection when button is used
   };
 
