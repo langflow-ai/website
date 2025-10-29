@@ -1,4 +1,18 @@
+.blog-article-container {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--spacer-3);
+
+  @include media-breakpoint-down(lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
 .blog-article {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
   p {
     font-size: 1.2rem;
   }

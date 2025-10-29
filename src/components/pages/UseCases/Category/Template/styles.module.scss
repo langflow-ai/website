@@ -1,0 +1,252 @@
+@import "../../../../../styles/variables";
+@import "~bootstrap/scss/mixins";
+
+// Header Section styles are now in shared component
+
+.categoryMeta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.templateCount {
+  color: var(--interface-blue-400);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+// BackLink styles are now in shared component
+
+// Search Section styles are now in shared component
+
+.sortContainer {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 100%;
+  
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+.sortLabel {
+  color: var(--interface-light-gray-300);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.sortSelect {
+  height: 51px;
+  padding: 0 2rem;
+  background: var(--interface-dark-gray-800);
+  border: 1px solid var(--interface-dark-gray-700);
+  border-radius: 8px;
+  color: var(--interface-light-gray-200);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
+
+  &:focus {
+    outline: none;
+    border-color: var(--interface-blue-500);
+  }
+  
+  @include media-breakpoint-down(md) {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+// Filter Chips
+.filterChips {
+  margin-top: 2rem;
+}
+
+.filterChip {
+  background: var(--interface-dark-gray-700);
+  border: 1px solid var(--interface-dark-gray-600);
+  color: var(--interface-light-gray-300);
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+
+  
+
+  &:hover {
+    background: var(--interface-dark-gray-600);
+    border-color: var(--interface-blue-500);
+  }
+}
+
+.filterChipActive {
+  background: var(--interface-blue-500);
+  border-color: var(--interface-blue-400);
+  color: white;
+}
+
+.clearFilters {
+  background: transparent;
+  border: 1px solid var(--interface-red-500);
+  color: var(--interface-red-400);
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: var(--interface-red-500);
+    color: white;
+  }
+}
+
+// Templates Section styles are now in shared component
+
+// Template Cards styles are now in shared component
+
+// Help Section
+.helpSection {
+  // ContentSection handles padding
+  text-align: center;
+}
+
+.helpTitle {
+  margin-bottom: 3rem;
+  color: var(--primary-white);
+}
+
+.helpContent {
+  background: var(--interface-dark-gray-800);
+  border: 1px solid var(--interface-dark-gray-700);
+  border-radius: 12px;
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  text-align: left;
+  
+  @include media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.helpColumn {
+  h4 {
+    color: var(--primary-white);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      margin-bottom: 1.5rem;
+      color: var(--interface-light-gray-300);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  }
+}
+
+.statusIndicator,
+.difficultyIndicator {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-right: 1rem;
+  min-width: 80px;
+  text-align: center;
+}
+
+.statusIndicator[data-status="done"] {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+}
+
+.statusIndicator[data-status="improved"] {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3B82F6;
+}
+
+.statusIndicator[data-status="limited"] {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+}
+
+.statusIndicator[data-status="not-possible"] {
+  background: rgba(107, 114, 128, 0.2);
+  color: #6B7280;
+}
+
+.difficultyIndicator[data-difficulty="beginner"] {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+}
+
+.difficultyIndicator[data-difficulty="intermediate"] {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+}
+
+.difficultyIndicator[data-difficulty="advanced"] {
+  background: rgba(239, 68, 68, 0.2);
+  color: #EF4444;
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(md) {
+  .header {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  
+  .searchSection {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  
+  .templatesSection {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  
+  .helpSection {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  
+  .templateCard {
+    margin-bottom: 2rem;
+  }
+  
+  .templateCardHeader,
+  .templateCardBody,
+  .templateCardFooter {
+    padding: 2rem;
+  }
+  
+  .helpContent {
+    padding: 3rem;
+  }
+}

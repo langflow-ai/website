@@ -103,8 +103,10 @@ const DownloadForm = () => {
         { errors: [], success: false, referrer: window.location.href },
         formData
       );
-      trackEvent("Langflow.org - Newsletter Subscribed From Download Form", {
-        text: "Subscribe",
+      trackEvent("CTA Clicked", {
+        CTA: "Subscribe",
+        channel: "webpage",
+        location: "download-form",
       });
     }
     setFormSubmitted(true);

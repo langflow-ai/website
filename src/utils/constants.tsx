@@ -22,6 +22,8 @@ import Apple from "@/components/ui/icons/Apple";
 import Windows from "@/components/ui/icons/Windows";
 import Globe from "@/components/ui/icons/Globe";
 
+import downloadLinks from "./downloadLinks.mjs";
+
 const LIST = [
   // {
   //   title: "Marketplace",
@@ -41,6 +43,12 @@ const LIST = [
     icon: "/assets/icons/resources.svg",
     comingSoon: false,
     subTabs: [
+      {
+        title: "Use Cases",
+        url: "/use-cases",
+        icon: null,
+        download: false,
+      },
       {
         title: "Changelog",
         url: "https://github.com/langflow-ai/langflow/releases",
@@ -301,7 +309,7 @@ const DOWNLOAD_OPTIONS = [
   {
     icon: <Apple />,
     name: "macOS (Apple Silicon)",
-    link: "https://github.com/langflow-ai/langflow/releases/download/1.6.0/Langflow_1.6.0_aarch64.dmg",
+    link: downloadLinks.macosApple,
     fileName: "Langflow_1.6.0_aarch64.dmg",
     btnText: "Download",
     isComingSoon: false,
@@ -309,7 +317,7 @@ const DOWNLOAD_OPTIONS = [
   {
     icon: <Apple />,
     name: "macOS (Intel)",
-    link: "https://github.com/langflow-ai/langflow/releases/download/1.6.0/Langflow_1.6.0_x64.dmg",
+    link: downloadLinks.macosIntel,
     fileName: "Langflow_1.6.0_x64.dmg",
     btnText: "Download",
     isComingSoon: false,
@@ -317,7 +325,7 @@ const DOWNLOAD_OPTIONS = [
   {
     icon: <Windows />,
     name: "Windows (x64)",
-    link: "https://github.com/langflow-ai/langflow/releases/download/1.6.0/Langflow_1.6.0_x64_en-US.msi",
+    link: downloadLinks.windowsX64,
     fileName: "Langflow_1.6.0_x64_en-US.msi",
     btnText: "Download",
     isComingSoon: false,
@@ -357,3 +365,7 @@ export {
   DOWNLOAD_OPTIONS,
   NEWSLETTER_BLURB,
 };
+
+export const HOST = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : "https://langflow.org";

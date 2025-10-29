@@ -1,9 +1,9 @@
 "use client";
 
 // Dependencies
-import { ReactElement, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Script from "next/script";
+import { ReactElement, useEffect, useRef, useState } from "react";
 
 // Types
 import {
@@ -24,8 +24,8 @@ import { isFunction } from "@/lib/utils/str";
 import { trackEvent } from "@/lib/utils/tracking";
 
 // Components
-import Markup from "@/components/ui/markup";
 import Footnote from "@/components/ui/footnote";
+import Markup from "@/components/ui/markup";
 import Text from "@/components/ui/text";
 
 // Globals
@@ -102,14 +102,15 @@ const MarketoForm = ({
 
   const handleSuccess = (values?: any) => {
     try {
-      const action = successTracking?.action || "www - Form Submitted";
       const payload = {
-        category: "All",
-        label: window.location.pathname,
+        formId: `mktoForm_${id}`,
+        fieldType: "button",
+        field: "submit",
+        ...(title && typeof title === "string" && { title }),
         ...(successTracking?.payload || {}),
       };
 
-      trackEvent(action, payload);
+      trackEvent("User Form", payload);
 
       // Fire GA4 desktop_download event for form submissions on desktop page
       if (window.gtag && window.location.pathname === "/desktop") {
@@ -239,8 +240,8 @@ const MarketoForm = ({
 
   useEffect(() => {
     if (
-      (allowBypass && searchParams.get("bypass")) ||
-      searchParams.get("aliId")
+      (allowBypass && searchParams?.get("bypass")) ||
+      searchParams?.get("aliId")
     ) {
       handleSuccess();
     }

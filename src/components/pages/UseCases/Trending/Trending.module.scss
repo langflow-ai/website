@@ -1,0 +1,55 @@
+@import "../../../../styles/variables";
+
+.trending {
+  background: transparent; // No background - extends across full width
+  padding: 60px 0; // 60px distance between sections
+}
+
+.container {
+  max-width: 1280px; // Consistent maximum width
+  margin: 0 auto; // Center horizontally
+  padding: 0; // No horizontal padding, same as Beginner basics
+  
+}
+
+.sectionTitle {
+  font-family: 'Chivo', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  margin: 0 0 32px 0; // 32px gap to cards
+  text-align: left;
+  width: 232px; // Same width as Templates title
+  word-wrap: nowrap;
+  white-space: nowrap;
+  display: block;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  z-index: 10;
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+    width: auto;
+  }
+}
+
+.templatesContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px; // 16px between cards
+  max-width: 1280px; // Same maximum width
+  margin: 0 auto; // Center cards
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, 1fr); // 2 cards on first line
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; // 1 card per line
+  }
+}

@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useReducer } from "react";
 import { BlogPost } from "@/lib/types/sanity";
 import { Post } from "./Post";
 import { postsFeedReducer, initialPostsFeedState } from "./postsFeedReducer";
+import { HOST } from "@/utils/constants";
+import { blogPostSchema, publisherSchema } from "@/lib/utils/schemas";
 
 interface PostsFeedProps {
   initialPosts: BlogPost[];
@@ -74,6 +76,21 @@ const PostsFeed: React.FC<PostsFeedProps> = ({
       {loading && (
         <p className="text-center text-secondary py-4">Loading more posts…</p>
       )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org/",
+            "@type": "Blog",
+            "@id": `${HOST}/blog`,
+            name: "Langflow blog",
+            description:
+              "Articles on building applications with AI, agents and MCP using Langflow.",
+            publisher: publisherSchema,
+            blogPost: posts.map(blogPostSchema),
+          }),
+        }}
+      ></script>
     </>
   );
 };

@@ -1,0 +1,52 @@
+@import "../../styles/variables";
+
+.skeletonCard {
+  background: $templates-panel;
+  border-radius: $templates-radius-lg;
+  box-shadow: $templates-shadow-card;
+  padding: 1.5rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    .badge {
+      width: 1.5rem;
+      height: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+  }
+
+  .title {
+    height: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .description {
+    .line {
+      height: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 0.25rem;
+      margin-bottom: 0.5rem;
+
+      &:last-child {
+        width: 75%;
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

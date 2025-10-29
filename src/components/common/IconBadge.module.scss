@@ -1,0 +1,12 @@
+@import "../../styles/variables";
+
+.iconBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: $templates-panel;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}

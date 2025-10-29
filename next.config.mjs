@@ -1,4 +1,6 @@
 import { withSentryConfig } from "@sentry/nextjs";
+import downloadLinks from "./src/utils/downloadLinks.mjs";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
@@ -32,6 +34,21 @@ const nextConfig = {
       {
         source: "/docs",
         destination: "https://docs.langflow.org",
+        permanent: false,
+      },
+      {
+        source: "/download/macos-apple",
+        destination: downloadLinks.macosApple,
+        permanent: false,
+      },
+      {
+        source: "/download/macos-intel",
+        destination: downloadLinks.macosIntel,
+        permanent: false,
+      },
+      {
+        source: "/download/windows-x64",
+        destination: downloadLinks.windowsX64,
         permanent: false,
       },
     ];

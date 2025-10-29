@@ -1,0 +1,211 @@
+@import "../../styles/variables";
+
+  .templateSummary {
+  display: grid;
+  gap: 3rem;
+  width: 70%;
+  max-width: 1080px; // Reduced from 1280px for more recuo
+  margin: 0 auto; // Centered horizontally
+  color: #ffffff;
+  padding: 0 2rem; // Increased horizontal padding
+
+  @media (min-width: 640px) {
+    padding: 0 1.5rem; // sm: 24px
+  }
+
+  @media (min-width: 768px) {
+    padding: 0 2rem; // md: 32px
+  }
+
+  @media (min-width: 1024px) {
+    padding: 0 2.5rem; // lg: 40px
+  }
+
+  @media (min-width: 1280px) {
+    padding: 0; // xl: no padding for full width
+  }
+
+  @media (max-width: 1024px) {
+    margin-left: auto; // Remove fixed margins
+    margin-right: auto;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 2rem; // Reduced top margin on mobile
+    margin-left: 12px;
+  }
+}
+
+.sectionTitle {
+  font-family: 'Chivo', sans-serif;
+  font-size: 28px;
+  font-weight: 500; // Medium
+  line-height: 140%;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+  text-align: left; // Left-align the section titles
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0; // Remove auto centering
+  padding: 0;
+  list-style: none;
+  font-family: 'Chivo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 0.8;
+  max-width: 600px; // Keep max-width for readability
+}
+
+.listItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1;
+  font-family: 'Chivo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+
+.checkIcon,
+.dotIcon,
+.starIcon {
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkIcon {
+  background: rgba(124, 77, 255, 0.15);
+  color: $templates-brand-1;
+}
+
+.dotIcon {
+  background: rgba(79, 70, 229, 0.15);
+  color: $templates-brand-2;
+}
+
+.dotIconInner {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.learnGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0; // Remove auto centering
+  padding: 0;
+  list-style: none;
+  font-family: 'Chivo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 1.2;
+  max-width: 600px; // Keep max-width for readability
+}
+
+.whyItMatters {
+  color: #FFFFFF;
+  line-height: 1.8;
+  font-family: 'Chivo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0; // Remove auto centering
+  max-width: 720px;
+  text-align: left; // Left-align the text content
+}
+
+.categoriesSection {
+  margin-top: 56px; // 56px below "Why it matters" section
+  display: flex;
+  justify-content: center; // Center the categories container
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.categoriesContainer {
+  width: 100%; 
+  height: 83px; // 83px height
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+
+  @media (max-width: 1024px) {
+    width: 90%;
+    max-width: 848px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+}
+
+.categoriesLabel {
+  color: $templates-text;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 32px; // 32px from left margin
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    text-align: left;
+  }
+}
+
+.categoriesButtons {
+  display: flex;
+  align-items: center;
+  gap: 12px; // 12px gap between buttons
+  margin-right: 32px; // 32px from right margin
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+.categoryButton {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 36px;
+  color: $templates-text;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 9px 12px; // 9px top/bottom, 12px left/right
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}

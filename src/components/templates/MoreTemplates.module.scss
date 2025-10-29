@@ -1,0 +1,47 @@
+@import "../../styles/variables";
+
+.moreTemplates {
+  background: transparent;
+  padding: 60px 0; // 60px distance between sections
+}
+
+.container {
+  max-width: 1280px; // Consistent max width
+  margin: 0 auto; // Center horizontally
+  padding: 0; // No horizontal padding, already in main container
+}
+
+.sectionTitle {
+  font-family: 'Chivo', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  margin: 0 0 32px 0; // 32px gap to cards
+  text-align: left;
+  width: 232px; // Same width as Templates title
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+    width: auto;
+  }
+}
+
+.templatesContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 3 cards in a row
+  gap: 16px; // 16px between cards
+  max-width: 1280px; // Same max width
+  margin: 0 auto; // Center cards
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, 1fr); // 2 cards on first line
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; // 1 card per line
+  }
+}
+

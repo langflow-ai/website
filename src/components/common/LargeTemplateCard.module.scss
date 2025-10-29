@@ -1,0 +1,34 @@
+@import "../../styles/variables";
+
+.largeTemplateCard {
+  display: block;
+  background: var(--primary-black);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  grid-column: span 2;
+  min-height: 300px;
+  overflow: hidden;
+
+  &:hover {
+    background: #11182780;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  @media (max-width: 991px) {
+    grid-column: span 1;
+  }
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 12px;
+}

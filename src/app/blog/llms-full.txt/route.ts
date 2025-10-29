@@ -3,6 +3,7 @@ export const revalidate = 60 * 60; // 1 hour
 
 import { sanityFetch } from "@/lib/backend/sanity/client";
 import { BLOG_POSTS_QUERY } from "@/lib/backend/sanity/queries";
+import { HOST } from "@/utils/constants";
 import type { NextRequest } from "next/server";
 
 interface Post {
@@ -27,13 +28,9 @@ interface Post {
 export async function GET(_req: NextRequest): Promise<Response> {
   const posts = await sanityFetch<Post[]>(BLOG_POSTS_QUERY);
 
-  const host = process.env.NEXT_PUBLIC_VERCEL_URL
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : "https://langflow.org";
-
   const records = posts
     .map((post) => {
-      const url = `${host}/blog/${post.slug?.current ?? ""}`;
+      const url = `${HOST}/blog/${post.slug?.current ?? ""}`;
       const bodyText = post.body;
       const author = [
         post.author ? post.author.name : null,

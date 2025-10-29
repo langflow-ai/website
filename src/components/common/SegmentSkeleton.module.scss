@@ -1,0 +1,25 @@
+@import "../../styles/variables";
+
+.segmentSkeleton {
+  display: flex;
+  gap: 0.5rem;
+  height: 35px;
+  align-items: center;
+}
+
+.skeletonPill {
+  height: 35px;
+  width: 80px; // Approximate width of a segment pill
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

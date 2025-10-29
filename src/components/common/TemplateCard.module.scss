@@ -1,0 +1,54 @@
+@import "../../styles/variables";
+
+.templateCard {
+  display: block;
+  background: var(--primary-black); // Fundo preto
+  border-radius: $templates-radius-lg;
+  box-shadow: $templates-shadow-card;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.1); // Borda sutil conforme imagem
+
+  &:hover {
+    background: #11182780;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2); // Borda mais visível no hover
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $templates-text;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s;
+
+    .templateCard:hover & {
+      color: $templates-brand-1;
+    }
+  }
+
+  .description {
+    color: $templates-muted;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  // Thumbnail styles removed - no images in cards
+}

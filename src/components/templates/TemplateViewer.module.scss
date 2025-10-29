@@ -1,0 +1,107 @@
+@import "../../styles/variables";
+
+.templateViewer {
+  .preview {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; // 16:9
+    background: $templates-panel;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: $templates-radius-lg;
+    overflow: hidden;
+    box-shadow: $templates-shadow-card;
+
+    iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: inherit;
+    }
+  }
+
+  .previewContent {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $templates-muted;
+    text-align: center;
+    padding: 2rem;
+    background-image: linear-gradient(
+      135deg,
+      rgba(124, 77, 255, 0.08),
+      rgba(79, 70, 229, 0.08)
+    );
+  }
+
+  .iconBadge {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+      color: $templates-muted;
+    }
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .controlGroup {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .iconButton {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: $templates-panel;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $templates-muted;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $templates-text;
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  .ctaButton {
+    padding: 0.75rem 1.75rem;
+    border-radius: $templates-radius-lg;
+    background: linear-gradient(135deg, $templates-brand-1, $templates-brand-2);
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(124, 77, 255, 0.35);
+    }
+  }
+}

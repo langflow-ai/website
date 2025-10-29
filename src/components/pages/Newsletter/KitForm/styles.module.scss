@@ -3,7 +3,7 @@
 
 .formContainer {
   max-width: 500px;
-  min-width: 500px;
+  width: 100%;
   height: fit-content;
   padding: 40px;
   display: flex;
@@ -44,6 +44,7 @@
   font-weight: 500 !important;
   font-family: var(--font-body) !important;
   line-height: 115%;
+
   @include media-breakpoint-down(lg) {
     font-size: 44px !important;
   }
