@@ -1,6 +1,49 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
 .urx {
   :global(.form-heading-container) {
     display: none !important;
+  }
+
+  :global(.cds--fieldset) {
+    margin-bottom: 20px !important;
+  }
+
+  :global(.cds--form-item) {
+    margin-bottom: 20px !important;
+  }
+
+  :global(.c4d--nc__pre-text) {
+    margin-top: 0px !important;
+  }
+
+  :global(.button-container) {
+    padding: 0px !important;
+    margin-top: 28px !important;
+  }
+
+  :global(.notice-choice) {
+    padding: 0px !important;
+  }
+
+  @media (min-width: 1056px) {
+    :global(.firstName-container) {
+      padding-right: var(--spacer-1) !important;
+    }
+    :global(.lastName-container) {
+      padding-left: var(--spacer-1) !important;
+    }
+
+    :global(.cds--accordion__item) {
+      padding: 0px !important;
+    }
+  }
+
+  @media (max-width: 1056px) {
+    :global(.cds--accordion__item) {
+      padding: 0px !important;
+    }
   }
 
   :global(.cds--select-input__wrapper) {
@@ -18,7 +61,8 @@
     font-family: var(--font-inter) !important;
     font-weight: 600;
     line-height: 1.43em;
-    margin-bottom: var(--spacer-1);
+    font-size: 14px;
+    margin-bottom: 14px;
     display: flex;
     flex-direction: row-reverse;
     width: fit-content !important;
@@ -51,6 +95,7 @@
     padding: 0.5rem 0.75rem;
     height: 2.75em;
     background-color: var(--primary-black) !important;
+    padding: 0px 12px;
 
     &:focus,
     &:focus-visible {

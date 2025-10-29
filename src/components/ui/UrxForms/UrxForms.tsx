@@ -4,6 +4,9 @@
 import Script from "next/script";
 import { useEffect, useState } from "react";
 
+// Components
+import Text from "@/components/ui/text";
+
 // Styles
 import styles from "./styles.module.scss";
 
@@ -22,13 +25,18 @@ declare global {
 interface UrxFormsProps {
   formId: string;
   instanceId?: string;
+  success?: JSX.Element;
+  text?: string;
 }
 
 const UrxForms: React.FC<UrxFormsProps> = ({
   formId = "urx-54089",
   instanceId = "urx-form",
+  success,
+  text,
 }) => {
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   // const isProduction = process.env.NODE_ENV === "production";
 
@@ -67,15 +75,14 @@ const UrxForms: React.FC<UrxFormsProps> = ({
           inline: false,
         },
         triggerManually: true,
-        onUrxFormSubmit: function (params: any, callback: () => void) {
-          console.log("Form data:", params);
+        onUrxFormSubmit: function (_: any, callback: () => void) {
           callback();
         },
         formLoaded: function () {
           console.log(`Form ${formId} loaded`);
         },
-        onUrxFormSubmitSuccess: function (params: any) {
-          console.log("Success callback data:", params);
+        onUrxFormSubmitSuccess: function () {
+          setIsSuccess(true);
         },
         userActionEvent: function (action: string, payload: any) {
           console.info("userActionEvent", action, payload);
@@ -96,42 +103,49 @@ const UrxForms: React.FC<UrxFormsProps> = ({
     setScriptsLoaded(true);
   };
 
+  if (isSuccess && success) {
+    return <>{success}</>;
+  }
+
   return (
-    <div className={styles.urx}>
-      <Script
-        src={`https://www${false ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/loader.js`}
-        strategy="afterInteractive"
-        onError={(e) => console.error("Loader script failed to load:", e)}
-      />
-      <Script
-        src={`https://www${false ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/main.js`}
-        strategy="afterInteractive"
-        onLoad={handleMainScriptLoad}
-        onError={(e) => console.error("Main script failed to load:", e)}
-      />
-
-      {false && (
+    <>
+      {text && <Text size={200}>{text}</Text>}
+      <div className={styles.urx}>
         <Script
-          src="https://www.ibm.com/common/stats/ida_stats.js"
-          strategy="lazyOnload"
+          src={`https://www${false ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/loader.js`}
+          strategy="afterInteractive"
+          onError={(e) => console.error("Loader script failed to load:", e)}
         />
-      )}
+        <Script
+          src={`https://www${false ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/main.js`}
+          strategy="afterInteractive"
+          onLoad={handleMainScriptLoad}
+          onError={(e) => console.error("Main script failed to load:", e)}
+        />
 
-      <div>
-        {!scriptsLoaded && (
-          <div
-            style={{
-              padding: "2rem",
-              textAlign: "center",
-              color: "#666",
-            }}
-          >
-            Loading form...
-          </div>
+        {false && (
+          <Script
+            src="https://www.ibm.com/common/stats/ida_stats.js"
+            strategy="lazyOnload"
+          />
         )}
-        <div id={instanceId}></div>
+
+        <div>
+          {!scriptsLoaded && (
+            <div
+              style={{
+                padding: "2rem",
+                textAlign: "center",
+                color: "#666",
+              }}
+            >
+              Loading form...
+            </div>
+          )}
+          <div id={instanceId}></div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
