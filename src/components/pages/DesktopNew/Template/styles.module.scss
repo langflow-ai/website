@@ -25,6 +25,23 @@
     background: none;
   }
 
+  :global(.company-typeahead) {
+    input {
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      padding-right: 16% !important;
+
+      @include media-breakpoint-down(sm) {
+        padding-right: 20% !important;
+      }
+
+      @media (max-width: 420px) {
+        padding-right: 25% !important;
+      }
+    }
+  }
+
   :global(.country-container) {
     min-width: 100% !important;
     max-width: 100% !important;
