@@ -76,6 +76,7 @@ const UrxForms: React.FC<UrxFormsProps> = ({
         },
         triggerManually: true,
         onUrxFormSubmit: function (_: any, callback: () => void) {
+          setIsSuccess(true);
           callback();
         },
         formLoaded: function () {
