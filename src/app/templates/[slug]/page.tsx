@@ -81,7 +81,7 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
         <TemplateHero template={template} flow={flow} />
 
         <section className={`container ${styles.section}`}>
-          <TemplateSummary template={template} />
+          <TemplateSummary template={template} flow={flow} />
         </section>
 
         <div className={styles.trendingContainer}>
