@@ -1,4 +1,5 @@
 import { Template } from "@/lib/types/templates";
+import Link from "next/link";
 import styles from "./TemplateSummary.module.scss";
 
 interface TemplateSummaryProps {
@@ -59,9 +60,14 @@ export default function TemplateSummary({ template, className = "" }: TemplateSu
             <span className={styles.categoriesLabel}>Categories</span>
             <div className={styles.categoriesButtons}>
               {segments.map((segment) => (
-                <button key={segment} className={styles.categoryButton}>
+                <Link
+                  key={segment}
+                  href={`/use-cases?segments=${encodeURIComponent(segment)}`}
+                  className={styles.categoryButton}
+                  aria-label={`Browse use cases in ${formatLabel(segment)}`}
+                >
                   {formatLabel(segment)}
-                </button>
+                </Link>
               ))}
             </div>
           </div>
