@@ -19,7 +19,10 @@ const Topbar = (_: Props) => {
     <div className={styles.topbar}>
       <Speaker color="black" />
       <Display size={100} weight={Weight.Regular} className={styles.text}>
-        <Link href="https://luma.com/open-rag-summit?utm_source=langflow">
+        <Link
+          href="https://luma.com/open-rag-summit?utm_source=langflow"
+          target="_blank"
+        >
           Be the first to find out what's next for RAG at the OpenRAG Summit on
           11/13
         </Link>
