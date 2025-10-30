@@ -7,6 +7,13 @@ import { useShare } from "@/hooks/useShare";
 import { Template } from "@/lib/types/templates";
 import Link from "next/link";
 import { useState } from "react";
+import {
+  HiOutlineBookOpen,
+  HiOutlineChatBubbleLeftRight,
+  HiOutlineCpuChip,
+  HiOutlinePhone,
+  HiOutlineSparkles
+} from "react-icons/hi2";
 import Toast from "../ui/Toast";
 import styles from "./TemplateHero.module.scss";
 import UseTemplateModal from "./UseTemplateModal";
@@ -107,6 +114,45 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
     // return `${years} year${years > 1 ? "s" : ""} ago`;
   };
 
+  // Get icon and label based on flow iconType
+  const getIconConfig = (iconType: string) => {
+    switch (iconType) {
+      case "basic":
+        return {
+          Icon: HiOutlineChatBubbleLeftRight,
+          label: "Chat"
+        };
+      case "robot":
+        return {
+          Icon: HiOutlineCpuChip,
+          label: "Automation"
+        };
+      case "automation":
+        return {
+          Icon: HiOutlineSparkles,
+          label: "Automation"
+        };
+      case "research":
+        return {
+          Icon: HiOutlineBookOpen,
+          label: "Research"
+        };
+      case "support":
+        return {
+          Icon: HiOutlinePhone,
+          label: "Support"
+        };
+      default:
+        return {
+          Icon: HiOutlineChatBubbleLeftRight,
+          label: "Chat"
+        };
+    }
+  };
+
+  const iconConfig = getIconConfig(flow.iconType);
+  const IconComponent = iconConfig.Icon;
+
   return (
     <section className={`${styles.templateHero} ${className}`}>
       <div className={styles.backgroundNoise} />
@@ -144,9 +190,9 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
                 <div className={styles.mobileSidebarBlock}>
                   <div className={styles.mobileAutomationBadge}>
                     <div className={styles.mobileAutomationIcon}>
-                      <img src="/images/robot.png" alt="Robot icon" width="20" height="20" />
+                      <IconComponent className={styles.icon} size={20} />
                     </div>
-                    <span className={styles.automationText}>Automation</span>
+                    <span className={styles.automationText}>{iconConfig.label}</span>
                   </div>
                 </div>
               </aside>
@@ -212,9 +258,9 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
               <div className={styles.sidebarBlock}>
                 <div className={styles.automationBadge}>
                   <div className={styles.automationIcon}>
-                    <img src="/images/robot.png" alt="Robot icon" width="24" height="24" />
+                    <IconComponent className={styles.icon} size={24} />
                   </div>
-                  <span className={styles.automationText}>Automation</span>
+                  <span className={styles.automationText}>{iconConfig.label}</span>
                 </div>
               </div>
             </aside>

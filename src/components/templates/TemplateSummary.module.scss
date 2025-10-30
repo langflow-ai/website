@@ -22,7 +22,18 @@
   }
 
   @media (min-width: 1280px) {
-    padding: 0; // xl: no padding for full width
+    // For screens wider than 1280px, calculate padding dynamically
+    // to ensure minimum padding on the sides
+    padding: 0 calc((100vw - 1080px) / 2);
+  }
+
+  // Ensure minimum padding of 24px on very large screens
+  @media (min-width: 1128px) {
+    padding: 0 24px; // Minimum 24px padding on each side
+  }
+
+  @media (min-width: 1440px) {
+    padding: 0 80px; // 80px padding for larger screens
   }
 
   @media (max-width: 1024px) {

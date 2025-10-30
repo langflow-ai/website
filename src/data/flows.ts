@@ -4,11 +4,11 @@ export type Flow = {
   topic: string;
   shortDescription: string;
   iconType: "basic" | "robot" | "automation" | "research" | "support";
-  category: string;          // Main category
-  subcategory: string;       // Subcategory
-  type: "automation" | "research" | "classification"; // Flow type
-  iframeSrc: string;         // TODO: set Langflow embed URL per flow
-  githubDownloadUrl: string; // TODO: set GitHub download URL per flow
+  category: string;
+  subcategory: string;
+  type: "automation" | "research" | "classification";
+  iframeSrc: string;
+  githubDownloadUrl: string;
 };
 
 export const FLOWS: Flow[] = [
@@ -30,7 +30,7 @@ export const FLOWS: Flow[] = [
     title: "Changelog Summarizer",
     topic: "Changelog Automation",
     shortDescription:
-      "Ingest commits/PRs/issues from GitHub and generate release notes in Markdown/HTML with breaking changes. (GitHub → Release Notes)",
+      "Ingest commits, PRs, and issues from GitHub and generate release notes in Markdown and HTML with breaking changes.",
     iconType: "automation",
     category: "Development",
     subcategory: "Release Management",
@@ -40,10 +40,10 @@ export const FLOWS: Flow[] = [
   },
   {
     slug: "personal-research-assistant-agentic-rag",
-    title: "Personal Research Assistant (Agentic RAG)",
+    title: "Research Assistant",
     topic: "Agentic RAG Research",
     shortDescription:
-      "Index PDFs/notes + web and respond with citations. Agent coordinates retrieve/verify/cite with RAG.",
+      "Index PDFs, notes, and web pages and respond with citations. Agent coordinates retrieve, verify, and cite with RAG.",
     iconType: "research",
     category: "Research",
     subcategory: "Document Analysis",
@@ -53,10 +53,10 @@ export const FLOWS: Flow[] = [
   },
   {
     slug: "support-ticket-auto-labeling-routing",
-    title: "Support Ticket Auto-Labeling (with Routing)",
+    title: "Ticket Auto-Labeling",
     topic: "Ticket Classification",
     shortDescription:
-      "Classify tickets by theme/product/urgency and apply routing to the right team.",
+      "Classify tickets by theme, product, and urgency and apply routing to the right team.",
     iconType: "support",
     category: "Customer Support",
     subcategory: "Ticket Management",

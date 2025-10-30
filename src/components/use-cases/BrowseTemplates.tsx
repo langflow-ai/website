@@ -2,8 +2,14 @@
 
 import { FLOWS, Flow, getCategoriesFromFlows, getTypesFromFlows } from "@/data/flows";
 import { FilterState } from "@/lib/types/templates";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import {
+  HiOutlineChatBubbleLeftRight,
+  HiOutlineCommandLine,
+  HiOutlineMagnifyingGlass,
+  HiOutlineSparkles,
+  HiOutlineSquares2X2
+} from "react-icons/hi2";
 import DownArrow from "../icons/downArrow/DownArrow";
 import TemplateCard from "../pages/UseCases/BeginnerBasics/TemplateCard";
 import styles from "./BrowseTemplates.module.scss";
@@ -25,11 +31,11 @@ const CATEGORIES = getCategoriesFromFlows().map((cat, index) => ({
 
 // Create category filter buttons with icons
 const CATEGORY_FILTERS = [
-  { value: "all-types", label: "All Types", icon: null },
-  { value: "Getting Started", label: "Getting Started", icon: "basic" },
-  { value: "Development", label: "Development", icon: "automation" },
-  { value: "Research", label: "Research", icon: "research" },
-  { value: "Customer Support", label: "Customer Support", icon: "support" },
+  { value: "all-types", label: "All Types", icon: HiOutlineSquares2X2 },
+  { value: "Getting Started", label: "Getting Started", icon: HiOutlineSparkles },
+  { value: "Development", label: "Development", icon: HiOutlineCommandLine },
+  { value: "Research", label: "Research", icon: HiOutlineMagnifyingGlass },
+  { value: "Customer Support", label: "Customer Support", icon: HiOutlineChatBubbleLeftRight },
 ];
 
 const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initialFilters }) => {
@@ -306,31 +312,8 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                         } ${filter.value === "all-types" && isActive ? styles.allTypes : ""}`}
                         onClick={() => handleFilterChange(filter.value as FilterType)}
                       >
-                      {filter.icon === "basic" && (
-                        <Image
-                          src="/images/basic.png"
-                          alt="Basic"
-                          width={24}
-                          height={24}
-                        />
-                      )}
-                      {filter.icon === "automation" && (
-                        <Image
-                          src="/images/robot.png"
-                          alt="Automation"
-                          width={24}
-                          height={24}
-                        />
-                      )}
-                      {filter.icon === "research" && (
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                      )}
-                      {filter.icon === "support" && (
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                        </svg>
+                      {filter.icon && (
+                        <filter.icon size={20} className={styles.icon} />
                       )}
                       {filter.label}
                     </button>

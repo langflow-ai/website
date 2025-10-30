@@ -148,6 +148,18 @@
   font-size: 1rem;
 }
 
+.icon {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
 .resultsAndSort {
   display: flex;
   justify-content: space-between;

@@ -11,8 +11,33 @@
 }
 
 .trendingContainer {
+  padding: 0 1rem; // Base padding for mobile
+  max-width: 1280px;
+  margin: 0 auto;
+
+  // Mobile-specific padding (24px minimum)
   @media (max-width: 767px) {
     margin-left: 24px;
-    padding-right: 24px;
+    padding: 0 24px; // 24px margin on each side
+  }
+
+  @media (min-width: 640px) {
+    padding: 0 1.5rem; // sm: 24px
+  }
+
+  @media (min-width: 768px) {
+    padding: 0 2rem; // md: 32px
+  }
+
+  @media (min-width: 1024px) {
+    padding: 0 2.5rem; // lg: 40px
+  }
+
+  @media (min-width: 1280px) {
+    padding: 0 72px;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 0 80px; // 80px padding for larger screens
   }
 }
