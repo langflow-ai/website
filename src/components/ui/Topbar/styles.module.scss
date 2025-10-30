@@ -21,6 +21,15 @@
     height: fit-content;
     padding: 8px 32px;
   }
+
+  a {
+    text-decoration: underline;
+  }
+
+  svg {
+    min-width: 20px;
+    min-height: 20px;
+  }
 }
 
 @keyframes waveGradient {
