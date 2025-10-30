@@ -193,7 +193,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
     setActiveFilter("all-types");
   };
 
-  // Apply additional filtering based on active filter and search query
+  // Apply additional filtering and sorting based on active filter, search query and sort selection
   useEffect(() => {
     let filtered = [...templates];
     
@@ -232,18 +232,19 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
       filtered = filtered.filter(flow => flow.category === activeFilter);
     }
     
-    console.log('Filtering debug:', {
-      selectedCategory,
-      activeFilter,
-      selectedType,
-      searchQuery,
-      originalCount: templates.length,
-      filteredCount: filtered.length,
-      filteredTitles: filtered.map(f => f.title)
-    });
+    // Apply sorting
+    if (sortBy === "most-popular") {
+      filtered.sort((a, b) => (b.clicks || 0) - (a.clicks || 0));
+    } else if (sortBy === "alphabetical") {
+      filtered.sort((a, b) => a.title.localeCompare(b.title));
+    } else {
+      // Default: most-recent
+      const toTime = (d?: string) => (d ? new Date(d).getTime() : 0);
+      filtered.sort((a, b) => toTime(b.updatedAt) - toTime(a.updatedAt));
+    }
     
     setFilteredTemplates(filtered);
-  }, [templates, searchQuery, selectedType, selectedCategory, activeFilter]);
+  }, [templates, searchQuery, selectedType, selectedCategory, activeFilter, sortBy]);
 
   return (
     <section id="browse-templates-section" className={`${styles.browseTemplates} ${className}`}>
@@ -505,10 +506,26 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                 </div>
               )}
             </div>
+            {/* Show View More only when any filter is applied */}
             {filteredTemplates.length > 0 && (
-              <div className={styles.viewMoreContainer}>
-                <button className={styles.viewMoreButton}>View More</button>
-              </div>
+              (() => {
+                const hasAnyFilter =
+                  Boolean(searchQuery && searchQuery.trim()) ||
+                  selectedType !== "all-types" ||
+                  selectedCategory !== "all-categories" ||
+                  activeFilter !== "all-types";
+                return hasAnyFilter ? (
+                  <div className={styles.viewMoreContainer}>
+                    <button
+                      className={styles.viewMoreButton}
+                      onClick={clearFilters}
+                      title="Clear filters and view all templates"
+                    >
+                      View More
+                    </button>
+                  </div>
+                ) : null;
+              })()
             )}
           </div>
         </div>

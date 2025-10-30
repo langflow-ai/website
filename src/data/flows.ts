@@ -9,6 +9,8 @@ export type Flow = {
   type: "automation" | "research" | "classification";
   iframeSrc: string;
   githubDownloadUrl: string;
+  updatedAt?: string; // ISO date used for sorting by recency
+  clicks?: number;    // popularity weight used for sorting by popularity
 };
 
 export const FLOWS: Flow[] = [
@@ -23,7 +25,10 @@ export const FLOWS: Flow[] = [
     subcategory: "Prompt Engineering",
     type: "automation",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
-    githubDownloadUrl: "/flows/basic_prompting.json"
+    githubDownloadUrl: "/flows/basic_prompting.json",
+    // Fixed date: Oct 20
+    updatedAt: "2025-10-20T00:00:00Z",
+    clicks: 300
   },
   {
     slug: "changelog-summarizer-github-release-notes",
@@ -36,7 +41,10 @@ export const FLOWS: Flow[] = [
     subcategory: "Release Management",
     type: "automation",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/8eb64311-0d80-40ee-a7b6-b3328f8ee5a3?embed=true",
-    githubDownloadUrl: "/flows/generate_concise_overviews.json"
+    githubDownloadUrl: "/flows/generate_concise_overviews.json",
+    // Fixed date: Oct 21
+    updatedAt: "2025-10-21T00:00:00Z",
+    clicks: 600
   },
   {
     slug: "personal-research-assistant-agentic-rag",
@@ -49,7 +57,10 @@ export const FLOWS: Flow[] = [
     subcategory: "Document Analysis",
     type: "research",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/eb618c7b-38c1-4bf1-91ee-9ddc77cc431d?embed=true",
-    githubDownloadUrl: "/flows/rag_article_in_web_with_agent.json"
+    githubDownloadUrl: "/flows/rag_article_in_web_with_agent.json",
+    // Fixed date: Oct 22
+    updatedAt: "2025-10-22T00:00:00Z",
+    clicks: 1200
   },
   {
     slug: "support-ticket-auto-labeling-routing",
@@ -62,7 +73,10 @@ export const FLOWS: Flow[] = [
     subcategory: "Ticket Management",
     type: "classification",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/4a0a22de-bd71-4840-991c-ca5cc07a8b16?embed=true",
-    githubDownloadUrl: "/flows/ticket_analysis_classification.json"
+    githubDownloadUrl: "/flows/ticket_analysis_classification.json",
+    // Fixed date: Oct 23
+    updatedAt: "2025-10-23T00:00:00Z",
+    clicks: 150
   }
 ];
 
