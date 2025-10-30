@@ -286,7 +286,7 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
                 src={flow.iframeSrc}
                 title={`${flow.title} Flow Preview`}
                 allow="clipboard-write; clipboard-read; web-share"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"
                 className={styles.templateIframe}
                 loading="lazy"
                 onError={(e) => {
