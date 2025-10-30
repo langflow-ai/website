@@ -394,9 +394,6 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                         <filter.icon size={20} className={styles.icon} />
                       )}
                       {filter.label}
-                      {filter.value === "all-types" && (
-                        <HiOutlineChevronDown size={16} className={styles.caretIcon} />
-                      )}
                     </button>
                     );
                   })}
