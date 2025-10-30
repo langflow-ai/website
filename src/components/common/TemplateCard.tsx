@@ -62,7 +62,7 @@ export default function TemplateCard({ template, className = "" }: TemplateCardP
 
   return (
     <Link 
-      href="/templates/basic-prompting"
+      href={`/templates/${template.slug}`}
       className={`${styles.templateCard} ${className}`}
     >
       {/* Header with badges */}
