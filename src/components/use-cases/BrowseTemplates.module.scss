@@ -166,6 +166,12 @@
   }
 }
 
+.caretSmall {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  margin-left: 6px;
+}
+
 .filterIcon {
   font-size: 1rem;
 }
@@ -651,8 +657,7 @@
   }
 
   .mobileSelector {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
   }
 
   .mobileSelect {
@@ -685,6 +690,19 @@
       background: var(--primary-black);
       padding: 0.25rem 0.5rem;
     }
+  }
+
+  .selectWrapper {
+    position: relative;
+  }
+
+  .selectChevron {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
   }
 
   .mobileResultsAndSort {

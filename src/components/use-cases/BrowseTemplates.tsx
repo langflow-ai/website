@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   HiOutlineChatBubbleLeftRight,
+  HiOutlineChevronDown,
   HiOutlineCommandLine,
   HiOutlineMagnifyingGlass,
   HiOutlineSparkles,
@@ -393,6 +394,9 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                         <filter.icon size={20} className={styles.icon} />
                       )}
                       {filter.label}
+                      {filter.value === "all-types" && (
+                        <HiOutlineChevronDown size={16} className={styles.caretIcon} />
+                      )}
                     </button>
                     );
                   })}
@@ -449,7 +453,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
               </div>
 
               <div className={styles.mobileSelectors}>
-                <div className={styles.mobileSelector}>
+                <div className={`${styles.mobileSelector} ${styles.selectWrapper}`}>
                   <select 
                     id="type-select" 
                     className={styles.mobileSelect} 
@@ -462,9 +466,11 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                       </option>
                     ))}
                   </select>
+                  <HiOutlineChevronDown className={styles.selectChevron} size={16} />
                 </div>
 
-                <div className={styles.mobileSelector}>
+                {/* Temporarily hidden - Categories selector */}
+                {/* <div className={`${styles.mobileSelector} ${styles.selectWrapper}`}>
                   <select 
                     id="category-select" 
                     className={styles.mobileSelect} 
@@ -482,18 +488,21 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                       </optgroup>
                     ))}
                   </select>
-                </div>
-              </div>
+                  <HiOutlineChevronDown className={styles.selectChevron} size={16} />
+                </div> */}
 
-              <div className={styles.mobileResultsAndSort}>
-                <div className={styles.mobileResultsCount}>
-                  {filteredTemplates.length} Results
-                </div>
-                <div className={styles.mobileSortContainer}>
-                  <span className={styles.mobileSortText}>Most Recent</span>
-                  <div className={styles.mobileSortIcon}>
-                    <DownArrow />
-                  </div>
+                <div className={`${styles.mobileSelector} ${styles.selectWrapper}`}>
+                  <select
+                    id="mobile-sort"
+                    className={styles.mobileSelect}
+                    value={sortBy}
+                    onChange={handleSortChange}
+                  >
+                    <option value="most-recent">Most Recent</option>
+                    <option value="most-popular">Most Popular</option>
+                    <option value="alphabetical">Alphabetical</option>
+                  </select>
+                  <HiOutlineChevronDown className={styles.selectChevron} size={16} />
                 </div>
               </div>
             </>

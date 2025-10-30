@@ -17,7 +17,11 @@ export const writeFiltersToURL = (router: ReturnType<typeof useRouter>, state: F
   if (state.q) p.set("q", state.q);
   if (state.segments.size) p.set("segments", [...state.segments].join(","));
   if (state.methodologies.size) p.set("methods", [...state.methodologies].join(","));
-  if (state.categories?.size) p.set("categories", [...state.categories].join(","));
+  if (state.categories && state.categories.size) {
+    // Enforce single-select for categories in URL
+    const first = [...state.categories][0];
+    if (first) p.set("categories", first);
+  }
   router.replace(`?${p.toString()}`, { scroll: false });
 };
 
