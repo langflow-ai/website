@@ -98,6 +98,14 @@
   color: #FFFFFF; // White text
   margin: 0 0 8px 0; // 8px abaixo do título
   text-align: left;
+  // Force single line with ellipsis for narrow desktop widths
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (min-width: 1001px) and (max-width: 1059px) {
+    font-size: 22px;
+  }
 }
 
 .cardDescription {

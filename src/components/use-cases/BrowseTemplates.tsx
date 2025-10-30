@@ -2,6 +2,8 @@
 
 import { FLOWS, Flow, getCategoriesFromFlows, getTypesFromFlows } from "@/data/flows";
 import { FilterState } from "@/lib/types/templates";
+import { writeFiltersToURL } from "@/utils/query";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   HiOutlineChatBubbleLeftRight,
@@ -42,13 +44,25 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
   const [activeFilter, setActiveFilter] = useState<FilterType>("all-types");
   const [searchQuery, setSearchQuery] = useState(initialFilters?.q || "");
   const [sortBy, setSortBy] = useState("most-recent");
-  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(["Getting Started"]));
+  // Expanded state for sidebar categories. Default: all expanded
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
+    new Set(CATEGORIES.map((c) => c.name))
+  );
   const [isMobile, setIsMobile] = useState(false);
   const [selectedType, setSelectedType] = useState("all-types");
   const [selectedCategory, setSelectedCategory] = useState("all-categories");
   const [templates, setTemplates] = useState<Flow[]>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<Flow[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const scrollToBrowseTemplates = () => {
+    if (typeof window === 'undefined') return;
+    const el = document.getElementById('browse-templates-section');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   // Check if mobile screen
   useEffect(() => {
@@ -106,6 +120,8 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
       setActiveFilter("all-types");
     }
     setSelectedCategory("all-categories"); // Reset sidebar selection when button is used
+    // Keep user focus on browse section
+    scrollToBrowseTemplates();
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,6 +158,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
     }
     
     setFilteredTemplates(filtered);
+    scrollToBrowseTemplates();
   };
 
   const getTypeDisplayValue = () => {
@@ -179,11 +196,13 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
   const handleCategoryClick = (categoryName: string) => {
     setSelectedCategory(categoryName);
     setActiveFilter("all-types"); // Reset button filter when sidebar is used
+    scrollToBrowseTemplates();
   };
 
   const handleSubcategoryClick = (categoryName: string, subcategoryName: string) => {
     setSelectedCategory(`${categoryName}-${subcategoryName}`);
     setActiveFilter("all-types"); // Reset button filter when sidebar is used
+    scrollToBrowseTemplates();
   };
 
   const clearFilters = () => {
@@ -191,6 +210,16 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
     setSelectedType("all-types");
     setSearchQuery("");
     setActiveFilter("all-types");
+    // Update URL to remove filters
+    writeFiltersToURL(router, {
+      q: "",
+      segments: new Set(),
+      methodologies: new Set(),
+      categories: new Set()
+    });
+    // After resetting, ensure the user remains focused on the browse section
+    // even when other sections (Trending/Beginner) render above.
+    setTimeout(scrollToBrowseTemplates, 0);
   };
 
   // Apply additional filtering and sorting based on active filter, search query and sort selection
@@ -245,6 +274,52 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
     
     setFilteredTemplates(filtered);
   }, [templates, searchQuery, selectedType, selectedCategory, activeFilter, sortBy]);
+
+  // Keep URL query in sync with category selections
+  useEffect(() => {
+    // Build categories set from either sidebar selection or top pill selection
+    let categoriesSet = new Set<string>();
+    if (selectedCategory !== "all-categories") {
+      categoriesSet.add(selectedCategory);
+    } else if (activeFilter !== "all-types") {
+      categoriesSet.add(activeFilter);
+    }
+
+    writeFiltersToURL(router, {
+      q: searchQuery || "",
+      segments: new Set(),
+      methodologies: new Set(),
+      categories: categoriesSet
+    });
+  }, [searchQuery, selectedCategory, activeFilter, router]);
+
+  // Control sidebar expansion reactively based on selection
+  useEffect(() => {
+    const allNames = CATEGORIES.map((c) => c.name);
+    const noSelection =
+      (selectedCategory === "all-categories" || !selectedCategory) &&
+      activeFilter === "all-types";
+
+    if (noSelection) {
+      // Expand all categories when nothing is selected
+      setExpandedCategories(new Set(allNames));
+      return;
+    }
+
+    // Determine the base category that should stay expanded
+    let baseCategory = "";
+    if (selectedCategory !== "all-categories") {
+      baseCategory = selectedCategory.includes("-")
+        ? selectedCategory.split("-")[0]
+        : selectedCategory;
+    } else if (activeFilter !== "all-types") {
+      baseCategory = activeFilter;
+    }
+
+    if (baseCategory) {
+      setExpandedCategories(new Set([baseCategory]));
+    }
+  }, [selectedCategory, activeFilter]);
 
   return (
     <section id="browse-templates-section" className={`${styles.browseTemplates} ${className}`}>
