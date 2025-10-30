@@ -9,12 +9,40 @@ import BrowseTemplates from "@/components/use-cases/BrowseTemplates";
 import TemplatesHero from "@/components/use-cases/TemplatesHero";
 import { fetchCollections, fetchTemplates } from "@/data/templates";
 import { hasActiveFilter, readFiltersFromURL } from "@/utils/query";
+import type { Metadata } from "next";
 import Link from "next/link";
 import styles from "./use-cases.module.scss";
 
 interface UseCasesPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
+
+export const generateMetadata = (): Metadata => {
+  return {
+    title: "Use Cases",
+    description:
+      "Explore Langflow use cases and AI workflow templates. Browse assistants, classification, coding, content generation, Q&A and more.",
+    openGraph: {
+      url: "https://www.langflow.org/use-cases",
+      siteName: "Langflow",
+      images: [
+        {
+          url: "/images/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: "Langflow Use Cases",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Use Cases",
+      description:
+        "Explore Langflow use cases and AI workflow templates. Browse assistants, classification, coding, content generation, Q&A and more.",
+      images: ["/images/og-image.png"],
+    },
+  };
+};
 
 export default async function UseCasesPage({ searchParams }: UseCasesPageProps) {
   const filters = readFiltersFromURL(
