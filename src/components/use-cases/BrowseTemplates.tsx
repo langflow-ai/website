@@ -13,7 +13,8 @@ import {
   HiOutlineSquares2X2
 } from "react-icons/hi2";
 import DownArrow from "../icons/downArrow/DownArrow";
-import TemplateCard from "../pages/UseCases/BeginnerBasics/TemplateCard";
+import TemplateCard from "@/components/common/TemplateCard";
+import { Template } from "@/lib/types/templates";
 import styles from "./BrowseTemplates.module.scss";
 
 interface BrowseTemplatesProps {
@@ -565,16 +566,25 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                   <p>Loading templates...</p>
                 </div>
               ) : filteredTemplates.length > 0 ? (
-                filteredTemplates.map((flow) => (
-                  <TemplateCard
-                    key={flow.slug}
-                    title={flow.title}
-                    description={flow.shortDescription}
-                    categories={[flow.category, flow.subcategory]}
-                    iconType={flow.iconType}
-                    slug={flow.slug}
-                  />
-                ))
+                filteredTemplates.map((flow) => {
+                  const template: Template = {
+                    id: flow.slug,
+                    slug: flow.slug,
+                    title: flow.title,
+                    summary: flow.shortDescription,
+                    thumbnailUrl: "/images/card-1.webp",
+                    segments: [],
+                    methodologies: [],
+                    badges: ["openai"],
+                    updatedAt: flow.updatedAt || "2025-01-01T00:00:00Z",
+                  };
+                  return (
+                    <TemplateCard
+                      key={flow.slug}
+                      template={template}
+                    />
+                  );
+                })
               ) : (
                 <div className={styles.emptyState}>
                   <p>No templates found matching your criteria.</p>
