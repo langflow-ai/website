@@ -11,10 +11,10 @@ import {
   HiOutlineBookOpen,
   HiOutlineChatBubbleLeftRight,
   HiOutlineCpuChip,
+  HiOutlineLink,
   HiOutlinePhone,
   HiOutlineSparkles
 } from "react-icons/hi2";
-import { HiOutlineLink } from "react-icons/hi2";
 import Toast from "../ui/Toast";
 import styles from "./TemplateHero.module.scss";
 import UseTemplateModal from "./UseTemplateModal";
