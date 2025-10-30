@@ -324,6 +324,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
   return (
     <section id="browse-templates-section" className={`${styles.browseTemplates} ${className}`}>
       <div className={styles.container}>
+        <h2 className={styles.sectionTitle}>Browse Templates</h2>
         <div className={styles.header}>
           {/* Desktop Layout */}
           {!isMobile && (
