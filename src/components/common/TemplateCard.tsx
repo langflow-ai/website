@@ -2,6 +2,13 @@
 
 import { SEGMENT_LABELS, Template } from "@/lib/types/templates";
 import Link from "next/link";
+import {
+    HiOutlineBookOpen,
+    HiOutlineChatBubbleLeftRight,
+    HiOutlineCpuChip,
+    HiOutlinePhone,
+    HiOutlineSparkles,
+} from "react-icons/hi2";
 import IconBadge from "./IconBadge";
 import Tag from "./Tag";
 import styles from "./TemplateCard.module.scss";
@@ -9,6 +16,9 @@ import styles from "./TemplateCard.module.scss";
 interface TemplateCardProps {
   template: Template;
   className?: string;
+  // Optional overrides for BrowseTemplates and other grids
+  iconType?: "basic" | "robot" | "automation" | "research" | "support";
+  footerTags?: string[]; // if provided, render these tags instead of segments
 }
 
 const BADGE_ICONS: Record<string, React.ReactNode> = {
@@ -53,10 +63,28 @@ const BADGE_ICONS: Record<string, React.ReactNode> = {
   )
 };
 
-export default function TemplateCard({ template, className = "" }: TemplateCardProps) {
+export default function TemplateCard({ template, className = "", iconType, footerTags }: TemplateCardProps) {
   const getBadgeIcon = (badge: string) => {
     return BADGE_ICONS[badge] || (
       <span style={{ fontSize: '0.75rem', fontWeight: '500' }}>{badge.charAt(0).toUpperCase()}</span>
+    );
+  };
+
+  const getIconBubble = () => {
+    if (!iconType) return null;
+    const map = {
+      basic: { Icon: HiOutlineChatBubbleLeftRight, bg: "rgb(139, 92, 246)" },
+      robot: { Icon: HiOutlineCpuChip, bg: "rgb(254, 89, 194)" },
+      automation: { Icon: HiOutlineSparkles, bg: "rgb(34, 197, 94)" },
+      research: { Icon: HiOutlineBookOpen, bg: "rgb(59, 130, 246)" },
+      support: { Icon: HiOutlinePhone, bg: "rgb(245, 158, 11)" },
+    } as const;
+    const cfg = map[iconType];
+    if (!cfg) return null;
+    return (
+      <div className={styles.iconBubble} style={{ backgroundColor: cfg.bg }}>
+        <cfg.Icon size={18} />
+      </div>
     );
   };
 
@@ -65,22 +93,27 @@ export default function TemplateCard({ template, className = "" }: TemplateCardP
       href={`/templates/${template.slug}`}
       className={`${styles.templateCard} ${className}`}
     >
-      {/* Header with badges */}
-      <div className={styles.header}>
-        {template.badges?.slice(0, 3).map((badge, index) => (
-          <IconBadge
-            key={index}
-            icon={getBadgeIcon(badge)}
-            tooltip={badge}
-          />
-        ))}
-        {template.badges && template.badges.length > 3 && (
-          <IconBadge
-            icon={<span style={{ fontSize: '0.75rem', fontWeight: '500' }}>+{template.badges.length - 3}</span>}
-            tooltip={`+${template.badges.length - 3} more integrations`}
-          />
-        )}
-      </div>
+      {/* Optional icon bubble */}
+      {getIconBubble()}
+
+      {/* Header with badges - hidden when iconType is provided (we show the bubble instead) */}
+      {!iconType && (
+        <div className={styles.header}>
+          {template.badges?.slice(0, 3).map((badge, index) => (
+            <IconBadge
+              key={index}
+              icon={getBadgeIcon(badge)}
+              tooltip={badge}
+            />
+          ))}
+          {template.badges && template.badges.length > 3 && (
+            <IconBadge
+              icon={<span style={{ fontSize: '0.75rem', fontWeight: '500' }}>+{template.badges.length - 3}</span>}
+              tooltip={`+${template.badges.length - 3} more integrations`}
+            />
+          )}
+        </div>
+      )}
 
       {/* Title */}
       <h3 className={styles.title}>
@@ -92,18 +125,18 @@ export default function TemplateCard({ template, className = "" }: TemplateCardP
         {template.summary}
       </p>
 
-      {/* Categories */}
+      {/* Footer tags: prefer provided footerTags; fallback to segments */}
       <div className={styles.categories}>
-        {template.segments.slice(0, 2).map((segment) => (
-          <Tag
-            key={segment}
-            label={SEGMENT_LABELS[segment]}
-          />
-        ))}
-        {template.segments.length > 2 && (
-          <Tag
-            label={`+${template.segments.length - 2}`}
-          />
+        {(footerTags && footerTags.length > 0
+          ? footerTags.slice(0, 2).map((t) => (
+              <Tag key={t} label={t} />
+            ))
+          : template.segments.slice(0, 2).map((segment) => (
+              <Tag key={segment} label={SEGMENT_LABELS[segment]} />
+            ))
+        )}
+        {!footerTags && template.segments.length > 2 && (
+          <Tag label={`+${template.segments.length - 2}`} />
         )}
       </div>
 

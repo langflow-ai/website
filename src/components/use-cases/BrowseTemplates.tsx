@@ -1,7 +1,8 @@
 "use client";
 
+import TemplateCard from "@/components/common/TemplateCard";
 import { FLOWS, Flow, getCategoriesFromFlows, getTypesFromFlows } from "@/data/flows";
-import { FilterState } from "@/lib/types/templates";
+import { FilterState, Template } from "@/lib/types/templates";
 import { writeFiltersToURL } from "@/utils/query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,8 +14,6 @@ import {
   HiOutlineSquares2X2
 } from "react-icons/hi2";
 import DownArrow from "../icons/downArrow/DownArrow";
-import TemplateCard from "@/components/common/TemplateCard";
-import { Template } from "@/lib/types/templates";
 import styles from "./BrowseTemplates.module.scss";
 
 interface BrowseTemplatesProps {
@@ -582,6 +581,8 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                     <TemplateCard
                       key={flow.slug}
                       template={template}
+                      iconType={flow.iconType}
+                      footerTags={[flow.category, flow.subcategory]}
                     />
                   );
                 })

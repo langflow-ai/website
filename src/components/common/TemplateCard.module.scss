@@ -25,6 +25,18 @@
     margin-bottom: 1rem;
   }
 
+  .iconBubble {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    margin-bottom: 0.75rem;
+    flex-shrink: 0;
+  }
+
   .title {
     font-size: 1.125rem;
     font-weight: 600;
