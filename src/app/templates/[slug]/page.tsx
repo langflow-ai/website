@@ -5,7 +5,9 @@ import GetStarted from "@/components/pages/Home/GetStarted";
 import Trending from "@/components/pages/UseCases/Trending/Trending";
 import { TemplateHero, TemplateSummary } from "@/components/templates";
 import { FLOWS, getFlowBySlug } from "@/data/flows";
+import { getTemplate } from "@/data/templates";
 import { Methodology, Segment } from "@/lib/types/templates";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import styles from "./page.module.scss";
 
@@ -81,7 +83,7 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
         <TemplateHero template={template} flow={flow} />
 
         <section className={`container ${styles.section}`}>
-          <TemplateSummary template={template} />
+          <TemplateSummary template={template} flow={flow} />
         </section>
 
         <div className={styles.trendingContainer}>
@@ -92,6 +94,48 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
       </div>
     </PageLayout>
   );
+}
+
+export async function generateMetadata({ params }: TemplatePageProps): Promise<Metadata> {
+  const flow = getFlowBySlug(params.slug);
+  const template = await getTemplate(params.slug);
+
+  if (!flow && !template) {
+    return {
+      title: "Template Not Found",
+      description: "The requested template could not be found.",
+    };
+  }
+
+  const title = template?.title || flow?.title || "Langflow Template";
+  const description = template?.summary || flow?.shortDescription || "Explore this Langflow template.";
+  const image = template?.thumbnailUrl || "/images/og-image.png";
+  const url = `https://www.langflow.org/templates/${params.slug}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      url,
+      siteName: "Langflow",
+      title,
+      description,
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+    },
+  };
 }
 
 // Generate static params for the flows

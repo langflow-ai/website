@@ -99,16 +99,15 @@ export default function TemplatesHero({ initialFilters }: TemplatesHeroProps) {
   };
 
   const toggleCategory = (category: string) => {
+    // Single-select behavior: clicking a category selects it exclusively;
+    // clicking again clears the selection.
     setFilters((prev) => {
-      const newCategories = new Set(prev.categories || []);
-      const isSelected = newCategories.has(category);
-
-      if (isSelected) {
-        newCategories.delete(category);
-      } else {
+      const current = prev.categories || new Set<string>();
+      const isSelected = current.has(category);
+      const newCategories = new Set<string>();
+      if (!isSelected) {
         newCategories.add(category);
       }
-
       return { ...prev, categories: newCategories };
     });
   };

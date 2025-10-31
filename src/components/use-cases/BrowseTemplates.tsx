@@ -1,11 +1,20 @@
 "use client";
 
+import TemplateCard from "@/components/common/TemplateCard";
 import { FLOWS, Flow, getCategoriesFromFlows, getTypesFromFlows } from "@/data/flows";
-import { FilterState } from "@/lib/types/templates";
-import Image from "next/image";
+import { FilterState, Template } from "@/lib/types/templates";
+import { writeFiltersToURL } from "@/utils/query";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import {
+  HiOutlineChatBubbleLeftRight,
+  HiOutlineChevronDown,
+  HiOutlineCommandLine,
+  HiOutlineMagnifyingGlass,
+  HiOutlineSparkles,
+  HiOutlineSquares2X2
+} from "react-icons/hi2";
 import DownArrow from "../icons/downArrow/DownArrow";
-import TemplateCard from "../pages/UseCases/BeginnerBasics/TemplateCard";
 import styles from "./BrowseTemplates.module.scss";
 
 interface BrowseTemplatesProps {
@@ -25,24 +34,36 @@ const CATEGORIES = getCategoriesFromFlows().map((cat, index) => ({
 
 // Create category filter buttons with icons
 const CATEGORY_FILTERS = [
-  { value: "all-types", label: "All Types", icon: null },
-  { value: "Getting Started", label: "Getting Started", icon: "basic" },
-  { value: "Development", label: "Development", icon: "automation" },
-  { value: "Research", label: "Research", icon: "research" },
-  { value: "Customer Support", label: "Customer Support", icon: "support" },
+  { value: "all-types", label: "All Types", icon: HiOutlineSquares2X2 },
+  { value: "Getting Started", label: "Getting Started", icon: HiOutlineSparkles },
+  { value: "Development", label: "Development", icon: HiOutlineCommandLine },
+  { value: "Research", label: "Research", icon: HiOutlineMagnifyingGlass },
+  { value: "Customer Support", label: "Customer Support", icon: HiOutlineChatBubbleLeftRight },
 ];
 
 const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initialFilters }) => {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all-types");
   const [searchQuery, setSearchQuery] = useState(initialFilters?.q || "");
   const [sortBy, setSortBy] = useState("most-recent");
-  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(["Getting Started"]));
+  // Expanded state for sidebar categories. Default: all expanded
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
+    new Set(CATEGORIES.map((c) => c.name))
+  );
   const [isMobile, setIsMobile] = useState(false);
   const [selectedType, setSelectedType] = useState("all-types");
   const [selectedCategory, setSelectedCategory] = useState("all-categories");
   const [templates, setTemplates] = useState<Flow[]>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<Flow[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const scrollToBrowseTemplates = () => {
+    if (typeof window === 'undefined') return;
+    const el = document.getElementById('browse-templates-section');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   // Check if mobile screen
   useEffect(() => {
@@ -100,6 +121,8 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
       setActiveFilter("all-types");
     }
     setSelectedCategory("all-categories"); // Reset sidebar selection when button is used
+    // Keep user focus on browse section
+    scrollToBrowseTemplates();
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,6 +159,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
     }
     
     setFilteredTemplates(filtered);
+    scrollToBrowseTemplates();
   };
 
   const getTypeDisplayValue = () => {
@@ -173,11 +197,13 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
   const handleCategoryClick = (categoryName: string) => {
     setSelectedCategory(categoryName);
     setActiveFilter("all-types"); // Reset button filter when sidebar is used
+    scrollToBrowseTemplates();
   };
 
   const handleSubcategoryClick = (categoryName: string, subcategoryName: string) => {
     setSelectedCategory(`${categoryName}-${subcategoryName}`);
     setActiveFilter("all-types"); // Reset button filter when sidebar is used
+    scrollToBrowseTemplates();
   };
 
   const clearFilters = () => {
@@ -185,9 +211,19 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
     setSelectedType("all-types");
     setSearchQuery("");
     setActiveFilter("all-types");
+    // Update URL to remove filters
+    writeFiltersToURL(router, {
+      q: "",
+      segments: new Set(),
+      methodologies: new Set(),
+      categories: new Set()
+    });
+    // After resetting, ensure the user remains focused on the browse section
+    // even when other sections (Trending/Beginner) render above.
+    setTimeout(scrollToBrowseTemplates, 0);
   };
 
-  // Apply additional filtering based on active filter and search query
+  // Apply additional filtering and sorting based on active filter, search query and sort selection
   useEffect(() => {
     let filtered = [...templates];
     
@@ -226,22 +262,70 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
       filtered = filtered.filter(flow => flow.category === activeFilter);
     }
     
-    console.log('Filtering debug:', {
-      selectedCategory,
-      activeFilter,
-      selectedType,
-      searchQuery,
-      originalCount: templates.length,
-      filteredCount: filtered.length,
-      filteredTitles: filtered.map(f => f.title)
-    });
+    // Apply sorting
+    if (sortBy === "most-popular") {
+      filtered.sort((a, b) => (b.clicks || 0) - (a.clicks || 0));
+    } else if (sortBy === "alphabetical") {
+      filtered.sort((a, b) => a.title.localeCompare(b.title));
+    } else {
+      // Default: most-recent
+      const toTime = (d?: string) => (d ? new Date(d).getTime() : 0);
+      filtered.sort((a, b) => toTime(b.updatedAt) - toTime(a.updatedAt));
+    }
     
     setFilteredTemplates(filtered);
-  }, [templates, searchQuery, selectedType, selectedCategory, activeFilter]);
+  }, [templates, searchQuery, selectedType, selectedCategory, activeFilter, sortBy]);
+
+  // Keep URL query in sync with category selections
+  useEffect(() => {
+    // Build categories set from either sidebar selection or top pill selection
+    let categoriesSet = new Set<string>();
+    if (selectedCategory !== "all-categories") {
+      categoriesSet.add(selectedCategory);
+    } else if (activeFilter !== "all-types") {
+      categoriesSet.add(activeFilter);
+    }
+
+    writeFiltersToURL(router, {
+      q: searchQuery || "",
+      segments: new Set(),
+      methodologies: new Set(),
+      categories: categoriesSet
+    });
+  }, [searchQuery, selectedCategory, activeFilter, router]);
+
+  // Control sidebar expansion reactively based on selection
+  useEffect(() => {
+    const allNames = CATEGORIES.map((c) => c.name);
+    const noSelection =
+      (selectedCategory === "all-categories" || !selectedCategory) &&
+      activeFilter === "all-types";
+
+    if (noSelection) {
+      // Expand all categories when nothing is selected
+      setExpandedCategories(new Set(allNames));
+      return;
+    }
+
+    // Determine the base category that should stay expanded
+    let baseCategory = "";
+    if (selectedCategory !== "all-categories") {
+      baseCategory = selectedCategory.includes("-")
+        ? selectedCategory.split("-")[0]
+        : selectedCategory;
+    } else if (activeFilter !== "all-types") {
+      baseCategory = activeFilter;
+    }
+
+    if (baseCategory) {
+      setExpandedCategories(new Set([baseCategory]));
+    }
+  }, [selectedCategory, activeFilter]);
 
   return (
     <section id="browse-templates-section" className={`${styles.browseTemplates} ${className}`}>
       <div className={styles.container}>
+        <h2 className={styles.sectionTitle}>Browse Templates</h2>
         <div className={styles.header}>
           {/* Desktop Layout */}
           {!isMobile && (
@@ -306,31 +390,8 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                         } ${filter.value === "all-types" && isActive ? styles.allTypes : ""}`}
                         onClick={() => handleFilterChange(filter.value as FilterType)}
                       >
-                      {filter.icon === "basic" && (
-                        <Image
-                          src="/images/basic.png"
-                          alt="Basic"
-                          width={24}
-                          height={24}
-                        />
-                      )}
-                      {filter.icon === "automation" && (
-                        <Image
-                          src="/images/robot.png"
-                          alt="Automation"
-                          width={24}
-                          height={24}
-                        />
-                      )}
-                      {filter.icon === "research" && (
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                      )}
-                      {filter.icon === "support" && (
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                        </svg>
+                      {filter.icon && (
+                        <filter.icon size={20} className={styles.icon} />
                       )}
                       {filter.label}
                     </button>
@@ -389,7 +450,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
               </div>
 
               <div className={styles.mobileSelectors}>
-                <div className={styles.mobileSelector}>
+                <div className={`${styles.mobileSelector} ${styles.selectWrapper}`}>
                   <select 
                     id="type-select" 
                     className={styles.mobileSelect} 
@@ -402,9 +463,11 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                       </option>
                     ))}
                   </select>
+                  <HiOutlineChevronDown className={styles.selectChevron} size={16} />
                 </div>
 
-                <div className={styles.mobileSelector}>
+                {/* Temporarily hidden - Categories selector */}
+                {/* <div className={`${styles.mobileSelector} ${styles.selectWrapper}`}>
                   <select 
                     id="category-select" 
                     className={styles.mobileSelect} 
@@ -422,18 +485,21 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                       </optgroup>
                     ))}
                   </select>
-                </div>
-              </div>
+                  <HiOutlineChevronDown className={styles.selectChevron} size={16} />
+                </div> */}
 
-              <div className={styles.mobileResultsAndSort}>
-                <div className={styles.mobileResultsCount}>
-                  {filteredTemplates.length} Results
-                </div>
-                <div className={styles.mobileSortContainer}>
-                  <span className={styles.mobileSortText}>Most Recent</span>
-                  <div className={styles.mobileSortIcon}>
-                    <DownArrow />
-                  </div>
+                <div className={`${styles.mobileSelector} ${styles.selectWrapper}`}>
+                  <select
+                    id="mobile-sort"
+                    className={styles.mobileSelect}
+                    value={sortBy}
+                    onChange={handleSortChange}
+                  >
+                    <option value="most-recent">Most Recent</option>
+                    <option value="most-popular">Most Popular</option>
+                    <option value="alphabetical">Alphabetical</option>
+                  </select>
+                  <HiOutlineChevronDown className={styles.selectChevron} size={16} />
                 </div>
               </div>
             </>
@@ -506,26 +572,53 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                   <p>Loading templates...</p>
                 </div>
               ) : filteredTemplates.length > 0 ? (
-                filteredTemplates.map((flow) => (
-                  <TemplateCard
-                    key={flow.slug}
-                    title={flow.title}
-                    description={flow.shortDescription}
-                    categories={[flow.category, flow.subcategory]}
-                    iconType={flow.iconType}
-                    slug={flow.slug}
-                  />
-                ))
+                filteredTemplates.map((flow) => {
+                  const template: Template = {
+                    id: flow.slug,
+                    slug: flow.slug,
+                    title: flow.title,
+                    summary: flow.shortDescription,
+                    thumbnailUrl: "/images/card-1.webp",
+                    segments: [],
+                    methodologies: [],
+                    badges: ["openai"],
+                    updatedAt: flow.updatedAt || "2025-01-01T00:00:00Z",
+                  };
+                  return (
+                    <TemplateCard
+                      key={flow.slug}
+                      template={template}
+                      iconType={flow.iconType}
+                      footerTags={[flow.category, flow.subcategory]}
+                    />
+                  );
+                })
               ) : (
                 <div className={styles.emptyState}>
                   <p>No templates found matching your criteria.</p>
                 </div>
               )}
             </div>
+            {/* Show View More only when any filter is applied */}
             {filteredTemplates.length > 0 && (
-              <div className={styles.viewMoreContainer}>
-                <button className={styles.viewMoreButton}>View More</button>
-              </div>
+              (() => {
+                const hasAnyFilter =
+                  Boolean(searchQuery && searchQuery.trim()) ||
+                  selectedType !== "all-types" ||
+                  selectedCategory !== "all-categories" ||
+                  activeFilter !== "all-types";
+                return hasAnyFilter ? (
+                  <div className={styles.viewMoreContainer}>
+                    <button
+                      className={styles.viewMoreButton}
+                      onClick={clearFilters}
+                      title="Clear filters and view all templates"
+                    >
+                      View More
+                    </button>
+                  </div>
+                ) : null;
+              })()
             )}
           </div>
         </div>

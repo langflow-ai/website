@@ -25,12 +25,33 @@
     margin-bottom: 1rem;
   }
 
+  .iconBubble {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    margin-bottom: 0.75rem;
+    flex-shrink: 0;
+  }
+
   .title {
     font-size: 1.125rem;
     font-weight: 600;
     color: $templates-text;
     margin-bottom: 0.75rem;
     transition: color 0.2s;
+    // Prevent multi-line wrapping and preserve card height consistency
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    // Narrow desktop range: slightly reduce font to avoid overflow
+    @media (min-width: 1001px) and (max-width: 1059px) {
+      font-size: 1rem;
+    }
 
     .templateCard:hover & {
       color: $templates-brand-1;

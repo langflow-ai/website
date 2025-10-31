@@ -1,8 +1,14 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import {
+    HiOutlineBookOpen,
+    HiOutlineChatBubbleLeftRight,
+    HiOutlineCpuChip,
+    HiOutlinePhone,
+    HiOutlineSparkles
+} from "react-icons/hi2";
 import styles from "./TemplateCard.module.scss";
 
 interface TemplateCardProps {
@@ -28,37 +34,37 @@ export default function TemplateCard({
     switch (type) {
       case "basic":
         return {
-          src: "/images/basic.png",
+          icon: HiOutlineChatBubbleLeftRight,
           alt: "Basic Prompting icon",
           bgColor: "rgb(139, 92, 246)" // Purple
         };
       case "robot":
         return {
-          src: "/images/robot.png",
+          icon: HiOutlineCpuChip,
           alt: "Robot icon",
           bgColor: "rgb(254, 89, 194)" // Pink
         };
       case "automation":
         return {
-          src: "/images/robot.png", // Using robot icon for automation
+          icon: HiOutlineSparkles,
           alt: "Automation icon",
           bgColor: "rgb(34, 197, 94)" // Green
         };
       case "research":
         return {
-          src: "/images/basic.png", // Using basic icon for research
+          icon: HiOutlineBookOpen,
           alt: "Research icon",
           bgColor: "rgb(59, 130, 246)" // Blue
         };
       case "support":
         return {
-          src: "/images/robot.png", // Using robot icon for support
+          icon: HiOutlinePhone,
           alt: "Support icon",
           bgColor: "rgb(245, 158, 11)" // Orange
         };
       default:
         return {
-          src: "/images/basic.png",
+          icon: HiOutlineChatBubbleLeftRight,
           alt: "Default icon",
           bgColor: "rgb(139, 92, 246)"
         };
@@ -113,11 +119,9 @@ export default function TemplateCard({
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         >
-          <Image
-            src={iconConfig.src}
-            alt={iconConfig.alt}
-            width={24}
-            height={24}
+          <iconConfig.icon 
+            className={styles.icon}
+            size={24}
           />
           {showTooltip && (
             <div className={styles.tooltip}>

@@ -1,12 +1,15 @@
+import { Flow } from "@/data/flows";
 import { Template } from "@/lib/types/templates";
+import Link from "next/link";
 import styles from "./TemplateSummary.module.scss";
 
 interface TemplateSummaryProps {
   template: Template;
+  flow?: Flow; // if provided, use flow.category/subcategory as categories
   className?: string;
 }
 
-export default function TemplateSummary({ template, className = "" }: TemplateSummaryProps) {
+export default function TemplateSummary({ template, flow, className = "" }: TemplateSummaryProps) {
   const { whatYouDo, whatYouLearn, whyItMatters, segments } = template;
 
   const formatLabel = (value: string) =>
@@ -53,16 +56,38 @@ export default function TemplateSummary({ template, className = "" }: TemplateSu
         </section>
       )}
 
-      {segments && segments.length > 0 && (
+      {(flow || (segments && segments.length > 0)) && (
         <section className={styles.categoriesSection}>
           <div className={styles.categoriesContainer}>
             <span className={styles.categoriesLabel}>Categories</span>
             <div className={styles.categoriesButtons}>
-              {segments.map((segment) => (
-                <button key={segment} className={styles.categoryButton}>
-                  {formatLabel(segment)}
-                </button>
-              ))}
+              {flow
+                ? (
+                  [flow.category, flow.subcategory].filter(Boolean).map((cat, idx) => (
+                    <Link
+                      key={`${cat}-${idx}`}
+                      href={`/use-cases?categories=${encodeURIComponent(
+                        idx === 0 ? cat : `${flow.category}-${flow.subcategory}`
+                      )}`}
+                      className={styles.categoryButton}
+                      aria-label={`Browse use cases in ${cat}`}
+                    >
+                      {cat}
+                    </Link>
+                  ))
+                )
+                : (
+                  segments.map((segment) => (
+                    <Link
+                      key={segment}
+                      href={`/use-cases?segments=${encodeURIComponent(segment)}`}
+                      className={styles.categoryButton}
+                      aria-label={`Browse use cases in ${formatLabel(segment)}`}
+                    >
+                      {formatLabel(segment)}
+                    </Link>
+                  ))
+                )}
             </div>
           </div>
         </section>

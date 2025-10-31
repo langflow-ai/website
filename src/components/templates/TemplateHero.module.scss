@@ -102,7 +102,14 @@
     }
 
     @media (min-width: 1280px) {
-      padding: 0; // xl: no padding for full width
+      // For screens wider than 1280px, calculate padding dynamically
+      // to ensure minimum padding on the sides
+      padding: 0 72px;
+    }
+
+
+    @media (min-width: 1440px) {
+      padding: 0 80px; // 80px padding for larger screens
     }
   }
 
@@ -441,6 +448,14 @@
       width: 24px;
       height: 24px;
     }
+
+    .icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+    }
   }
 
   .automationText {
@@ -588,6 +603,14 @@
     width: 32px;
     height: 32px;
     padding: 0.375rem;
+  }
+
+  .icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
   }
 }
 

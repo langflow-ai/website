@@ -1,9 +1,9 @@
 "use client";
 
 import { FLOWS } from "@/data/flows";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
 import styles from "./BeginnerBasics.module.scss";
 import TemplateCard from "./TemplateCard";
 
@@ -33,14 +33,13 @@ export default function BeginnerBasics() {
             <div className={styles.leftContent}>
               <div 
                 className={styles.iconContainer}
+                style={{ backgroundColor: "rgb(139, 92, 246)" }}
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
               >
-                <Image
-                  src="/images/basic.png"
-                  alt="Basic Prompting icon"
-                  width={24}
-                  height={24}
+                <HiOutlineChatBubbleLeftRight 
+                  className={styles.icon}
+                  size={24}
                 />
                 {showTooltip && (
                   <div className={styles.tooltip}>

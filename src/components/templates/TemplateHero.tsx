@@ -6,7 +6,15 @@ import { Flow } from "@/data/flows";
 import { useShare } from "@/hooks/useShare";
 import { Template } from "@/lib/types/templates";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FaRegCopy } from "react-icons/fa6";
+import {
+  HiOutlineBookOpen,
+  HiOutlineChatBubbleLeftRight,
+  HiOutlineCpuChip,
+  HiOutlinePhone,
+  HiOutlineSparkles
+} from "react-icons/hi2";
 import Toast from "../ui/Toast";
 import styles from "./TemplateHero.module.scss";
 import UseTemplateModal from "./UseTemplateModal";
@@ -51,6 +59,7 @@ const BADGE_ICONS: Record<string, React.ReactNode> = {
 export default function TemplateHero({ template, flow, className = "" }: TemplateHeroProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [supportsNativeShare, setSupportsNativeShare] = useState(false);
   const { share, shareToTwitter, shareToLinkedIn } = useShare();
 
   // Get current URL for sharing
@@ -77,6 +86,13 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
   const handleLinkedInShare = () => {
     shareToLinkedIn(currentUrl);
   };
+
+  // Detect native share support to toggle icon for fallback (copy link)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setSupportsNativeShare(!!navigator.share);
+    }
+  }, []);
 
   const getBadgeIcon = (badge: string) => {
     return BADGE_ICONS[badge] || (
@@ -106,6 +122,45 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
     // const years = Math.round(days / 365);
     // return `${years} year${years > 1 ? "s" : ""} ago`;
   };
+
+  // Get icon and label based on flow iconType
+  const getIconConfig = (iconType: string) => {
+    switch (iconType) {
+      case "basic":
+        return {
+          Icon: HiOutlineChatBubbleLeftRight,
+          label: "Chat"
+        };
+      case "robot":
+        return {
+          Icon: HiOutlineCpuChip,
+          label: "Automation"
+        };
+      case "automation":
+        return {
+          Icon: HiOutlineSparkles,
+          label: "Automation"
+        };
+      case "research":
+        return {
+          Icon: HiOutlineBookOpen,
+          label: "Research"
+        };
+      case "support":
+        return {
+          Icon: HiOutlinePhone,
+          label: "Support"
+        };
+      default:
+        return {
+          Icon: HiOutlineChatBubbleLeftRight,
+          label: "Chat"
+        };
+    }
+  };
+
+  const iconConfig = getIconConfig(flow.iconType);
+  const IconComponent = iconConfig.Icon;
 
   return (
     <section className={`${styles.templateHero} ${className}`}>
@@ -144,9 +199,9 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
                 <div className={styles.mobileSidebarBlock}>
                   <div className={styles.mobileAutomationBadge}>
                     <div className={styles.mobileAutomationIcon}>
-                      <img src="/images/robot.png" alt="Robot icon" width="20" height="20" />
+                      <IconComponent className={styles.icon} size={20} />
                     </div>
-                    <span className={styles.automationText}>Automation</span>
+                    <span className={styles.automationText}>{iconConfig.label}</span>
                   </div>
                 </div>
               </aside>
@@ -169,12 +224,16 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
                     type="button" 
                     className={styles.shareButton}
                     onClick={handleNativeShare}
-                    aria-label="Share template"
-                    title="Share template"
+                    aria-label={supportsNativeShare ? "Share template" : "Copy link"}
+                    title={supportsNativeShare ? "Share template" : "Copy link"}
                   >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-                    </svg>
+                    {supportsNativeShare ? (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+                      </svg>
+                    ) : (
+                      <FaRegCopy size={18} />
+                    )}
                   </button>
                   <button 
                     type="button" 
@@ -212,9 +271,9 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
               <div className={styles.sidebarBlock}>
                 <div className={styles.automationBadge}>
                   <div className={styles.automationIcon}>
-                    <img src="/images/robot.png" alt="Robot icon" width="24" height="24" />
+                    <IconComponent className={styles.icon} size={24} />
                   </div>
-                  <span className={styles.automationText}>Automation</span>
+                  <span className={styles.automationText}>{iconConfig.label}</span>
                 </div>
               </div>
             </aside>
@@ -227,7 +286,7 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
                 src={flow.iframeSrc}
                 title={`${flow.title} Flow Preview`}
                 allow="clipboard-write; clipboard-read; web-share"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"
                 className={styles.templateIframe}
                 loading="lazy"
                 onError={(e) => {

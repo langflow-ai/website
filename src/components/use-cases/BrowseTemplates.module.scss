@@ -16,6 +16,21 @@
   margin-bottom: 0;
 }
 
+.sectionTitle {
+  font-family: 'Chivo', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  margin: 0 0 32px 0;
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+  }
+}
+
 .title {
   font-family: 'Chivo', sans-serif;
   font-style: normal;
@@ -138,14 +153,39 @@
     background: #1f1f23;
   }
 
-  &.active {
-    background: linear-gradient(to right, rgba(124, 77, 255, 0.9), rgba(79, 70, 229, 0.9));
-    border-color: transparent;
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    box-shadow: none; // prevent purple focus ring
+    border-color: rgba(255, 255, 255, 0.35);
   }
+
+  &.active {
+    background: rgba(255, 255, 255, 0.15); // neutral gray, not purple
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.caretSmall {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  margin-left: 6px;
 }
 
 .filterIcon {
   font-size: 1rem;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
 }
 
 .resultsAndSort {
@@ -315,12 +355,12 @@
 
 // All Types pill always uses gradient background
 .allTypes {
-  background: linear-gradient(to right, #7c4dff, #4f46e5);
-  border-color: transparent;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
   color: #ffffff;
 
   &:hover {
-    background: linear-gradient(to right, #7c4dff, #4f46e5);
+    background: rgba(255, 255, 255, 0.2);
   }
 }
 
@@ -617,8 +657,7 @@
   }
 
   .mobileSelector {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
   }
 
   .mobileSelect {
@@ -651,6 +690,19 @@
       background: var(--primary-black);
       padding: 0.25rem 0.5rem;
     }
+  }
+
+  .selectWrapper {
+    position: relative;
+  }
+
+  .selectChevron {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
   }
 
   .mobileResultsAndSort {

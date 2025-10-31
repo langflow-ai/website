@@ -51,6 +51,18 @@
   position: relative; // For tooltip positioning
 }
 
+.icon {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+
 .tooltip {
   position: absolute;
   top: -40px; // Position above the icon
@@ -86,6 +98,14 @@
   color: #FFFFFF; // White text
   margin: 0 0 8px 0; // 8px abaixo do título
   text-align: left;
+  // Force single line with ellipsis for narrow desktop widths
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (min-width: 1001px) and (max-width: 1059px) {
+    font-size: 22px;
+  }
 }
 
 .cardDescription {
@@ -94,11 +114,11 @@
   font-weight: 300;
   font-size: 16px;
   line-height: 140%;
-  color: #FFFFFF; // White text
-  margin: 0 0 24px 0; // 24px abaixo da descrição
+  color: #FFFFFF;
+  margin: 0 0 24px 0;
   text-align: left;
-  text-align: justify; // Texto justificado
-  max-width: 380px; // Para controlar a quebra de linha
+  text-align: left;
+  max-width: 380px;
   word-wrap: break-word;
   hyphens: auto;
 }
