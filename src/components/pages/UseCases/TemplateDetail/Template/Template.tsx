@@ -41,8 +41,6 @@ const TemplateDetailTemplate = ({ template }: TemplateDetailTemplateProps) => {
       <ContentSection>
         <div className="row justify-content-center">
           <div className="col-lg-10">
-          
-
             {/* Use Cases */}
             <div className={styles.section}>
               <h3 className={styles.sectionTitle}>Use Cases</h3>
