@@ -266,7 +266,7 @@ export default function TemplatesHero({ initialFilters }: TemplatesHeroProps) {
 
       <div className={styles.container}>
         <div className={styles.content}>
-          {/* Primeira linha: Título e Subtítulo */}
+          {/* First row: Title and Subtitle */}
           <div className={styles.headerContent}>
             <h1 className={styles.title}>Templates</h1>
             <p className={styles.subtitle}>
@@ -274,7 +274,7 @@ export default function TemplatesHero({ initialFilters }: TemplatesHeroProps) {
             </p>
           </div>
 
-          {/* Segunda linha: Input e Botões */}
+          {/* Second row: Input and Buttons */}
           <div className={styles.searchAndFiltersRow}>
             {/* Search Bar */}
             <div className={styles.searchContainer}>

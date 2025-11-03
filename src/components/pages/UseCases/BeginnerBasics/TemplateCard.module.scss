@@ -45,7 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px; // 24px abaixo do ícone
+  margin-bottom: 24px; // 24px below the icon
   flex-shrink: 0; // Prevent shrinking
   aspect-ratio: 1; // Ensure perfect circle
   position: relative; // For tooltip positioning
@@ -96,7 +96,7 @@
   font-size: 24px;
   line-height: 120%;
   color: #FFFFFF; // White text
-  margin: 0 0 8px 0; // 8px abaixo do título
+  margin: 0 0 8px 0; // 8px below the title
   text-align: left;
   // Force single line with ellipsis for narrow desktop widths
   white-space: nowrap;
@@ -136,7 +136,7 @@
   padding: 0.25rem 0.75rem; // Reduced padding to fit better
   background: transparent;
   border: 0.5px solid #3f3f46; // zinc-700 border like hero buttons
-  color: rgba(255, 255, 255, 0.7); // Texto branco com transparência como os botões do hero
+  color: rgba(255, 255, 255, 0.7); // White text with transparency like hero buttons
   border-radius: 0.75rem; // Slightly smaller border radius
   font-size: 0.75rem; // Smaller font size to fit better
   font-weight: 500;

@@ -72,9 +72,9 @@
     z-index: 20;
     padding: 0;
     margin: 0;
-    max-width: 1280px; // Largura máxima para o conteúdo
-    margin: 0 auto; // Centraliza o conteúdo
-    padding: 0 20px; // Padding mínimo
+    max-width: 1280px; // Maximum width for content
+    margin: 0 auto; // Center content horizontally
+    padding: 0 20px; // Minimum padding
 
     @media (min-width: 480px) {
       padding: 0 40px;
@@ -89,7 +89,7 @@
     }
 
     @media (min-width: 1440px) {
-      padding: 0 80px; // 80px de recuo em telas de 1440px
+      padding: 0 80px; // 80px offset on 1440px screens
     }
   }
 
@@ -97,15 +97,15 @@
     width: 100%;
     position: relative;
     display: flex;
-    flex-direction: column; // Duas linhas: título/subtítulo e input/botões
-    gap: 2rem; // Espaço entre as duas linhas
-    padding: 120px 0 60px 0; // Apenas padding vertical
+    flex-direction: column; // Two rows: title/subtitle and input/buttons
+    gap: 2rem; // Space between the two rows
+    padding: 120px 0 60px 0; // Vertical padding only
 
     @media (min-width: 768px) {
       gap: 1.5rem;
     }
 
-    // Primeira linha: título e subtítulo
+    // First row: title and subtitle
     .headerContent {
       display: flex;
       flex-direction: column;
@@ -135,7 +135,7 @@
       font-size: 18px;
       line-height: 140%;
       color: #FFFFFF;
-      margin: 24px 0 0 0; // 24px abaixo do título
+      margin: 24px 0 0 0; // 24px below the title
       width: 513px;
 
       @media (max-width: 767px) {
@@ -144,13 +144,13 @@
       }
     }
 
-    // Segunda linha: input e botões
+    // Second row: input and buttons
     .searchAndFiltersRow {
       display: flex;
-      justify-content: space-between; // Input à esquerda, botões à direita
-      align-items: center; // Alinhados na mesma altura
+      justify-content: space-between; // Input on left, buttons on right
+      align-items: center; // Aligned at the same height
       width: 100%;
-      gap: 2rem; // Espaço entre input e botões
+      gap: 2rem; // Space between input and buttons
 
       @media (max-width: 767px) {
         flex-direction: column;
@@ -160,8 +160,8 @@
     }
 
     .searchContainer {
-      flex-shrink: 0; // Não encolhe o input
-      width: 500px; // Largura reduzida para dar espaço aos segmentos
+      flex-shrink: 0; // Don't shrink the input
+      width: 500px; // Reduced width to make room for segments
 
       @media (max-width: 767px) {
         width: 100%;
@@ -171,33 +171,33 @@
     .filtersRight {
       display: flex;
       flex-direction: row; // Horizontal
-      gap: 12px; // 12px entre os botões
-      align-items: center; // Alinhados na mesma altura do input
-      flex-wrap: nowrap; // Sem quebra de linha - SEMPRE
-      overflow-x: auto; // Permite scroll horizontal
-      overflow-y: hidden; // Sem scroll vertical
-      scrollbar-width: none; // Esconde scrollbar no Firefox
-      -ms-overflow-style: none; // Esconde scrollbar no IE/Edge
-      flex-shrink: 1; // Pode encolher se necessário
-      min-width: 0; // Permite que o container encolha
+      gap: 12px; // 12px between buttons
+      align-items: center; // Aligned at the same height as input
+      flex-wrap: nowrap; // No line break - ALWAYS
+      overflow-x: auto; // Allow horizontal scroll
+      overflow-y: hidden; // No vertical scroll
+      scrollbar-width: none; // Hide scrollbar in Firefox
+      -ms-overflow-style: none; // Hide scrollbar in IE/Edge
+      flex-shrink: 1; // Can shrink if needed
+      min-width: 0; // Allow container to shrink
       
-      // Esconde scrollbar no Webkit (Chrome, Safari)
+      // Hide scrollbar in Webkit (Chrome, Safari)
       &::-webkit-scrollbar {
         display: none;
       }
 
-      // Em telas grandes, sempre horizontal com scroll
+      // On large screens, always horizontal with scroll
       @media (min-width: 769px) {
-        flex-wrap: nowrap; // SEMPRE horizontal em desktop
-        max-width: calc(100% - 500px - 2rem); // Largura máxima baseada no input reduzido
-        overflow-x: auto; // Scroll horizontal quando necessário
+        flex-wrap: nowrap; // ALWAYS horizontal on desktop
+        max-width: calc(100% - 500px - 2rem); // Maximum width based on reduced input
+        overflow-x: auto; // Horizontal scroll when needed
       }
 
       @media (max-width: 767px) {
-        flex-wrap: wrap; // Permite quebra em duas linhas no mobile
+        flex-wrap: wrap; // Allow break into two rows on mobile
         width: 100%;
-        justify-content: center; // Centraliza os botões
-        overflow-x: visible; // Remove scroll horizontal no mobile
+        justify-content: center; // Center the buttons
+        overflow-x: visible; // Remove horizontal scroll on mobile
         overflow-y: visible;
         max-width: 100%;
       }
