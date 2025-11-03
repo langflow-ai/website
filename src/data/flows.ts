@@ -120,3 +120,19 @@ export function getTypesFromFlows(): Array<{value: string, label: string}> {
     }))
   ];
 }
+
+// Helper function to get top-level categories (for Hero CategoryBar)
+// Returns categories in a consistent order matching BrowseTemplates
+export function getTopLevelCategories(): string[] {
+  const categories = new Set<string>();
+  FLOWS.forEach(flow => categories.add(flow.category));
+  // Return in a specific order to match BrowseTemplates CATEGORY_FILTERS
+  const orderedCategories = [
+    "Getting Started",
+    "Development", 
+    "Research",
+    "Customer Support"
+  ];
+  // Return only categories that exist in flows, in the specified order
+  return orderedCategories.filter(cat => categories.has(cat));
+}
