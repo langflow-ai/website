@@ -55,6 +55,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
   const [templates, setTemplates] = useState<Flow[]>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<Flow[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [displayedCount, setDisplayedCount] = useState(6); // Start with 6 templates
   const router = useRouter();
 
   const scrollToBrowseTemplates = () => {
@@ -223,6 +224,11 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
     setTimeout(scrollToBrowseTemplates, 0);
   };
 
+  const handleViewMore = () => {
+    // Load 6 more templates
+    setDisplayedCount(prev => prev + 6);
+  };
+
   // Apply additional filtering and sorting based on active filter, search query and sort selection
   useEffect(() => {
     let filtered = [...templates];
@@ -274,6 +280,8 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
     }
     
     setFilteredTemplates(filtered);
+    // Reset displayed count when filters change
+    setDisplayedCount(6);
   }, [templates, searchQuery, selectedType, selectedCategory, activeFilter, sortBy]);
 
   // Keep URL query in sync with category selections
@@ -572,7 +580,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                   <p>Loading templates...</p>
                 </div>
               ) : filteredTemplates.length > 0 ? (
-                filteredTemplates.map((flow) => {
+                filteredTemplates.slice(0, displayedCount).map((flow) => {
                   const template: Template = {
                     id: flow.slug,
                     slug: flow.slug,
@@ -599,26 +607,17 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                 </div>
               )}
             </div>
-            {/* Show View More only when any filter is applied */}
-            {filteredTemplates.length > 0 && (
-              (() => {
-                const hasAnyFilter =
-                  Boolean(searchQuery && searchQuery.trim()) ||
-                  selectedType !== "all-types" ||
-                  selectedCategory !== "all-categories" ||
-                  activeFilter !== "all-types";
-                return hasAnyFilter ? (
-                  <div className={styles.viewMoreContainer}>
-                    <button
-                      className={styles.viewMoreButton}
-                      onClick={clearFilters}
-                      title="Clear filters and view all templates"
-                    >
-                      View More
-                    </button>
-                  </div>
-                ) : null;
-              })()
+            {/* Show View More button only if there are more templates to display */}
+            {filteredTemplates.length > 6 && displayedCount < filteredTemplates.length && (
+              <div className={styles.viewMoreContainer}>
+                <button
+                  className={styles.viewMoreButton}
+                  onClick={handleViewMore}
+                  title="Load more templates"
+                >
+                  View More
+                </button>
+              </div>
             )}
           </div>
         </div>
