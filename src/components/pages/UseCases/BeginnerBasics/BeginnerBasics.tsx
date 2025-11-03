@@ -25,7 +25,7 @@ export default function BeginnerBasics() {
   return (
     <section className={styles.beginnerBasics}>
       <div className={styles.container}>
-        <div className={styles.sectionTitle}>Beginner basics</div>
+        <div className={styles.sectionTitle}>Getting Started</div>
         
         <div className={styles.templatesContainer}>
           {/* Large Card */}  

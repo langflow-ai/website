@@ -4,8 +4,8 @@ import PageLayout from "@/components/layout/page";
 import GetStarted from "@/components/pages/Home/GetStarted";
 import BeginnerBasics from "@/components/pages/UseCases/BeginnerBasics/BeginnerBasics";
 import Trending from "@/components/pages/UseCases/Trending/Trending";
+import { TemplatesHero } from "@/components/use-cases";
 import BrowseTemplates from "@/components/use-cases/BrowseTemplates";
-import TemplatesHero from "@/components/use-cases/TemplatesHero";
 import { fetchCollections, fetchTemplates } from "@/data/templates";
 import { hasActiveFilter, readFiltersFromURL } from "@/utils/query";
 import type { Metadata } from "next";
@@ -62,8 +62,8 @@ export default async function UseCasesPage({ searchParams }: UseCasesPageProps) 
         <BeginnerBasics />
 
         <Trending />
-
         <BrowseTemplates initialFilters={filters} />
+
       </div>
       
       {/* GetStarted fora do container para ocupar toda a largura */}
