@@ -22,8 +22,8 @@ This website is built with:
 
 ### Prerequisites
 
-- Node.js 20.x or higher
-- npm, yarn, pnpm, or bun
+- Node.js 22.x or higher
+- npm
 
 ### Installation
 
@@ -38,10 +38,6 @@ cd langflow-website
 
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
 ```
 
 3. Set up environment variables (if needed):
@@ -54,12 +50,6 @@ cp .env.example .env.local
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the website.
