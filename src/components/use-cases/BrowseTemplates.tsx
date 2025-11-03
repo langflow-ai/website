@@ -1,11 +1,11 @@
 "use client";
 
 import TemplateCard from "@/components/common/TemplateCard";
-import { FLOWS, Flow, getCategoriesFromFlows, getTypesFromFlows } from "@/data/flows";
+import { FLOWS, Flow, getCategoriesFromFlows, getTopLevelCategories, getTypesFromFlows } from "@/data/flows";
 import { FilterState, Template } from "@/lib/types/templates";
-import { writeFiltersToURL } from "@/utils/query";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { readFiltersFromURL, writeFiltersToURL } from "@/utils/query";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   HiOutlineChatBubbleLeftRight,
   HiOutlineChevronDown,
@@ -22,8 +22,6 @@ interface BrowseTemplatesProps {
   initialFilters?: FilterState;
 }
 
-type FilterType = "all-types" | "Getting Started" | "Development" | "Research" | "Customer Support";
-
 // Get real categories and types from flows
 const FILTER_TYPES = getTypesFromFlows();
 const CATEGORIES = getCategoriesFromFlows().map((cat, index) => ({
@@ -32,18 +30,82 @@ const CATEGORIES = getCategoriesFromFlows().map((cat, index) => ({
   subcategories: cat.subcategories,
 }));
 
-// Create category filter buttons with icons
+// Get top-level categories dynamically from flows to ensure consistency with Hero
+const TOP_LEVEL_CATEGORIES = getTopLevelCategories();
+
+// Dynamic FilterType based on actual categories from flows
+type FilterType = "all-types" | (typeof TOP_LEVEL_CATEGORIES[number]);
+
+// Icon mapping for category filter buttons
+const CATEGORY_ICON_MAP: Record<string, typeof HiOutlineSquares2X2> = {
+  "Getting Started": HiOutlineSparkles,
+  "Development": HiOutlineCommandLine,
+  "Research": HiOutlineMagnifyingGlass,
+  "Customer Support": HiOutlineChatBubbleLeftRight,
+};
+
+// Create category filter buttons with icons - dynamically from flows data
 const CATEGORY_FILTERS = [
   { value: "all-types", label: "All Types", icon: HiOutlineSquares2X2 },
-  { value: "Getting Started", label: "Getting Started", icon: HiOutlineSparkles },
-  { value: "Development", label: "Development", icon: HiOutlineCommandLine },
-  { value: "Research", label: "Research", icon: HiOutlineMagnifyingGlass },
-  { value: "Customer Support", label: "Customer Support", icon: HiOutlineChatBubbleLeftRight },
+  ...TOP_LEVEL_CATEGORIES.map(category => ({
+    value: category,
+    label: category,
+    icon: CATEGORY_ICON_MAP[category] || HiOutlineSquares2X2,
+  })),
 ];
 
 const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initialFilters }) => {
-  const [activeFilter, setActiveFilter] = useState<FilterType>("all-types");
-  const [searchQuery, setSearchQuery] = useState(initialFilters?.q || "");
+  // Helper function to convert category to subcategory format
+  // If it's a top-level category, find its first subcategory
+  // If it's already a subcategory (format: "Category-Subcategory"), return it as is
+  const convertToSubcategory = useCallback((category: string): string => {
+    // If it's already in subcategory format (contains "-"), return as is
+    if (category.includes("-")) {
+      return category;
+    }
+    
+    // If it's a top-level category, find the first subcategory
+    const categoryData = CATEGORIES.find(cat => cat.name === category);
+    if (categoryData && categoryData.subcategories.length > 0) {
+      // Return in format "Category-Subcategory"
+      return `${categoryData.name}-${categoryData.subcategories[0]}`;
+    }
+    
+    // Fallback: return as is
+    return category;
+  }, []);
+
+  // Initialize states with values from initialFilters (from URL/hero)
+  const getInitialCategory = () => {
+    if (initialFilters?.categories && initialFilters.categories.size > 0) {
+      const categoryFromURL = Array.from(initialFilters.categories)[0];
+      // Check if it's a top-level category (not in subcategory format)
+      if (!categoryFromURL.includes("-") && TOP_LEVEL_CATEGORIES.includes(categoryFromURL)) {
+        return categoryFromURL as FilterType;
+      }
+      // If it's a subcategory, extract the top-level category
+      if (categoryFromURL.includes("-")) {
+        const [parentCategory] = categoryFromURL.split("-");
+        if (TOP_LEVEL_CATEGORIES.includes(parentCategory)) {
+          return parentCategory as FilterType;
+        }
+      }
+      return "all-types";
+    }
+    return "all-types";
+  };
+
+  const getInitialSelectedCategory = () => {
+    if (initialFilters?.categories && initialFilters.categories.size > 0) {
+      const categoryFromURL = Array.from(initialFilters.categories)[0];
+      // Convert to subcategory format if needed
+      return convertToSubcategory(categoryFromURL);
+    }
+    return "all-categories";
+  };
+
+  const [activeFilter, setActiveFilter] = useState<FilterType>(() => getInitialCategory());
+  const [searchQuery, setSearchQuery] = useState(() => initialFilters?.q || "");
   const [sortBy, setSortBy] = useState("most-recent");
   // Expanded state for sidebar categories. Default: all expanded
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
@@ -51,12 +113,18 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
   );
   const [isMobile, setIsMobile] = useState(false);
   const [selectedType, setSelectedType] = useState("all-types");
-  const [selectedCategory, setSelectedCategory] = useState("all-categories");
+  const [selectedCategory, setSelectedCategory] = useState(() => getInitialSelectedCategory());
   const [templates, setTemplates] = useState<Flow[]>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<Flow[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [displayedCount, setDisplayedCount] = useState(6); // Start with 6 templates
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Read filters from URL in real-time to detect changes
+  const urlFilters = useMemo(() => {
+    return readFiltersFromURL(searchParams?.toString() ?? "");
+  }, [searchParams]);
 
   const scrollToBrowseTemplates = () => {
     if (typeof window === 'undefined') return;
@@ -81,47 +149,75 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
   // Load flows on component mount
   useEffect(() => {
     setTemplates(FLOWS);
-    setFilteredTemplates(FLOWS);
   }, []);
 
-  // Sync search query when initialFilters changes from hero
+  // Sync search query from URL when it changes
   useEffect(() => {
-    if (initialFilters?.q) {
-      setSearchQuery(initialFilters.q);
-    }
-  }, [initialFilters?.q]);
+    const queryFromURL = urlFilters.q || "";
+    setSearchQuery(queryFromURL);
+  }, [urlFilters.q]);
 
-  // Reset activeFilter to all-types when search query is cleared
-  useEffect(() => {
-    if (!searchQuery && activeFilter === "all-types") {
-      // Keep all-types selected when there's no query
-      return;
+  // Sync category filters from URL when it changes
+  // Serialize Set to detect changes properly
+  const categoriesKey = useMemo(() => {
+    if (!urlFilters.categories || urlFilters.categories.size === 0) {
+      return "";
     }
-  }, [searchQuery]);
-
-  // Sync category filter when initialFilters changes from hero
+    return Array.from(urlFilters.categories).sort().join(",");
+  }, [urlFilters.categories]);
+    
   useEffect(() => {
-    if (initialFilters?.categories && initialFilters.categories.size > 0) {
-      const firstCategory = Array.from(initialFilters.categories)[0];
-      setActiveFilter(firstCategory as FilterType);
-      setSelectedCategory(firstCategory);
+    const categoriesFromURL = urlFilters.categories;
+    
+    if (categoriesFromURL && categoriesFromURL.size > 0) {
+      const categoryFromURL = Array.from(categoriesFromURL)[0];
+      
+      // Convert to subcategory format for the selector
+      const subcategoryValue = convertToSubcategory(categoryFromURL);
+      
+      // Determine the activeFilter (top-level category)
+      let topLevelCategory: FilterType;
+      if (categoryFromURL.includes("-")) {
+        // If it's already a subcategory, extract parent category
+        const [parentCategory] = categoryFromURL.split("-");
+        if (TOP_LEVEL_CATEGORIES.includes(parentCategory)) {
+          topLevelCategory = parentCategory as FilterType;
+        } else {
+          topLevelCategory = "all-types";
+        }
+      } else if (TOP_LEVEL_CATEGORIES.includes(categoryFromURL)) {
+        // If it's a top-level category, use it directly
+        topLevelCategory = categoryFromURL as FilterType;
+      } else {
+        topLevelCategory = "all-types";
+      }
+      
+      // Always update to ensure selectors reflect the current URL state
+      // This ensures the mobile selector shows the correct value when URL changes
+      setActiveFilter(topLevelCategory);
+      setSelectedCategory(subcategoryValue);
+      setSelectedType("all-types");
+    } else {
+      // Clear category filters when URL doesn't have categories
+      // Force update to ensure selectors reflect cleared state
+      setActiveFilter("all-types");
+      setSelectedCategory("all-categories");
     }
-  }, [initialFilters?.categories]);
+  }, [categoriesKey, convertToSubcategory]);
 
   const handleFilterChange = (filter: FilterType) => {
     // If clicking on "All Types" when already selected, do nothing
     if (filter === "all-types" && activeFilter === "all-types") {
       return;
     }
-    // If clicking on a specific category, set activeFilter to that category
+    // Update activeFilter
+    setActiveFilter(filter);
+    // Sync selectedCategory to match (for mobile selectors)
     if (filter !== "all-types") {
-      setActiveFilter(filter);
+      setSelectedCategory(filter);
+    } else {
+      setSelectedCategory("all-categories");
     }
-    // If clicking on "All Types" when another filter is selected, reset to "all-types"
-    if (filter === "all-types" && activeFilter !== "all-types") {
-      setActiveFilter("all-types");
-    }
-    setSelectedCategory("all-categories"); // Reset sidebar selection when button is used
     // Keep user focus on browse section
     scrollToBrowseTemplates();
   };
@@ -135,31 +231,50 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
   };
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedType(e.target.value);
+    const value = e.target.value;
+    setSelectedType(value);
+    // Reset other filters when type changes on mobile
+    setActiveFilter("all-types");
+    setSelectedCategory("all-categories");
+    scrollToBrowseTemplates();
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setSelectedCategory(value);
     
-    // Filter flows based on category selection
-    let filtered = [...templates];
-    
+    // Sync activeFilter if it's a top-level category that matches button filters
     if (value !== "all-categories") {
-      if (value.includes("-")) {
-        const [category, subcategory] = value.split("-");
-        filtered = filtered.filter(flow => 
-          flow.category.toLowerCase() === category.toLowerCase() &&
-          flow.subcategory.toLowerCase() === subcategory.toLowerCase()
-        );
+      const isTopLevelCategory = TOP_LEVEL_CATEGORIES.includes(value);
+      if (isTopLevelCategory) {
+        setActiveFilter(value as FilterType);
+      } else if (value.includes("-")) {
+        // If subcategory, set activeFilter to parent category
+        const [parentCategory] = value.split("-");
+        if (TOP_LEVEL_CATEGORIES.includes(parentCategory)) {
+          setActiveFilter(parentCategory as FilterType);
+        } else {
+          setActiveFilter("all-types");
+        }
       } else {
-        filtered = filtered.filter(flow => 
-          flow.category.toLowerCase() === value.toLowerCase()
-        );
+        setActiveFilter("all-types");
       }
+    } else {
+      setActiveFilter("all-types");
     }
     
-    setFilteredTemplates(filtered);
+    // Reset type filter when category changes
+    setSelectedType("all-types");
+    
+    // Update URL to reflect category selection
+    const categoriesSet = value !== "all-categories" ? new Set([value]) : new Set<string>();
+    writeFiltersToURL(router, {
+      q: searchQuery || "",
+      segments: new Set(),
+      methodologies: new Set(),
+      categories: categoriesSet
+    });
+    
     scrollToBrowseTemplates();
   };
 
@@ -197,13 +312,26 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
 
   const handleCategoryClick = (categoryName: string) => {
     setSelectedCategory(categoryName);
-    setActiveFilter("all-types"); // Reset button filter when sidebar is used
+    // Sync activeFilter if it's a top-level category that matches button filters
+    const isTopLevelCategory = CATEGORY_FILTERS.some(f => f.value === categoryName);
+    if (isTopLevelCategory) {
+      setActiveFilter(categoryName as FilterType);
+    } else {
+      setActiveFilter("all-types");
+    }
     scrollToBrowseTemplates();
   };
 
   const handleSubcategoryClick = (categoryName: string, subcategoryName: string) => {
-    setSelectedCategory(`${categoryName}-${subcategoryName}`);
-    setActiveFilter("all-types"); // Reset button filter when sidebar is used
+    const fullCategory = `${categoryName}-${subcategoryName}`;
+    setSelectedCategory(fullCategory);
+    // Sync activeFilter if parent category matches button filters
+    const isTopLevelCategory = CATEGORY_FILTERS.some(f => f.value === categoryName);
+    if (isTopLevelCategory) {
+      setActiveFilter(categoryName as FilterType);
+    } else {
+      setActiveFilter("all-types");
+    }
     scrollToBrowseTemplates();
   };
 
@@ -231,6 +359,11 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
 
   // Apply additional filtering and sorting based on active filter, search query and sort selection
   useEffect(() => {
+    // Don't filter if templates haven't loaded yet
+    if (templates.length === 0) {
+      return;
+    }
+
     let filtered = [...templates];
     
     // Apply search filter
@@ -458,31 +591,15 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
               </div>
 
               <div className={styles.mobileSelectors}>
+                {/* Categories selector - enabled to reflect URL changes */}
                 <div className={`${styles.mobileSelector} ${styles.selectWrapper}`}>
-                  <select 
-                    id="type-select" 
-                    className={styles.mobileSelect} 
-                    value={selectedType} 
-                    onChange={handleTypeChange}
-                  >
-                    {FILTER_TYPES.map((type) => (
-                      <option key={type.value} value={type.value}>
-                        {type.label}
-                      </option>
-                    ))}
-                  </select>
-                  <HiOutlineChevronDown className={styles.selectChevron} size={16} />
-                </div>
-
-                {/* Temporarily hidden - Categories selector */}
-                {/* <div className={`${styles.mobileSelector} ${styles.selectWrapper}`}>
                   <select 
                     id="category-select" 
                     className={styles.mobileSelect} 
                     value={selectedCategory} 
                     onChange={handleCategoryChange}
                   >
-                    <option value="all-categories">Categories: All Categories</option>
+                    <option value="all-categories">All Types</option>
                     {CATEGORIES.map((category) => (
                       <optgroup key={category.name} label={category.name}>
                         {category.subcategories.map((subcategory) => (
@@ -494,7 +611,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
                     ))}
                   </select>
                   <HiOutlineChevronDown className={styles.selectChevron} size={16} />
-                </div> */}
+                </div>
 
                 <div className={`${styles.mobileSelector} ${styles.selectWrapper}`}>
                   <select

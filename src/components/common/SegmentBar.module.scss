@@ -7,8 +7,17 @@
 
   // Mobile-specific alignment
   @media (max-width: 767px) {
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 0.5rem;
+    
+    // Force 2 buttons per row
+    .filterPill {
+      flex: 0 0 calc(50% - 0.25rem); // 50% minus half the gap
+      max-width: calc(50% - 0.25rem);
+    }
   }
 }
 

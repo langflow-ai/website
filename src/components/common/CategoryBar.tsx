@@ -1,9 +1,8 @@
 // CategoryBar Molecular Component
 
-import { useEffect, useState } from "react";
+import { getTopLevelCategories } from "@/data/flows";
 import FilterPill from "./FilterPill";
 import styles from "./SegmentBar.module.scss";
-import SegmentSkeleton from "./SegmentSkeleton";
 
 interface CategoryBarProps {
   selectedCategories: Set<string>;
@@ -11,51 +10,33 @@ interface CategoryBarProps {
   className?: string;
 }
 
-type Category = "Getting Started" | "Development" | "Research" | "Customer Support";
+// Icon mapping for categories
+const CATEGORY_ICONS: Record<string, string | null> = {
+  "Getting Started": "basic",
+  "Development": "automation",
+  "Research": "research",
+  "Customer Support": "support",
+};
 
-const CATEGORIES: { value: Category; label: string; icon: string | null }[] = [
-  { value: "Getting Started", label: "Getting Started", icon: "basic" },
-  { value: "Development", label: "Development", icon: "automation" },
-  { value: "Research", label: "Research", icon: "research" },
-  { value: "Customer Support", label: "Customer Support", icon: "support" },
-];
+// Get categories dynamically from flows to ensure consistency
+const getCategories = () => {
+  const topLevelCategories = getTopLevelCategories();
+  return topLevelCategories.map(category => ({
+    value: category,
+    label: category,
+    icon: CATEGORY_ICONS[category] || null,
+  }));
+};
+
+const CATEGORIES = getCategories();
 
 export default function CategoryBar({ 
   selectedCategories, 
   onCategoryToggle, 
   className = "" 
 }: CategoryBarProps) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
-  
-  // Check if mobile screen
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // Simulate loading state
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000); // 1 second loading simulation
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Show skeleton on mobile while loading
-  if (isMobile && isLoading) {
-    return <SegmentSkeleton className={className} />;
-  }
-
   return (
-    <div className={`${styles.segmentBar} ${className}`} style={{ flexWrap: 'nowrap', height: '35px' }}>
+    <div className={`${styles.segmentBar} ${className}`} style={{ height: '35px' }}>
       {CATEGORIES.map((category) => (
         <FilterPill
           key={category.value}

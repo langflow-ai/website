@@ -3,6 +3,7 @@
 .filterPill {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   border-radius: 1rem;
@@ -12,6 +13,7 @@
   border: none;
   background: transparent;
   cursor: pointer;
+  text-align: center;
 
   &:focus {
     outline: none;

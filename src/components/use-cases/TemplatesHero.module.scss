@@ -194,10 +194,11 @@
       }
 
       @media (max-width: 767px) {
-        flex-wrap: nowrap; // Mantém horizontal mesmo em mobile
+        flex-wrap: wrap; // Permite quebra em duas linhas no mobile
         width: 100%;
-        justify-content: flex-start;
-        overflow-x: auto; // Scroll horizontal em mobile também
+        justify-content: center; // Centraliza os botões
+        overflow-x: visible; // Remove scroll horizontal no mobile
+        overflow-y: visible;
         max-width: 100%;
       }
     }

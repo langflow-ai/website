@@ -15,10 +15,13 @@
     font-size: 1rem;
     transition: all 0.2s;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Drop shadow sutil
+    display: flex;
+    align-items: center; // Centraliza o texto verticalmente
 
     // Mobile responsive: full width and left padding for icon
     @media (max-width: 767px) {
       width: 100%;
+      height: 48px; // Altura reduzida no mobile
       padding-left: 3rem; // Space for left icon
       padding-right: 1rem; // Normal right padding
     }
@@ -46,6 +49,10 @@
     width: 1.25rem;
     height: 1.25rem;
     color: #FFFFFF; // Ícone branco
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; // Não interfere com cliques no input
 
     // Move icon to left side for mobile screens
     @media (max-width: 767px) {
