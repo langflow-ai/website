@@ -39,7 +39,8 @@ const Template: FC<PropsWithChildren> = () => {
                 Download the App
               </Display>
               <UrxForms
-                formId="urx-t53109"
+                formId="urx-54089"
+                stageFormId="urx-t53109"
                 instanceId="urx-form-2"
                 success={<DownloadOptions />}
                 text="Fill out the form below to receive access to download the desktop app for Mac or Windows."

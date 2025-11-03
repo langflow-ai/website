@@ -2,7 +2,7 @@
 
 // Dependencies
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // Components
 import Text from "@/components/ui/text";
@@ -27,6 +27,7 @@ interface UrxFormsProps {
   instanceId?: string;
   success?: JSX.Element;
   text?: string;
+  stageFormId?: string;
 }
 
 const UrxForms: React.FC<UrxFormsProps> = ({
@@ -34,11 +35,14 @@ const UrxForms: React.FC<UrxFormsProps> = ({
   instanceId = "urx-form",
   success,
   text,
+  stageFormId = "",
 }) => {
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // const isProduction = process.env.NODE_ENV === "production";
+  const [isProduction, setIsProduction] = useState(false);
+
+  const isBrowser = typeof window !== "undefined";
 
   useEffect(() => {
     if (document.loadWidgets && !scriptsLoaded) {
@@ -47,25 +51,36 @@ const UrxForms: React.FC<UrxFormsProps> = ({
   }, [scriptsLoaded]);
 
   useEffect(() => {
-    // Initialize success callback
-    if (!window.onUrxFormSubmitSuccessMultiple) {
-      window.onUrxFormSubmitSuccessMultiple = {};
-    }
+    if (!isBrowser) return;
+    const origin = window.location?.origin ?? "";
+    setIsProduction(
+      origin.includes("langflow.org") || origin.includes("langflow.new")
+    );
+  }, [isBrowser]);
 
-    window.onUrxFormSubmitSuccessMultiple[instanceId] = function (params: any) {
-      console.log("Form submitted successfully:", params);
-    };
-  }, [instanceId]);
+  const resolvedFormId = useMemo(() => {
+    return !isProduction && stageFormId ? stageFormId : formId;
+  }, [isProduction, stageFormId, formId]);
 
   useEffect(() => {
-    if (scriptsLoaded && document.loadWidgets) {
+    if (!isBrowser) return;
+    window.onUrxFormSubmitSuccessMultiple ??= {};
+    window.onUrxFormSubmitSuccessMultiple[instanceId!] = function (
+      params: any
+    ) {
+      console.log("Form submitted successfully:", params);
+    };
+  }, [isBrowser, instanceId]);
+
+  useEffect(() => {
+    if (scriptsLoaded && document.loadWidgets && isBrowser) {
       const widget = {
         instanceId: instanceId,
-        formid: formId,
+        formid: resolvedFormId,
         locale: "us-en",
-        environment: false ? "production" : "stage",
+        environment: isProduction ? "production" : "stage",
         onRenderFinish: function () {
-          console.log(`Form ${formId} rendered`);
+          console.log(`Form ${resolvedFormId} rendered`);
         },
         renderFunctionName: "renderUrxWidget",
         design: {
@@ -80,7 +95,7 @@ const UrxForms: React.FC<UrxFormsProps> = ({
           callback();
         },
         formLoaded: function () {
-          console.log(`Form ${formId} loaded`);
+          console.log(`Form ${resolvedFormId} loaded`);
         },
         onUrxFormSubmitSuccess: function () {
           setIsSuccess(true);
@@ -98,7 +113,7 @@ const UrxForms: React.FC<UrxFormsProps> = ({
     } else if (scriptsLoaded && !document.loadWidgets) {
       console.error("Scripts loaded but loadWidgets function not found!");
     }
-  }, [scriptsLoaded, formId, instanceId]);
+  }, [scriptsLoaded, resolvedFormId, instanceId, isBrowser]);
 
   const handleMainScriptLoad = () => {
     setScriptsLoaded(true);
@@ -113,18 +128,18 @@ const UrxForms: React.FC<UrxFormsProps> = ({
       {text && <Text size={200}>{text}</Text>}
       <div className={styles.urx}>
         <Script
-          src={`https://www${false ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/loader.js`}
+          src={`https://www${isProduction ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/loader.js`}
           strategy="afterInteractive"
           onError={(e) => console.error("Loader script failed to load:", e)}
         />
         <Script
-          src={`https://www${false ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/main.js`}
+          src={`https://www${isProduction ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/main.js`}
           strategy="afterInteractive"
           onLoad={handleMainScriptLoad}
           onError={(e) => console.error("Main script failed to load:", e)}
         />
 
-        {false && (
+        {isProduction && (
           <Script
             src="https://www.ibm.com/common/stats/ida_stats.js"
             strategy="lazyOnload"
