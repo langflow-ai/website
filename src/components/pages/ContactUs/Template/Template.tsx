@@ -46,7 +46,7 @@ const Template: FC<PropsWithChildren> = () => {
               </Display>
               <UrxForms
                 formId="urx-54088"
-                stageFormId="urx-t53108"
+                stageFormId="urx-54088"
                 instanceId="urx-form-1"
                 success={
                   <Text size={200} className="mt-2">
