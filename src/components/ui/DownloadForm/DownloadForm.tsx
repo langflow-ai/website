@@ -3,38 +3,20 @@
 // Dependencies
 import { useState } from "react";
 
-// Components
-import Display from "@/components/ui/Display";
-import MarketoForm from "@/components/ui/form";
-
-// Utils
-import { DOWNLOAD_OPTIONS, NEWSLETTER_BLURB } from "@/utils/constants";
+// Utilities
+import { NEWSLETTER_BLURB } from "@/utils/constants";
 import { trackEvent } from "@/lib/utils/tracking";
 import { kitSubscribe } from "@/app/actions/kitSubscribe";
 
-// Styles
-import styles from "./styles.module.scss";
+// Components
+import Display from "@/components/ui/Display";
+import MarketoForm from "@/components/ui/form";
+import DownloadOptions from "./DownloadOptions";
 
 const CHECKBOX_ID = "newsletter-optin-checkbox";
 
 const DownloadForm = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
-
-  const handleDownload = async (url: string, filename: string) => {
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    trackEvent("CTA Clicked", {
-      CTA: "Download",
-      channel: "webpage",
-      location: "download-form",
-      filename: filename,
-    });
-    a.click();
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
-  };
 
   // Creates and inserts a checkbox for newsletter subscription into the Marketo form
   // Yes, this is a bit hacky, but I couldn't find a better way to insert
@@ -131,45 +113,7 @@ const DownloadForm = () => {
   };
 
   if (formSubmitted) {
-    return (
-      <div className={styles.list}>
-        {DOWNLOAD_OPTIONS.map((option) => (
-          <div key={option.name} className={styles.listItem}>
-            <div
-              className={`${styles.detailsItem} ${option.isComingSoon ? styles.opacity : ""}`}
-            >
-              {option.icon}
-              <Display size={100} weight={600} className={styles.itemName}>
-                {option.name}
-              </Display>
-            </div>
-
-            {option.isComingSoon ? (
-              <Display size={100} weight={400} className={styles.comingSoon}>
-                Coming Soon
-              </Display>
-            ) : (
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  handleDownload(option.link, option.fileName);
-                }}
-                className={styles.downloadButton}
-              >
-                <Display
-                  size={100}
-                  weight={600}
-                  className={"text-center text-black"}
-                >
-                  {option.btnText}
-                </Display>
-              </a>
-            )}
-          </div>
-        ))}
-      </div>
-    );
+    <DownloadOptions />;
   }
 
   return (

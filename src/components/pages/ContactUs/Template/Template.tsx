@@ -1,9 +1,14 @@
 // Dependencies
 import { FC, PropsWithChildren } from "react";
+import dynamic from "next/dynamic";
 
 // Components
 import Display from "@/components/ui/Display";
-import ContactForm from "@/components/ui/ContactForm";
+import Text from "@/components/ui/text";
+
+const UrxForms = dynamic(() => import("@/components/ui/UrxForms/UrxForms"), {
+  loading: () => <div style={{ height: "400px" }} />,
+});
 
 // Styles
 import styles from "./styles.module.scss";
@@ -31,7 +36,25 @@ const Template: FC<PropsWithChildren> = () => {
         <div className={`col ${styles.right}`}>
           <div className={styles.content}>
             <div className={styles.form}>
-              <ContactForm />
+              <Display
+                size={300}
+                weight={500}
+                className={styles.form__title}
+                fontFamily="inter"
+              >
+                Contact Us
+              </Display>
+              <UrxForms
+                formId="urx-54088"
+                stageFormId="urx-t53108"
+                instanceId="urx-form-1"
+                success={
+                  <Text size={200} className="mt-2">
+                    We've received your request and someone from our team will
+                    reach out shortly.
+                  </Text>
+                }
+              />
             </div>
           </div>
         </div>
