@@ -137,7 +137,7 @@ const UrxForms: React.FC<UrxFormsProps> = ({
     } else if (scriptsLoaded && !document.loadWidgets) {
       console.error("Scripts loaded but loadWidgets function not found!");
     }
-  }, [scriptsLoaded, resolvedFormId, instanceId, isBrowser]);
+  }, [scriptsLoaded, resolvedFormId, instanceId, isBrowser, isProduction]);
 
   const handleMainScriptLoad = () => {
     setScriptsLoaded(true);
