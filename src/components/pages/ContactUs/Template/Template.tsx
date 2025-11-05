@@ -48,6 +48,7 @@ const Template: FC<PropsWithChildren> = () => {
                 formId="urx-54088"
                 stageFormId="urx-t53108"
                 instanceId="urx-form-1"
+                className={styles.urx}
                 success={
                   <Text size={200} className="mt-2">
                     We've received your request and someone from our team will

@@ -28,6 +28,7 @@ interface UrxFormsProps {
   success?: JSX.Element;
   text?: string;
   stageFormId?: string;
+  className?: string;
 }
 
 const UrxForms: React.FC<UrxFormsProps> = ({
@@ -35,6 +36,7 @@ const UrxForms: React.FC<UrxFormsProps> = ({
   instanceId = "urx-form",
   success,
   text,
+  className,
   stageFormId = "",
 }) => {
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
@@ -182,7 +184,7 @@ const UrxForms: React.FC<UrxFormsProps> = ({
               Loading form...
             </div>
           )}
-          <div id={instanceId}></div>
+          <div className={`${styles.form} ${className}`} id={instanceId}></div>
         </div>
       </div>
     </>

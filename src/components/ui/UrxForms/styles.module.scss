@@ -1,6 +1,15 @@
 @import "/src/styles/variables";
 @import "~bootstrap/scss/mixins";
 
+.form {
+  min-height: 300px;
+  min-width: 400px;
+
+  @media (max-width: 500px) {
+    min-width: 80%;
+  }
+}
+
 .urx {
   :global(.form-heading-container) {
     display: none !important;
@@ -136,7 +145,7 @@
       line-height: 1.5;
       outline-offset: 0;
       padding: 0.5rem 0.75rem;
-      height: 2.75em;
+      min-height: 80px;
       background-color: var(--primary-black) !important;
 
       &:focus,

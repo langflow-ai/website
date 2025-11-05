@@ -101,6 +101,10 @@
   display: flex;
 }
 
+.urx {
+  margin-top: var(--spacer-2);
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -108,7 +112,6 @@
 
   &__title {
     color: var(--interface-light-gray-75);
-    margin-bottom: var(--spacer-1);
     font-size: 1.5rem !important;
   }
 }
