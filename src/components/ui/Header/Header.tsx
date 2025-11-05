@@ -26,9 +26,10 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const leaveTimeout = useRef<any>(null);
   const pathname = usePathname();
-  
+
   // Check if we're on use-cases or template pages
-  const isTransparentPage = pathname?.startsWith('/use-cases') || pathname?.startsWith('/templates');
+  const isTransparentPage =
+    pathname?.startsWith("/use-cases") || pathname?.startsWith("/templates");
 
   useEffect(() => {
     if (isActive) {
@@ -48,8 +49,8 @@ const Header = () => {
       setIsScrolled(scrollTop > 50); // Show background after 50px scroll
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [isTransparentPage]);
 
   const toggleMenu = () => {
@@ -79,7 +80,9 @@ const Header = () => {
   };
 
   return (
-    <section className={`${styles.header} ${isTransparentPage && !isScrolled ? styles.transparent : ''}`}>
+    <section
+      className={`${styles.header} ${isTransparentPage && !isScrolled ? styles.transparent : ""}`}
+    >
       <div className={styles.container}>
         {isActive && (
           <div
@@ -98,7 +101,7 @@ const Header = () => {
                         data-event="UI Interaction"
                         data-action="clicked"
                         data-channel="webpage"
-                        data-element-id={`drawer-nav-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                        data-element-id={`drawer-nav-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
                         data-namespace="drawer"
                         data-platform-title="Langflow"
                       >
@@ -133,7 +136,7 @@ const Header = () => {
                                 data-event="UI Interaction"
                                 data-action="clicked"
                                 data-channel="webpage"
-                                data-element-id={`drawer-${sub.title.toLowerCase().replace(/\s+/g, '-')}`}
+                                data-element-id={`drawer-${sub.title.toLowerCase().replace(/\s+/g, "-")}`}
                                 data-namespace="drawer"
                                 data-platform-title="Langflow"
                               >
@@ -147,7 +150,7 @@ const Header = () => {
                                 data-event="UI Interaction"
                                 data-action="clicked"
                                 data-channel="webpage"
-                                data-element-id={`drawer-${sub.title.toLowerCase().replace(/\s+/g, '-')}`}
+                                data-element-id={`drawer-${sub.title.toLowerCase().replace(/\s+/g, "-")}`}
                                 data-namespace="drawer"
                                 data-platform-title="Langflow"
                               >
@@ -205,7 +208,7 @@ const Header = () => {
                       data-event="UI Interaction"
                       data-action="clicked"
                       data-channel="webpage"
-                      data-element-id={`nav-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                      data-element-id={`nav-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
                       data-namespace="header"
                       data-platform-title="Langflow"
                     >
@@ -238,7 +241,7 @@ const Header = () => {
                       }}
                     >
                       {item.subTabs.map((sub) => (
-                        <>
+                        <div key={sub.title}>
                           {sub.download ? (
                             <a
                               onClick={(e) => {
@@ -250,7 +253,7 @@ const Header = () => {
                               data-event="UI Interaction"
                               data-action="clicked"
                               data-channel="webpage"
-                              data-element-id={`nav-${sub.title.toLowerCase().replace(/\s+/g, '-')}`}
+                              data-element-id={`nav-${sub.title.toLowerCase().replace(/\s+/g, "-")}`}
                               data-namespace="header"
                               data-platform-title="Langflow"
                             >
@@ -259,12 +262,11 @@ const Header = () => {
                             </a>
                           ) : (
                             <Link
-                              key={sub.title}
                               href={sub.url}
                               data-event="UI Interaction"
                               data-action="clicked"
                               data-channel="webpage"
-                              data-element-id={`nav-${sub.title.toLowerCase().replace(/\s+/g, '-')}`}
+                              data-element-id={`nav-${sub.title.toLowerCase().replace(/\s+/g, "-")}`}
                               data-namespace="header"
                               data-platform-title="Langflow"
                             >
@@ -272,7 +274,7 @@ const Header = () => {
                               {sub.title}
                             </Link>
                           )}
-                        </>
+                        </div>
                       ))}
                     </div>
                   )}
