@@ -8,10 +8,24 @@ body:has(.layout) {
   color: var(--primary-white);
 }
 
+.container-new {
+  @include make-container(48px);
+  margin: 0px auto;
+  max-width: 1440px;
+  padding: 0px 80px;
+
+  @media (max-width: 1350px) {
+    max-width: 100%;
+  }
+  @media (max-width: 1224px) {
+    padding: 0px 60px;
+  }
+}
+
 .container-wide {
   @include make-container(48px);
   max-width: 1300px;
-  padding: 0px 80px; // 80px nas laterais para consistência
+  padding: 0px 80px;
   @include media-breakpoint-down(xxll) {
     max-width: 1180px;
   }
@@ -20,6 +34,6 @@ body:has(.layout) {
   }
   @include media-breakpoint-down(mlg) {
     max-width: 100%;
-    padding: 0px 20px; // 20px em mobile para consistência
+    padding: 0px 20px;
   }
 }
