@@ -325,14 +325,13 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  // Tablet - 1 column full width
-  @media (min-width: 577px) and (max-width: 768px) {
+  // Below 1050px - 1 column to match other sections
+  @media (max-width: 1050px) {
     grid-template-columns: 1fr;
   }
 
-  // Mobile - 1 column full width
+  // Mobile - smaller gap
   @media (max-width: 576px) {
-    grid-template-columns: 1fr;
     gap: 12px; // Smaller gap on mobile
   }
 }
@@ -346,7 +345,8 @@
   max-width: 100%;
   overflow: hidden;
 
-  @include media-breakpoint-down(md) {
+  // Below 1050px - stack sidebar and content
+  @media (max-width: 1050px) {
     flex-direction: column;
   }
 }
@@ -357,14 +357,23 @@
   padding: 0;
   height: fit-content;
   
-  // Desktop - 1/3 of total width (matches one card width from 3-column grid)
-  @media (min-width: 769px) {
+  // Desktop above 1050px - 1/3 of total width (matches one card width from 3-column grid)
+  @media (min-width: 1051px) {
     flex: 0 0 calc((100% - 2 * 16px) / 3);
   }
 
-  // Tablet - 40% width
+  // Between 769px and 1050px - full width (sidebar on top)
+  @media (min-width: 769px) and (max-width: 1050px) {
+    flex-basis: 100%;
+    width: 100%;
+    margin-bottom: 1.5rem; // Space before content
+  }
+
+  // Tablet - full width
   @media (min-width: 577px) and (max-width: 768px) {
-    flex: 0 0 40%;
+    flex-basis: 100%;
+    width: 100%;
+    margin-bottom: 1.5rem;
   }
 
   // Mobile - full width
@@ -639,8 +648,8 @@
   transform: rotate(180deg);
 }
 
-// Mobile-specific styles
-@media (max-width: 767px) {
+// Mobile-specific styles (now starts at 1040px)
+@media (max-width: 1039px) {
   .mobileSearchContainer {
     margin-bottom: 1rem;
   }

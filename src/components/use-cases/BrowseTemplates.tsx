@@ -141,7 +141,7 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
   // Check if mobile screen
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1040);
     };
 
     checkMobile();

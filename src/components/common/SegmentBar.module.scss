@@ -2,12 +2,12 @@
 
 .segmentBar {
   display: flex;
-  flex-wrap: nowrap; // No wrap on desktop - horizontal scroll if needed
+  flex-wrap: nowrap; // No wrap by default
   gap: 0.5rem;
   align-items: center;
 
-  // Desktop - allow horizontal scrolling if needed
-  @media (min-width: 768px) {
+  // Large desktop - horizontal scrolling if needed
+  @media (min-width: 1279px) {
     flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
@@ -17,6 +17,14 @@
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+
+  // Tablet range - allow wrapping
+  @media (min-width: 768px) and (max-width: 1278px) {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow-x: visible;
+    overflow-y: visible;
   }
 
   // Mobile-specific alignment
