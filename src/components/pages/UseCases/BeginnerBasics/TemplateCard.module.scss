@@ -2,14 +2,16 @@
 
 .templateCard {
   width: 100%;
-  height: 320px; // Increased from 287px to accommodate categories
+  height: 100%; // Fill grid cell height
+  min-height: 320px; // Minimum fixed height
   background: var(--primary-black);
-  border: 0.5px solid #3f3f46; // zinc-700 border like hero buttons
-  border-radius: 12px; // More rounded borders
+  border: 0.5px solid #3f3f46;
+  border-radius: 12px;
   display: flex;
   position: relative;
-  text-decoration: none; // Remove underline from Link
+  text-decoration: none;
   transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
 
   &:hover {
     background: #11182780;
@@ -18,24 +20,23 @@
   }
 
   @media (max-width: 1000px) {
-    height: auto;
-    min-height: 280px; // Increased from 250px
+    min-height: 280px;
   }
 
   @media (max-width: 768px) {
-    height: auto;
-    min-height: 230px; // Increased from 200px
+    min-height: 230px;
   }
 }
 
 .leftContent {
   width: 100%;
-  padding: 24px; // Padding menor para cards pequenos
+  padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between; // Distribute content evenly
+  justify-content: flex-start; // Start from top
   height: 100%; // Take full height of card
+  box-sizing: border-box;
 }
 
 .iconContainer {
@@ -95,16 +96,22 @@
   font-weight: 400;
   font-size: 24px;
   line-height: 120%;
-  color: #FFFFFF; // White text
-  margin: 0 0 8px 0; // 8px below the title
+  color: #FFFFFF;
+  margin: 0 0 8px 0;
   text-align: left;
-  // Force single line with ellipsis for narrow desktop widths
-  white-space: nowrap;
+  // Limit to 2 lines max
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  min-height: calc(24px * 1.2 * 2); // 2 lines minimum height
 
-  @media (min-width: 1001px) and (max-width: 1059px) {
-    font-size: 22px;
+  @media (max-width: 768px) {
+    font-size: 20px;
+    min-height: calc(20px * 1.2 * 2);
   }
 }
 
@@ -117,10 +124,14 @@
   color: #FFFFFF;
   margin: 0 0 24px 0;
   text-align: left;
-  text-align: left;
-  max-width: 380px;
   word-wrap: break-word;
-  hyphens: auto;
+  flex: 1; // Take available space
+  // Limit to 3 lines max
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .categoryButtons {

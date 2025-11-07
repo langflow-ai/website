@@ -8,6 +8,7 @@ interface CategoryBarProps {
   selectedCategories: Set<string>;
   onCategoryToggle: (category: string) => void;
   className?: string;
+  maxCategories?: number; // Optional limit for number of categories to display
 }
 
 // Icon mapping for categories
@@ -16,25 +17,35 @@ const CATEGORY_ICONS: Record<string, string | null> = {
   "Development": "automation",
   "Research": "research",
   "Customer Support": "support",
+  "Sales & Marketing Automation": "automation",
+  "Business Functions": "automation",
+  "Document Intelligence": "research",
+  "Data and Analytics Augmentation": "research",
 };
 
 // Get categories dynamically from flows to ensure consistency
-const getCategories = () => {
+const getCategories = (maxCategories?: number) => {
   const topLevelCategories = getTopLevelCategories();
-  return topLevelCategories.map(category => ({
+  // Limit to maxCategories if specified, otherwise show all
+  const limitedCategories = maxCategories 
+    ? topLevelCategories.slice(0, maxCategories)
+    : topLevelCategories;
+    
+  return limitedCategories.map(category => ({
     value: category,
     label: category,
     icon: CATEGORY_ICONS[category] || null,
   }));
 };
 
-const CATEGORIES = getCategories();
-
 export default function CategoryBar({ 
   selectedCategories, 
   onCategoryToggle, 
-  className = "" 
+  className = "",
+  maxCategories = 4 // Default to 4 categories max
 }: CategoryBarProps) {
+  const CATEGORIES = getCategories(maxCategories);
+  
   return (
     <div className={`${styles.segmentBar} ${className}`} style={{ height: '35px' }}>
       {CATEGORIES.map((category) => (

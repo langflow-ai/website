@@ -9,7 +9,18 @@
 .container {
   max-width: 1280px; 
   margin: 0 auto; 
-  padding: 0; 
+  padding: 0 1rem;
+  box-sizing: border-box;
+  width: 100%;
+  
+  // Consistent padding across all breakpoints
+  @media (min-width: 769px) {
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: 576px) {
+    padding: 0 1rem;
+  }
 }
 
 .header {
@@ -302,17 +313,27 @@
 // Browse grid: 2 cards per row so sidebar (1 card) + 2 cards = 3 total width
 .templatesContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); // Equal width columns
+  grid-auto-rows: 1fr; // Equal height rows
   gap: 16px;
-  max-width: 1280px;
-  margin: 0 auto;
-
-  @media (max-width: 1000px) {
-    grid-template-columns: 1fr; // with sidebar at 50%, results in 1 + 1 layout
+  max-width: 100%;
+  width: 100%;
+  align-items: stretch; // Stretch all cards to same height
+  
+  // Desktop - 2 columns with equal width and height
+  @media (min-width: 769px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr; // stacked on mobile
+  // Tablet - 1 column full width
+  @media (min-width: 577px) and (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  // Mobile - 1 column full width
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+    gap: 12px; // Smaller gap on mobile
   }
 }
 
@@ -321,6 +342,9 @@
   display: flex;
   align-items: flex-start;
   gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 
   @include media-breakpoint-down(md) {
     flex-direction: column;
@@ -332,16 +356,21 @@
   border: none;
   padding: 0;
   height: fit-content;
-  // one-card width when main grid shows 2 cards -> total equals Trending width (3 cards)
-  flex: 0 0 calc((100% - 2 * 16px) / 3);
-
-  @media (max-width: 1000px) {
-    // when templates become 1 col, make sidebar equal to one card (half)
-    flex-basis: calc((100% - 1 * 16px) / 2);
+  
+  // Desktop - 1/3 of total width (matches one card width from 3-column grid)
+  @media (min-width: 769px) {
+    flex: 0 0 calc((100% - 2 * 16px) / 3);
   }
 
-  @media (max-width: 768px) {
+  // Tablet - 40% width
+  @media (min-width: 577px) and (max-width: 768px) {
+    flex: 0 0 40%;
+  }
+
+  // Mobile - full width
+  @media (max-width: 576px) {
     flex-basis: 100%;
+    width: 100%;
   }
 }
 
@@ -490,6 +519,8 @@
   flex-direction: column;
   gap: 32px;
   flex: 1 1 auto;
+  min-width: 0; // Allow flex item to shrink below content size
+  overflow: hidden; // Prevent overflow
 }
 
 .viewMoreContainer {

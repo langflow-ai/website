@@ -38,10 +38,14 @@ type FilterType = "all-types" | (typeof TOP_LEVEL_CATEGORIES[number]);
 
 // Icon mapping for category filter buttons
 const CATEGORY_ICON_MAP: Record<string, typeof HiOutlineSquares2X2> = {
-  "Getting Started": HiOutlineSparkles,
-  "Development": HiOutlineCommandLine,
-  "Research": HiOutlineMagnifyingGlass,
-  "Customer Support": HiOutlineChatBubbleLeftRight,
+  "Sales & Marketing Automation": HiOutlineSparkles,
+  "Business Functions": HiOutlineCommandLine,
+  "Document Intelligence": HiOutlineMagnifyingGlass,
+  "Data and Analytics Augmentation": HiOutlineChatBubbleLeftRight,
+  "Document Processing": HiOutlineSquares2X2,
+  "Web & Workflow Automation": HiOutlineCommandLine,
+  "Data Processing & Automation": HiOutlineSquares2X2,
+  "Productivity & Automation": HiOutlineSparkles,
 };
 
 // Create category filter buttons with icons - dynamically from flows data

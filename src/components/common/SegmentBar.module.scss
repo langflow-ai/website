@@ -2,18 +2,32 @@
 
 .segmentBar {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; // No wrap on desktop - horizontal scroll if needed
   gap: 0.5rem;
+  align-items: center;
+
+  // Desktop - allow horizontal scrolling if needed
+  @media (min-width: 768px) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 
   // Mobile-specific alignment
   @media (max-width: 767px) {
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: wrap; // Allow wrapping on mobile
     width: 100%;
     gap: 0.5rem;
     
-    // Force 2 buttons per row
+    // Force 2 buttons per row on mobile
     .filterPill {
       flex: 0 0 calc(50% - 0.25rem); // 50% minus half the gap
       max-width: calc(50% - 0.25rem);
@@ -32,4 +46,5 @@
   font-size: 0.875rem;
   font-weight: 500;
   transition: all 0.2s ease-in-out;
+  flex-shrink: 0; // Don't shrink buttons on desktop
 }

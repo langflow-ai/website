@@ -6,10 +6,15 @@
 }
 
 .container {
-  max-width: 1280px; // Consistent maximum width
-  margin: 0 auto; // Center horizontally
-  padding: 0; // No horizontal padding, same as Beginner basics
-  
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
 }
 
 .sectionTitle {
@@ -40,16 +45,17 @@
 
 .templatesContainer {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px; // 16px between cards
-  max-width: 1280px; // Same maximum width
-  margin: 0 auto; // Center cards
+  grid-template-columns: repeat(3, 1fr); // 3 equal width columns
+  grid-auto-rows: 1fr; // Equal height rows
+  gap: 16px;
+  width: 100%;
+  align-items: stretch; // Stretch cards to fill cells
 
   @media (max-width: 1000px) {
-    grid-template-columns: repeat(2, 1fr); // 2 cards on first line
+    grid-template-columns: repeat(2, 1fr); // 2 equal width columns
   }
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr; // 1 card per line
+    grid-template-columns: 1fr; // 1 column full width
   }
 }

@@ -15,68 +15,169 @@ export type Flow = {
 
 export const FLOWS: Flow[] = [
   {
-    slug: "basic-prompting",
-    title: "Basic Prompting",
-    topic: "Prompt Engineering",
+    slug: "crm-data-enrichment",
+    title: "CRM Data Enrichment",
+    topic: "Workflow Automation",
     shortDescription:
-      "Learn the fundamentals of prompt engineering with this interactive template. Perfect for beginners starting their AI journey.",
-    iconType: "basic",
-    category: "Getting Started",
-    subcategory: "Prompt Engineering",
+      "Automates CRM data entry processes with intelligent form filling and validation.",
+    iconType: "automation",
+    category: "Sales & Marketing Automation",
+    subcategory: "Workflow Automation",
     type: "automation",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
-    githubDownloadUrl: "/flows/basic_prompting.json",
-    // Fixed date: Oct 20
-    updatedAt: "2025-10-20T00:00:00Z",
-    clicks: 300
+    githubDownloadUrl: "/flows/crm_data_enrichment.json",
+    updatedAt: "2025-11-01T00:00:00Z",
+    clicks: 450
   },
   {
-    slug: "changelog-summarizer-github-release-notes",
-    title: "Changelog Summarizer",
-    topic: "Changelog Automation",
+    slug: "call-classification-analytics",
+    title: "Call Classification Analytics",
+    topic: "Customer Support",
     shortDescription:
-      "Ingest commits, PRs, and issues from GitHub and generate release notes in Markdown and HTML with breaking changes.",
-    iconType: "automation",
-    category: "Development",
-    subcategory: "Release Management",
-    type: "automation",
-    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/8eb64311-0d80-40ee-a7b6-b3328f8ee5a3?embed=true",
-    githubDownloadUrl: "/flows/generate_concise_overviews.json",
-    // Fixed date: Oct 21
-    updatedAt: "2025-10-21T00:00:00Z",
-    clicks: 600
-  },
-  {
-    slug: "personal-research-assistant-agentic-rag",
-    title: "Research Assistant",
-    topic: "Agentic RAG Research",
-    shortDescription:
-      "Index PDFs, notes, and web pages and respond with citations. Agent coordinates retrieve, verify, and cite with RAG.",
-    iconType: "research",
-    category: "Research",
-    subcategory: "Document Analysis",
-    type: "research",
-    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/eb618c7b-38c1-4bf1-91ee-9ddc77cc431d?embed=true",
-    githubDownloadUrl: "/flows/rag_article_in_web_with_agent.json",
-    // Fixed date: Oct 22
-    updatedAt: "2025-10-22T00:00:00Z",
-    clicks: 1200
-  },
-  {
-    slug: "support-ticket-auto-labeling-routing",
-    title: "Ticket Auto-Labeling",
-    topic: "Ticket Classification",
-    shortDescription:
-      "Classify tickets by theme, product, and urgency and apply routing to the right team.",
+      "Automatically convert audio to text, detect sentiment, and classify calls by topic, resolution, and urgency.",
     iconType: "support",
-    category: "Customer Support",
-    subcategory: "Ticket Management",
+    category: "Business Functions",
+    subcategory: "Customer Support Operations",
     type: "classification",
-    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/4a0a22de-bd71-4840-991c-ca5cc07a8b16?embed=true",
-    githubDownloadUrl: "/flows/ticket_analysis_classification.json",
-    // Fixed date: Oct 23
-    updatedAt: "2025-10-23T00:00:00Z",
-    clicks: 150
+    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
+    githubDownloadUrl: "/flows/call_classification_analytics.json",
+    updatedAt: "2025-11-02T00:00:00Z",
+    clicks: 580
+  },
+  {
+    slug: "chunk-classifier",
+    title: "Chunk Classifier",
+    topic: "Knowledge bases",
+    shortDescription:
+      "Split any file into smaller parts and label each chunk automatically, returning a clean JSON output with text + classifications.",
+    iconType: "research",
+    category: "Document Intelligence",
+    subcategory: "Knowledge bases",
+    type: "classification",
+    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
+    githubDownloadUrl: "/flows/chunk_classifier.json",
+    updatedAt: "2025-11-03T00:00:00Z",
+    clicks: 720
+  },
+  {
+    slug: "talk-to-csv",
+    title: "Talk to CSV",
+    topic: "Data Analytics",
+    shortDescription:
+      "Upload files and let an AI agent read, analyze, and extract insights from them—no manual searching needed.",
+    iconType: "research",
+    category: "Data and Analytics Augmentation",
+    subcategory: "Data Analytics",
+    type: "research",
+    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
+    githubDownloadUrl: "/flows/talk_to_csv.json",
+    updatedAt: "2025-11-04T00:00:00Z",
+    clicks: 890
+  },
+  {
+    slug: "file-data-extractor",
+    title: "File Data Extractor",
+    topic: "Legal, B2B, Compliance, Automation",
+    shortDescription:
+      "Extracts structured data from unstructured documents like contracts and purchase orders.",
+    iconType: "automation",
+    category: "Document Processing",
+    subcategory: "Data Extraction & Structuring",
+    type: "automation",
+    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
+    githubDownloadUrl: "/flows/file_data_extractor.json",
+    updatedAt: "2025-11-05T00:00:00Z",
+    clicks: 630
+  },
+  {
+    slug: "email-calendar-ai-assistant",
+    title: "Email & Calendar AI Assistant",
+    topic: "Workflow Automation",
+    shortDescription:
+      "An AI agent that can read, create, summarize, extract information, answer questions, and manage your inbox and calendar for you.",
+    iconType: "automation",
+    category: "Web & Workflow Automation",
+    subcategory: "Workflow Automation",
+    type: "automation",
+    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
+    githubDownloadUrl: "/flows/email_calendar_ai_assistant.json",
+    updatedAt: "2025-11-06T00:00:00Z",
+    clicks: 1050
+  },
+  {
+    slug: "smart-document-ingestion-router",
+    title: "Smart Document Ingestion Router",
+    topic: "AI/ML",
+    shortDescription:
+      "Upload files and let an AI agent classify and route each one to the right destination based on its content.",
+    iconType: "automation",
+    category: "Data Processing & Automation",
+    subcategory: "Agentic RAG",
+    type: "automation",
+    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
+    githubDownloadUrl: "/flows/smart_document_ingestion_router.json",
+    updatedAt: "2025-11-07T00:00:00Z",
+    clicks: 780
+  },
+  {
+    slug: "smart-meeting-research",
+    title: "Smart Meeting Research",
+    topic: "Sales, Partnerships, Consulting, Customer Success, B2B SaaS",
+    shortDescription:
+      "Automatically enrich calendar meetings with company insights, attendee context, and sales talking points.",
+    iconType: "automation",
+    category: "Productivity & Automation",
+    subcategory: "Sales Intelligence",
+    type: "automation",
+    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
+    githubDownloadUrl: "/flows/smart_meeting_research.json",
+    updatedAt: "2025-11-08T00:00:00Z",
+    clicks: 920
+  },
+  {
+    slug: "multi-source-github-analytics-agent",
+    title: "Multi-Source GitHub Analytics Agent",
+    topic: "DevOps / Engineering Intelligence",
+    shortDescription:
+      "Agent that pulls GitHub metrics from BigQuery and turns them into a natural-language summary.",
+    iconType: "research",
+    category: "Data and Analytics Augmentation",
+    subcategory: "DevOps",
+    type: "research",
+    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
+    githubDownloadUrl: "/flows/multi_source_github_analytics_agent.json",
+    updatedAt: "2025-11-09T00:00:00Z",
+    clicks: 540
+  },
+  {
+    slug: "sales-proposal-assistant",
+    title: "Sales Proposal Assistant",
+    topic: "Sales & Marketing",
+    shortDescription:
+      "Collects requirements, researches context, and builds a ready-to-use sales proposal.",
+    iconType: "automation",
+    category: "Sales & Marketing Automation",
+    subcategory: "Proposal & Collateral Generation",
+    type: "automation",
+    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
+    githubDownloadUrl: "/flows/sales_proposal_assistant.json",
+    updatedAt: "2025-11-10T00:00:00Z",
+    clicks: 670
+  },
+  {
+    slug: "ai-stock-analysis-assistant",
+    title: "AI Stock Analysis Assistant",
+    topic: "Financial Services",
+    shortDescription:
+      "Fetch real market data for any stock ticker and generate an AI-powered analytical summary.",
+    iconType: "research",
+    category: "Data and Analytics Augmentation",
+    subcategory: "Financial Services",
+    type: "research",
+    iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
+    githubDownloadUrl: "/flows/ai_stock_analysis_assistant.json",
+    updatedAt: "2025-11-11T00:00:00Z",
+    clicks: 810
   }
 ];
 
@@ -128,10 +229,14 @@ export function getTopLevelCategories(): string[] {
   FLOWS.forEach(flow => categories.add(flow.category));
   // Return in a specific order to match BrowseTemplates CATEGORY_FILTERS
   const orderedCategories = [
-    "Getting Started",
-    "Development", 
-    "Research",
-    "Customer Support"
+    "Sales & Marketing Automation",
+    "Business Functions",
+    "Document Intelligence",
+    "Data and Analytics Augmentation",
+    "Document Processing",
+    "Web & Workflow Automation",
+    "Data Processing & Automation",
+    "Productivity & Automation"
   ];
   // Return only categories that exist in flows, in the specified order
   return orderedCategories.filter(cat => categories.has(cat));

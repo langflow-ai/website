@@ -10,10 +10,15 @@
 }
 
 .container {
-  max-width: 1280px; // Consistent maximum width
-  margin: 0 auto; // Center horizontally
-  padding: 0; // No horizontal padding, already in main container
-  
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
 }
 
 .sectionTitle {
@@ -222,17 +227,18 @@
 
 .smallCards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px; // 16px between small cards
-  max-width: 1280px; // Same maximum width as large card
-  margin: 0 auto; // Center the cards
+  grid-template-columns: repeat(3, 1fr); // 3 equal width columns
+  grid-auto-rows: 1fr; // Equal height rows
+  gap: 16px;
+  width: 100%;
+  align-items: stretch; // Stretch cards to fill cells
 
   @media (max-width: 1000px) {
-    grid-template-columns: repeat(2, 1fr); // 2 cards in first row
+    grid-template-columns: repeat(2, 1fr); // 2 equal width columns
   }
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr; // 1 card per row
+    grid-template-columns: 1fr; // 1 column full width
   }
 }
 

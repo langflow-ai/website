@@ -3,9 +3,9 @@
 .templatesHero {
   position: relative;
   padding: 0;
-  width: 100vw; // Full viewport width
-  margin-left: calc(-50vw + 50%); // Center background
-  margin-right: calc(-50vw + 50%); // Center background
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
 
   // Black background for mobile screens
   @media (max-width: 767px) {
@@ -14,6 +14,9 @@
 
   .backgroundNoise {
     position: absolute;
+    width: 100vw;
+    margin-left: calc(-50vmax + 50%); // Center background
+    margin-right: calc(-50vmax + 50%); // Center background
     inset: 0;
     
     height: 150%;
@@ -41,6 +44,9 @@
 
   .backgroundGradient {
     position: absolute;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%); // Center background
+    margin-right: calc(-50vw + 50%); // Center background
     top: 30%; // Starts at middle of hero
     left: 0;
     right: 0;
@@ -70,31 +76,20 @@
   .container {
     position: relative;
     z-index: 20;
-    padding: 0;
-    margin: 0;
-    max-width: 1280px; // Maximum width for content
-    margin: 0 auto; // Center content horizontally
-    padding: 0 20px; // Minimum padding
-
-    @media (min-width: 480px) {
-      padding: 0 40px;
-    }
-
-    @media (min-width: 768px) {
-      padding: 0 60px;
-    }
-
-    @media (min-width: 1024px) {
-      padding: 0 80px;
-    }
-
-    @media (min-width: 1440px) {
-      padding: 0 80px; // 80px offset on 1440px screens
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    
+    @media (max-width: 768px) {
+      padding: 0 1rem;
     }
   }
-
+  
   .content {
     width: 100%;
+    max-width: 1280px;
     position: relative;
     display: flex;
     flex-direction: column; // Two rows: title/subtitle and input/buttons
