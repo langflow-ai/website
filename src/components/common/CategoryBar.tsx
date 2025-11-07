@@ -13,14 +13,14 @@ interface CategoryBarProps {
 
 // Icon mapping for categories
 const CATEGORY_ICONS: Record<string, string | null> = {
-  "Getting Started": "basic",
-  "Development": "automation",
-  "Research": "research",
-  "Customer Support": "support",
-  "Sales & Marketing Automation": "automation",
-  "Business Functions": "automation",
-  "Document Intelligence": "research",
-  "Data and Analytics Augmentation": "research",
+  "Sales": "automation",
+  "Business": "automation",
+  "Documents": "research",
+  "Analytics": "research",
+  "Processing": "automation",
+  "Automation": "automation",
+  "Data": "research",
+  "Productivity": "automation",
 };
 
 // Get categories dynamically from flows to ensure consistency

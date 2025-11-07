@@ -21,7 +21,7 @@ export const FLOWS: Flow[] = [
     shortDescription:
       "Automates CRM data entry processes with intelligent form filling and validation.",
     iconType: "automation",
-    category: "Sales & Marketing Automation",
+    category: "Sales",
     subcategory: "Workflow Automation",
     type: "automation",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
@@ -36,8 +36,8 @@ export const FLOWS: Flow[] = [
     shortDescription:
       "Automatically convert audio to text, detect sentiment, and classify calls by topic, resolution, and urgency.",
     iconType: "support",
-    category: "Business Functions",
-    subcategory: "Customer Support Operations",
+    category: "Business",
+    subcategory: "Customer Support",
     type: "classification",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
     githubDownloadUrl: "/flows/call_classification_analytics.json",
@@ -51,8 +51,8 @@ export const FLOWS: Flow[] = [
     shortDescription:
       "Split any file into smaller parts and label each chunk automatically, returning a clean JSON output with text + classifications.",
     iconType: "research",
-    category: "Document Intelligence",
-    subcategory: "Knowledge bases",
+    category: "Documents",
+    subcategory: "Knowledge Bases",
     type: "classification",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
     githubDownloadUrl: "/flows/chunk_classifier.json",
@@ -66,8 +66,8 @@ export const FLOWS: Flow[] = [
     shortDescription:
       "Upload files and let an AI agent read, analyze, and extract insights from them—no manual searching needed.",
     iconType: "research",
-    category: "Data and Analytics Augmentation",
-    subcategory: "Data Analytics",
+    category: "Analytics",
+    subcategory: "Data",
     type: "research",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
     githubDownloadUrl: "/flows/talk_to_csv.json",
@@ -81,8 +81,8 @@ export const FLOWS: Flow[] = [
     shortDescription:
       "Extracts structured data from unstructured documents like contracts and purchase orders.",
     iconType: "automation",
-    category: "Document Processing",
-    subcategory: "Data Extraction & Structuring",
+    category: "Processing",
+    subcategory: "Data Extraction",
     type: "automation",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
     githubDownloadUrl: "/flows/file_data_extractor.json",
@@ -96,8 +96,8 @@ export const FLOWS: Flow[] = [
     shortDescription:
       "An AI agent that can read, create, summarize, extract information, answer questions, and manage your inbox and calendar for you.",
     iconType: "automation",
-    category: "Web & Workflow Automation",
-    subcategory: "Workflow Automation",
+    category: "Automation",
+    subcategory: "Workflow",
     type: "automation",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
     githubDownloadUrl: "/flows/email_calendar_ai_assistant.json",
@@ -111,7 +111,7 @@ export const FLOWS: Flow[] = [
     shortDescription:
       "Upload files and let an AI agent classify and route each one to the right destination based on its content.",
     iconType: "automation",
-    category: "Data Processing & Automation",
+    category: "Data",
     subcategory: "Agentic RAG",
     type: "automation",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
@@ -126,7 +126,7 @@ export const FLOWS: Flow[] = [
     shortDescription:
       "Automatically enrich calendar meetings with company insights, attendee context, and sales talking points.",
     iconType: "automation",
-    category: "Productivity & Automation",
+    category: "Productivity",
     subcategory: "Sales Intelligence",
     type: "automation",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
@@ -141,7 +141,7 @@ export const FLOWS: Flow[] = [
     shortDescription:
       "Agent that pulls GitHub metrics from BigQuery and turns them into a natural-language summary.",
     iconType: "research",
-    category: "Data and Analytics Augmentation",
+    category: "Analytics",
     subcategory: "DevOps",
     type: "research",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
@@ -156,8 +156,8 @@ export const FLOWS: Flow[] = [
     shortDescription:
       "Collects requirements, researches context, and builds a ready-to-use sales proposal.",
     iconType: "automation",
-    category: "Sales & Marketing Automation",
-    subcategory: "Proposal & Collateral Generation",
+    category: "Sales",
+    subcategory: "Proposals",
     type: "automation",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
     githubDownloadUrl: "/flows/sales_proposal_assistant.json",
@@ -171,8 +171,8 @@ export const FLOWS: Flow[] = [
     shortDescription:
       "Fetch real market data for any stock ticker and generate an AI-powered analytical summary.",
     iconType: "research",
-    category: "Data and Analytics Augmentation",
-    subcategory: "Financial Services",
+    category: "Analytics",
+    subcategory: "Financial",
     type: "research",
     iframeSrc: "https://ubuntu-production-da92.up.railway.app/flow/9e15c125-463a-4815-bd55-b52b55f57b12?embed=true",
     githubDownloadUrl: "/flows/ai_stock_analysis_assistant.json",
@@ -229,14 +229,14 @@ export function getTopLevelCategories(): string[] {
   FLOWS.forEach(flow => categories.add(flow.category));
   // Return in a specific order to match BrowseTemplates CATEGORY_FILTERS
   const orderedCategories = [
-    "Sales & Marketing Automation",
-    "Business Functions",
-    "Document Intelligence",
-    "Data and Analytics Augmentation",
-    "Document Processing",
-    "Web & Workflow Automation",
-    "Data Processing & Automation",
-    "Productivity & Automation"
+    "Sales",
+    "Business",
+    "Documents",
+    "Analytics",
+    "Processing",
+    "Automation",
+    "Data",
+    "Productivity"
   ];
   // Return only categories that exist in flows, in the specified order
   return orderedCategories.filter(cat => categories.has(cat));
