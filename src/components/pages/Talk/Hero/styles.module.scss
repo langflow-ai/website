@@ -87,11 +87,20 @@
     opacity: 0.8;
   }
 
+  .addToCalendarContainer {
+
+    @include media-breakpoint-up(lg) {
+      margin-left: auto;
+    }
+  }
+  
+
   .details {
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
     margin-bottom: 32px;
+    font-size: .8rem;
 
     &__item {
       display: flex;
@@ -111,6 +120,24 @@
 
   .share {
     margin-top: 16px;
+  }
+
+  .addToCalendar {
+    color: var(--primary-white);
+    margin-left: auto;
+    font-weight: 600;
+    font-family: var(--font-body);
+    line-height: 1em;
+    text-transform: uppercase;
+    transition: color 0.4s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacer-1);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--interface-purple-50);
+    }
   }
 }
 

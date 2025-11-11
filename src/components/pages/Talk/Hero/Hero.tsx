@@ -8,6 +8,7 @@ import Display from "@/components/ui/Display";
 import Link from "@/components/ui/Link";
 import SocialShare from "@/components/external/SocialShare";
 import Text from "@/components/ui/text";
+import AddToCalendarLink from "./AddToCalendarLink";
 
 // Styles
 import styles from "./styles.module.scss";
@@ -19,6 +20,7 @@ type Props = {
   date?: string;
   duration?: number;
   location?: string;
+  slug?: { current?: string };
   event?: {
     _id: string;
     title?: string;
@@ -40,6 +42,7 @@ const Hero: FC<Props> = ({
   date,
   duration,
   location,
+  slug,
   event,
   speakers,
 }) => {
@@ -54,6 +57,30 @@ const Hero: FC<Props> = ({
       minute: "2-digit",
     });
   };
+
+  const getCalendarData = () => {
+    if (!date || !title) return null;
+
+    const startDate = new Date(date);
+    const endDate = duration
+      ? new Date(startDate.getTime() + duration * 60 * 1000)
+      : new Date(startDate.getTime() + 60 * 60 * 1000); // Default 1 hour
+
+    const url = slug?.current
+      ? `https://www.langflow.org/talks/${slug.current}`
+      : undefined;
+
+    return {
+      title,
+      description,
+      location,
+      startDate,
+      endDate,
+      url,
+    };
+  };
+
+  const calendarData = getCalendarData();
 
   return (
     <section className={styles.hero}>
@@ -78,8 +105,8 @@ const Hero: FC<Props> = ({
             <Display className={styles.title} size={600} tagName="h2">
               {title}
             </Display>
-            <div className="row">
-          <div className="col-lg-9">
+            <div className="row w-100">
+          <div>
             <div className={styles.details}>
               {date && (
                 <div className={styles.details__item}>
@@ -135,6 +162,9 @@ const Hero: FC<Props> = ({
                   </svg>
                   <span className={styles.details__item__data}>{location}</span>
                 </div>
+              )}
+              {calendarData && (
+                <AddToCalendarLink calendarData={calendarData} />
               )}
             </div>
           </div>

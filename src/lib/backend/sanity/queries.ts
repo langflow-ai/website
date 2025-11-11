@@ -58,6 +58,7 @@ export const API_GET_UPCOMING_EVENTS_QUERY = defineQuery(`
     ] | order(dates[0].date asc, seo.title asc) [$start...$end] {
       "dates": dates,
       "description": excerpt,
+      "body": body,
       "slug": slug.current,
       "thumbnail": thumbnail,
       "title": title,
@@ -79,6 +80,7 @@ export const API_GET_ON_DEMAND_EVENTS_QUERY = defineQuery(`
     ] | order(dates[0].date desc, seo.title asc) [$start...$end] {
       "dates": dates,
       "description": excerpt,
+      "body": body,
       "slug": slug.current,
       "thumbnail": thumbnail,
       "title": title,

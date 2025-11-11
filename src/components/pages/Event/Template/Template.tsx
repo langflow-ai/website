@@ -39,6 +39,8 @@ const Template: FC<Props> = ({ event }) => {
         title={event.title}
         type={event.type}
         thumbnail={event.thumbnail}
+        slug={event.slug}
+        body={event.body}
       />
       {event.body && <Content content={event.body} />}
       {event.talks && event.talks.length > 0 && (

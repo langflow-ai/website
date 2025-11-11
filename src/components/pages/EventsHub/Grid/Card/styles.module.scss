@@ -27,8 +27,12 @@
     margin-bottom: var(--spacer-3);
   }
 
-  a:not(:has(h4)) {
+  .actions {
     margin-top: auto;
+    margin-bottom: var(--spacer-2);
+  }
+
+  a:not(:has(h4)) {
     color: var(--primary-white);
     font-weight: 600;
     font-family: var(--font-body);
@@ -36,7 +40,6 @@
     font-size: 1rem;
     text-transform: uppercase;
     transition: color 0.4s ease;
-    margin-bottom: var(--spacer-2);
     display: inline-flex;
     align-items: center;
     gap: var(--spacer-1);

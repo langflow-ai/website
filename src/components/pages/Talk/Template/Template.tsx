@@ -59,6 +59,7 @@ const Template: FC<Props> = ({ talk }) => {
         date={talk.date}
         duration={talk.duration}
         location={talk.location}
+        slug={talk.slug}
         event={talk.event}
         speakers={talk.speakers}
       />
