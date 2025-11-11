@@ -29,7 +29,7 @@ const Template: FC<PropsWithChildren> = () => {
   return (
     <section className={styles.template}>
       <div
-        className={`container-new h-100 ${styles.container} ${isScrolled ? styles.scrolled : ""}`}
+        className={`container-new h-100 ${styles.container} ${isScrolled ? styles.scrolled : styles.margin}`}
       >
         <div className={`col ${styles.left}`}>
           <Display
