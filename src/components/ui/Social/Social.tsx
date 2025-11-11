@@ -14,8 +14,8 @@ import styles from "./styles.module.scss";
 const Social = () => {
   const [socialCounts, setSocialCounts] = useState({
     github: "138k",
-    discord: "18k",
-    youtube: "11k",
+    discord: "23k",
+    youtube: "15xk",
   });
 
   useEffect(() => {
