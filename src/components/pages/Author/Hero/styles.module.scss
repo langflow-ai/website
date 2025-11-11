@@ -14,15 +14,16 @@
 
     @include media-breakpoint-up(md) {
       flex-direction: row;
-      align-items: flex-start;
+      align-items: center;
     }
   }
 
   .avatar {
-    width: 120px;
-    height: 120px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     object-fit: cover;
+    background-color: var(--primary-white);
     flex-shrink: 0;
   }
 

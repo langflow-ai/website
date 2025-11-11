@@ -138,9 +138,6 @@ const Hero: FC<Props> = ({
               )}
             </div>
           </div>
-          <div className={`col-lg-3 d-flex justify-content-lg-end`}>
-            {title && <SocialShare className={styles.share} title={title} />}
-          </div>
         </div>
             {speakers && speakers.length > 0 && (
               <div className={styles.speakers}>
