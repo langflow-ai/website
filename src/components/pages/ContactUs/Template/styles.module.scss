@@ -13,8 +13,8 @@
 .container {
   display: flex;
   justify-content: space-between;
-  margin-top: var(--spacer-7);
-  margin-bottom: var(--spacer-8);
+  margin-top: var(--spacer-7) !important;
+  margin-bottom: var(--spacer-8) !important;
 
   @media (max-width: 1150px) {
     flex-direction: column;
@@ -39,7 +39,7 @@
   }
 
   @include media-breakpoint-down(lg) {
-    margin: var(--spacer-4) 0px var(--spacer-8);
+    margin: var(--spacer-4) 0px var(--spacer-8) !important;
   }
 
   @include media-breakpoint-down(md) {
@@ -62,6 +62,7 @@
   border-radius: 20px;
   border: 1px solid var(--color-gray-Gray-700, #4a4a4a);
   background: var(--color-brand-Black, #000);
+  height: fit-content;
 
   @media (max-width: 1150px) {
     width: 100%;

@@ -1,7 +1,7 @@
 "use client";
 
 // Dependencies
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useEffect, useState } from "react";
 import Image from "next/image";
 
 // Components
@@ -14,39 +14,60 @@ import DownloadOptions from "@/components/ui/DownloadForm/DownloadOptions";
 import styles from "./styles.module.scss";
 
 const Template: FC<PropsWithChildren> = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section className={styles.template}>
-      <div className={`container h-100 ${styles.container}`}>
+      <div
+        className={`container-new h-100 ${styles.container} ${isScrolled ? styles.scrolled : ""}`}
+      >
         <div className={`col ${styles.left}`}>
-          <Display size={200} className={`${styles.heading} text-white`}>
+          <Display
+            size={200}
+            className={`${styles.heading} text-white`}
+            tagName="h1"
+          >
             Langflow for Desktop
           </Display>
           <TopBadge />
           <div className={styles.imageContainer}>
             <Image
-              src="/images/desktop-hero.png"
+              src="/images/desktop-laptop.webp"
               alt="Langflow for Desktop"
-              width={680}
-              height={442}
+              width={648}
+              height={480}
               className={styles.imageHero}
             />
           </div>
         </div>
         <div className={`col ${styles.right}`}>
-          <div className={styles.content}>
-            <div className={styles.form}>
-              <Display className="text-white" size={400} weight={500}>
-                Download the App
-              </Display>
-              <UrxForms
-                formId="urx-54089"
-                stageFormId="urx-t53109"
-                buttonText="Download Langflow"
-                instanceId="urx-form-2"
-                success={<DownloadOptions />}
-                text="Fill out the form below to receive access to download the desktop app for Mac or Windows."
-              />
-            </div>
+          <div className={styles.form}>
+            <Display
+              className="text-white"
+              size={400}
+              weight={500}
+              tagName="h2"
+            >
+              Download the App
+            </Display>
+            <UrxForms
+              formId="urx-54089"
+              stageFormId="urx-t53109"
+              buttonText="Download Langflow"
+              instanceId="urx-form-2"
+              success={<DownloadOptions />}
+              text="Fill out the form below to receive access to download the desktop app for Mac or Windows."
+            />
           </div>
         </div>
       </div>

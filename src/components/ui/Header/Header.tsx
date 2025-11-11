@@ -29,7 +29,9 @@ const Header = () => {
 
   // Check if we're on use-cases or template pages
   const isTransparentPage =
-    pathname?.startsWith("/use-cases") || pathname?.startsWith("/templates");
+    pathname?.startsWith("/use-cases") ||
+    pathname?.startsWith("/templates") ||
+    pathname.startsWith("/desktop");
 
   useEffect(() => {
     if (isActive) {

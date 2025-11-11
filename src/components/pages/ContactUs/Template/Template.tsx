@@ -31,6 +31,7 @@ const Template: FC<PropsWithChildren> = () => {
             className={`text-white ${styles.subtitle}`}
             size={100}
             weight={300}
+            tagName="p"
           >
             Have a question, need premier support, or want to learn more about
             our professional services? We're here to help.
@@ -45,7 +46,7 @@ const Template: FC<PropsWithChildren> = () => {
         <div className={`col ${styles.right}`}>
           <div className={styles.content}>
             <div className={styles.form}>
-              <Display size={400} weight={500}>
+              <Display size={400} weight={500} tagName="h2">
                 Contact Us
               </Display>
               <UrxForms
@@ -54,7 +55,7 @@ const Template: FC<PropsWithChildren> = () => {
                 instanceId="urx-form-1"
                 className={styles.urx}
                 success={
-                  <Text size={200} className="mt-2">
+                  <Text size={200} className="mt-3" tagName="p">
                     We've received your request and someone from our team will
                     reach out shortly.
                   </Text>

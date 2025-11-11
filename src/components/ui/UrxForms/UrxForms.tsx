@@ -161,7 +161,11 @@ const UrxForms: React.FC<UrxFormsProps> = ({
 
   return (
     <>
-      {text && <Text size={200}>{text}</Text>}
+      {text && (
+        <Text size={200} tagName="p">
+          {text}
+        </Text>
+      )}
       <div className={styles.urx}>
         <Script
           src={`https://www${isProduction === 1 ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/loader.js`}
