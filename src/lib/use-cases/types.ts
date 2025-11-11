@@ -35,6 +35,7 @@ export interface Template {
     version: string;
   };
   comment?: string;
+  line_number?: number; // Line number from spreadsheet for quick reference
 }
 
 export interface SearchFilters {

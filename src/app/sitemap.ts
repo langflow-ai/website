@@ -5,7 +5,7 @@ import {
   PUBLISHED_PAGES_QUERY,
 } from "@/lib/backend/sanity/queries";
 import { PageForSiteMap } from "@/lib/types/sanity";
-import { getAllCategories, mockTemplates } from "@/lib/use-cases/mock-data";
+import { Category, getAllCategories, mockTemplates, Template } from "@/lib/use-cases";
 import { MetadataRoute } from "next";
 
 const CHANGE_FREQUENCIES = {
@@ -98,7 +98,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Use case category pages
   const categories = getAllCategories();
-  const categoryUrls = categories.map((category) => ({
+  const categoryUrls = categories.map((category: Category) => ({
     url: `${baseUrl}/use-cases/category/${category.slug}`,
     lastModified: new Date(category.last_updated),
     changeFrequency: CHANGE_FREQUENCIES.MONTHLY,
@@ -107,8 +107,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Use case template pages
   const templateUrls = mockTemplates
-    .filter((template) => template.slug && template.slug !== "nan") // Filter out invalid slugs
-    .map((template) => ({
+    .filter((template: Template) => template.slug && template.slug !== "nan") // Filter out invalid slugs
+    .map((template: Template) => ({
       url: `${baseUrl}/use-cases/template/${template.slug}`,
       lastModified: new Date(template.updated_at || "2024-01-01"),
       changeFrequency: CHANGE_FREQUENCIES.MONTHLY,
