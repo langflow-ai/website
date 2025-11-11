@@ -4,11 +4,11 @@ import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 // Backend
-import { sanityFetch } from "@/lib/backend/sanity/client";
+import { sanityFetch, getImageUrl } from "@/lib/backend/sanity/client";
 import {
   METADATA_BY_SLUG_QUERY,
-  EVENT_WITH_TALKS_QUERY,
-  PAGES_SLUGS_QUERY,
+  TALK_BY_SLUG_QUERY,
+  TALK_SLUGS_QUERY,
 } from "@/lib/backend/sanity/queries";
 
 // Types
@@ -20,7 +20,7 @@ import { formatOpenGraphTitle } from "@/lib/utils/titles";
 
 // Components
 import PageLayout from "@/components/layout/page";
-import Template from "@/components/pages/Event/Template";
+import Template from "@/components/pages/Talk/Template";
 
 // Props types
 type Props = {
@@ -34,13 +34,11 @@ type Props = {
  */
 export const dynamic = "force-static";
 export const dynamicParams = true;
-const DOCUMENT_TYPE = "event";
+const DOCUMENT_TYPE = "talk";
 
 export async function generateStaticParams() {
   // Data
-  const slugs = await sanityFetch<string[]>(PAGES_SLUGS_QUERY, {
-    type: DOCUMENT_TYPE,
-  });
+  const slugs = await sanityFetch<string[]>(TALK_SLUGS_QUERY);
 
   return (slugs || [])
     .filter((slug) => Boolean(slug))
@@ -57,52 +55,65 @@ export async function generateStaticParams() {
 }
 
 /**
- * Generate the Metadata settings for this pages
+ * Generate the Metadata settings for this page
  */
 export const generateMetadata = async ({ params: { slug } }: Props) => {
-  const isDraftMode = (await draftMode()).isEnabled;
-  const parsedSlug = parseSlugToString(slug).replace(/events\//, "");
+  const isDraftMode = draftMode().isEnabled;
+  const parsedSlug = parseSlugToString(slug).replace(/talks\//, "");
   const metadata = await sanityFetch<Seo>(
     METADATA_BY_SLUG_QUERY,
     {
       type: DOCUMENT_TYPE,
-      slugs: [`events/${parsedSlug}`, `/events/${parsedSlug}`],
+      slugs: [parsedSlug, `talks/${parsedSlug}`, `/talks/${parsedSlug}`],
     },
     isDraftMode
   );
+  
+  const talk = await sanityFetch<any>(
+    TALK_BY_SLUG_QUERY,
+    {
+      slugs: [parsedSlug, `talks/${parsedSlug}`, `/talks/${parsedSlug}`],
+    },
+    isDraftMode
+  );
+
+  const thumbnailUrl = talk?.thumbnail ? getImageUrl(talk.thumbnail) : undefined;
+
   return {
-    title: metadata?.title,
-    description: metadata?.description,
+    title: metadata?.title || talk?.title,
+    description: metadata?.description || talk?.description,
     openGraph: {
-      url: `https://www.langflow.org/${metadata?.slug?.current?.replace(/^\//, "")}`,
-      title: formatOpenGraphTitle(metadata?.title),
-      description: metadata?.description,
+      url: `https://www.langflow.org/talks/${parsedSlug}`,
+      title: formatOpenGraphTitle(metadata?.title || talk?.title),
+      description: metadata?.description || talk?.description,
       siteName: "Langflow",
-      images: [metadata?.thumbnail ? metadata?.thumbnail : "/images/logo.png"],
+      images: thumbnailUrl ? [thumbnailUrl] : ["/images/logo.png"],
     },
   };
 };
 
 const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
-  const isDraftMode = draftMode().isEnabled;
-  const parsedSlug = parseSlugToString(slug).replace(/events\//, "");
-  const page = await sanityFetch<any>(
-    EVENT_WITH_TALKS_QUERY,
+  const isDraftMode = (await draftMode()).isEnabled;
+  const parsedSlug = parseSlugToString(slug).replace(/talks\//, "");
+  const talk = await sanityFetch<any>(
+    TALK_BY_SLUG_QUERY,
     {
-      slugs: [parsedSlug, `events/${parsedSlug}`, `/events/${parsedSlug}`],
+      slugs: [parsedSlug, `talks/${parsedSlug}`, `/talks/${parsedSlug}`],
     },
     isDraftMode
   );
 
-  if (!page) {
+  if (!talk) {
     notFound();
   }
 
   return (
     <PageLayout className="layout" type="normal">
-      <Template event={page} />
+      <Template talk={talk} />
     </PageLayout>
   );
 };
 
 export default DynamicPage;
+
+

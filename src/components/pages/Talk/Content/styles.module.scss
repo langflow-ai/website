@@ -1,0 +1,71 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.content {
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+  padding-bottom: 100px;
+  width: 100%;
+
+  .article {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      scroll-margin-top: 96px;
+      font-weight: 600;
+      margin: var(--spacer-5) 0 var(--spacer-2);
+      color: var(--primary-white);
+
+      * {
+        color: inherit;
+        font: inherit;
+      }
+    }
+
+    h1,
+    h2 {
+      font-size: 1.5rem;
+
+      @include media-breakpoint-up(md) {
+        font-size: 2rem;
+      }
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 1.25rem;
+
+      @include media-breakpoint-up(md) {
+        font-size: 1.5rem;
+      }
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin: var(--spacer-4) auto;
+    }
+
+    a {
+      text-decoration: underline;
+      cursor: pointer;
+      color: var(--primary-white);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    ul,
+    ol {
+      margin-bottom: var(--spacer-4);
+    }
+  }
+}
+
+

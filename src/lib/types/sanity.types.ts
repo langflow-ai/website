@@ -85,6 +85,10 @@ export type Author = {
     _type: 'image'
   }
   location?: string
+  twitter?: string
+  linkedin?: string
+  github?: string
+  website?: string
 }
 
 export type Settings = {

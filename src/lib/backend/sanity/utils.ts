@@ -2,6 +2,8 @@ const PREFIXES: Record<string, string | null> = {
   page: null,
   event: "events/",
   post: "blog/",
+  talk: "talks/",
+  author: "authors/",
 };
 
 // Helper function to generate the correct path based on slug & page type

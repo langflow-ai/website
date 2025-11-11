@@ -1,0 +1,51 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.links {
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+  width: 100%;
+
+  .heading {
+    color: var(--primary-white);
+    margin-bottom: 32px;
+  }
+
+  .resourceList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .resourceLink {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--primary-white);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+  }
+
+  .resourceLabel {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .resourceUrl {
+    font-size: .75rem;
+    opacity: 0.5;
+    word-break: break-all;
+  }
+}
+
+

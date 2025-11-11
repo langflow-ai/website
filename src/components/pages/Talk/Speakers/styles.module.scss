@@ -1,0 +1,59 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.speakers {
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+  padding: 100px 0;
+  width: 100%;
+
+  .heading {
+    color: var(--primary-white);
+    margin-bottom: 48px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 32px;
+
+    @include media-breakpoint-up(md) {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+  }
+
+  .speaker {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .name {
+    color: var(--primary-white);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .bio {
+    color: var(--primary-white);
+    opacity: 0.8;
+  }
+}
+
+

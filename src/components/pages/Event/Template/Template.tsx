@@ -7,10 +7,28 @@ import type { Event } from "@/lib/types/sanity.types";
 // Components
 import Hero from "../Hero";
 import Content from "@/components/pages/Event/Content";
+import Talks from "../Talks";
 
 // Props types
 type Props = {
-  event: Event;
+  event: Event & {
+    talks?: Array<{
+      _id: string;
+      title?: string;
+      slug?: { current?: string };
+      description?: string;
+      date?: string;
+      duration?: number;
+      location?: string;
+      thumbnail?: any;
+      speakers?: Array<{
+        _id: string;
+        name?: string;
+        slug?: { current?: string };
+        avatar?: any;
+      }>;
+    }>;
+  };
 };
 const Template: FC<Props> = ({ event }) => {
   return (
@@ -20,9 +38,12 @@ const Template: FC<Props> = ({ event }) => {
         location={event.location}
         title={event.title}
         type={event.type}
+        thumbnail={event.thumbnail}
       />
-
       {event.body && <Content content={event.body} />}
+      {event.talks && event.talks.length > 0 && (
+        <Talks talks={event.talks} />
+      )}
     </>
   );
 };

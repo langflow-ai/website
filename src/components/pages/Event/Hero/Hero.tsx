@@ -11,6 +11,7 @@ import Display from "@/components/ui/Display";
 import Lines, { Mode } from "@/components/ui/Lines";
 import Link from "@/components/ui/Link";
 import SocialShare from "@/components/external/SocialShare";
+import SanityImage from "@/components/ui/media/SanityImage";
 
 // Utilities
 import {
@@ -20,7 +21,6 @@ import {
 
 // Styles
 import styles from "./styles.module.scss";
-import Button from "@/components/ui/button";
 
 // Constants
 const LABELS: Record<"virtual" | "in-person", string> = {
@@ -36,15 +36,15 @@ type Props = {
   title?: string;
   type?: "virtual" | "in-person";
   intro?: any;
+  thumbnail?: any;
 };
 
 const Hero: FC<Props> = ({
-  ctas = [],
   dates,
-  intro,
   location,
   title,
   type,
+  thumbnail,
 }) => {
   // // Local Variables
   const upcomingDate = getEventUpcomingDate(dates || []);
@@ -86,7 +86,19 @@ const Hero: FC<Props> = ({
             <Display className={styles.title} size={600} tagName="h2">
               {title}
             </Display>
+            {thumbnail && (
+              <div className={`d-lg-none ${styles.image}`}>
+                <SanityImage image={thumbnail} alt={title || "Event image"} />
+              </div>
+            )}
           </div>
+          {thumbnail && (
+            <div className="col-lg-3 d-none d-lg-block">
+              <div className={styles.image}>
+                <SanityImage image={thumbnail} alt={title || "Event image"} />
+              </div>
+            </div>
+          )}
         </div>
         <div className="row">
           <div className="col-lg-9">
