@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: nowrap;
 
-  img:not(:first-child) {
+  a:not(:first-child) {
     margin-left: -8px;
   }
 }
