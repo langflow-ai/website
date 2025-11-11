@@ -3,6 +3,7 @@ main.layout {
   display: flex;
   flex-direction: column;
 }
+
 body:has(.layout) {
   background-color: var(--primary-black);
   color: var(--primary-white);
@@ -17,6 +18,7 @@ body:has(.layout) {
   @media (max-width: 1350px) {
     max-width: 100%;
   }
+
   @media (max-width: 1224px) {
     padding: 0px 60px;
   }
@@ -26,12 +28,15 @@ body:has(.layout) {
   @include make-container(48px);
   max-width: 1300px;
   padding: 0px 80px;
+
   @include media-breakpoint-down(xxll) {
     max-width: 1180px;
   }
+
   @include media-breakpoint-down(xl) {
     max-width: 100%;
   }
+
   @include media-breakpoint-down(mlg) {
     max-width: 100%;
     padding: 0px 20px;
