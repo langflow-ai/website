@@ -332,3 +332,17 @@ export const AUTHOR_SLUGS_QUERY = defineQuery(`
     _type == "author" && defined(slug.current) && !(_id in path("drafts.**"))
   ].slug.current
 `);
+
+// REVALIDATION: Fetch talk slugs for an event by event slug
+export const TALK_SLUGS_BY_EVENT_QUERY = defineQuery(`
+  *[_type == "event" && slug.current in $slugs][0] {
+    "talkSlugs": *[_type == "talk" && references(^._id) && defined(slug.current) && !(_id in path("drafts.**"))].slug.current | filter(!isNull(@))
+  }
+`);
+
+// REVALIDATION: Fetch author slugs for a talk by talk slug
+export const AUTHOR_SLUGS_BY_TALK_QUERY = defineQuery(`
+  *[_type == "talk" && slug.current in $slugs][0] {
+    "authorSlugs": speakers[]->[defined(slug.current) && !(_id in path("drafts.**"))].slug.current | filter(!isNull(@))
+  }
+`);
