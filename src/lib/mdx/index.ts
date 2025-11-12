@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import readingTime from "reading-time";
 import type { Event, Page } from "@/lib/types/sanity.types";
 import type { BlogPost, AuthorClip } from "@/lib/types/sanity";
 
