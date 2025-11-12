@@ -48,8 +48,8 @@ export async function GET(request: Request) {
   // Transform to match the expected API response format
   const results = paginatedEvents.map((event) => ({
     title: event.title,
-    slug: event.slug,
-    excerpt: event.excerpt,
+    slug: event.slug?.current || event._id,
+    description: event.excerpt || "",
     type: event.type,
     dates: event.dates,
     location: event.location,

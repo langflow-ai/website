@@ -26,8 +26,7 @@ type Props = {
 };
 
 const Card: FC<Props> = ({ event }) => {
-  const eventSlug = typeof event.slug === 'string' ? event.slug : event.slug?.current || '';
-  const eventUrl = `/events/${eventSlug}`;
+  const eventUrl = `/events/${event.slug}`;
   const isStringThumbnail = typeof event.thumbnail === 'string';
 
   const getCalendarData = () => {
