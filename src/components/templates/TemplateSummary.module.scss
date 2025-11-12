@@ -44,6 +44,8 @@
   @media (max-width: 768px) {
     margin-top: 2rem; // Reduced top margin on mobile
     margin-left: 12px;
+    padding: 0 2.25rem 0 1.5rem; // 24px left, 36px right (24px + 12px) for alignment with other sections
+    width: 100%; // Full width on mobile
   }
 }
 
@@ -75,6 +77,10 @@
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.8;
   max-width: 720px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 }
 
 .listItem {
@@ -100,6 +106,11 @@
     font-size: 16px;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.8);
+    text-align: left;
+
+    @media (max-width: 768px) {
+      text-align: justify;
+    }
   }
 }
 
@@ -145,6 +156,10 @@
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.8;
   max-width: 720px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 }
 
 .whyItMatters {
@@ -156,6 +171,11 @@
   margin: 0;
   max-width: 720px;
   text-align: left;
+
+  @media (max-width: 768px) {
+    text-align: justify;
+    max-width: 100%;
+  }
 }
 
 .introText {
@@ -167,6 +187,11 @@
   margin: 0;
   max-width: 720px;
   text-align: left;
+
+  @media (max-width: 768px) {
+    text-align: justify;
+    max-width: 100%;
+  }
 }
 
 .textContent {
@@ -177,13 +202,23 @@
   font-weight: 400;
   max-width: 720px;
   text-align: left;
+
+  @media (max-width: 768px) {
+    text-align: justify;
+    max-width: 100%;
+  }
 }
 
 .textParagraph {
   margin: 0 0 1.5rem 0;
+  text-align: left;
   
   &:last-child {
     margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    text-align: justify;
   }
 }
 
