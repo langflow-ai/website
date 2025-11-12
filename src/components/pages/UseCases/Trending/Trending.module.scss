@@ -50,6 +50,14 @@
   gap: 16px;
   width: 100%;
   align-items: stretch; // Stretch cards to fill cells
+  box-sizing: border-box;
+
+  // Ensure all cards have equal width
+  > * {
+    width: 100%;
+    min-width: 0; // Prevent overflow
+    box-sizing: border-box;
+  }
 
   @media (max-width: 1050px) {
     grid-template-columns: repeat(2, 1fr); // 2 equal width columns

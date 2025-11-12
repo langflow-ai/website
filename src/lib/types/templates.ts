@@ -30,6 +30,11 @@ export type Template = {
   whatYouDo?: string[];
   whatYouLearn?: string[];
   whyItMatters?: string;
+  // Detailed content for template detail page
+  introText?: string; // Introduction/summary text
+  howItWorks?: string; // "How it works" section text block
+  exampleUseCases?: string[]; // List of example use cases
+  extendingText?: string; // Text about extending the flow
   // Classification flags
   isBeginner?: boolean;
   isTrending?: boolean;

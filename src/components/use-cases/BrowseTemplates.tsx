@@ -1,7 +1,7 @@
 "use client";
 
 import TemplateCard from "@/components/common/TemplateCard";
-import { FLOWS, Flow, getCategoriesFromFlows, getTopLevelCategories, getTypesFromFlows } from "@/data/flows";
+import { FLOWS, Flow, getCategoriesFromFlows, getTopLevelCategories, getTypesFromFlows } from "@/lib/use-cases";
 import { FilterState, Template } from "@/lib/types/templates";
 import { readFiltersFromURL, writeFiltersToURL } from "@/utils/query";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -407,13 +407,25 @@ const BrowseTemplates: React.FC<BrowseTemplatesProps> = ({ className = "", initi
     
     // Apply sorting
     if (sortBy === "most-popular") {
-      filtered.sort((a, b) => (b.clicks || 0) - (a.clicks || 0));
+      filtered.sort((a, b) => {
+        const clicksDiff = (b.clicks || 0) - (a.clicks || 0);
+        // If clicks are equal, sort by line_number
+        return clicksDiff !== 0 ? clicksDiff : ((a.line_number || 0) - (b.line_number || 0));
+      });
     } else if (sortBy === "alphabetical") {
-      filtered.sort((a, b) => a.title.localeCompare(b.title));
+      filtered.sort((a, b) => {
+        const titleDiff = a.title.localeCompare(b.title);
+        // If titles are equal, sort by line_number
+        return titleDiff !== 0 ? titleDiff : ((a.line_number || 0) - (b.line_number || 0));
+      });
     } else {
       // Default: most-recent
       const toTime = (d?: string) => (d ? new Date(d).getTime() : 0);
-      filtered.sort((a, b) => toTime(b.updatedAt) - toTime(a.updatedAt));
+      filtered.sort((a, b) => {
+        const timeDiff = toTime(b.updatedAt) - toTime(a.updatedAt);
+        // If dates are equal, sort by line_number to maintain consistent order
+        return timeDiff !== 0 ? timeDiff : ((a.line_number || 0) - (b.line_number || 0));
+      });
     }
     
     setFilteredTemplates(filtered);

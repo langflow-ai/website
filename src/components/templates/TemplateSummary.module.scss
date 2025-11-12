@@ -145,6 +145,35 @@
   text-align: left; // Left-align the text content
 }
 
+.introText {
+  color: #FFFFFF;
+  line-height: 1.8;
+  font-family: 'Chivo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0 0 1.5rem 0;
+  max-width: 720px;
+  text-align: left;
+}
+
+.textContent {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.8;
+  font-family: 'Chivo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  max-width: 720px;
+  text-align: left;
+}
+
+.textParagraph {
+  margin: 0 0 1.5rem 0;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .categoriesSection {
   margin-top: 56px; // 56px below "Why it matters" section
   display: flex;

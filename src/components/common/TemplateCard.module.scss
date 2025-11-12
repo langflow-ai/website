@@ -13,8 +13,10 @@
   border: 1px solid rgba(255, 255, 255, 0.1); // Borda sutil conforme imagem
   height: 100%; // Fill entire grid cell height
   width: 100%; // Fill entire grid cell width
+  max-width: 100%; // Ensure it doesn't exceed grid cell
   min-height: 280px; // Minimum height to ensure consistency
   box-sizing: border-box;
+  overflow: hidden; // Prevent content overflow
 
   &:hover {
     background: #11182780;
@@ -41,6 +43,17 @@
     color: #FFFFFF;
     margin-bottom: 0.75rem;
     flex-shrink: 0;
+    
+    // Ensure icons inside bubble have fixed size
+    svg {
+      width: 18px !important;
+      height: 18px !important;
+      min-width: 18px !important;
+      min-height: 18px !important;
+      max-width: 18px !important;
+      max-height: 18px !important;
+      flex-shrink: 0;
+    }
   }
 
   .title {
@@ -72,14 +85,21 @@
     line-height: 1.5;
     margin-bottom: 1rem;
     flex: 1; // Allow description to take available space
-    // Limit description to 3 lines max
+    // Limit description to 3 lines max with ellipsis
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    overflow: hidden;
+    overflow: hidden !important; // Force overflow to be hidden
     text-overflow: ellipsis;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    // Ensure proper text truncation - prevent any text from showing after ellipsis
+    word-break: break-word;
+    hyphens: auto;
+    // Set max-height to ensure exactly 3 lines
+    max-height: calc(0.875rem * 1.5 * 3); // font-size * line-height * 3 lines
+    // Ensure text doesn't overflow
+    position: relative;
   }
 
   .categories {

@@ -2,7 +2,7 @@
 
 "use client";
 
-import { Flow } from "@/data/flows";
+import { Flow } from "@/lib/use-cases";
 import { useShare } from "@/hooks/useShare";
 import { Template } from "@/lib/types/templates";
 import Link from "next/link";

@@ -1,6 +1,6 @@
 "use client";
 
-import { FLOWS } from "@/data/flows";
+import { FLOWS } from "@/lib/use-cases";
 import {
   HiOutlineBookOpen,
   HiOutlineChatBubbleLeftRight,
@@ -60,6 +60,7 @@ export default function BeginnerBasics() {
                 <Icon 
                   className={styles.icon}
                   size={24}
+                  style={{ width: '24px', height: '24px', flexShrink: 0 }}
                 />
                 {showTooltip && (
                   <div className={styles.tooltip}>

@@ -1,5 +1,5 @@
-import { Flow } from "@/data/flows";
 import { Template } from "@/lib/types/templates";
+import { Flow } from "@/lib/use-cases";
 import Link from "next/link";
 import styles from "./TemplateSummary.module.scss";
 
@@ -10,7 +10,7 @@ interface TemplateSummaryProps {
 }
 
 export default function TemplateSummary({ template, flow, className = "" }: TemplateSummaryProps) {
-  const { whatYouDo, whatYouLearn, whyItMatters, segments } = template;
+  const { whatYouDo, whatYouLearn, whyItMatters, segments, introText, howItWorks, exampleUseCases, extendingText } = template;
 
   const formatLabel = (value: string) =>
     value
@@ -18,8 +18,58 @@ export default function TemplateSummary({ template, flow, className = "" }: Temp
       .map((chunk) => chunk.charAt(0).toUpperCase() + chunk.slice(1))
       .join(" ");
 
+  // Helper function to render text with line breaks
+  const renderTextWithBreaks = (text: string) => {
+    return text.split('\n\n').map((paragraph, index) => (
+      <p key={index} className={styles.textParagraph}>
+        {paragraph}
+      </p>
+    ));
+  };
+
   return (
     <div className={`${styles.templateSummary} ${className}`}>
+      {/* Intro Text */}
+      {introText && (
+        <section>
+          <p className={styles.introText}>{introText}</p>
+        </section>
+      )}
+
+      {/* How it works */}
+      {howItWorks && (
+        <section>
+          <h3 className={styles.sectionTitle}>How it works</h3>
+          <div className={styles.textContent}>
+            {renderTextWithBreaks(howItWorks)}
+          </div>
+        </section>
+      )}
+
+      {/* Example use cases */}
+      {exampleUseCases && exampleUseCases.length > 0 && (
+        <section>
+          <h3 className={styles.sectionTitle}>Example use cases</h3>
+          <ul className={styles.list}>
+            {exampleUseCases.map((item, index) => (
+              <li key={index} className={styles.listItem}>
+                <p>&#8226; {item}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Extending text */}
+      {extendingText && (
+        <section>
+          <div className={styles.textContent}>
+            {renderTextWithBreaks(extendingText)}
+          </div>
+        </section>
+      )}
+
+      {/* Legacy sections - keep for backward compatibility */}
       {whatYouDo && whatYouDo.length > 0 && (
         <section>
           <h3 className={styles.sectionTitle}>What you&apos;ll do</h3>

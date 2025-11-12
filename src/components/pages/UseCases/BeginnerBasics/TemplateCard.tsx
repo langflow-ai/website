@@ -122,6 +122,7 @@ export default function TemplateCard({
           <iconConfig.icon 
             className={styles.icon}
             size={24}
+            style={{ width: '24px', height: '24px', flexShrink: 0 }}
           />
           {showTooltip && (
             <div className={styles.tooltip}>

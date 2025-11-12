@@ -1,6 +1,6 @@
 "use client";
 
-import { Flow, isPlaceholderUrl } from "@/data/flows";
+import { Flow, isPlaceholderUrl } from "@/lib/use-cases";
 import { useEffect, useState } from "react";
 import styles from "./UseTemplateModal.module.scss";
 
@@ -41,21 +41,45 @@ export default function UseTemplateModal({ isOpen, onClose, flow }: UseTemplateM
     }
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!flow) return;
     if (isPlaceholderUrl(flow.githubDownloadUrl)) {
       // Show "Coming soon" tooltip or message
       console.log("Download coming soon");
       return;
     }
-    // Create a temporary link element with download attribute
-    const link = document.createElement('a');
-    link.href = flow.githubDownloadUrl;
-    link.download = `${flow.slug}.json`; // Set filename for download
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    
+    try {
+      // Fetch the JSON file content
+      const response = await fetch(flow.githubDownloadUrl);
+      if (!response.ok) {
+        throw new Error('Failed to fetch file');
+      }
+      
+      // Get the file content as text
+      const jsonContent = await response.text();
+      
+      // Create a blob with the JSON content
+      const blob = new Blob([jsonContent], { type: 'application/json' });
+      
+      // Create a temporary URL for the blob
+      const url = window.URL.createObjectURL(blob);
+      
+      // Create a temporary link element with download attribute
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${flow.slug}.json`; // Set filename for download
+      document.body.appendChild(link);
+      link.click();
+      
+      // Clean up
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+      // Fallback: open in new tab if fetch fails
+      window.open(flow.githubDownloadUrl, '_blank');
+    }
   };
 
   const handleCopyToClipboard = async () => {

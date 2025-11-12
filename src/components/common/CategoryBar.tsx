@@ -1,6 +1,6 @@
 // CategoryBar Molecular Component
 
-import { getTopLevelCategories } from "@/data/flows";
+import { getTopLevelCategories } from "@/lib/use-cases";
 import FilterPill from "./FilterPill";
 import styles from "./SegmentBar.module.scss";
 

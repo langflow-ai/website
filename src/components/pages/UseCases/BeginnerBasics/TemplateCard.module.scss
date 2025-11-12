@@ -4,6 +4,7 @@
   width: 100%;
   height: 100%; // Fill grid cell height
   min-height: 320px; // Minimum fixed height
+  max-width: 100%; // Ensure it doesn't exceed grid cell
   background: var(--primary-black);
   border: 0.5px solid #3f3f46;
   border-radius: 12px;
@@ -12,6 +13,7 @@
   text-decoration: none;
   transition: all 0.2s ease-in-out;
   box-sizing: border-box;
+  overflow: hidden; // Prevent content overflow
 
   &:hover {
     background: #11182780;
@@ -37,31 +39,52 @@
   justify-content: flex-start; // Start from top
   height: 100%; // Take full height of card
   box-sizing: border-box;
+  min-width: 0; // Allow flex items to shrink below content size
+  overflow: hidden; // Prevent content from overflowing
 }
 
 .iconContainer {
-  width: 48px;
-  height: 48px;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
+  aspect-ratio: 1 !important;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 24px; // 24px below the icon
-  flex-shrink: 0; // Prevent shrinking
-  aspect-ratio: 1; // Ensure perfect circle
+  flex-shrink: 0 !important; // Prevent shrinking
+  flex-grow: 0 !important; // Prevent growing
   position: relative; // For tooltip positioning
+  box-sizing: border-box;
 }
 
 .icon {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  min-height: 24px;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #FFFFFF;
+  
+  // Ensure SVG icons maintain fixed size
+  svg {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    flex-shrink: 0;
+  }
 }
 
 .tooltip {
@@ -130,8 +153,12 @@
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow: hidden !important; // Force overflow to be hidden
   text-overflow: ellipsis;
+  // Set max-height to ensure exactly 3 lines
+  max-height: calc(16px * 1.4 * 3); // font-size * line-height * 3 lines
+  // Ensure text doesn't overflow
+  position: relative;
 }
 
 .categoryButtons {

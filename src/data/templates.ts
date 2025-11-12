@@ -7,13 +7,13 @@ import { mockTemplates as useCaseTemplates } from "@/lib/use-cases/mock-data";
 const convertUseCaseTemplate = (template: any): Template => ({
   id: template.slug,
   slug: template.slug,
-  title: template.topic,
+  title: template.title || template.topic, // Use title if available, fallback to topic
   summary: template.summary.length > 120 ? template.summary.substring(0, 120) + "..." : template.summary,
   thumbnailUrl: template.flow?.image_url || "/images/card-1.webp",
   segments: template.category || [],
   methodologies: template.mapped_use_cases?.length > 0 ? ["rag", "prompting-basics"] : ["prompting-basics"],
   badges: ["openai"],
-  updatedAt: template.updated_at || "2024-01-01T00:00:00Z",
+  updatedAt: template.updatedAt || template.updated_at || "2024-01-01T00:00:00Z",
   whatYouDo: template.mapped_use_cases?.slice(0, 3) || [
     "Run the workflow to process your data",
     "See how data flows through each node",

@@ -1,6 +1,6 @@
 "use client";
 
-import { FLOWS } from "@/data/flows";
+import { FLOWS } from "@/lib/use-cases";
 import TemplateCard from "../BeginnerBasics/TemplateCard";
 import styles from "./Trending.module.scss";
 

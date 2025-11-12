@@ -15,16 +15,23 @@ export interface Category {
 export interface Template {
   slug: string;
   topic: string;
+  title: string; // Display title (may differ from topic)
   summary: string;
-  category: string[];
+  shortDescription?: string; // Alternative short description
+  category: string[]; // Array of category slugs
+  categoryDisplay?: string; // Display category name (e.g., "Sales", "Business")
+  subcategory?: string; // Subcategory name
   mapped_use_cases: string[];
   status: TemplateStatus;
   difficulty: DifficultyLevel;
+  type?: "automation" | "research" | "classification"; // Flow type
+  iconType?: "basic" | "robot" | "automation" | "research" | "support"; // Icon type for display
   builder: {
     name: string;
     url?: string;
   };
   updated_at: string;
+  updatedAt?: string; // ISO date format for sorting
   example: {
     input: string;
     output: string;
@@ -34,8 +41,16 @@ export interface Template {
     image_url: string;
     version: string;
   };
+  iframeSrc?: string; // URL for iframe embedding
+  githubDownloadUrl?: string; // URL for downloading the flow JSON
+  clicks?: number; // Popularity weight for sorting
   comment?: string;
   line_number?: number; // Line number from spreadsheet for quick reference
+  // Detailed content for template detail page
+  introText?: string; // Introduction/summary text
+  howItWorks?: string; // "How it works" section text block
+  exampleUseCases?: string[]; // List of example use cases
+  extendingText?: string; // Text about extending the flow
 }
 
 export interface SearchFilters {

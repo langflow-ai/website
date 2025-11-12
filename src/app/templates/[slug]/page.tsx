@@ -4,7 +4,7 @@ import PageLayout from "@/components/layout/page";
 import GetStarted from "@/components/pages/Home/GetStarted";
 import Trending from "@/components/pages/UseCases/Trending/Trending";
 import { TemplateHero, TemplateSummary } from "@/components/templates";
-import { FLOWS, getFlowBySlug } from "@/data/flows";
+import { FLOWS, getFlowBySlug } from "@/lib/use-cases";
 import { getTemplate } from "@/data/templates";
 import { Methodology, Segment } from "@/lib/types/templates";
 import type { Metadata } from "next";
@@ -33,6 +33,12 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
     methodologies: ["rag", "prompting-basics"] as Methodology[],
     badges: ["openai"],
     updatedAt: "2024-01-01T00:00:00Z",
+    // New detailed content properties
+    introText: flow.introText,
+    howItWorks: flow.howItWorks,
+    exampleUseCases: flow.exampleUseCases,
+    extendingText: flow.extendingText,
+    // Legacy properties (fallback if new properties are not available)
     whatYouDo: [
       "Run the workflow to process your data",
       "See how data flows through each node",

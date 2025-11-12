@@ -319,6 +319,14 @@
   max-width: 100%;
   width: 100%;
   align-items: stretch; // Stretch all cards to same height
+  box-sizing: border-box;
+
+  // Ensure all cards have equal width
+  > * {
+    width: 100%;
+    min-width: 0; // Prevent overflow
+    box-sizing: border-box;
+  }
   
   // Desktop - 2 columns with equal width and height
   @media (min-width: 769px) {
