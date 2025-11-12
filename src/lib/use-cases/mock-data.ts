@@ -463,7 +463,7 @@ export const mockTemplates: Template[] = [
   {
     slug: "use-langflow-to-summarize-github-metrics-from-bigquery",
     topic: "Use Langflow to summarize GitHub metrics from BigQuery.",
-    title: "09_multi-source_retrieval",
+    title: "Multi Source Retrieval",
     summary: "Execute SQL queries against Google's public GitHub datasets in BigQuery and generate human-readable development reports using Langflow's visual workflow interface. Build automated analytics pipelines that process commit metrics, contributor statistics, and language distributions without custom coding.",
     shortDescription: "Execute SQL queries against Google's public GitHub datasets in BigQuery and generate human-readable development reports using Langflow's visual workflow interface. Build automated analytics pipelines that process commit metrics, contributor statistics, and language distributions without custom coding.",
     category: [
