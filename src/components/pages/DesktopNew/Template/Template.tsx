@@ -28,6 +28,8 @@ const Template: FC<PropsWithChildren> = () => {
 
   return (
     <section className={styles.template}>
+      <div className={styles.backgroundNoise} />
+      <div className={styles.backgroundGradient} />
       <div
         className={`container-new h-100 ${styles.container} ${isScrolled ? styles.scrolled : styles.margin}`}
       >

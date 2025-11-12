@@ -83,7 +83,7 @@ const Header = () => {
 
   return (
     <section
-      className={`${styles.header} ${isTransparentPage && !isScrolled ? styles.transparent : ""}`}
+      className={`${styles.header} ${isTransparentPage && !isScrolled ? styles.transparent : styles.bg}`}
     >
       <div className={styles.container}>
         {isActive && (

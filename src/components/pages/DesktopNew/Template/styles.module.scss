@@ -1,6 +1,72 @@
 @import "/src/styles/variables";
 @import "~bootstrap/scss/mixins";
 
+.backgroundGradient {
+  @include media-breakpoint-up(lg) {
+    position: absolute;
+    inset: 0;
+    top: 25%;
+    background-image: url("/images/desktop-bg-gradient.webp");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: -1;
+
+    mask: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 20%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) 80%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    -webkit-mask: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 20%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) 80%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+}
+
+.backgroundNoise {
+  position: absolute;
+  inset: 0;
+  height: 65%;
+
+  @include media-breakpoint-down(lg) {
+    height: 100%;
+  }
+
+  background: transparent;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.8) 1px,
+    transparent 0
+  );
+  top: 20px;
+  background-size: 30px 30px;
+  opacity: 0.4;
+  z-index: -1;
+
+  mask: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.6) 30%,
+    rgba(0, 0, 0, 0.6) 60%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.6) 30%,
+    rgba(0, 0, 0, 0.6) 60%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
 .scrolled {
   margin-top: 94px !important;
 
@@ -19,11 +85,6 @@
   flex-direction: column;
   overflow-y: auto;
   position: relative;
-  background-color: var(--primary-black);
-  background-image: url("/images/desktop-bg.webp");
-  background-size: 100% 80%;
-  background-position: top center;
-  background-repeat: no-repeat;
   @include media-breakpoint-down(lg) {
     min-height: calc(100vh - 240px);
     background: none;

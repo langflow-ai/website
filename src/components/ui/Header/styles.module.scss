@@ -2,7 +2,6 @@
 @import "~bootstrap/scss/mixins";
 
 .header {
-  background: var(--primary-black);
   padding: 32px;
   color: var(--primary-white);
   font-family: var(--font-inter);
@@ -18,6 +17,10 @@
     right: 0;
     z-index: 1000;
   }
+}
+
+.bg {
+  background: var(--primary-black) !important;
 }
 
 .container {
