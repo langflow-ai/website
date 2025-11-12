@@ -4,12 +4,13 @@
 import Link from "@/components/ui/Link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 // Components
 import DownArrow from "@/components/icons/downArrow/DownArrow";
 import Display from "@/components/ui/Display";
 import Badge from "@/components/ui/Header/Badge";
+import Close from "@/components/ui/icons/Close";
 import Social from "../Social";
 // Utils
 import { LIST } from "@/utils/constants";
@@ -31,15 +32,6 @@ const Header = () => {
     pathname?.startsWith("/templates") ||
     pathname.startsWith("/desktop");
 
-  useEffect(() => {
-    if (isActive) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-    return () => document.body.classList.remove("no-scroll");
-  }, [isActive]);
-
   // Handle scroll detection for transparent pages
   useEffect(() => {
     if (!isTransparentPage) return;
@@ -56,6 +48,38 @@ const Header = () => {
   const toggleMenu = () => {
     setIsActive(!isActive);
   };
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const body = document.body;
+    const html = document.documentElement;
+
+    if (!isActive) {
+      body.style.removeProperty("overflow");
+      html.style.removeProperty("overflow");
+      body.style.removeProperty("padding-right");
+      return;
+    }
+
+    const previousBodyOverflow = body.style.overflow;
+    const previousHtmlOverflow = html.style.overflow;
+    const previousBodyPaddingRight = body.style.paddingRight;
+
+    const scrollBarWidth = window.innerWidth - html.clientWidth;
+    if (scrollBarWidth > 0) {
+      body.style.paddingRight = `${scrollBarWidth}px`;
+    }
+
+    body.style.overflow = "hidden";
+    html.style.overflow = "hidden";
+
+    return () => {
+      body.style.overflow = previousBodyOverflow;
+      html.style.overflow = previousHtmlOverflow;
+      body.style.paddingRight = previousBodyPaddingRight;
+    };
+  }, [isActive]);
 
   const handleDownload = (url: string, filename: string) => {
     fetch(url)
@@ -81,7 +105,7 @@ const Header = () => {
 
   return (
     <section
-      className={`${styles.header} ${isTransparentPage && !isScrolled ? styles.transparent : styles.bg}`}
+      className={`${styles.header} ${isTransparentPage && !isScrolled && !isActive ? styles.transparent : styles.bg}`}
     >
       <div className={styles.container}>
         {isActive && (
@@ -92,6 +116,29 @@ const Header = () => {
             aria-hidden={!isActive}
           >
             <div className={styles.drawerContent}>
+              <div className="d-flex w-100 justify-content-between">
+                <Link
+                  href={"/"}
+                  data-event="UI Interaction"
+                  data-action="clicked"
+                  data-channel="webpage"
+                  data-element-id="logo"
+                  data-namespace="header"
+                  data-platform-title="Langflow"
+                  className="mb-4"
+                >
+                  <Image
+                    src={Logo}
+                    alt="Langflow Logo"
+                    width={123}
+                    height={24}
+                    className={styles.left_img}
+                  />
+                </Link>
+                <div onClick={() => setIsActive(false)}>
+                  <Close />
+                </div>
+              </div>
               {LIST.map((item) => (
                 <div key={item.title}>
                   <div className={styles.drawerItem}>

@@ -83,7 +83,6 @@
   display: flex;
   min-height: calc(100vh - 200px);
   flex-direction: column;
-  overflow-y: auto;
   position: relative;
   @include media-breakpoint-down(lg) {
     min-height: calc(100vh - 240px);

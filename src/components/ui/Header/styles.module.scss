@@ -5,6 +5,7 @@
   padding: 32px;
   color: var(--primary-white);
   font-family: var(--font-inter);
+  overflow-y: hidden;
   transition:
     background-color 0.3s ease,
     position 0.3s ease;
@@ -174,18 +175,6 @@
     width: 100%;
     background-color: #aaa;
     border-radius: 2px;
-    transition: all 0.3s ease-in-out;
-  }
-
-  &.active {
-    span:nth-child(1) {
-      position: absolute;
-      transform: rotate(45deg);
-    }
-    span:nth-child(2) {
-      position: absolute;
-      transform: rotate(-45deg);
-    }
   }
 
   @include media-breakpoint-up(md) {
@@ -195,20 +184,18 @@
 
 .drawer {
   position: fixed;
-  top: 120px;
-  inset: 120px 0 0 0;
-  height: calc(100vh - 120px);
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  left: 0;
-  width: 100%;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   background: var(--primary-black);
   z-index: 9999;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 20px;
+  padding: var(--spacer-3) 0px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   transition: all 0.4s ease-in-out;
 }
 
@@ -264,7 +251,7 @@
 .drawerSubItemContainer {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   max-width: 600px;
   gap: 16px;
   color: var(--primary-white);
@@ -294,9 +281,4 @@
   pointer-events: none;
   opacity: 0;
   transform: translateY(8px);
-}
-
-.no-scroll {
-  overflow: hidden;
-  height: 100vh;
 }
