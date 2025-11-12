@@ -6,8 +6,10 @@
   padding: 24px 32px;
   color: var(--primary-white);
   font-family: var(--font-inter);
-  transition: background-color 0.3s ease, position 0.3s ease;
-  
+  transition:
+    background-color 0.3s ease,
+    position 0.3s ease;
+
   // Transparent background for use-cases and template pages
   &.transparent {
     background: transparent;
@@ -35,8 +37,8 @@
 
 .nav {
   display: flex;
-  margin-left: 40px;
-  gap: 32px;
+  margin-left: 24px;
+  gap: 0;
   a {
     text-decoration: none;
     color: var(--primary-white);
@@ -58,6 +60,7 @@
   align-items: center;
   cursor: pointer;
   gap: 8px;
+  padding: 10px 16px;
   h6 {
     font-weight: 500;
   }
@@ -72,42 +75,43 @@
 }
 
 .dropdown {
+  display: none;
   position: absolute;
-  top: 26px;
   background: #111;
   padding: 6px;
   font-family: var(--font-inter);
   border-radius: 15px;
   border: 1px solid rgb(34, 34, 34);
   width: 160px;
-  left: -18%;
-  top: 125%;
+  top: 100%;
+  left: 0;
   cursor: pointer;
   a {
     padding: 5px 10px;
     font-size: 500 !important;
     color: var(--primary-white);
   }
+  opacity: 0;
+  transition: all 0.2s allow-discrete;
+
+  @starting-style {
+    /* This is important because @starting-style adds no specificity, but the
+    element is displayed when the parent is hovered and that overrides the
+    opacity to be 1 immediately. This allows for a fade in transition. */
+    opacity: 0 !important;
+  }
+}
+.navItem:hover .dropdown,
+.navItem:focus .dropdown,
+.navItem:focus-within .dropdown {
+  display: block;
+  opacity: 1;
+  transition: all 0.2s allow-discrete;
+}
+.getHelp {
+  width: 200px;
 }
 
-.dropdownGetHelp {
-  position: absolute;
-  top: 26px;
-  background: #111;
-  padding: 6px;
-  font-family: var(--font-inter);
-  border-radius: 15px;
-  border: 1px solid rgb(34, 34, 34);
-  width: 200px;
-  left: -18%;
-  top: 125%;
-  cursor: pointer;
-  a {
-    padding: 5px 10px;
-    font-size: 500 !important;
-    color: var(--primary-white);
-  }
-}
 .right {
   display: flex;
   gap: 15px;
@@ -188,9 +192,9 @@
 
 .drawer {
   position: fixed;
-  top: 60px;
-  inset: 60px 0 0 0;
-  height: calc(100vh - 60px);
+  top: 120px;
+  inset: 120px 0 0 0;
+  height: calc(100vh - 120px);
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;

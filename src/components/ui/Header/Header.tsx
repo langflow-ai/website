@@ -22,9 +22,7 @@ import styles from "./styles.module.scss";
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const leaveTimeout = useRef<any>(null);
   const pathname = usePathname();
 
   // Check if we're on use-cases or template pages
@@ -101,7 +99,7 @@ const Header = () => {
                         data-event="UI Interaction"
                         data-action="clicked"
                         data-channel="webpage"
-                        data-element-id={`drawer-nav-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
+                        data-element-id={`drawer-nav-${item.title.toLowerCase().replaceAll(/\s+/g, "-")}`}
                         data-namespace="drawer"
                         data-platform-title="Langflow"
                       >
@@ -136,7 +134,7 @@ const Header = () => {
                                 data-event="UI Interaction"
                                 data-action="clicked"
                                 data-channel="webpage"
-                                data-element-id={`drawer-${sub.title.toLowerCase().replace(/\s+/g, "-")}`}
+                                data-element-id={`drawer-${sub.title.toLowerCase().replaceAll(/\s+/g, "-")}`}
                                 data-namespace="drawer"
                                 data-platform-title="Langflow"
                               >
@@ -150,7 +148,7 @@ const Header = () => {
                                 data-event="UI Interaction"
                                 data-action="clicked"
                                 data-channel="webpage"
-                                data-element-id={`drawer-${sub.title.toLowerCase().replace(/\s+/g, "-")}`}
+                                data-element-id={`drawer-${sub.title.toLowerCase().replaceAll(/\s+/g, "-")}`}
                                 data-namespace="drawer"
                                 data-platform-title="Langflow"
                               >
@@ -187,20 +185,12 @@ const Header = () => {
             />
           </Link>
           <nav className={styles.nav}>
-            {LIST.map((item, index) => {
-              const isHovered = hoveredIndex === index;
+            {LIST.map((item) => {
               return (
                 <div
                   key={item.title}
                   className={styles.navItem}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => {
-                    clearTimeout(leaveTimeout.current);
-                    leaveTimeout.current = setTimeout(
-                      () => setHoveredIndex(null),
-                      200
-                    );
-                  }}
+                  {...(item.link ? {} : { tabIndex: 0 })}
                 >
                   {item?.link ? (
                     <Link
@@ -208,7 +198,7 @@ const Header = () => {
                       data-event="UI Interaction"
                       data-action="clicked"
                       data-channel="webpage"
-                      data-element-id={`nav-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
+                      data-element-id={`nav-${item.title.toLowerCase().replaceAll(/\s+/g, "-")}`}
                       data-namespace="header"
                       data-platform-title="Langflow"
                     >
@@ -225,20 +215,9 @@ const Header = () => {
                   {item?.subTabs && <DownArrow />}
                   {item?.comingSoon && <Badge />}
 
-                  {item?.subTabs && isHovered && (
+                  {item?.subTabs && (
                     <div
-                      className={
-                        item?.title === "Get Help"
-                          ? styles.dropdownGetHelp
-                          : styles.dropdown
-                      }
-                      onMouseEnter={() => clearTimeout(leaveTimeout.current)}
-                      onMouseLeave={() => {
-                        leaveTimeout.current = setTimeout(
-                          () => setHoveredIndex(null),
-                          200
-                        );
-                      }}
+                      className={`${styles.dropdown} ${item?.title === "Get Help" && styles.getHelp}`}
                     >
                       {item.subTabs.map((sub) => (
                         <div key={sub.title}>
@@ -253,7 +232,7 @@ const Header = () => {
                               data-event="UI Interaction"
                               data-action="clicked"
                               data-channel="webpage"
-                              data-element-id={`nav-${sub.title.toLowerCase().replace(/\s+/g, "-")}`}
+                              data-element-id={`nav-${sub.title.toLowerCase().replaceAll(/\s+/g, "-")}`}
                               data-namespace="header"
                               data-platform-title="Langflow"
                             >
@@ -266,7 +245,7 @@ const Header = () => {
                               data-event="UI Interaction"
                               data-action="clicked"
                               data-channel="webpage"
-                              data-element-id={`nav-${sub.title.toLowerCase().replace(/\s+/g, "-")}`}
+                              data-element-id={`nav-${sub.title.toLowerCase().replaceAll(/\s+/g, "-")}`}
                               data-namespace="header"
                               data-platform-title="Langflow"
                             >
