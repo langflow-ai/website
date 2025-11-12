@@ -1,38 +1,24 @@
 import { NextResponse } from "next/server";
-import { BLOG_POSTS_QUERY } from "@/lib/backend/sanity/queries";
-import { sanityFetch, getImageUrl } from "@/lib/backend/sanity/client";
-import { BlogPost } from "@/lib/types/sanity";
-import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
-import { getBodyText } from "@/lib/utils/getBodyText";
+import { getAllPosts } from "@/lib/mdx";
 
 export async function GET() {
   try {
-    // Fetch all blog posts
-    const posts = await sanityFetch<BlogPost[]>(BLOG_POSTS_QUERY, {}, false);
-
-    // Generate excerpts for posts that don't have them
-    const postsWithExcerpts = await Promise.all(
-      posts.map(async (post) => ({
-        ...post,
-        excerpt: post.excerpt ?? (await generateBlogExcerpt(post.body)) ?? "",
-      }))
-    );
+    // Fetch all blog posts from MDX
+    const posts = await getAllPosts();
 
     // Generate RSS XML
-    const rssItems = postsWithExcerpts
+    const rssItems = posts
       .map((post) => {
         const postUrl = `https://langflow.org/blog/${post.slug.current}`;
         const pubDate = new Date(post.publishedAt).toUTCString();
-        const imageUrl = getImageUrl(post.featureImage);
-        const description =
-          post.excerpt || getBodyText(post.body).substring(0, 200) + "...";
-        const author = [
-          post.author ? post.author.name : null,
-          ...(post.authors ? post.authors?.map((author) => author.name) : []),
-          "Unknown",
-        ]
+        const imageUrl = post.featureImage ? `https://langflow.org${post.featureImage}` : null;
+        const description = post.excerpt || post.body.substring(0, 200) + "...";
+
+        // Get author names
+        const authorNames = post.authors
+          ?.map((author) => author.name)
           .filter(Boolean)
-          .join(",");
+          .join(", ") || post.author?.name || "Unknown";
 
         return `
     <item>
@@ -41,7 +27,7 @@ export async function GET() {
       <guid isPermaLink="true">${postUrl}</guid>
       <pubDate>${pubDate}</pubDate>
       <description><![CDATA[${description}]]></description>
-      <author>please-reply@langflow.org (${author})</author>
+      <author>please-reply@langflow.org (${authorNames})</author>
       ${imageUrl ? `<enclosure url="${imageUrl}" length="0" type="image/jpeg" />` : ""}
     </item>`;
       })

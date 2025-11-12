@@ -1,9 +1,11 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import downloadLinks from "./src/utils/downloadLinks.mjs";
+import withMDX from "@next/mdx";
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withMDX({
   /* config options here */
+  pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
   redirects: async () => {
     return [
       {
@@ -53,7 +55,7 @@ const nextConfig = {
       },
     ];
   },
-};
+});
 
 export default withSentryConfig(nextConfig, {
   // For all available options, see:

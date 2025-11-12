@@ -1,0 +1,112 @@
+---
+title: "Query, Split, Search, Synthesize: Automating Deep Research with JigsawStack and Langflow"
+slug: "query-split-search-synthesize-automating-deep-research-with-jigsawstack-and-langflow"
+excerpt: "While platforms like Perplexity and OpenAI offer deep research through closed systems, developers can now build their own transparent, extensible research agents using JigsawStack's open-source framework within Langflow. This hands-on guide shows how to create a multi-step research pipeline that breaks down complex queries, performs iterative web searches, and compiles evidence-backed reports—all through visual workflows that accelerate development without writing code.
+Learn to prototype AI research agents that you can see, modify, and scale for your specific needs."
+publishedAt: "2025-07-28T22:15:16.490Z"
+featureImage: "/content/images/posts/d698964f1a0dd55638b38700c7e49c2e44943216-982x568.png"
+authors:
+  - harsha-vardhan-khurdula
+  - melissa
+tags: []
+---
+
+*A hands-on guide to building your own deep research pipeline using JigsawStack Bundle within Langflow.*
+
+Large Language Models can generate answers quickly, but often without real depth. Techniques like context engineering and deep research help bridge that gap by improving how models handle complex queries. Deep research refers to an AI-driven process that breaks down complex questions into subtopics, performs iterative web searches, and compiles evidence-backed responses, similar to a research assistant.
+
+Platforms like [Perplexity](https://www.perplexity.ai/hub/blog/introducing-perplexity-deep-research) and [OpenAI](https://openai.com/index/introducing-deep-research/) offer deep research as a service through closed, expensive systems. In this guide, we’ll show you how to rebuild a deep research workflow based on an [open-source framework](https://github.com/JigsawStack/deep-research) from [JigsawStack](https://jigsawstack.com/) within [Langflow.](https://www.langflow.org/) You’ll walk away with your own transparent, extensible research agent using visual workflows that accelerate development and let you focus on logic rather than boilerplate.
+
+## How JigsawStack Does Deep Research
+
+[JigsawStack's **Deep Research**](https://github.com/JigsawStack/deep-research) is an open-source framework designed to orchestrate the entire multi-hop research process. Under the hood, it combines large language models (LLMs) with recursive web search and structured reasoning to generate comprehensive reports with sources. Here's how JigsawStack performs deep research behind the scenes:
+
+| ![](/content/images/posts/e64d4755845f776727d751fc4eafeff56e8ff53e-868x704.png) | 
+|:--:| 
+| *Figure: A conceptual overview of JigsawStack's Deep Research pipeline* |
+
+1. **Research Planning:** Breaks down a complex query into logical subtopics via LLM prompts, guiding focused investigations into each theme.
+2. **Web Search:** Executes focused, multi-hop web searches via the JigsawStack Search API, and avoids duplication of results for clarity and coverage.
+3. **Reasoning and Evaluation:** Uses reasoning models (e.g. OpenAI's o3) to analyze gathered data, generate follow‑up search steps, and iterate until coverage is deemed sufficient.
+4. **Report Generation:** Synthesizes findings into a structured, bibliographically‑backed report with citations, and clear source traceability.
+
+## Building and Deep Research Pipeline in Langflow
+
+We’ve seen how JigsawStack handles deep research behind the scenes within their framework. Now, we’ll recreate a research pipeline in Langflow without writing any code and using the JigsawStack Bundle introduced in Langflow v1.5.0. We will design a multi-step flow that takes a user query, breaks it down, performs web searches, and compiles answers.
+
+Here’s what you need to get started:
+- An [OpenAI API key](https://platform.openai.com/api-keys), to power the OpenAI Agent component which shall act as the orchestrator within this flow.
+- A [JigsawStack API key](https://jigsawstack.com/dashboard/), available via their [free plan.](https://jigsawstack.com/pricing) (Note: OpenAI incurs usage charges when using their APIs.)
+
+[Components](https://docs.langflow.org/concepts-components) you'll need to build this workflow:
+| ![](/content/images/posts/d698964f1a0dd55638b38700c7e49c2e44943216-982x568.png) | 
+|:--:| 
+| *Figure: A conceptual overview of JigsawStack's Deep Research pipeline* |
+
+1. **Chat Input:** Receives the user's research question/query.
+2. **OpenAI Agent:** acts as the reasoning engine and orchestrator for planning and synthesis. 
+
+
+Here are the agent instructions for OpenAI agent, which serves as the research orchestration agent:
+
+```
+You are a deep research orchestrator whose task is to manage the flow of deep research for a query posed by the user. You can verify today’s date using the Date tool.
+When prompted to perform deep research
+First, clarify what the user expects, based on the clarifications determine additional search queries or sub-research topics, the level of queries would evolve for each result. You will continue to call the Search tool with an immediate query to investigate the research topic. 
+Evaluate the output from the Search tool, and continue to propagate the topic.
+You are provided with an internet Search tool called JigsawStack Search, which will be your access to the web to conduct research. Be polite, and your synthesis should only stop when you feel there is enough evidence for the topic or the prompt requested by the user.
+Your response should follow the Harvard style. Always back your writing with relevant citations. JigsawStack search will only provide real sources. 
+You will at all times conduct research looking for all the information and queries formed.
+```
+
+3. **JigsawStack AI Web Search (Tool Mode):** performs live web searches with AI overview. Provided as a tool to OpenAI Agent.
+4. **Current Date (Tool Mode):** returns current date and time. Required by the model to make relevant searches on time sensitive queries.
+5. **Chat Output:** Displays the agent's final answer to the user.
+
+### Stage 1: Splitting the Problem
+The research orchestration agent begins by asking clarifying questions to better understand the user’s intent. Once these questions are answered by the user, it decomposes the query into smaller, focused subtopics. This approach ensures depth and structure, allowing the agent to cover all relevant aspects instead of producing a shallow, one-shot answer.
+![](/content/images/posts/a0dd822aba3b8ee1e448f16c5b98a39a98dcb641-1492x892.png)
+
+### Stage 2: Research Planning (Query Decomposition)
+Once the subtopics are identified, the agent begins investigating each one using the JigsawStack Web Search tool. 
+
+![](/content/images/posts/6bd5bc8a8fe7e95cace7bffe9b2e55895fe503bc-1488x480.png)
+
+JigsawStack Search is powered by an AI model that pulls results from multiple sources and returns a concise summary (when AI Overview is set to True as shown in the image above), along with relevant links and images based on the query’s complexity. 
+
+These raw results are passed back to the agent, who evaluates the findings and decides whether further queries or refinements are needed. This step repeats recursively until the agent gathers enough information for each subtopic.
+![](/content/images/posts/ee3cbeae80e6538786245c82e53e914f1f438e9a-1488x982.png)
+
+### Stage 3 & 4: Reasoning & Report
+At this stage, the agent begins to synthesize the results collected for each subtopic. It evaluates the summaries and supporting links returned from Search tool, identifies patterns or gaps, and refines the research if needed.
+
+This process runs automatically inside the OpenAI Agent component, guided by the agent instructions we defined earlier. The agent continues to issue search queries in the background whenever it detects missing context or unanswered questions.
+
+| ![](/content/images/posts/b106e36bd0c8f60b2b8995ab59e1d103f99d85b4-1498x648.png) | 
+|:--:| 
+|*Image: First call made by our research agent to understand the latest developments in the topic.*|
+
+| ![](/content/images/posts/e3cded0c5c33e5558cc02023e875875171ad2ba4-1492x492.png) | 
+|:--:| 
+|*Image: Second call by the research agent to further investigate a previous lead.*|
+
+Once it has sufficient evidence, the agent composes concise, well-structured summaries for each subtopic. These are then integrated into a final, cohesive report that directly addresses the user’s original question.
+
+![](/content/images/posts/a241976afc6716c0925041a70e7e6fa6788fd338-1488x1350.png)
+The final output follows a Harvard-style format, with citations tied to real web sources returned by JigsawStack, ensuring the answer is both verifiable and comprehensive.
+
+## Open Minds Need Open Tools
+
+Perplexity and OpenAI have shown us what deep research agents can do, but they’re closed systems. You can’t change how they work, you can’t see what’s happening under the hood, and you definitely can’t adapt them to your needs.
+
+With Langflow and JigsawStack, you’re not just using someone else’s research tool; you’re building your own. You can see every step, tweak every decision, and plug in whatever data or models you want.
+
+And maybe that’s the difference, not just smarter AI, but AI that works for *you.*
+
+## What's Next?
+*Coming in the following weeks:* JigsawStack's deep research service will ship with Langflow as part of their bundle, letting developers rapidly prototype and iterate on research workflows without getting bogged down in implementation details. 
+
+Next Steps:
+- [Open Deep Research with LangGraph: ](https://blog.langchain.com/open-deep-research/)A reference implementation of a recursive research agent using open-source components.
+- [Composio + LangGraph Deep Research Guide](https://blog.langchain.com/open-deep-research/): Shows how to chain memory, planning, and retrieval into a modular research agent.
+- Experiment by swapping in other search tools or test different LLMs (Gemini, Claude, DeepSeek) to see what works best for you.

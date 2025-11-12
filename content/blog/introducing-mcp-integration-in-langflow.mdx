@@ -1,0 +1,45 @@
+---
+title: "Introducing MCP Integration in Langflow"
+slug: "introducing-mcp-integration-in-langflow"
+excerpt: "Model Context Protocol (MCP) is an open standard from Anthropic. Langflow is both an MCP client and server, it can connect to other MCP servers and you can expose Langflow flows as MCP servers."
+publishedAt: "2025-03-12T21:12:04.000Z"
+featureImage: "/content/images/posts/5e309ab1059198561bf0a065f0a2d87320655a1d-960x540.png"
+authors:
+  - rodrigo
+tags: []
+---
+
+Model Context Protocol ([MCP](https://modelcontextprotocol.io/introduction)) is an open standard from Anthropic, largely inspired by language servers ([LSP](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/)) from Microsoft and VS Code. It is designed to establish seamless interoperability between Large Language Model (LLM) applications and external tools, APIs, or data sources. Today, every chat app has its own functionality and implementation, and so this standard has a great potential to simplify the building of agentic AI applications.
+
+**Client and Server Support**
+
+Back in January we quietly added both MCP client and server support to Langflow. Client support means you can take any of the thousands of MCP servers that exist today and use them as agentic tools in Langflow. Server support means that you can take any MCP client (including Claude Desktop) and connect it to Langflow, each of your existing flows is exposed to the client as tools.
+
+Architecturally, MCP is made up of:
+
+*   **MCP Servers** are interfaces to expose data and functionality from external systems or data sources. Servers facilitate communication between tools and AI systems. Examples of MCP servers include servers that allow LLMs to search the web, use a local file system, use a database, etc. By building an MCP server for your system, you make it accessible to LLM applications.
+*   **MCP Clients** are LLM or GenAI applications that are able to connect to MCP servers to retrieve data or execute tasks. The first MCP client was Claude desktop, other AI apps like Cursor and GooseAI are also MCP clients.
+
+![](/content/images/posts/e11d7316357d1279bc3dc2026da52ce4c6b491a6-696x632.png)
+
+Drop in the MCP component to use an MCP server
+
+MCP is a specification, though it also includes Python and node SDKs to aid with implementation. The spec, like LSP, is built on json-rpc but the wire protocol is not strictly defined. The SDKs initially shipped with stdio and sse protocols. The former simply expects the client to kick off the server process for every invocation and communicates through stdin and stdout. They came out of the gate with a [wide list of supported MCP servers](https://github.com/modelcontextprotocol/servers?tab=readme-ov-file#-reference-servers) and has seen widespread adoption with over 1,500 public MCP servers created by developers in the first few months.
+
+The first MCP client was the Claud Desktop app, currently only available for macOS and windows. The Claude Desktop app currently only supports the stdio protocol (sse support is not there yet but sse implementations can be tested with the [mcp inspector](https://github.com/modelcontextprotocol/inspector)).
+
+Langflow is a Python-based, open-source developer and runtime environment for interacting with AI tools, and an API backend that can be used to run AI applications in production.
+
+As far as we are aware, Langflow is the only system that functions natively as both an MCP client and an MCP server and we believe it opens the doors for MCP based composability that will open the doors to create a new class of powerful AI applications. 
+
+Internally, MCP supports multiple primitives that can be exposed by servers to clients. These primitives include resources, prompts, tools, sampling, and roots (see the [MCP docs](https://modelcontextprotocol.io/docs/concepts/architecture) for more details). When acting as a server, Langflow exposes both tools and resources. This means that MCP clients like Claude Desktop and others can access Langflow flows as tools and files that have been uploaded to langflow as resources.
+
+When acting as a client, Langflow’s MCP component exposes MCP tools natively to the native Langflow agent component giving Langflow developers immediate access to the thousands of MCP servers that exist today.
+
+<div data-youtube-embed="K1Zy8lPl9BM"></div>
+
+Use MCP as a client or server in Langflow
+
+For a practical example of Langflow using MCP, check out [Langflow + MCP: Standardizing AI Tool Integration](https://www.youtube.com/watch?v=K1Zy8lPl9BM), which implements a use case to show how Model Context Protocol is standardizing how AI applications interact with tools and resources.
+
+Langflow + MCP is a big leap into the uncharted realm of agentic workflows. We can’t wait to see what you’ll build with it

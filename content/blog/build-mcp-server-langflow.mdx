@@ -1,0 +1,87 @@
+---
+title: "Build your own MCP server in Langflow"
+slug: "build-mcp-server-langflow"
+excerpt: "Langflow is a powerful tool for building custom AI agents, but did you know it can also be used to create MCP servers that grant access to private data and APIs? This blog post showcases how to use Langflow to build a custom MCP tool that provides documentation for a lesser-known library, making it accessible to coding agents."
+publishedAt: "2025-10-10T09:23:52.348Z"
+featureImage: "/content/images/posts/4427c3c998fa59fda7e9c1aa48da194e71992e1c-960x540.jpg"
+authors:
+  - phil
+tags:
+  - mcp
+---
+
+Langflow is great for building your own AI agents, but did you know you can also expose your flows as MCP servers to use within other agents?
+
+Yes, you can build tools for your agents with Langflow. There are many MCP servers out there, but if you need easy access to private data, APIs or some other service and there isn’t an existing MCP server available then Langflow is a great way to build it for yourself. It’s also really useful to throw together an ad-hoc MCP tool when you need something specific for your agents.
+
+In this blog post I’m going to show you how to build an agent that can access documentation for a library that models might not know about and then make it available to a coding agent.
+
+## The problem
+
+When I am coding and using libraries that aren’t well known, agents often get the details of using the library wrong. They can hallucinate arguments or functions, losing effectiveness. I know this because this happens with the [Langflow TypeScript client](https://github.com/langflow-ai/langflow-client-ts). For example, I asked Cursor to help me upload a file for a flow and it got a function name and argument name wrong.
+
+In the example below the model hallucinated a `runFlow` function, because I asked it to create a function in my app that would run a flow. The real function is just called `run`.
+
+![Some example code showing red lines under parts of it that were generated incorrectly.](/content/images/posts/019150568800e732998a23b230eb1c0e9a4567c6-1015x734.png)
+
+I can’t blame the agent though, this is a relatively young library, so it’s not in the training data. We know agents understand how to code, they just need to read the docs first.
+
+For this app we’re going to build a quick flow that uses the documentation of the library to answer questions about how to use the library. Then we’ll expose the flow as an MCP server that my coding agent can use.
+
+## The flow
+
+If you want to build flows like this, you’ll need Langflow. Either install the [desktop version](https://www.langflow.org/desktop) or [follow the docs for other ways to install Langflow](https://docs.langflow.org/get-started-installation).
+
+Create a new flow, we’ll start with the _Simple Agent_. This flow creates an agent that has access to 2 tools, a URL component that can fetch web content and a calculator. Delete the calculator as it’s not useful for this use-case. Choose a model provider and model for the agent component and add an API key so that you can access the service through Langflow.
+
+The URL component is most useful when you direct the agent as to what URLs it can use to get information. In the agent instructions field in the agent component, add:
+
+```
+You are a helpful assistant that can use tools to answer questions and perform tasks.
+
+Your tool can fetch data from a URL. 
+
+Use it to fetch information about the Langflow TypeScript client at this URL: https://raw.githubusercontent.com/langflow-ai/langflow-client-ts/refs/heads/main/README.md
+
+Source code:
+
+Main client: https://raw.githubusercontent.com/langflow-ai/langflow-client-ts/refs/heads/main/src/index.ts
+
+Flows: https://raw.githubusercontent.com/langflow-ai/langflow-client-ts/refs/heads/main/src/flow.ts
+
+File uploads: https://raw.githubusercontent.com/langflow-ai/langflow-client-ts/refs/heads/main/src/files.ts
+```
+
+You can now open the Playground and ask this agent about the Langflow TypeScript library that a coding agent without access to the docs would likely get wrong. Now that It has access to both docs and source code it can answer based on the real code.
+
+![A conversation with the flow we just built shows that it can now answer questions on the library and correctly generate code based on the documentation.](/content/images/posts/bfc56878d890584a2a38f270e7a7ce5b4ebc60a5-865x740.png)
+
+## Exposing the flow as an MCP server
+
+Now the flow is complete, we can expose it so that other agents can use it. In the top right of the canvas, click on _Share_ then _MCP Server_.
+
+![The MCP button is under the Share menu with API Access, Export and Embed into site.](/content/images/posts/9e18a8cb43431300c83a90e855028f351ef46270-865x740.png)
+
+Here you can see that each flow within a project is exposed as a tool.
+
+![This project lists one tool as available, called LANGFLOW_TYPESCRIPT](/content/images/posts/7cf88bd3d5f91761383d67a8d9965538523f6e1f-865x740.png)
+
+You can edit tools, hiding ones that you don’t want to expose and updating the name and description.
+
+![Editing the tools shows an interface where you can toggle tools on or off and change the name or description.](/content/images/posts/c71643f48748c1683a0709710101713f518550b8-865x740.png)
+
+Once you are happy with your tool descriptions, you can install the tool into your agent. If you have Claude, Cursor, or Windsurf you can use the Auto install buttons which automatically write the config into the tools’ respective MCP config. You can also take the JSON and edit your agent’s config directly.
+
+## Using the flow in an MCP client
+
+I added this tool to Cursor and now it uses the docs to successfully write the code I needed.
+
+![Now with the docs at the agents fingertips, the updated code is correct.](/content/images/posts/11e51a5bad51c01abc27650bc36c7e7f9d78f5eb-804x581.png)
+
+## Build your own MCP tools with Langflow
+
+In this post you’ve seen how to create a flow in Langflow, then expose it as an MCP server and use the tools in an agent application like Cursor. For more on this, take a look at the [documentation on using Langflow as an MCP server](https://docs.langflow.org/mcp-server).
+
+This was a simple flow that just made some useful documentation available while I needed the agent to write some code correctly. Your flows could be more complicated, perhaps creating a [RAG-powered answer bot for private data](https://docs.langflow.org/chat-with-rag), a [deep research agent](https://www.langflow.org/blog/how-to-build-a-deep-research-multi-agent-system), or whatever else you can dream of with Langflow.
+
+Questions or comments? Get in touch with us on X at [@langflow_ai](https://x.com/langflow_ai), and join [the Discord](https://langflow.org/discord). We would love to hear about the MCP servers that you're building.

@@ -1,0 +1,41 @@
+---
+title: "Launch Week Day 5 - Graph RAG 🕸️"
+slug: "launch-week-day-5-graph-rag"
+excerpt: "The new Graph RAG component in Langflow takes your workflows to the next level by improving accuracy and incorporating data relationships directly."
+publishedAt: "2025-04-04T13:27:21.000Z"
+featureImage: "/content/images/posts/bcd174a675f5f15d24640bbdb6d41d0f55a578bf-960x540.png"
+authors:
+  - melissa
+tags:
+  - launch-week
+---
+
+We're closing out Launch Week big with a brand-new Graph RAG component that makes it easy for you to improve the accuracy of your vector searches by leveraging the relationships between your documents.
+
+![](/content/images/posts/3f0eb1f76af19173003f393f28f9a626ae01cdbb-1600x834.png)
+
+Most developers have been using Langflow to build robust RAG (Retrieval-Augmented Generation) pipelines for a while. Now, the Graph RAG component takes your workflows to the next level by improving accuracy and incorporating data relationships directly. This addition allows seamless integration with your existing databases, gives you more control over the retrieval process, and enhances context-awareness by leveraging the relationships between your data points. With Graph RAG in Langflow, your AI applications can now navigate complex information networks to deliver more comprehensive and accurate responses. 
+
+{%youtube 2EpeXLxtteI %}
+
+## How It Works
+
+![](/content/images/posts/53d03f23b3b745b118bfa20376ab377e85f7af7f-1324x720.gif)
+
+Graph RAG improves on traditional vector search by providing the ability to identify meaningful relationships between your documents. What might look like a typical vector store retrieval is actually much more powerful. The new graph component references data directly from your vector store and uses metadata to identify connections between entities. 
+
+As the system processes your dataset, it recognizes and maps relationships between things like proper nouns, document structure, and other relational data. The component performs graph traversal through your existing data, allowing for more contextually relevant responses that understand how different pieces of information relate to each other.
+
+## Getting Started
+
+Connect your **Vector Store** component to the **Graph RAG** component using the yellow **"Vector Store Connection"** points. If you're using an embedding model other than **NV-Embed-QA**, remember to connect your **"Embedding Model"** component to your **"Vector Store"** component. Hook up the **Chat Input** component to the **Graph RAG** component's "Search Query" field, and the rest of the flow works just like a standard vector store RAG pipeline. Within the Graph RAG component, you can define specific relationships, edges, and traversal strategies to customize how your data connections are interpreted and utilized when responding to queries.
+
+## Wrapping Up
+
+We hope your excited to start building better queries for your AI-powered agents and flows! Here are a few next steps:
+
+*   Check out [the docs](https://docs.langflow.org/components-vector-stores#graph-rag) for the new Graph RAG component.
+*   Join the [Langflow Discord](https://discord.com/invite/EqksyE2EX9?ref=blog.langflow.org) and let us know what you're building or if you need some help.
+*   Check out our [project on Github](https://github.com/langflow-ai/langflow?ref=blog.langflow.org) and give us a star if you like what you see!
+
+Happy coding! 🎉

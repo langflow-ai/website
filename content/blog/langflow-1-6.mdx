@@ -1,0 +1,123 @@
+---
+title: "Langflow 1.6 released: OAuth for MCP, OpenAI responses API compatibility, and more! "
+slug: "langflow-1-6"
+excerpt: "Langflow 1.6 is out with OAuth for MCP, OpenAI API compatibility, Docling-powered parsing, Traceloop observability and Better UX. "
+publishedAt: "2025-10-02T01:27:00.000Z"
+featureImage: "/content/images/posts/4027fc82efbe5543c5d07fbd67498c27d0c06ab5-1600x900.jpg"
+authors:
+  - phil
+tags:
+  - news
+---
+
+Welcome to the release of Langflow 1.6! We’re always working to improve Langflow for you and with this release we have: 
+
+* Added OAuth authentication for MCP servers, powered by [MCP Composer](https://ibm.github.io/mcp-composer/)   
+* Added an OpenAI responses API compliant endpoint for running flows, to make it easier to integrate Langflow with your applications   
+* Added advanced document parsing, powered by [Docling](https://www.docling.ai/), into the [File component](https://docs.langflow.org/components-data#advanced-parsing)   
+* Integrated [Traceloop](https://www.traceloop.com/) to give you more options for observability   
+* Made UI improvements to make it easier for you to build your flows 
+
+Let’s look at what this means in detail. 
+
+> 💡 For a video rundown of the new features, check out the [Langflow 1.6.0 launch video](https://www.youtube.com/watch?v=dTuVpbNRO4o)
+
+## OAuth for MCP servers 
+
+Every Langflow project can be exposed as an MCP server in which each flow is available as a tool. This is a great way to build custom tools for you or your business’s needs. Starting in Langflow 1.6 you can protect the MCP server with OAuth, requiring users to authenticate. This uses the [MCP Composer](https://ibm.github.io/mcp-composer/) project to provide the authorization.   
+   
+You can enable this protection by opening the *MCP Server* tab for your project and clicking on *Edit Auth.* Here you can select between no auth, API key or OAuth. To configure the OAuth settings, you will need an OAuth provider ready to go. Then you will need to register a new client for your OAuth provider and get a client ID and client secret.   
+   
+Once you’ve done that you can fill in the details. You need to provide a host and port for an instance of MCP Composer to run on locally. You can then provide a server URL and callback URL which is how you will access the server externally. This can be localhost, or a domain or IP address if you are deploying this remotely.   
+
+![Configuring the MCP server authentication](/content/images/posts/fc65e3394b9ea641fdde5f570b4280026685f234-2260x1704.jpg)
+   
+The client ID, client secret, authorization URL and token URL are all provided by your OAuth provider. The MCP scope must be “user” and the provider scope must be “openid”.   
+   
+Once you’ve saved this config, the MCP Composer server will start up and as soon as you get a green check mark you can then add the server to your MCP host application, like Claude, Cursor, or Windsurf. Then, when you try to access the server from the host, you will be taken through an OAuth flow in your browser before you can use the tools. Now you can control access to tools via your OAuth provider.   
+   
+![When the MCP Composer server has started, the auth shows a green tick](/content/images/posts/06586efee4ca0c025def93bfbdc232ccade87ab8-2260x1704.jpg)
+
+> 💡 For a more in-depth look at this feature, check out David’s video that shows you how to [configure and use OAuth for MCP servers in Langflow](https://www.youtube.com/watch?v=ZNRw1pT-_5A).
+
+## OpenAI Responses API Compatibility 
+
+Langflow already has an [API from which you can trigger flows to run](https://docs.langflow.org/api-flows-run) and get the results. But we also recognize that the OpenAI API is the most well-known API for AI development. For that reason, we have made a new API endpoint that is compatible with the [OpenAI Responses API](https://platform.openai.com/docs/api-reference/responses).   
+   
+This means, that when you want to run a flow from the API, you can make a request to \`/api/v1/responses\` passing the flow ID as the model and your input, and you will get back a response that matches the Responses API. For example, in Python you could do this:   
+   
+```python
+import requests   
+import json   
+    
+r = requests.post(   
+    "http://localhost:7861/api/v1/responses",   
+    data=json.dumps(   
+        {   
+            "model": YOUR_FLOW_ID,   
+            "input": "Hello, how are you?",   
+        }
+    ),
+    headers={"Content-Type": "application/json"},   
+)   
+    
+print(r.json()["output"][0]["content"][0]["text"])
+```
+You can also use the OpenAI API libraries. Although there is one quirk right now. If you need to pass an API key, you need to do that as an additional header, and you must also pass a dummy API key to the library. Like this:   
+   
+```python
+from openai import OpenAI   
+    
+client = OpenAI(   
+    base_url="http://localhost:7861/api/v1/",   
+    default_headers={ "x-api-key": "sk-0e3..." },   
+    api_key=":-P",   
+)   
+    
+response = client.responses.create(   
+    model= YOUR_FLOW_ID,   
+    input= "Hello, how are you?",   
+)
+    
+print(response.output_text)   
+```
+   
+For more details, check out [the documentation on the OpenAI compatibility](https://docs.langflow.org/api-openai-responses). 
+
+## Upgraded File component 
+
+In [Langflow 1.5 we introduced the Docling bundle](https://www.langflow.org/blog/langflow-1-5-docling-windows-support-and-improved-ux). Since file processing is such a key part of any RAG style application, we wanted to make the advanced document parsing capabilities of Docling more easily available. In Langflow 1.6 you will find an [*Advanced Parser* setting in the File component that upgrades it to use the Docling file parser](https://docs.langflow.org/components-data#advanced-parsing).   
+   
+Once you’ve added a file to the component, just check the *Advanced Parser* option and you can configure the parser to use either the standard or VLM pipeline, and the OCR engine you want to use.   
+
+![When you check the Advanced Parser option on the File component it opens up new Docling powered options.](/content/images/posts/fedba1bda6fba39529a7ca40f4a14e8c1b7a8305-356x458.png)
+   
+In advanced mode, you can choose to output either structured output or markdown.   
+   
+In Langflow 1.5 the Docling dependency wasn’t included, and you needed to install it yourself. Since it is such a core part of document processing, the Docling dependency is bundled in Langflow 1.6.   
+   
+Powering your file ingestion with Docling will produce clean, structured data from messy PDFs and other documents. 
+
+## More observability options 
+
+When deploying your agents to production, you need to keep an eye on them to ensure they are serving your users well. Monitoring their behavior is crucial to this, and in Langflow 1.6 Traceloop joins the list of available observability platforms that already includes Arize, Langfuse, LangSmith, LangWatch and Opik. [Just set the right environment variables](https://docs.langflow.org/integrations-instana-traceloop) and your flows will start reporting to Traceloop. 
+
+## UI Updates
+
+We continue to iterate on the Langflow interface to make sure it works well for you. In Langflow 1.6 we’ve updated the components sidebar to separate core components, bundles, and MCP servers. You can always use the search bar to find any component or available MCP server, but it’s now easier to browse the core components and keep track of the MCP servers you have added to Langflow.   
+   
+![ ](/content/images/posts/ea1c792e98cb1141a2c09b47863a83b1555d75b6-960x718.gif)
+
+For more on all the changes that we’ve made, check out the [release notes for version 1.6.0](https://docs.langflow.org/release-notes#160) and for all the detail, you can dig into the [release on GitHub](https://github.com/langflow-ai/langflow/releases). 
+
+## Join the community 
+
+We’re always working hard to make Langflow better for you, and we can’t do it without you, your support and your feedback. There are loads of ways to be part of the community, you can: 
+
+* join us in the [Discord community](https://discord.com/invite/EqksyE2EX9) to connect with fellow builders   
+* check out the [GitHub repo](https://github.com/langflow-ai/langflow) to contribute or 🌟 the project   
+* Subscribe to the [YouTube channel](https://www.youtube.com/@langflow) for tutorials on building with Langflow   
+* Subscribe to the [AI++ newsletter](https://www.langflow.org/newsletter) for the latest articles about building with AI, agents and MCP 
+
+We cannot wait to see what you build with this new version, so [download Langflow 1.6](https://www.langflow.org/desktop) and let us know what you think.   
+

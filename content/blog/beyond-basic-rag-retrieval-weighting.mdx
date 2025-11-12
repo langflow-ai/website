@@ -1,0 +1,95 @@
+---
+title: "Beyond Basic RAG: Retrieval Weighting"
+slug: "beyond-basic-rag-retrieval-weighting"
+excerpt: "In Retrieval-Augmented Generation (RAG) systems, it’s common to assume that simply feeding an entire text corpus and relying on plain…"
+publishedAt: "2024-09-04T22:04:10.000Z"
+featureImage: "/content/images/posts/c0de95280d62a75155748bfc736bf056b2622be9-1200x520.png"
+authors:
+  - rodrigo
+tags: []
+---
+
+In Retrieval-Augmented Generation (RAG) systems, it’s common to assume that simply feeding an entire text corpus and relying on plain retrieval will yield decent results. This often leads to answers that lack specificity when the system doesn’t prioritize critical information, failing to deliver accurate answers. The core issue is focus — too much noise means a higher chance that the chunks selected won’t help the LLM construct an accurate answer.
+
+In this article, we will look into how retrieval weighting can address this problem by prioritizing more relevant information, ultimately improving the reliability of generated responses.
+
+### Why Retrieval Weighting Matters
+
+RAG can be visualized as a Language Model extracting information from a database. In this process, even small improvements in retrieval can directly impact the quality of the final answer. This is particularly relevant for cases where answers must be formulated using multiple parts of a corpus, where a response may be entirely incorrect if one or two crucial chunks are missing.
+
+When a system retrieves irrelevant information, it can lead to a cascade of mistakes which, over time, diminish user trust in the entire RAG-based system.
+
+### Metadata Filtering
+
+If reducing noise is important, metadata filtering is probably the current mainstream technique to address that. By leveraging attributes such as publication dates, authorship, or document type, one can include or exclude specific chunks, effectively narrowing the data pool. It’s an effective rule-based approach for excluding irrelevant information and streamlining the retrieval process.
+
+However, metadata filtering doesn’t always address subtleties within the remaining data. After filtering, you might still be left with chunks that are technically relevant but vary significantly in their usefulness. Besides, hard filters (e.g., “date < 2021”) may be too aggressive and unintentionally strip away valid or complementary parts of a document.
+
+Weighting (or soft filtering) allows for a more nuanced approach. It takes into account factors such as recency, source reliability, and contextual relevance to score chunks. This helps ensure the retrieved information is relevant and prioritized in a way that aligns more closely with the proposed task. So, instead of applying hard filters, retrieval scores are weighted by pre-determined factors the system wouldn’t “figure out” by itself.
+
+Below we will explore some weighting techniques, providing examples and concise explanations of how to apply these factors using a “soft” approach.
+
+### Time-Based Weighting
+
+In fast-paced domains like news, the relevance of information is highly dependent on its recency.
+
+Time-weighted retrieval enhances traditional retrieval methods by taking into account the recency of the information and applying decay factors that increase on a daily basis to prioritize newer content.
+
+By multiplying these factors with the computed similarity before ranking, older articles are gradually de-prioritized.
+
+**Example:**
+
+_For a cryptocurrency query, applying a decay factor to older data, with today’s information weighted at 1.0, yesterday’s at 0.98, and so on._
+
+![](/content/images/posts/465ea991890a5a9186a7da131dc001d9757cdc01-800x675.png)
+
+Exponential Time-Based Decay: Non-linear decay of relevance over time, where older data gradually loses weight. Source: Author.
+
+This concept can naturally be expanded to adjust for specific needs, like including custom trends or accounting for seasonality.
+
+### Source-Based Weighting
+
+In information retrieval, source credibility may be as important as the content itself. Source-based weighting lets you assign weights according to the reliability and authority of the source, ensuring that more credible information is prioritized while ranking.
+
+Assigning higher weights to sources with established credibility can significantly enhance the quality of the retrieved content. This is particularly useful in fields where accuracy is key, such as medicine, law, or academic research.
+
+**Example:**
+
+_In research papers, manually assign weights that are proportional to the number of peer-reviewers or other factors that contribute to that paper’s credibility._
+
+### Contextual Weighting
+
+Contextual weighting involves analyzing the structure of a document and assigning different weights to its sections. It is particularly valuable in documents where certain parts inherently contain more relevant information.
+
+By assigning higher weights to document sections that are more likely to address the query directly, you can improve the precision of your retrieval system. This technique ensures that the system doesn’t just retrieve any relevant text but focuses on the parts of the document that are most likely to provide meaningful answers.
+
+![](/content/images/posts/1160f839578fb7ee19a09edc7fc34c414dc04a9c-800x1110.png)
+
+Sections of a paper are to be structured via pre-processing before text splitting. Source: Author.
+
+**Examples:**
+
+*   **Research Papers:** _Focus on methodology or implementation rather than introduction, summary, or conclusion, as these may contain redundant information._
+*   **Financial News:** _De-emphasize preambles, headers, or company descriptions, prioritizing the latest news or financial data._
+
+Notice that this kind of technique requires breaking down documents into categorized sections before splitting.
+
+> _💡_ [_Langflow_](http://langflow.org) _just released its integration with_ [_Unstructured IO_](https://unstructured.io) _for advanced document parsing functionalities! Check it out_ [_here_](https://github.com/langflow-ai/langflow)_._
+
+### Length Normalization
+
+Another creative way to weight scores is used to prevent a large corpus from dominating the retrieval by normalizing scores across different documents.
+
+With fixed splitting windows, larger documents lead to more chunks, which naturally lead to more opportunities within the same document to match a query. This can make longer documents dominate the retrieval process, skewing results in their favor against smaller (and sometimes more specialized) ones.
+
+Length normalization is a technique used to balance the influence of documents by adjusting their scores. The scores of longer documents are scaled down proportionally to their length (akin to TF-IDF length normalization), ensuring that all sources — regardless of size — are fairly represented.
+
+**Example:**
+
+_Applying a small reduction factor to scores where chunks come from a large comprehensive report allows a smaller, focused study to contribute more significantly to the retrieval results._
+
+* * *
+
+This article is part of the Beyond Basic RAG series. Read more: [**Beyond Basic RAG: Similarity ≠ Relevance**](https://medium.com/logspace/beyond-basic-rag-similarity-relevance-fdbd16373d4a)
+
+At Langflow, we’re building the fastest path from RAG prototyping to production. It’s open-source and features a free cloud service! Check it out at [https://github.com/langflow-ai/langflow](https://github.com/langflow-ai/langflow) ✨

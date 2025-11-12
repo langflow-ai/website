@@ -1,0 +1,159 @@
+---
+title: "How to Use the Langflow API in Node.js"
+slug: "use-langflow-api-in-node-js"
+excerpt: "Learn how to integrate a Langflow flow into your own application using the Langflow API.
+"
+publishedAt: "2025-05-29T02:41:00.000Z"
+featureImage: "/content/images/posts/09c645186e098126419ea1b3cd21f24b28146229-1920x1273.heif"
+authors:
+  - phil
+tags: []
+---
+
+Once you've built your flows and agents in Langflow, you need to integrate them into your own application. You can do so using the [Langflow API](https://docs.langflow.org/api-reference-api-examples).
+
+In Node.js applications, you can construct and make calls directly to the API with [fetch](https://nodejs.org/api/globals.html#fetch), the [http module](https://nodejs.org/api/http.html), or using your favourite HTTP client like [axios](https://www.npmjs.com/package/axios) or [got](https://www.npmjs.com/package/got). To make it easier, you can now use this [JavaScript Langflow client](https://www.npmjs.com/package/@datastax/langflow-client). Let's take a look at how it works.
+
+![Example code for using the JavaScript Langflow client. It reads:  import { LangflowClient } from '@datastax/langflow-client';  const client = new LangflowClient({ langflowId, apiKey }); const flow = client.flow(flowId); const response = await flow.run("Hello there");  console.log(response.chatOutputText());](/content/images/posts/591a92be141af3c6712ea91fc22ddf487e1a1c2a-1550x852.png)
+
+## What you'll need
+
+To test the client out, you’ll either need to [download the desktop version of Langflow](https://www.langflow.org/desktop) or [install Langflow with one of the other methods](https://github.com/langflow-ai/langflow?tab=readme-ov-file#-quickstart). Once you are set up with Langflow, make sure you have a flow to test the API out with. The [basic prompting flow template](https://docs.langflow.org/starter-projects-basic-prompting) is a good start, or, if you're looking for something with a bit more agency, check out the [simple agent template](https://docs.langflow.org/starter-projects-simple-agent). You'll need an [OpenAI API key](https://platform.openai.com/api-keys) to run these flows, or you can change out the model provider if you want to. Make sure the flow works with a test in the playground; once it’s responding, you’re ready to make calls to the API.
+
+Note: this Langflow client is for using on the server. The Langflow API uses API keys, which should not be exposed, so it isn’t suitable for using directly from the front-end.
+
+### Getting started with the JavaScript Langflow client
+
+To demonstrate how to use the Langflow client, let's start a small TypeScript application. Create a new directory, change into it, and initialize a new Node.js project:
+
+```sh
+mkdir using-langflow-client  
+cd using-langflow-client  
+npm init --yes
+```
+
+Install the client using your favourite package manager:
+
+```sh
+npm install @datastax/langflow-client
+```
+
+Install some other tools that will help us write and run the application:
+
+```sh
+npm install tsx @types/node --save-dev
+```
+
+Create a new file called _index.ts_ and open it in your editor of choice. Start by importing the client.
+
+```typescript
+import { LangflowClient } from "@datastax/langflow-client"
+```
+
+Now you can initialize a client to use with the Langflow API. You will need the URL from which you access Langflow. By default, the URL is `http://localhost:7860`, but if you are hosting Langflow somewhere else then you will need to get the URL from there.
+
+If you have set up authentication for your instance of Langflow, you’ll need to [create an API key for your user](https://docs.langflow.org/configuration-api-keys). If you haven't yet set up authentication for your instance of Langflow, you can omit the API key.
+
+You can then initialize the client like this:
+
+```typescript
+const baseURL = "http://localhost:7860";
+const apiKey = "YOUR_API_KEY";  
+const client = new LangflowClient({ baseURL, apiKey });
+```
+
+### Running a flow
+
+Now you can use it to run your flows. To do so, you’ll need the flow ID, which can be found in the API modal in the flow canvas.
+
+![In the canvas, click on Share, then API Access](/content/images/posts/9c3e27be3b0447d1e48bee9216231bd9a223176a-1176x920.png)
+
+![Your flow ID can be found in the API modal in the API URL after /run/.](/content/images/posts/b9b0951c221dfacbfa8aad677935ca2d456a5658-1176x920.png)
+
+You can get a reference to a flow by calling on the client like so:
+
+```typescript
+const flowId = "YOUR_FLOW_ID";  
+const flow = client.flow(flowId);
+```
+
+You can run the flow by calling `run` and passing it the input to your flow:
+
+```typescript
+const response = await flow.run("Hello, how are you?");  
+console.log(response.outputs);
+```
+
+If you run the application now, your flow will run and output your results.
+
+```sh
+npx tsx ./index.ts
+```
+
+![A screenshot of the example code in VS Code, with the integrated terminal open at the bottom of the screen having run the example. The response says, "Hello! It's great to see your enthusiasm. How can I assist you today? Are you looking to start a new project or learn something exciting? Let me know how I can help you get started!"](/content/images/posts/1342b7cdc8e0dcd9d439751a0cf1f954d96b66d8-1999x1145.png)
+
+### Flow responses
+
+Flows return a lot of data: everything you could want to know about how the flow ran. The most important part of the response is the output from the flow; the Langflow client tries to make this easy.
+
+You can take the flow response from above and instead of logging the entire set of response outputs, you can call:
+
+```typescript
+const response = await flow.run("Hello, how are you?");  
+console.log(response.chatOutputText());
+```
+
+The client will return the text from the first chat output component in the response. 
+
+If you need the session ID, or more detail from any of the outputs, you can access the full response from the FlowResponse object:
+
+```typescript
+const response = await flow.run("Hello, how are you?");  
+console.log(response.sessionId);  
+console.log(response.outputs);
+```
+
+### Options for running a flow
+
+Using `flow.run(input)` will run your flow with several defaults. The input and output types will be set to chat and it’ll use the [default session](https://docs.langflow.org/concepts-playground#use-custom-session-ids-for-multiple-user-interactions). If your flow requires different settings, you can update the parameters. For example, if you want to set the input and output types to text and pass a session ID, you can do the following:
+
+```typescript
+import { InputTypes, OutputTypes } from  
+"@datastax/langflow-client/consts";  
+  
+// set up flow as above  
+  
+const response = await flow.run("Hello, how are you?", {  
+  input_type: InputTypes.TEXT,  
+  output_type: OutputTypes.TEXT,  
+  session_id: "USER_SESSION_ID",  
+});
+```
+
+### Tweaks
+
+Langflow is flexible enough to enable you to change the settings for any of the components in a flow. For example, you might have set up the flow to use the OpenAI model component using the gpt-4o-mini model, but you want to test the flow with gpt-4o. Instead of updating the flow itself, you can send a tweak by providing the ID of the component and the parameters you want to override.
+
+The JavaScript Langflow client supports tweaks in a couple of ways.
+
+You can add a tweak to a flow object, like so:
+
+```typescript
+const flow = client.flow(flowId);  
+const tweakedFlow = flow.tweak("OpenAIModel-KqkTB", { model_name: "gpt-4o" });
+```
+
+This creates a new flow object, so if you call `run` on the original `flow` object it will use the original model and if you call run on the tweakedFlow object it will use gpt-4o.
+
+You can also provide your tweaks as an object when you run the flow.
+
+```typescript
+const tweaks = { "OpenAIModel-KqkTB": { "model_name": "gpt-4o" }};  
+const response = await flow.run("Hello, how are you?", { tweaks });
+```
+
+## Let's make this better together
+
+This is the first release of this Langflow client and we want it to be the easiest way for you to use Langflow in your JavaScript server-side applications. The code is open-source and [available on GitHub](https://github.com/datastax/langflow-client-ts/).
+
+If you have feedback, suggestions, or you want to contribute, please do so over on GitHub. And if you like the library, please leave a star on the GitHub repo.

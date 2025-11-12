@@ -1,13 +1,21 @@
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { AuthorClip } from "@/lib/types/sanity";
-import SanityImage from "../media/SanityImage";
 import Text from "../text";
+import Image from "next/image";
 
 import styles from "./Byline.module.scss";
 import NextLink from "next/link";
 
+type JSONAuthor = {
+  name: string;
+  slug?: string;
+  avatar?: string;
+  bio?: string;
+  location?: string;
+  social?: Record<string, string | null>;
+};
+
 type BylineProps = {
-  authors: AuthorClip[];
+  authors: (AuthorClip | JSONAuthor)[];
   publishedAt: string;
 };
 
@@ -18,19 +26,36 @@ export function Byline({ authors, publishedAt }: BylineProps) {
         <div className={styles.avatars}>
           {authors
             ?.filter((author) => !!author.avatar)
-            .map((author, index) => (
-              <NextLink href={`/people/${author.slug?.current}`} key={author.slug?.current || index}>
-                <SanityImage
-                image={author.avatar}
-                alt={author.name}
-                width={32}
-                height={32}
-                className="rounded-circle"
-                key={author.slug?.current || index}
-                title={author.name}
-              />
-              </NextLink>
-            ))}
+            .map((author, index) => {
+              const authorSlug = (author as any).slug;
+              const slugKey = typeof authorSlug === "string"
+                ? authorSlug
+                : authorSlug?.current || index;
+
+              // Handle slug for link
+              const slugForLink = typeof authorSlug === "string"
+                ? authorSlug
+                : authorSlug?.current;
+
+              // Now all avatars are string paths
+              const avatarPath = typeof author.avatar === "string"
+                ? author.avatar
+                : "/images/default-avatar.png";
+
+              return (
+                <NextLink href={`/people/${slugForLink}`} key={slugKey}>
+                  <Image
+                    src={avatarPath}
+                    alt={author.name}
+                    width={32}
+                    height={32}
+                    className="rounded-circle"
+                    title={author.name}
+                    style={{ borderRadius: "50%" }}
+                  />
+                </NextLink>
+              );
+            })}
         </div>
       )}
       <div className="d-flex flex-column">
@@ -44,10 +69,15 @@ export function Byline({ authors, publishedAt }: BylineProps) {
           {authors?.map((author, index) => {
             const isLast = index === authors.length - 1;
             const isSecondToLast = index === authors.length - 2;
-            
+
+            const authorSlug = (author as any).slug;
+            const slugForLink = typeof authorSlug === "string"
+              ? authorSlug
+              : authorSlug?.current;
+
             return (
-              <span key={author.slug?.current || index}>
-                <NextLink href={`/people/${author.slug?.current}`}>
+              <span key={slugForLink || index}>
+                <NextLink href={`/people/${slugForLink}`}>
                   {author.name}
                 </NextLink>
                 {!isLast && !isSecondToLast && ", "}

@@ -1,0 +1,118 @@
+---
+title: "Top 3 Mistakes I Made While Building AI Agents"
+slug: "top-three-mistakes-building-agents"
+excerpt: "Like many developers, I made mistakes while building my personal assistant app. Here are my top three mistakes, shared to help you avoid these same pitfalls."
+publishedAt: "2025-03-12T06:39:00.000Z"
+featureImage: "/content/images/posts/e15f6add988fc941c00e1f200fbbbdb226089ea6-1920x1273.jpg"
+authors:
+  - melissa
+tags: []
+---
+
+Agents have become a hot topic in AI, and, like many of you, I initially wondered:
+
+* “Why can’t I just prompt my LLM to do this task for me?”
+* “What’s the difference between prompting a model versus using an agent?”
+* “Oh no, another AI concept that I have to learn?” 
+
+After diving into agent development, I quickly realized why this approach has generated so much buzz. Unlike simple LLM prompts, agents can interact with external tools, maintain state across multiple steps, and execute complex workflows. Agents are like a personal assistant who can email contacts, write documentation, and schedule appointments – deciding which tool to use when, and understanding the right moment to apply it.
+
+This journey wasn’t without challenges. Like many developers in their discovery phase, I made mistakes along the way while building my personal assistant app. Each misstep taught me valuable lessons that improved my approach to building agents. 
+
+In this post, I’ll share my top three mistakes, in hopes that by “building in public,” I can help you avoid these same pitfalls. Let’s dive in! 
+
+## Mistake #1: Overestimating the agent’s capabilities
+
+My first mistake when I started building agents seemed to be a simple but critical one. I learned that agents have agency: an ability to decide and reason where a base LLM does not. They can select tools, maintain context, and execute multi-step plans. Because of this, I drastically underestimated the importance of clear, detailed instructions to the agent’s system prompt, and overestimated the agent’s capability to figure things out on its own.
+
+Newsflash: agents are still powered by LLMs! Agents use LLMs as their core reasoning and decision-making engine. This means that they have both the same strengths and the same limitations of their underlying language model.
+
+I initially created vague prompts like “You are a helpful assistant that can email people, create docs, and other operational tasks. Be clear and concise and maintain a professional tone throughou.t” I assumed that because the agent had access to email tools and documentation tools it would intuitively understand when and how to use them appropriately. However, this was not the case and my prompt was simply not enough. 
+
+What I learned through trial and error is that while agents add powerful tool-using capabilities, they are not “magic” – entirely. They still need the same level of clear guidance and explicit instructions that you’d provide in a direct LLM prompt – perhaps even more so. The agent needs to know not just that it has access to tools, but precisely when to invoke them, how to interpret their outputs, and how to integrate them back into the expected workflow. Here’s my  my improved prompt:
+
+![An image of an improved prompt, starting with "You are an intelligent operational assistant that executes tasks based on a provide action item and accompanying context ... "](/content/images/posts/2ddf69caf81b69645c83e29f7558d936783934ea-1999x971.png)
+
+I fundamentally misunderstood how to effectively prompt an agent. Once I started writing detailed system prompts like the one above, providing examples where needed, and referencing tool names where I could, my agent’s performance improved dramatically. 
+
+## Mistake #2: Tool overload vs. multi-agent architecture
+
+My second critical mistake was attempting to create ONE “super agent” equipped with every possible tool needed for my personal assistant app. I understood the concept of agents and tools, so I began to connect a bunch of these tools to my agent. Remember, the actions I needed the agent to be able to do spanned across document processing, email communication, data retrieval, even basic chatbot capabilities. I thought this would essentially create a powerful, all-in-one assistant.
+
+Example of overloading the agent with multiple tools
+
+![An example of overloading the agent with multiple tools.](/content/images/posts/0f946d12939afc42f11aa02d4919eb76b0bb73d5-1999x1087.png)
+
+I found out that my agent became overwhelmed with options and struggled to manage context across complex tasks and multi-step requests such as “Access this doc [doc link], summarize it, then draft an email”. The agent would take incorrect steps, forget steps in the process, or confuse tools like the Google Docs tool versus the URL tool versus hallucinating a response from the LLM. Additionally, response times would increase dramatically depending on how complex the task was. 
+
+The solution to this came when I restructured my approach to use a multi-agent architecture with specialized components. I created an agent with focused toolsets: a document agent, an email agent, a RAG agent—and I plan to implement more! Connecting these is an orchestrator agent that essentially acts as the “decision-maker” of the app and routes tasks to the appropriate specialized agent based on the user’s request.
+
+![](/content/images/posts/40d10cf43f135d6f7fe4f6bc9f80303ea9ce03f0-1999x1131.png)
+
+The orchestrator agent’s role is to understand the user’s intent, break complex requests into subtasks, and delegate them to the right agent. It was now able to handle requests such as the one above “Access this doc [doc link], summarize it, then draft an email” and break it down into something like this:
+
+1. First, use GOOGLEDOCS_AGENT to access the doc link
+2. Second, use LLM to summarize it, and form the content for the email draft
+3. Third, use GMAIL_AGENT to create the actual email draft for the user to be able to review and easily send it off
+
+This mistake taught me that complex AI workflows benefit from division of labor, just as humans do. Each agent should have a clearly defined scope with the right tools for the specific job. Just make sure you assign and describe those tools and jobs correctly. 
+
+## Mistake #3: Poor tool implementation and description
+
+This leads me to my third and probably most-critical mistake. After refining my agent prompts and implementing multi-agent architecture, I thought I was on the right track. But I quickly encountered another obstacle: my tools were not being used correctly, or in some cases, not at all. This led me to my second mistake in the agent development process, which was not properly naming or describing each tool for the agent. 
+
+When implementing tools in [Langflow](https://langflow.org), I initially gave them generic names like “Email Tool” or “Docs Tool” with minimal descriptions. I assumed that since I had properly connected the APIs through Composio (a third-party app integration tool) and the functionality worked when tested individually, the agent would inherently understand how to use that. Though the agent did come through sometimes, it did not happen 100% of the time.
+
+I discovered that meaningful tool names and descriptions are critical for the agent’s decision-making process. For example, if the input is “Access this marketing doc and summarize it: [docs link]”, the agent has to match the intent to the appropriate tool. My original Google Docs tool implementation looked something like this:
+
+* Name: “Docs Agent”
+* Description: “Use this to create and access docs”
+
+With vague names and descriptions, the agent would sometimes struggle to make the correct decision consistently, fail to use the tool, or use it incorrectly. With the above description, it would attempt to use the URL tool instead of accessing the doc through the Google Docs API, which has the proper permissions. 
+
+After recognizing the issue, I implemented more descriptive naming and description:
+
+* Name - “GOOGLEDOCS_AGENT”
+* Description - “A Google Docs tool with access to the following tools: creating new Google Docs (give relevant titles, context, etc), edit existing Google Docs, retrieve existing Google Docs via the Google Docs link”
+
+![](/content/images/posts/4d59b5efc0eb2b806f73a3dad0a636fd860947e4-904x480.gif)
+
+The improvement was immediate and significant. With clearer naming conventions and more detailed and prescriptive descriptions, the agent began consistently selecting the right tools for each task. Tool descriptions are essentially API documentation for your agent. Through this mistake, I learned that an agent, just like an LLM, can only be as effective as the information you provide about its available tools. 
+
+## Conclusion
+
+After overcoming these three mistakes – underestimating the importance of prompting, overloading the agent with tools, and poorly implementing tools – I’ve gained valuable insights into effective agent development. 
+
+The most important lesson that I learned is something I feel that I’ve always known – our tools are only as powerful as how we make them to be. Agents are powerful, and they can seem magical—but they aren’t. We still have to provide the right tools, detailed descriptions, and structured architecture in order for them to shine. Tools like Langflow have really helped me break down the concept of agents, fail fast, and iterate on my mistakes. It’s about finding the right balance between giving your agents enough information while avoiding overwhelming them with too many options or vague instructions.
+
+For those who are embarking on their own agent-building journey, I hope you learned a thing or two from this post. The field of AI agents is still growing and evolving fast – what works well today may change tomorrow as models improve. 
+
+What mistakes have you encountered while getting started with agents? Please start a discussion in our [Discord](https://discord.com/invite/EqksyE2EX9).
+
+## Frequently Asked Questions (FAQ)
+
+### What is an agent and how do they differ from regular LLM prompts?
+
+Unlike simple LLM prompts, agents can interact with external tools, maintain state across multiple steps, and execute complex workflows.
+
+### What are multi-agents?
+
+“Multi-agents” use specialized AI agents to focus on specific tasks or domains. Instead of using one “super agent” connected to every possible tool, a multi-agent architecture uses dedicated agents for specific functions (like document processing, email management, or data retrieval).
+
+### What does this personal assistant app do? 
+
+This personal assistant uses AI agents to handle multiple tasks, multi-step tasks, and more, such as drafting emails, summarizing meeting notes, and retrieving knowledge from a database. 
+
+### What is Langflow, and why use it? 
+
+Langflow is a visual IDE for building generative and agentic AI workflows. It simplifies creating complex AI flows, enables quick iteration, and integrates seamlessly with applications.
+
+### What tools are used?  
+
+* [Langflow](https://langflow.org) – AI app development, agents
+* [Astra DB](https://www.datastax.com/products/datastax-astra) – Vector database, data retrieval, RAG
+* [Composio](https://composio.dev/) – Application integration platform for AI Agents and LLMs, handles Gmail and Google Doc API integrations
+
+### Where can I find the flow file? 
+
+At my GitHub: https://github.com/melienherrera/personal-assistant-langflow

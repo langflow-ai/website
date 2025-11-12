@@ -1,0 +1,50 @@
+---
+title: "Langflow Micro Tutorials — Transform Chain"
+slug: "langflow-micro-tutorials-transform-chain"
+excerpt: "Welcome back to our Langflow micro tutorials series! In this article, we’ll continue exploring simple Langflow examples and the design of…"
+publishedAt: "2023-10-22T16:15:44.000Z"
+featureImage: "/content/images/posts/9766d357c9e813947d0de477f35e08798917eb80-1200x656.png"
+authors:
+  - rodrigo
+tags: []
+---
+
+Welcome back to our Langflow micro tutorials series! In this article, we’ll continue exploring simple Langflow examples and the design of custom components.
+
+_You can download the flow mentioned in this article to modify and understand the components used._
+
+Today, we’ll focus on reproducing a Langchain **Transform Chain** in Langflow. Hope you enjoy it!
+
+#### Main Features
+
+**Transform Chain:** A custom component with a special method called `perform_action`. This method allows for customization of its logic to meet specific requirements before being converted into a chain.
+
+![](/content/images/posts/75083593b4d8c68ed5485460b449e8e797bb96fd-1200x656.png)
+
+#### Objective
+
+In Langchain, a Transform Chain is designed to modify input data before sending it to another chain. It uses input and output variables that are _transformed_ by a function (hereby called `perform_action`).
+
+This function takes a dictionary of input variables and returns a dictionary of output variables, allowing for arbitrary Python code to change the inputs. Transform Chains are useful for tasks like segmenting long text, translating language, or extracting metadata. More information is available [here](https://python.langchain.com/docs/modules/chains/foundational/transformation).
+
+The goal is to bring this Transform Chain feature into Langflow, converting any Python function into a chain type. This allows us to utilize all the chain-related functionalities Langflow offers. For example, they can be used as input to the CombineDocs Chain or Sequential Chains and can work with prompt templates or even open up the chat interface.
+
+To use it, just open the code of the custom component and play around with the `perform_action` method.
+
+![](/content/images/posts/840340af0d0a2f33d2b90d53edba82651db7ba8e-1200x656.png)
+
+In this case, we're simplifying it and passing a single input variable to the `perform_action`, but the logic applied in lines 16-19 makes it so that any argument supplied to the `build` function automatically becomes a part of the class with `self` — meaning you can add new parameters to the `build` function and access them within `perform_action`. The `foo` argument serves as an example of this.
+
+Once the chat interface is activated, just interact with your function as if it’s a chain.
+
+![](/content/images/posts/29dcef80380212e9093805a0320ad4eee57b07ef-1200x656.png)
+
+Notice that this opens up possibilities for including diverse fields in the component. For example, `foo` could be set as a Document instead of a string, allowing it to accept outputs from other components.
+
+![](/content/images/posts/66929e009eb1a3a4c96135cfd45cd6e29863a24e-600x328.png)
+
+![](/content/images/posts/0518484a6668e2b51ba4bd70d22842173a2cc659-600x328.png)
+
+* * *
+
+### Download Flow (gist)

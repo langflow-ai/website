@@ -1,6 +1,4 @@
-import { sanityFetch } from "@/lib/backend/sanity/client";
-import { POST_BY_SLUG_QUERY } from "@/lib/backend/sanity/queries";
-import { BlogPost } from "@/lib/types/sanity";
+import { getPostBySlug } from "@/lib/mdx";
 import { Post } from "./Post";
 
 interface PostEmbedProps {
@@ -8,10 +6,8 @@ interface PostEmbedProps {
 }
 
 export const PostEmbed = async ({ slug }: PostEmbedProps) => {
-  // Fetch the post data directly from Sanity
-  const post = await sanityFetch<BlogPost | null>(POST_BY_SLUG_QUERY, {
-    slug,
-  });
+  // Fetch the post data from MDX
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     // If we couldn't find the post, render nothing (or you could render a placeholder)

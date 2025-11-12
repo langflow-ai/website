@@ -1,0 +1,51 @@
+---
+title: "Langflow Micro Tutorials — Batch Web Loader"
+slug: "langflow-micro-tutorials-batch-web-loader"
+excerpt: "Welcome back to our Langflow micro tutorials series! In this article, we’ll continue exploring simple Langflow examples and custom…"
+publishedAt: "2023-09-19T19:12:43.000Z"
+featureImage: "/content/images/posts/1a2d55fe53587be089f7eb4ef6fbd50f6806bbdb-800x439.png"
+authors:
+  - rodrigo
+tags: []
+---
+
+Welcome back to our Langflow micro tutorials series! In this article, we’ll continue exploring simple Langflow examples and custom component design.
+
+_You can download the flow mentioned in this article to modify and understand the components used._
+
+Today, we’ll focus on a web scraper that loads multiple websites and runs the same prompted LLM on each one of them. Hope you enjoy it!
+
+#### Main Features
+
+**Batch Web Loader:** This Custom Component leverages the functionality of langchain’s WebBaseLoader by incorporating it into a for loop. This allows users to process multiple web-based tasks sequentially.
+
+**JSON Saver:** Parses JSON outputs and stores them into files using one of the keys as the file name.
+
+![](/content/images/posts/0001106428b4d23b3a2898ae50fbc1f956dd2c1c-800x439.png)
+
+#### Objective
+
+The objective of this flow is to extract information from webpages in JSON format using the structure output parser.
+
+![](/content/images/posts/701d287740748bedf9a3e0e78f605bc101e17131-800x439.png)
+
+The flow focuses on web scraping features such as name, birth date, and birth location from a Wikipedia page.
+
+The webpage field in the prompt template remains empty to allow for recursive filling by the for-loop inside the custom component created.
+
+![](/content/images/posts/90af5593d54351e12b7709914885176715787dd1-800x439.png)
+
+In this example, the URLs field was filled with the following webpages in a Python list format:
+
+*   [https://en.wikipedia.org/wiki/Meryl\_Streep](https://en.wikipedia.org/wiki/Meryl_Streep)
+*   [https://en.wikipedia.org/wiki/Tom\_Cruise](https://en.wikipedia.org/wiki/Tom_Cruise)
+
+![](/content/images/posts/38be347f5d063bec81d3192dc692e33572d6fecc-800x439.png)
+
+The output files are then created by the second custom component: “_Mary Louise Streep.json”_ and “_Tom Cruise.json”_, which were stored in the Langflow installation folder (since no absolute path was provided).
+
+![](/content/images/posts/ae310235d7476863e122eb6113eb724d2177027a-800x259.png)
+
+* * *
+
+#### Download Flow (gist)

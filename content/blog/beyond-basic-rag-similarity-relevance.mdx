@@ -1,0 +1,108 @@
+---
+title: "Beyond Basic RAG: Similarity ≠ Relevance"
+slug: "beyond-basic-rag-similarity-relevance"
+excerpt: "RAG systems often rely on similarity as a proxy for relevance when retrieving text chunks. If a text is similar to a query, we assume it…"
+publishedAt: "2024-08-27T23:56:03.000Z"
+featureImage: "/content/images/posts/226848b870dd2d2c9f00bdd90a69e39b418a75fe-1200x520.png"
+authors:
+  - rodrigo
+tags: []
+---
+
+RAG systems often rely on similarity as a proxy for relevance when retrieving text chunks. If a text is similar to a query, we assume it must be relevant. This approach has become so widespread that it’s easy to confuse similarity with relevance. Let’s explore their differences and why understanding them matters in the context of RAG!
+
+### Basics First…
+
+**Here’s the simplest RAG system you’ll see today:**
+
+1.  You have a question and a book to search through.
+
+*   _“Who’s Harry?”_
+
+2\. Extract parts of the book that match keywords from the question.
+
+*   _“Harry, you’re a wizard.”_
+*   _“Harry values his friends.”_
+
+3\. Send those parts/chunks to a language model to answer the question.Given the sentences below, answer the question.Sentences:  
+"Harry, you’re a wizard.”  
+"Harry values his friends.”Question: “Who’s Harry?”
+
+The search or retrieval part uses a specific strategy to pull out and rank sections of the document that might hold the answer to the original question or, in other words, the most **relevant** content.
+
+### RAG Relevance
+
+In RAG systems, relevance can be understood as the likelihood that a specific chunk of text directly answers the query. Relevance is task-specific, meaning that the criteria for what makes a chunk relevant can vary depending on the nature of the question and the intended outcome. For instance, in some cases, relevance might depend on the presence of certain keywords, while in others, it might hinge on the overall meaning or context within the text.
+
+> Relevance ~= probability that the text contains enough information to answer a query.
+
+![](/content/images/posts/ce3f953d8c76000ca1b6da41728a32456f02cc1d-800x450.png)
+
+> Harry is a wizard.
+
+### Similarity Works!
+
+A proven retrieval strategy known as **Semantic Search** goes beyond matching exact words. Instead, it finds text chunks that are contextually related to the question by comparing their similarity scores with the original query.
+
+This method typically involves using embeddings or vector similarity, where texts are transformed into high-dimensional vectors. The system then measures similarity based on how close these vectors are in that space.
+
+![](/content/images/posts/faf984df8950024e1d4782c4574835a1e3be3f90-748x688.png)
+
+_Simplified vector representation of various concepts. Source:_ [https://odsc.com](https://odsc.com/blog/getting-started-with-vector-based-search/)
+
+Similarity works well because, in many cases, the language we use in queries naturally aligns with the language found in relevant answers. For example, if you ask, “What is the capital of France?” a text chunk containing “Paris is the capital of France” is both contextually and semantically similar, making it easy for the system to identify it as relevant.
+
+This approach excels when the query closely mirrors how the information is expressed in the source material. For instance, asking “Who wrote ‘Romeo and Juliet’?” will likely retrieve a text chunk saying, “Shakespeare wrote ‘Romeo and Juliet,’” because the key terms match up directly, and the context is clear.
+
+### But It Falls Short When…
+
+However, similarity often falls short when a query requires specific details not captured by context alone. In such cases, the system may retrieve related content that doesn’t directly answer the query, resulting in less accurate or incomplete responses.
+
+### Example 1
+
+Imagine you’re trying to find out when the Eiffel Tower was built. A similarity-based system might pull up text chunks discussing Paris, landmarks, or even other towers, simply because they share common terms. However, these chunks may not directly answer your specific question about the Eiffel Tower’s construction date.
+
+Here’s a potential outcome using similarity as the primary criterion:
+
+*   _“The Eiffel Tower is one of the most famous landmarks in Paris.”_
+*   _“Many visitors come to Paris to see its beautiful architecture.”_
+
+These sentences, while related to the Eiffel Tower, don’t provide the specific information you’re looking for. A relevance-focused approach would aim to retrieve content like:
+
+*   _“The Eiffel Tower was constructed between 1887 and 1889.”_
+
+### Example 2
+
+Now consider a query like:
+
+*   _“Why did Bob invite Alice to go out?”_
+
+A passage that says, _“Bob invited Alice to go out for coffee”_ might score high on similarity because it shares key terms with the query. However, a passage that reads _“He was feeling lonely… which led to picking up the phone”_ might be less similar in wording but more relevant because it provides the reasoning behind Bob’s actions.
+
+The blind reliance on similarity over relevance can lead to less accurate responses in RAG systems. The core challenge is that similarity-based retrieval might flood the model with related but not necessarily helpful information, potentially confusing the model and leading to suboptimal answers.
+
+### Mitigating the Problem
+
+To address the limitations of similarity-based retrieval, it’s crucial to incorporate additional layers that evaluate the relevance of retrieved chunks beyond just similarity scores. This can involve:
+
+**Sub-Query Generation**: Break down a general query into more specific ones, improving focus. Example:
+
+*   _“affordable smartphones with good cameras” to “budget smartphones” and “best camera phones.”_
+
+**Entity Recognition**: Replaces specific names with their entity types to increase similarity with the query. Example:
+
+*   _“J.K. Rowling” becomes “AUTHOR,” better matching “famous authors.”_
+
+**Coreference Resolution**: Links different references to the same entity, maintaining context. Example:
+
+*   _Recognizing “he” and “Bob” as the same person ensures consistent retrieval._
+
+**Advanced Retrieval Models**: Using retrieval-specific algorithms like [ColBERT](https://github.com/stanford-futuredata/ColBERT) or [FLaRE](https://github.com/jzbjyb/FLARE), or even training custom retrieval models.
+
+Note that these strategies are just part of content-based retrieval, which focuses on extracting and ranking relevant text based on the content itself. However, this approach can be further enhanced by incorporating metadata filtering with methods such as hybrid search, which can better scope and prevent overly clustered chunks.
+
+While similarity can get us close, it doesn’t always work. It’s not always easy to step away from the default solution and look sideways, but that might be the key to keeping the actual problem in focus.
+
+* * *
+
+At Langflow, we're building the fastest path from RAG prototyping to production. It's open-source and features a free cloud service! Check it out at [https://github.com/langflow-ai/langflow](https://github.com/langflow-ai/langflow) ✨

@@ -1,36 +1,40 @@
 import { NextResponse } from "next/server";
-import { sanityFetch } from "@/lib/backend/sanity/client";
-import { BlogPost } from "@/lib/types/sanity";
-import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
-import { BLOG_POSTS_QUERY } from "@/lib/backend/sanity/queries";
-import { getBodyText } from "@/lib/utils/getBodyText";
-import { searchPosts } from "@/lib/utils/searchPosts";
+import { getAllPosts } from "@/lib/mdx";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const q = (searchParams.get("q") || "").trim();
+  const q = (searchParams.get("q") || "").trim().toLowerCase();
 
   if (!q) {
     return NextResponse.json({ posts: [] });
   }
 
-  // Fetch posts and reuse shared searchPosts util
-  const posts = await sanityFetch<BlogPost[]>(BLOG_POSTS_QUERY, {}, false);
+  // Get all posts from MDX files
+  const allPosts = await getAllPosts();
 
-  const limited = searchPosts(posts, q, 5);
+  // Search through posts - check title, excerpt, and body
+  const matchedPosts = allPosts.filter((post) => {
+    const titleMatch = post.title.toLowerCase().includes(q);
+    const excerptMatch = post.excerpt?.toLowerCase().includes(q);
+    const contentMatch = post.body.toLowerCase().includes(q);
 
-  // Ensure excerpts exist
-  const postsWithExcerpts = await Promise.all(
-    limited.map(async (post) => {
-      if (post.excerpt) return post;
-      const bodyText = getBodyText(post.body);
-      const excerpt =
-        typeof post.body === "string"
-          ? bodyText.slice(0, 200)
-          : await generateBlogExcerpt(post.body);
-      return { ...post, excerpt };
-    })
-  );
+    return titleMatch || excerptMatch || contentMatch;
+  });
 
-  return NextResponse.json({ posts: postsWithExcerpts });
+  // Limit to 5 results
+  const limited = matchedPosts.slice(0, 5);
+
+  // Transform to match the expected API response format
+  const posts = limited.map((post) => ({
+    title: post.title,
+    slug: post.slug,
+    excerpt: post.excerpt || post.body.substring(0, 200) + "...",
+    publishedAt: post.publishedAt,
+    featureImage: post.featureImage,
+    authors: post.authors,
+    author: post.author,
+    _id: post._id,
+  }));
+
+  return NextResponse.json({ posts });
 }

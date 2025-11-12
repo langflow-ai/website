@@ -1,4 +1,3 @@
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { CardPreview, Event, SeoSlug } from "./sanity.types";
 
 export type InstantBook = {
@@ -26,7 +25,7 @@ export type EventCard = Required<
 export type AuthorClip = {
   name: string;
   slug?: { current: string };
-  avatar?: SanityImageSource;
+  avatar?: string;
 }
 
 export type BlogPost = {
@@ -36,7 +35,7 @@ export type BlogPost = {
   excerpt?: string;
   body: string;
   publishedAt: string;
-  featureImage: SanityImageSource;
+  featureImage: string;
   author?: AuthorClip;
   authors?: AuthorClip[];
 };

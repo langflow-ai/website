@@ -1,0 +1,233 @@
+---
+title: "Generate Personalized Action Figures and Mythical Creatures using next.js and AI with Langflow"
+slug: "generate-personalized-action-figures-and-mythical-creatures-using-ai-with-langflow"
+excerpt: "Hello, fellow dev nerds! 👋 Inspired by some intriguing displays at GitHub Universe, we embarked on a mission to create an app that generates unique, visually stunning \"C"
+publishedAt: "2025-05-23T15:44:07.000Z"
+featureImage: "/content/images/posts/1ac83095bb17c671a17188589e70d34a66d9589c-2000x1105.png"
+authors:
+  - david
+tags: []
+---
+
+Hello, fellow dev nerds! 👋 Inspired by some intriguing displays at [GitHub Universe](https://githubuniverse.com/), we embarked on a mission to create an app that generates unique, visually stunning "CodeBeasts" based on your [GitHub](https://github.com/) activity. Let's dive into how this app, built with [Langflow](https://langflow.new/ui), [Next.js](http://next.js), and Cursor, brings your coding history to life!
+
+\[[Embed video](https://youtu.be/HydE4Ap9ZQY?si=Rgqu-tzn5Kha7qPL)\] \[[GitHub Repo](https://github.com/SonicDMG/codebeasts)\]
+
+![](/content/images/posts/bd2b1e4f8ed09869a7e217a7a6ded76b5fc5c346-1024x1024.png)
+
+## **The inspiration behind CodeBeasts 🌟**
+
+At GitHub Universe, two displays caught my eye. One was a cool enclosure that explored your personal GitHub history, and the other were postcards generated from repo activity.
+
+![](/content/images/posts/255265ab15fc1702799fce127c71f2b676a19b4e-1600x1140.png)
+
+_One of the author's many cards from GitHub Universe_
+
+These brought a personal touch to coding history, and I thought, "Why not create an app that generates ‘CodeBeasts’ based on this same activity? These beasts represent coding languages as animals (based on [O'Reilly](https://www.oreilly.com/)’s animal choices as a reference), using EverArt’s access to Flux1.1 to craft them.
+
+## **How CodeBeasts works 🧠**
+
+The application is built on Next.js, with a frontend originally generated using [Lovable.dev](https://lovable.dev/) (a great resource for backend developers who need help with frontend design), and agentic AI powered by [Langflow](https://langflow.new/ui).
+
+[Check out the app here](http://codebeasts.ai).
+
+Here's the process:
+
+1.  Enter your GitHub handle
+2.  Upload and image of yourself (optional)
+3.  A Langflow based AI agent scans your GitHub repositories
+4.  The agent identifies your most-used programming languages
+5.  Each language is associated with an animal (based on O'Reilly animal references)
+    *   Python = Snake 🐍
+    *   TypeScript = Blue Jay 🐦
+    *   JavaScript = Rhino 🦏
+    *   A bunch of others...
+6.  It then generates a prompt for a "CodeBeast" combining all the animals together
+7.  Finally, it passes GitHub details and the prompt to the app for image generation and displays the result
+8.  You can download, print, or share your unique creation on Twitter
+
+![](/content/images/posts/ec7a11a314c5345367bba3c92ea680a7cd3949ec-1600x970.png)
+
+## **For example**
+
+**My codebeast components are:**  
+Python snake for Python, Chameleon for JavaScript, Peacock for CSS, Butterfly for HTML, and Dolphin for Docker. Notice those aspects in the below examples.
+
+|Codebeast Components |  |  |
+|--:|:-:|---|
+| ![Langflow Action Figure](/content/images/posts/d98cbb73ffdef27ff43c8b50ef660f27e85f4838-960x1280.jpg) | [**+** SonicDMG](https://github.com/SonicDMG) **\+ Action Figure =** | ![CodeBeast SonicDMG](/content/images/posts/c6e09686919352ebc3c37d512424b994005fbf76-1024x1024.png) |
+| [SonicDMG](https://github.com/SonicDMG) **\+ Action Figure =** | ![CodeBeast SonicDMG](/content/images/posts/b4d85c66f08b74d3c40309cbea3e3113cb014679-1024x1024.png) |   |
+| [SonicDMG](https://github.com/SonicDMG) **\+ Ghibli =** | ![CodeBeast SonicDMG](/content/images/posts/674afec0e08aed419ebecca241312ceac8ceb1a4-1024x1024.png) |   |
+
+## **The magic behind the scenes: Langflow 🔮**
+
+The real magic happens through an agentic flow built with [Langflow](https://langflow.org/) - a visual IDE for building GenAI and agentic workflows in a drag-and-drop, low-code/no-code way.
+
+Langflow makes it very easy to create generative/agentic AI workflows that you can hook up to your application. Then you can quickly iterate with different LLMs and logic without needing to change any of your app code.
+
+_(_[_Here's a link to the flow file_](https://langflow.new/ui/f/codebeasts)_. Download and import it into your own Langflow instance to try it out!)_ 
+
+![](/content/images/posts/71656c4d24df2a801e10cb8036f9df79a7e14aca-2200x1346.png)
+
+### **Components in the Codebeasts Langflow flow:**
+
+#### **🟢 Input/Output (Green)**
+
+*   GitHub handle input
+*   Final payload output for image generation
+
+#### **🟤 Data Storage/Retrieval (Beige)**
+
+*   Stores GitHub user details in [Astra DB](https://www.datastax.com/products/datastax-astra) to avoid expensive API calls on subsequent runs
+*   Retrieves stored data when a user is matched in the database
+
+#### **🟣 Conditional Logic (Pink)**
+
+*   Uses the if-else component to determine the flow path
+*   If user is new → Full agentic flow with GitHub API calls
+*   If user exists in database → Pure LLM path (faster)
+
+#### **⚪ Post-Processing (Gray)**
+
+*   Creates a structured payload for the application
+*   Ensures consistent output format for the UI
+
+#### **🔵 Agentic Components (Blue)**
+
+*   Coding Language Agent: Gets languages from GitHub repos
+*   Profile Details Agent: Gets basic GitHub profile information
+*   Main Agent: Combines all information to create the final prompt
+
+## **Why this architecture matters 📊**
+
+This setup contains both agentic and purely generative paths along with data storage, but why do we need to take this approach at all? 
+
+The guiding light is all about reducing the amount of GitHub API calls we need to make, especially when dealing with GitHub profiles with many repositories. While there’s an API to get repo languages, you still need to iterate through each repo to get those languages. This turns out to be a pretty expensive operation in terms of time and the amount of LLM tokens needed to analyze the output and fetch all of the languages.
+
+Not only that, but this kind of information doesn’t really change over time unless new repos are added. It’s a waste to constantly rescan the same GitHub profile. This is where the storage mechanism comes in. Scan once, analyze and massage the data, format it, then store it. On a subsequent run we already have the data and can get to generating our codebeast a lot faster with a lot fewer tokens using a regular LLM call to generate a new prompt, with no agent needed.
+
+So to sum up, here’s the overall architecture:
+
+1.  **Modular agents** - Building specific, focused agents rather than one large agent
+2.  **Conditional logic** - Using different paths based on input criteria
+3.  **Efficiency** - Storing user data to avoid redundant API calls
+4.  **Structured output** - Ensuring consistent payload format for the application
+
+```ts
+{
+  "languages": ["Python", "JavaScript", "HTML", "Java"],
+  "prompt": "Create a chimera with snake, rhino...",
+  "github_username": "https://github.com/SonicDMG",
+  "num_repositories": 30,
+  "animal_selection": [['Python snake', 'representing adaptability and wisdom'], ["..."]],
+  "github_achievements": []
+}
+```
+
+_(a pared down example of the output payload)_
+
+## **Do we really need to use an agent at all?**
+
+In the last section, I mentioned using an agentic flow to interface with the GitHub API. We use this to fetch details about both the GitHub profile and the languages used in their repos. However, do we need to use this approach? Is there some requirement? Could we have used a more traditional approach that simply reads from the API and parses the results?
+
+The short answer is, yes, we could have used a more traditional approach. There is no requirement that says we must use an agent. It comes down to weighing the pros and cons that work best for your situation and expertise.
+
+In our case, the agent and tools used made it very easy to authenticate, fetch data, and combine the results from the GitHub API. For example, after I added a tool action to get profile details, it was only a matter of adding tools to get all of the repositories and another to pull their coding languages for the agent to _magically_ put it all together and give me all of the coding languages for a particular GitHub profile.
+
+![](/content/images/posts/5af54937344e0795c5a28ca235eee2ba32d8940a-838x753.png)
+
+## **Leveraging session IDs in Langflow 🔑**
+
+Any time I’m building applications that need to track unique user information in Langflow, I immediately start using the “session\_id” parameter in my input payload.
+
+Using session IDs in Langflow, as demonstrated in [this video](https://youtu.be/nJiF_eF21MY?si=BQP_ncyMfshJC12b), provide some really useful benefits:
+
+*   **Preventing model confusion** - Isolating user contexts to prevent confusion in AI models and decrease LLM token usage.
+*   **Scaling considerations** - Using external memory (Astra DB, Redis, etc.) for persistence is better for scalability.
+
+```js
+payload = {
+        "input_value": message,
+        "output_type": output_type,
+        "input_type": input_type,
+        "session_id": message.lower() <-- Add session ID to the payload, Langflow does the rest
+    }
+```
+
+By using session IDs, you can create a more robust application, ensuring that each user experience is personalized with fewer API calls and reduced LLM token usage. It’s also extremely easy to set up and use.
+
+## **Tools and frameworks used**
+
+Finally, here are the various tools and frameworks we used for Codebeasts.
+
+I want to give a specific callout to [Lovable.dev](https://lovable.dev/). As someone initially more focused on backend development, it enables me to iterate very quickly on nice-looking frontends using modern frameworks.
+
+### **Frontend**
+
+1.  [**Lovable.dev**](https://lovable.dev/): Frontend design for backend devs
+2.  [**React**](https://reactjs.org/): JavaScript library for interactive UI
+3.  [**NProgress**](https://ricostacruz.com/nprogress/): Progress bars for loading states
+4.  **Toast Notifications**: User feedback on request status
+
+###     **AI & Backend**
+
+1.  [**Langflow**](https://langflow.org/): Orchestration layer for the AI agent, connecting GitHub analysis, prompt generation, and image generation. Hosted via DataStax Cloud.
+2.  [**EverArt**](https://www.everart.ai/home): AI image generation service accessed via Langflow.
+3.  [**Astra DB**](https://www.datastax.com/products/datastax-astra): NoSQL/Vector database used to store generated images and user data.
+4.  **Next.js API Routes**: Backend logic for interacting with Langflow and Astra DB is handled within the Next.js application at app/api/.
+
+### **Integrating AI image generation**
+
+*   **EverArt API**: Uses detailed prompts for generating pixel art-style images [(see docs](https://github.com/newcompute-ai/everart-node-sdk) or [code](https://github.com/SonicDMG/codebeasts/blob/main/lib/everart.ts))
+
+## **Try it yourself! 🚀**
+
+I hope this was a useful and fun example of something you can build using LLMs and agentic AI with image generation to boot. I love seeing the beasts everyone is creating.
+
+Want to see what your coding history looks like as an action figure or mythical beast? Head over to [codebeasts.ai](https://codebeasts.ai) and generate your own unique CodeBeast!
+
+And as always, happy coding!
+
+* * *
+
+_Have you created your own CodeBeast? Share it on social media or just use it for yourself! And if you're interested in building similar applications, check out_ [_Langflow_](https://langflow.org) _and_ [_Astra DB_](https://www.datastax.com/products/datastax-astra) _to get started on your own agentic AI journey!_
+
+# FAQ
+
+### **What is CodeBeasts?**
+
+CodeBeasts is a fun, visual app that generates unique action figures and mythical creatures based on your GitHub activity, representing your favorite programming languages as animals.
+
+### **How does CodeBeasts work?**
+
+You enter your GitHub handle and the app scans your repositories to identify your most-used languages. It then generates a "CodeBeast" combining these animals.
+
+### **What technologies power CodeBeasts?**
+
+The app is built using Next.js and [Langflow](https://langflow.org/) for AI processing, and [Lovable.dev](https://lovable.dev/) with React for frontend design. Image generation uses EverArt’s API.
+
+### **What is Langflow, and why use it?**
+
+[Langflow](https://langflow.org/) is a visual IDE for building generative and agentic AI workflows. It simplifies creating complex AI flows, enables quick iteration, and integrates seamlessly with applications.
+
+### **What are the benefits of using session IDs in Langflow?**
+
+Session IDs personalize user interactions, prevent confusion in AI models, reduce LLM token usage, and support scalable user-data management.
+
+### **Why store user data?**
+
+Storing user data in databases like Astra DB minimizes redundant GitHub API calls, making subsequent runs faster and more efficient.
+
+### **Can I create my own CodeBeast?**
+
+Absolutely! Visit [codebeasts.ai](https://codebeasts.ai) to generate your unique coding chimera.
+
+### **Where can I find the flow file?**
+
+You can download and import the Langflow flow file from [Langflow.new](https://langflow.new/ui/f/codebeasts).
+
+### **Which frameworks and libraries are used?**
+
+*   **Backend**: [Next.js](http://next.js), AstraDB
+*   **Frontend**: Lovable.dev, React, NProgress, Toast notifications
+*   **AI Integration**: EvertArt API, Langflow

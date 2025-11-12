@@ -1,18 +1,11 @@
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { AuthorClip, BlogPost } from "../types/sanity";
 import { HOST } from "@/utils/constants";
 
-function imageToUrl(image?: SanityImageSource) {
+function imageToUrl(image?: string) {
   if (image === undefined || image === null) {
     return "";
   }
-  if (typeof image === "string") {
-    return image;
-  }
-  if ("url" in image) {
-    return image.url;
-  }
-  return "";
+  return image;
 }
 
 export const blogPostSchema = (post: BlogPost) => ({

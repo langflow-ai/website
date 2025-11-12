@@ -1,27 +1,12 @@
 // Dependencies
 import { NextResponse } from "next/server";
-
-// Types
-import { EventCard } from "@/lib/types/sanity";
-
-// Backend
-import { sanityFetch } from "@/lib/backend/sanity/client";
-
-// Queries
-import {
-  API_GET_UPCOMING_EVENTS_QUERY,
-  API_GET_ON_DEMAND_EVENTS_QUERY,
-} from "@/lib/backend/sanity/queries";
+import { getAllEvents } from "@/lib/mdx";
 
 // Constants
 const ITEMS_PER_PAGE = 10;
-const QUERIES_BY_TYPE: Record<string, string> = {
-  upcoming: API_GET_UPCOMING_EVENTS_QUERY,
-  past: API_GET_ON_DEMAND_EVENTS_QUERY,
-};
 
 /**
- * Handle Preview mode feature to enable the usage of preview features
+ * Handle events API - filter by upcoming or past events
  *
  * @param {Request} request
  * @return {Response}
@@ -46,18 +31,35 @@ export async function GET(request: Request) {
     });
   }
 
-  const { count, results } = await sanityFetch<{
-    count: number;
-    results: EventCard[];
-  }>(QUERIES_BY_TYPE[type], {
-    from: today.toISOString().substring(0, 10),
-    start: start,
-    end: end,
+  // Get all events from MDX files
+  const allEvents = await getAllEvents();
+
+  // Filter events based on type (upcoming or past)
+  const filteredEvents = allEvents.filter((event) => {
+    const eventDate = event.dates?.[0]?.date || "";
+    const eventDateTime = new Date(eventDate);
+    const isUpcoming = eventDateTime >= today;
+    return type === "upcoming" ? isUpcoming : !isUpcoming;
   });
+
+  // Apply pagination
+  const paginatedEvents = filteredEvents.slice(start, end);
+
+  // Transform to match the expected API response format
+  const results = paginatedEvents.map((event) => ({
+    title: event.title,
+    slug: event.slug,
+    excerpt: event.excerpt,
+    type: event.type,
+    dates: event.dates,
+    location: event.location,
+    thumbnail: event.thumbnail,
+    _updatedAt: event._updatedAt,
+  }));
 
   return NextResponse.json({
     data: {
-      count,
+      count: filteredEvents.length,
       results,
     },
   });

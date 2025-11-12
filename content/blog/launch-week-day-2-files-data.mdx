@@ -1,0 +1,91 @@
+---
+title: "Launch Week Day 2 - Files & Data 💾"
+slug: "launch-week-day-2-files-data"
+excerpt: "Big updates to Langflow, including:  📤 Multi-file Uploads, 🗃️ New File Management System, 🔄 Cross-Flow File Access,  📊 Enhanced CSV Handling."
+publishedAt: "2025-04-01T13:19:32.000Z"
+featureImage: "/content/images/posts/a25e88abe618a4c62baaaa766797cfdf60a09b5f-960x540.png"
+authors:
+  - melissa
+tags:
+  - launch-week
+---
+
+File and data handling as you know it currently in Langflow is changing. Here’s what we’re replacing… 📂
+
+{%youtube Xt6CAH6iE_g %}
+
+## Introduction
+
+The [File Component](https://docs.langflow.org/components-data#file) has been a core component of Langflow since the beginning. This component currently supports uploading and parsing various file formats and converting the content into a Data object. These objects can then be passed to other components such as [Models](https://docs.langflow.org/components-models), [Vector Stores](https://docs.langflow.org/components-vector-stores), [Helpers](https://docs.langflow.org/components-helpers), and more. 
+
+![](/content/images/posts/e3003bceec0b051fd5b6c7494fedbd118e6ebe06-928x480.gif)
+
+While the File component has been great for handling basic document processing needs, we saw devs keep hitting limits. Today, we are introducing some big changes: supporting multi-file uploads, global file access across multiple workflows, and our newly added file management system. Let’s jump in! 
+
+## Before & After: User Experience
+
+### Multi-file Uploads
+
+We have reimagined the user experience and capabilities of the File component. Previously limited to a single file upload, we have implemented a multi-file selection interface. No longer restricted to processing files one at a time, you can now select multiple documents from your local file directory. 
+
+![](/content/images/posts/e719bee244f7a02a94b33a3796ebd79c4ab2859c-932x480.gif)
+
+### New File Management System
+
+Once your files are uploaded via the File component, you can then access these in our newly added file management system. Before, file uploads were limited to only the flows you were working directly in (ie. specific to a given session), and you had to repeatedly upload files from your local directory. This was especially painful for folks who wanted to test results across different files. Now, with the file management system, files are persisted into Langflow to be accessed at any time. View the file management directory via two different ways: 
+
+Through the home screen under **“My Files”**
+
+![](/content/images/posts/abfcbe8322bb6aaebbc912b6615bdfd4b0c63433-1600x777.png)
+
+Or at the /files URL. For example, if you’re running Langflow at the default `http://127.0.0.1:7860` address, the file management system is located at `http://127.0.0.1:7860/files` .
+
+Files that are stored in **“My Files”** can be renamed, downloaded, duplicated, or deleted. 
+
+![](/content/images/posts/f48b14615cb35f2c2e0938112fc0456573db3b1a-1600x773.png)
+
+![](/content/images/posts/43a3e8e09029175b65add5173e75913988493521-1389x824.png)
+
+### Files Access Across Flows
+
+With the new file management system, you can now access uploaded files across multiple flows. This eliminates the frustration of repeatedly uploading the same files for different workflows or testing scenarios. Your documents remain accessible across sessions, creating a more cohesive and efficient development environment. 
+
+To access your previously uploaded files in a different flow, simply include the File component in your new flow and click the **“Select Files”** button. You should now be able to see a directory of all the files you have uploaded within the File component itself. 
+
+## Improvements to CSV File Handling
+
+### Uploading CSV Files as Dataframes
+
+Developers love to use CSV files when prototyping and building AI apps, so we have vastly **improved** how Langflow handles CSV. A great way to demonstrate this update is to take a look at the “Vector Store RAG” template in Langflow. Here, you can ingest a file, chunk the content, and store them into Astra DB (DataStax’s vector database). Users originally had to take an additional step to process the CSV data by incorporating different helper components. Today, the File component can now handle your CSV data and convert it directly into a “Dataframe” or tabular format. 
+
+Here’s an example where we are ingesting a sample set of movie reviews. In the original experience, when a user uploads a file, the “Data” output looks like this. You had to then parse the “text” column to retrieve the correct format. 
+
+![](/content/images/posts/1484948b9ad49d6a51b41095b9a639cef78abf19-1600x730.png)
+
+Now, when uploading CSV files, you can immediately view it as a “Dataframe” or tabular data.
+
+![](/content/images/posts/b5984a5394a1fc3d97d28c6425824f7c6a1a1493-1600x728.png)
+
+You can then easily parse the data by specific columns, or store the data into Astra DB without additional processing steps aside from “Split Text”. 
+
+### Interacting with Tabular Data
+
+With this new tabular view, you can now easily interact with the data within each row of the Dataframe by using components such as [**“Batch Run”**](https://docs.langflow.org/components-helpers#batch-run-component) for example. The **“Batch Run”** component is a **“Helper”** tool that can run a language model over each row of a Dataframe and return a new Dataframe with the original text and the model’s response. Consider the flow below.
+
+![](/content/images/posts/85ce9a89bb648aa92273cd68b5d2c3414dc1587b-1318x571.png)
+
+Here, we are uploading the sample set of movie reviews. For each row, we are running a language model with the prompt “Summarize the movie review in one line”. 
+
+![](/content/images/posts/bac037bf73c585db3e0ef3fd89ec787c2417994d-1600x731.png)
+
+Instead of retrieving the entire movie review, I can now talk to the model directly with the “**Chat Input”** component, and the model can answer questions based on just the one-liner summaries. It is much easier now to manipulate the different rows and columns in a Dataframe with these updated capabilities and support for CSV in the File component. 
+
+## Final Thoughts
+
+We’ve completely revamped file handling in Langflow with multi-file uploads, global file access, seamless CSV-to-Dataframe conversion and more to eliminate friction points and unlock new possibilities for building your AI agents and applications. 
+
+Now that you know how these new features work, here are some next steps:
+
+*   Join the [Langflow Discord](https://discord.com/invite/EqksyE2EX9) and let us know what you're building!
+*   Register for our [Launch Week Livestream](https://dtsx.io/langflow_launch) to hear more about the `1.3` release and a **HUGE** surprise we're announcing on Thursday.
+*   Check out our [project on Github](https://github.com/langflow-ai/langflow) and give us a star if you like what you see!

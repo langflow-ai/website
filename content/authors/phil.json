@@ -1,0 +1,13 @@
+{
+  "name": "Phil Nash",
+  "slug": "phil",
+  "bio": "Phil Nash is a developer relations engineer at IBM, working on the Langflow project. He lives in Melbourne, Australia, builds apps with TypeScript, and enjoys meeting developers at conferences and meetups around the world.",
+  "avatar": "/content/images/authors/417c91ef7ae03823048d43030d3b35588f37be02-250x250.jpg",
+  "location": "Melbourne, Australia",
+  "social": {
+    "github": "philnash",
+    "linkedin": "https://linkedin.com/in/philnash",
+    "twitter": "philnash",
+    "website": "https://philna.sh"
+  }
+}

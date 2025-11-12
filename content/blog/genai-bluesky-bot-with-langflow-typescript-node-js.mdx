@@ -1,0 +1,294 @@
+---
+title: "How to Build a GenAI Bluesky Bot with Langflow, TypeScript, and Node.js"
+slug: "genai-bluesky-bot-with-langflow-typescript-node-js"
+excerpt: "Learn how to build a small TypeScript application that creates a Bluesky bot powered by Langflow."
+publishedAt: "2025-01-02T04:33:00.000Z"
+featureImage: "/content/images/posts/d93a52c2c2d3e430802b2f5842eb883e67a15b75-1920x1273.jpg"
+authors:
+  - phil
+tags: []
+---
+
+[Bluesky](https://bsky.social/about) is a social network built on the [AT Protocol](https://atproto.com/): an open, decentralised way for building social applications. The AT Protocol is open, which means that developers can use it to build their own applications, from [custom feeds](https://docs.bsky.app/docs/starter-templates/custom-feeds), to [clients](https://docs.bsky.app/docs/starter-templates/clients), to my favorite: [bots](https://docs.bsky.app/docs/starter-templates/bots).
+
+With the advent of generative AI, we can now build chat bots that are even smarter. They can do everything from having realistic conversations to acting independently as agents. Langflow makes it easy to build AI agents and workflows.
+
+Given all that, it's only natural to want to connect clever bots to social media. In this post we'll build a small TypeScript application that creates a Bluesky bot powered by Langflow.
+
+## The application
+
+The application we’re going to build will take control of a Bluesky account, responding whenever it receives a mention or a reply. A mention is any post that contains the account's handle, whereas a reply is a post sent to a thread in which the account is participating.
+
+We'll use the [@skyware/bot](https://skyware.js.org/guides/bot/introduction/getting-started/) package to make it easy to interact with the Bluesky API and Langflow to help generate responses to posts.
+
+![](/content/images/posts/a4e6d01001e2c3abde5200db582c5d26a44ee563-891x654.png)
+
+## What you’ll need
+
+To build this application, you will need the following:
+
+*   Node.js installed (I'm using the [latest LTS version 22](https://nodejs.org/en/about/previous-releases) at the time of this writing)
+*   [A Bluesky account](https://bsky.app/)
+*   [Langflow installed](https://www.langflow.org/desktop)
+*   Depending on the flow you build, you may need API keys for the services you use
+
+Once you’re ready, let's get building a Bluesky bot.
+
+## Setting up the application
+
+Start by creating a new Node.js application; create a new directory called *langflow-bluesky-bot* and open it in your terminal.
+
+```shell
+mkdir langflow-bluesky-bot  
+cd langflow-bluesky-bot
+```
+
+Initialise your new Node application with:
+
+```shell
+npm init --yes
+```
+
+Install the dependencies and development dependencies that you're going to use:
+
+```shell
+npm install @skyware/bot  
+npm install typescript tsx @types/node --save-dev
+```
+
+Open the project in your favourite text editor, then open up _package.json_. I like my projects to act as [ES modules](https://nodejs.org/api/esm.html#modules-ecmascript-modules). To do the same, add the following under the "main" key.
+
+```json
+"type": "module",
+```
+
+Add the following scripts to _package.json_, too. The _build_ script will compile the TypeScript we're going to write into JavaScript, and the start script will run that JavaScript. Finally, to make development easier, the _dev_ script will use [tsx](https://tsx.is/) to run the TypeScript directly and restart when changes are detected.
+
+```json
+  "scripts": {  
+    "build": "tsc",  
+    "start": "node --env-file=.env .",  
+    "dev": "tsx watch --env-file=.env ./src/index.ts"  
+  },
+```
+
+Speaking of TypeScript, we also need to configure the compiler. Create a file called _tsconfig.json_ and paste in the following:
+
+```json
+{  
+  "compilerOptions": {  
+    "target": "es2023",  
+    "lib": [  
+      "es2023"  
+    ],  
+    "module": "NodeNext",  
+    "sourceMap": true,  
+    "outDir": "./dist",  
+    "esModuleInterop": true,  
+    "forceConsistentCasingInFileNames": true,  
+    "strict": true,  
+    "skipLibCheck": true  
+  }  
+}
+```
+
+Create a file called _.env_ and paste in the following:
+
+```shell
+BSKY_USERNAME=  
+BSKY_PASSWORD=  
+LANGFLOW_URL=  
+LANGFLOW_TOKEN=
+```
+
+We will fill these variables in as we need them.
+
+For the last bit of setup, create a _src_ directory and a file called _src/index.ts_.
+
+```shell
+mkdir src  
+touch src/index.ts
+```
+
+Now we're ready to start work on the code of our bot.
+
+## Coding the bot
+
+Open src/index.ts in your editor. Start by importing the bot framework and create a bot object which will be authenticated using the account name and an app password. 
+
+```typescript
+import { Bot } from "@skyware/bot";  
+  
+const bot = new Bot();  
+await bot.login({  
+  identifier: process.env.BSKY_USERNAME!,  
+  password: process.env.BSKY_PASSWORD!,  
+});
+```
+
+We haven't filled in these details in the _.env_ file yet. So we'll need to do that before we go any further.
+
+### Bluesky account details
+
+Log in to the account you want to power with this application. You will need to [create an app password](https://blueskyfeeds.com/en/faq-app-password) for the account. Go to your account settings, choose _App_ passwords and then add a new password. Once you have both your account handle and app password, add them to the _.env_ file.
+
+We can test whether these credentials work by trying to send a post from the account. Add this code to _src/index.ts_.
+
+```typescript
+bot.post({  
+  text: "Hello world!",  
+});
+```
+
+Now, run the bot with:
+
+```shell
+npm run dev
+```
+
+You should see a new post from your bot account. If you don't, check your account credentials again.
+
+![](/content/images/posts/eeee7b50c025d65c51a1be1698217c5abcc325ea-851x526.png)
+
+Stop the bot with Ctrl + C. Remove the code that sends the post—we don't want to keep spamming the timeline!
+
+### Listening for events
+
+We're going to listen to the "reply" and "mention" events. You can also listen for "quote", "repost", "like", "follow", and "message" events if you want to handle other use-cases with your bot. This code sets up to listen to those two events with a single function and logs a message when the bot is ready.
+
+```typescript
+bot.on("reply", respondToIncoming);  
+bot.on("mention", respondToIncoming);  
+console.log(  
+  `[✓] @${process.env.BSKY_USERNAME} is listening for mentions and replies.\n`  
+);
+```
+
+Now we need to define the `respondToIncoming` function. Let's start by seeing what happens when we get mentioned. At the top of the file, import the Post type. Then implement the `respondToIncoming` function. In this case, we'll just log the author of the post and the text they sent.
+
+```typescript
+// At the top add Post to the import  
+import { Bot, Post } from "@skyware/bot";  
+  
+// At the bottom  
+async function respondToIncoming(post: Post) {  
+  console.log(`[>] @${post.author.handle}: ${post.text}\n`);  
+}
+```
+
+With this code in place, start the application again with:
+
+```shell
+npm run dev
+```
+
+You can test that you are successfully listening for these events by sending a mention or reply from a different account.
+
+![](/content/images/posts/48b583d7904dc54a47cc321996192872e3f226ab-1051x631.png)
+
+You can see the rest of the [properties of a post by checking the @skyware/bot documentation](https://skyware.js.org/docs/bot/classes/Post/) and you can explore them by logging them out to the terminal.
+
+#### Polling
+
+Note that there can be a delay between when you send a mention or reply to your bot before you see the post logged. This is because @skyware/bot polls the API every 5 seconds for updates. While there is a real-time [Firehose](https://docs.bsky.app/docs/advanced-guides/firehose) you can subscribe to, this is overkill for this application, polling will suffice.
+
+Now we can see posts being sent to our bot, let's build something to handle them.
+
+## Langflow
+
+For this blog post, we'll build a simple Langflow flow to respond to incoming posts. Once you have this step working, I encourage you to play around with Langflow and see what else you can create. There are plenty of example flows you can dig into for inspiration too.
+  
+Open Langflow Desktop and create a new flow. For this example we'll use the _Basic Prompting_ template.
+
+![](/content/images/posts/08049d0d761e9c56e494b058247c55082bd91636-1164x914.png)
+
+This template takes the message that is sent to a chat input component and feeds it to a model component, [OpenAI gpt-4o-mini](https://platform.openai.com/docs/models#gpt-4o-mini) by default. If you want to use OpenAI for this app you will need to fill in the component with an OpenAI API key. You can choose to use any of the other model components if you would prefer. 
+
+You can [alter how your bot will respond by providing system instructions](https://platform.openai.com/docs/guides/prompt-engineering#tactic-ask-the-model-to-adopt-a-persona) via the prompt component. For a simple flow like this, you might tell your model to respond like a pirate, a bored teenager, or an 80s action movie hero. Or something sensible, I guess.
+
+The model component sends its output to a chat output component and this means that you can test your flow by chatting with it using the _Playground_. Once you are happy with the responses, click the _Share_ button, then the _API_ button. Here you can find the URL of your flow. Copy the URL and enter it in the .env file as the `LANGFLOW_URL`. 
+
+If you have authentication set up on your Langflow instance, you will also need an API key. Go to settings, generate a new API key and then copy and enter it in the _.env_ file as the `LANGFLOW_TOKEN`. 
+
+Now let's hook up the Langflow API in the code.
+
+### Working with the Langflow API
+
+Create a function called `getLangflowResponse`. This function will make an HTTP POST request to the Langflow URL that we copied earlier.
+
+The body of the request is a JSON object that defines the `input_type` and `output_type` as "chat" and the `input_value` as the text we'll pass into this function.
+
+To authorise the request, we pass an `x-api-key` header that contains the token we generated. If you didn't need to generate an API key, you can skip this.
+
+Once we've made the request, we then parse the response as JSON and extract the response message from the response object. 
+
+```typescript
+async function getLangflowResponse(text: string) {  
+  const body = {  
+    input_type: "chat",  
+    output_type: "chat",  
+    input_value: text,  
+  };  
+  const response = await fetch(process.env.LANGFLOW_URL!, {  
+    method: "POST",  
+    headers: {  
+      "x-api-key": process.env.LANGFLOW_TOKEN,  
+      "Content-Type": "application/json",  
+    },  
+    body: JSON.stringify(body),  
+  });  
+  if (!response.ok) {  
+    throw new Error("Could not respond", { cause: response });  
+  }  
+  const data = (await response.json()) as any;  
+  return data.outputs[0].outputs[0].artifacts.message;  
+}
+```
+
+Update the `respondToIncoming` function to generate content using the `getLangflowResponse` function, handling any errors, then post that result in response to the original post using the `post.reply` function.
+
+```typescript
+async function respondToIncoming(post: Post) {  
+  console.log(`[>] @${post.author.handle}: ${post.text}\n`);  
+  try {  
+    const text = await getLangflowResponse(post.text);  
+    console.log(`[<] @${process.env.BSKY_USERNAME}: ${text}\n`);  
+    await post.reply({ text });  
+  } catch (error) {  
+    console.error(error);  
+  }  
+}
+```
+
+Restart your bot process again, by stopping with Ctrl + C and then running:
+
+```shell
+npm run dev
+```
+
+Send yourself another mention and this time you should see responses from your bot generated by the Langflow flow.
+
+![](/content/images/posts/a4e6d01001e2c3abde5200db582c5d26a44ee563-891x654.png)
+
+This example bot currently has the personality of a snarky teenager. I'm not sure it’s the best bot I've built, but this is just the start.
+
+Now that you have integrated the Langflow flow with your application code, you can experiment with Langflow and see what else you can achieve. You could experiment by building:
+
+*   [a chatbot that can ingest files](https://docs.langflow.org/chat-with-files), so that the bot can answer questions about the files you upload
+*   [a vector RAG chatbot](https://docs.langflow.org/chat-with-rag), so that the bot can respond based on knowledge you provide to it
+*   [an agent](https://docs.langflow.org/agent-tutorial) that has many tools at its disposal to form responses
+
+If you want to deploy your bots, check out this article on [how to deploy Langflow](https://www.langflow.org/blog/how-to-host-langflow).
+
+## Build more bots
+
+Bluesky makes it really easy to build bots that are fun to interact with and Langflow makes it easy to build GenAI applications that you can plug into bots with just a few lines of code.
+
+To get started, you can:
+
+*   get [the code for this Bluesky bot on GitHub](https://github.com/philnash/langflow-bluesky-bot/),
+*   download [Langflow](https://docs.langflow.org/chat-with-files),
+*   start building!
+
+  
+I'd love to hear about any bots you are building on Bluesky. Feel free to follow me on Bluesky at [@philna.sh](https://bsky.app/profile/philna.sh) and drop me a message if you've built something cool.

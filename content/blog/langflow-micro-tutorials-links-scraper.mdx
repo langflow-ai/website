@@ -1,0 +1,36 @@
+---
+title: "Langflow Micro Tutorials — Links Scraper"
+slug: "langflow-micro-tutorials-links-scraper"
+excerpt: "Welcome back to our Langflow micro tutorials series! In this article, we’ll continue exploring simple Langflow examples and custom…"
+publishedAt: "2023-10-10T00:35:51.000Z"
+featureImage: "/content/images/posts/2dab345ea0e989e01cb14f363c589b2a7d09b0fe-1200x658.png"
+authors:
+  - rodrigo
+tags: []
+---
+
+Welcome back to our Langflow micro tutorials series! In this article, we’ll continue exploring simple Langflow examples and custom component design.
+
+_You can download the flow we’ll be discussing here to modify and understand the components in use._
+
+Today, we’ll focus on a basic web scraper flow for extracting links that may contain valuable information. Hope you enjoy it!
+
+#### Key Features
+
+**HTML Loader:** The HTML Loader custom component uses the BeautifulSoup library to retrieve the soup object from a given URL. This allows for easy extraction of relevant information from HTML documents.
+
+**HTML Links Extractor:** The HTML Links Extractor gets links within the HTML content. By leveraging BeautifulSoup, this component reduces the amount of text before the information is processed by the LLM, saving time and token costs.
+
+![](/content/images/posts/a9fbaf3d88d072fe179a224bdad3ed4109a22d80-1200x658.png)
+
+#### Objective
+
+The objective of this flow is to extract relevant links from an HTML document and present them as bullet points for a Language Model.
+
+The model aims to identify the links that could potentially contain the company’s email ("email" is used in this example, but you can imagine similar use cases with different queries), such as “About Us” and “Contact Us” pages.
+
+Notice that there is some pre-processing to the HTML information before it is passed to the prompt template, which makes custom components and LLM pipelines even more attractive.
+
+* * *
+
+#### Download Flow (gist)

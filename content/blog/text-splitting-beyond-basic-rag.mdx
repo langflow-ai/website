@@ -1,0 +1,92 @@
+---
+title: "Text Splitting: Beyond Basic RAG"
+slug: "text-splitting-beyond-basic-rag"
+excerpt: "In RAG, splitting text into chunks is key to making retrieval effective. But there’s more than one way to do it. Some methods are quick and…"
+publishedAt: "2024-10-16T14:27:01.000Z"
+featureImage: "/content/images/posts/d5292f377be67220dda16dde48da8b8157aafde1-1200x519.png"
+authors:
+  - rodrigo
+tags: []
+---
+
+In RAG, splitting text into chunks is key to making retrieval effective. But there’s more than one way to do it. Some methods are quick and dirty; others dig deeper to keep the meaning intact.
+
+This article covers why splitting matters, breaks down different techniques from basic character cuts to AI-driven splits and gives you practical examples to make it click.
+
+#### Why Splitting, Again?
+
+Direct model inference on long texts has some clear limitations:
+
+1.  **Finite Context Size**: Models have a maximum input size.
+2.  **Accuracy Decline with Size**: Even long context models can struggle when the input is too lengthy.
+3.  **Black-Box Retrieval**: Direct inference makes it harder to control what’s "retrieved"; you’re relying on the model’s judgment.
+4.  **Cost**: Processing extensive texts repeatedly can get expensive, especially if multiple questions need the same context.
+
+Splitting breaks data into chunks, allowing you to retrieve only what’s needed before feeding a large language model. The approach is cheaper, more efficient, and allows for complete control over what information is retrieved.
+
+#### Splitting Techniques: Which One to Choose?
+
+Ok, so we do need splitting but also know that different techniques offer different strengths. Here’s a quick rundown on some of them:
+
+**Character-Based Splitting**: Fast and simple. You set a character limit and slice. Good for rough, quick cuts but may break sentences. For instance, splitting every ten characters or at every period `.` found.
+
+**Recursive Character Splitting**: Splits at larger boundaries first (paragraphs, sentences), then drills down. Keeps chunks readable and coherent. Progressively uses smaller separators like `\n`, then `.`, then `;`.
+
+**Semantic Splitting**: Uses embeddings to split based on meaning, keeping related content together. It uses clustering techniques based on semantic/structure assumptions — e.g., _parts of the same chunk should be more similar than parts of different chunks._
+
+**Regex-Based Splitting**: Splits based on patterns like dates or specific keywords, which are great for structured data.
+
+**LLM-Based**: A prompted AI model dynamically decides where to split based on content flow.
+
+> 💡 For a deep dive, here's a recommended video by [Greg Kamradt (Data Indy)](https://www.youtube.com/@DataIndependent): [The 5 Levels Of Text Splitting For Retrieval](https://www.youtube.com/watch?v=8OJC21T2SL4)
+
+#### Overlapping
+
+Overlapping text across chunks helps maintain continuity by providing a shared reference point between consecutive chunks. This overlap ensures that when a model reads each new chunk, it has a direct link to the previous one, which helps carry forward important details and context.
+
+*   **Smooth Transitions**: The repeated portion carries essential information from one chunk to the next, so the model can understand the transition without losing track of the ongoing topic.
+*   **Avoids Information Loss**: If a key detail falls at the boundary of a chunk, overlap ensures that detail appears in both chunks, preventing it from being overlooked or forgotten.
+
+#### Think Out of the Box
+
+Splitting can be as unique as your use case. Use whatever functions, patterns, or structures suit your data. The goal is to create coherent and meaningful segments that maximize retrieval accuracy and efficiency.
+
+For instance, **HTML content** can be split by tags like `<h1>` or `<h2>` , which helps preserve the structure of a webpage for retrieval.
+
+```css
+<h1>Introduction</h1><p>This is the first paragraph. 
+</p><h2>Section 1</h2><p>Content under section 1.</p>
+```
+
+*   Chunk 1: `<h1>Introduction</h1><p>This is the first paragraph.</p>`
+*   Chunk 2: `<h2>Section 1</h2><p>Content under section 1.</p>`
+
+This keeps each HTML section intact and is useful for webpage summarization or for pulling content into structured data formats like JSON.
+
+Or, if you’re working with **audio transcriptions**, you might want to split by speaker to capture distinct parts of a dialogue (e.g., “Speaker 1:” or “Speaker 2:”) and split each time the speaker changes.
+
+```vbnet
+Speaker 1: I think we should proceed with the project.  
+Speaker 2: I agree, but we need to check the budget.  
+Speaker 1: Budget shouldn't be an issue.
+```
+
+*   Chunk 1: `Speaker 1: I think we should proceed with the project.`
+*   Chunk 2: `Speaker 2: I agree, but we need to check the budget.`
+*   Chunk 3: `Speaker 1: Budget shouldn’t be an issue.`
+
+This preserves the conversation’s structure, allowing for better contextual retrieval when you need specific dialogue parts. Notice that here, we could decide not to keep the separator depending on the application.
+
+#### Balancing Retrieval and Ingestion Costs
+
+When designing an RAG pipeline, remember that, in most cases, ingestion happens once, while **retrieval happens multiple times**. More time and resources spent during ingestion could mean better accuracy and efficiency during retrieval.
+
+But there’s a fine line — overinvesting in ingestion (like using advanced semantic models or LLMs to split every document) could mean unnecessary costs if the retrieval frequency is low or even if the use case is simple enough.
+
+#### Start Simple
+
+Don’t over-engineer. Begin with basic methods, like character-based or document-specific splitting, and only move to advanced techniques if they add clear value. Keeping it simple means faster prototyping and easier debugging.
+
+* * *
+
+At Langflow, we’re building the fastest path from RAG prototyping to production. It’s open-source and features a free cloud service! Check it out at [https://github.com/langflow-ai/langflow](https://github.com/langflow-ai/langflow) ✨

@@ -1,0 +1,36 @@
+---
+title: "Langflow Micro Tutorials — Document Truncator"
+slug: "langflow-micro-tutorials-document-truncator"
+excerpt: "Welcome back to our Langflow micro tutorials series! We’ll continue our journey into very simple Langflow examples, highlighting ideas and…"
+publishedAt: "2023-09-12T21:47:04.000Z"
+featureImage: "/content/images/posts/3dec76c9edb56d4b70553e8bbde48dc0dcf0f27c-800x441.png"
+authors:
+  - rodrigo
+tags: []
+---
+
+Welcome back to our Langflow micro tutorials series! We’ll continue our journey into very simple Langflow examples, highlighting ideas and the design of custom components.
+
+_This article provides a link to download the described flow. Use it to modify and understand the components in use._
+
+Today, we focus on a basic website reading flow that uses a custom component to help truncate documents. Have fun!
+
+#### **Main Features**
+
+*   **Document Truncator**: This is a custom component designed and built from scratch. The primary function of this component is to reduce the text content of a webpage. It does so by retaining only the initial set of characters specified by the _truncate\_size_ parameter.
+
+#### **Objective**
+
+To help reduce the length of a webpage’s text content to a manageable size before it’s fed into a prompt. Only the beginning portion of the text, up to a specific number of characters, is retained.
+
+![](/content/images/posts/aff51e728fcb5d4e742734905de8a52cf5508d83-800x441.png)
+
+For instance, if a webpage has 5,000 characters and the truncate\_size is set to 1,000, the Document Truncator will output only the first 1,000 characters from the webpage, discarding the rest.
+
+![](/content/images/posts/8fc1a7c1f713d6ff911cc2783c4d4d380cbbfd38-800x441.png)
+
+Notice that this component takes a Langchain Document as input, processes the text inside of it, and outputs a Document again, which is then sent to the Prompt Template.
+
+* * *
+
+#### Download Flow (gist)
