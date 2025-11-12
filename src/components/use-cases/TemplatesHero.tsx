@@ -11,8 +11,9 @@ import {
     SEGMENT_LABELS,
 } from "@/lib/types/templates";
 import { writeFiltersToURL } from "@/utils/query";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { trackPage } from "@/lib/utils/tracking";
 import CategoryBar from "../common/CategoryBar";
 import SearchWithSuggest from "../common/SearchWithSuggest";
 import styles from "./TemplatesHero.module.scss";
@@ -28,12 +29,32 @@ type FilterSequenceItem = {
 
 export default function TemplatesHero({ initialFilters }: TemplatesHeroProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const [filters, setFilters] = useState<FilterState>(() => ({
     ...initialFilters,
     categories: initialFilters.categories || new Set()
   }));
   const [searchValue, setSearchValue] = useState(initialFilters.q);
   const isMounted = useRef(false);
+
+  // Track page view whenever pathname changes (including initial load and client-side navigation)
+  useEffect(() => {
+    // Only track for the main use-cases page (not template detail pages)
+    if (pathname === '/use-cases') {
+      // Track page view with friendly name after IBM common.js loads Segment
+      const trackPageView = () => {
+        if (window.analytics) {
+          trackPage('Use Cases');
+        } else {
+          // Wait for Segment to load
+          setTimeout(trackPageView, 100);
+        }
+      };
+
+      // Start trying to track page view
+      trackPageView();
+    }
+  }, [pathname]);
   const [_filterSequence, setFilterSequence] = useState<FilterSequenceItem[]>(() => {
     const sequence: FilterSequenceItem[] = [];
     initialFilters.segments.forEach((segment) =>

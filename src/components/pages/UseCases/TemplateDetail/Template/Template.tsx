@@ -5,7 +5,9 @@ import Button from "@/components/ui/button";
 import { ButtonTypes } from "@/components/ui/button/types";
 import ImportModal from "@/components/ui/ImportModal";
 import { Template } from "@/lib/use-cases/types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { trackPage } from "@/lib/utils/tracking";
 import { BackLink, ContentSection } from "../../shared";
 import styles from "./styles.module.scss";
 
@@ -15,6 +17,23 @@ interface TemplateDetailTemplateProps {
 
 const TemplateDetailTemplate = ({ template }: TemplateDetailTemplateProps) => {
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Track page view whenever pathname changes (including initial load and client-side navigation)
+  useEffect(() => {
+    // Track page view with friendly name after IBM common.js loads Segment
+    const trackPageView = () => {
+      if (window.analytics) {
+        trackPage(template.topic);
+      } else {
+        // Wait for Segment to load
+        setTimeout(trackPageView, 100);
+      }
+    };
+
+    // Start trying to track page view
+    trackPageView();
+  }, [pathname, template.topic]);
 
   return (
     <>

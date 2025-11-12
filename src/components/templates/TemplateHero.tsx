@@ -7,6 +7,8 @@ import { useShare } from "@/hooks/useShare";
 import { Template } from "@/lib/types/templates";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { trackPage } from "@/lib/utils/tracking";
 import { FaRegCopy } from "react-icons/fa6";
 import {
   HiOutlineBookOpen,
@@ -61,6 +63,23 @@ export default function TemplateHero({ template, flow, className = "" }: Templat
   const [showToast, setShowToast] = useState(false);
   const [supportsNativeShare, setSupportsNativeShare] = useState(false);
   const { share, shareToTwitter, shareToLinkedIn } = useShare();
+  const pathname = usePathname();
+
+  // Track page view whenever pathname changes (including initial load and client-side navigation)
+  useEffect(() => {
+    // Track page view with friendly name after IBM common.js loads Segment
+    const trackPageView = () => {
+      if (window.analytics) {
+        trackPage(flow.title);
+      } else {
+        // Wait for Segment to load
+        setTimeout(trackPageView, 100);
+      }
+    };
+
+    // Start trying to track page view
+    trackPageView();
+  }, [pathname, flow.title]);
 
   // Get current URL for sharing
   const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
