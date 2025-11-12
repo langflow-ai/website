@@ -187,7 +187,11 @@ const Header = () => {
           <nav className={styles.nav}>
             {LIST.map((item) => {
               return (
-                <div key={item.title} className={styles.navItem}>
+                <div
+                  key={item.title}
+                  className={styles.navItem}
+                  {...(item.link ? {} : { tabIndex: 0 })}
+                >
                   {item?.link ? (
                     <Link
                       href={item.link}

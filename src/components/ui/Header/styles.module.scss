@@ -101,7 +101,9 @@
     opacity: 0 !important;
   }
 }
-.navItem:hover .dropdown {
+.navItem:hover .dropdown,
+.navItem:focus .dropdown,
+.navItem:focus-within .dropdown {
   display: block;
   opacity: 1;
   transition: all 0.2s allow-discrete;
