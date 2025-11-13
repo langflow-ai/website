@@ -146,6 +146,19 @@ const Hero: FC<Props> = ({
 
     const bodyText = body ? getBodyTextForICS(body) : undefined;
 
+    // Determine end date/time strings
+    let endDateString: string | undefined;
+    let endTimeString: string | undefined;
+    
+    if (firstDate.endTime) {
+      endDateString = firstDate.date as string;
+      endTimeString = firstDate.endTime;
+    } else if (dates.length > 1) {
+      const lastDate = dates[dates.length - 1];
+      endDateString = lastDate.date as string;
+      endTimeString = lastDate.endTime || lastDate.time;
+    }
+
     return {
       title,
       description: bodyText,
@@ -153,6 +166,11 @@ const Hero: FC<Props> = ({
       startDate,
       endDate,
       url,
+      timezone: firstDate.timezone,
+      startDateString: firstDate.date as string,
+      startTimeString: firstDate.time,
+      endDateString,
+      endTimeString,
     };
   };
 
