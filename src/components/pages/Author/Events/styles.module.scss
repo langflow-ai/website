@@ -1,0 +1,82 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.events {
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+  padding: 100px 0;
+  width: 100%;
+
+  .heading {
+    color: var(--primary-white);
+    margin-bottom: 48px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+
+    @include media-breakpoint-up(md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .event {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-decoration: none;
+    color: var(--primary-white);
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .type {
+    color: var(--primary-white);
+    opacity: 0.7;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+
+  .date {
+    color: var(--primary-white);
+    opacity: 0.6;
+  }
+
+  .title {
+    color: var(--primary-white);
+  }
+
+  .location {
+    color: var(--primary-white);
+    opacity: 0.8;
+  }
+}
+
+

@@ -1,0 +1,102 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.talks {
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+  width: 100%;
+  margin-top: var(--spacer-4);
+
+  .heading {
+    color: var(--primary-white);
+    margin-bottom: var(--spacer-2);
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacer-4);
+    width: 100%;
+  }
+
+  .talk {
+    display: flex;
+    gap: var(--spacer-2);
+    text-decoration: none;
+    color: var(--primary-white);
+    padding: var(--spacer-4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: border-color 0.2s;
+    width: 100%;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .image {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: var(--spacer-2);
+    background: white;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .title {
+    color: var(--primary-white);
+  }
+
+  .description {
+    color: var(--primary-white);
+    opacity: 0.8;
+  }
+
+  .meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .date,
+  .duration,
+  .location {
+    color: var(--primary-white);
+    opacity: 0.6;
+  }
+
+  .speakers {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .speakersLabel {
+    color: var(--primary-white);
+    opacity: 0.7;
+    font-weight: 600;
+  }
+
+  .speakersList {
+    color: var(--primary-white);
+    opacity: 0.8;
+  }
+
+  .speakerLink {
+    color: var(--primary-white);
+    text-decoration: underline;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+

@@ -7,12 +7,11 @@ import { notFound } from "next/navigation";
 import { sanityFetch } from "@/lib/backend/sanity/client";
 import {
   METADATA_BY_SLUG_QUERY,
-  PAGE_BY_SLUG_QUERY,
+  EVENT_WITH_TALKS_QUERY,
   PAGES_SLUGS_QUERY,
 } from "@/lib/backend/sanity/queries";
 
 // Types
-import type { Event as PageType } from "@/lib/types/sanity.types";
 import type { Seo } from "@/lib/types/sanity";
 
 // Utilities
@@ -85,13 +84,12 @@ export const generateMetadata = async ({ params: { slug } }: Props) => {
 };
 
 const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
-  const isDraftMode = (await draftMode()).isEnabled;
-  const parsedSlug = parseSlugToString(slug);
-  const page = await sanityFetch<PageType>(
-    PAGE_BY_SLUG_QUERY,
+  const isDraftMode = draftMode().isEnabled;
+  const parsedSlug = parseSlugToString(slug).replace(/events\//, "");
+  const page = await sanityFetch<any>(
+    EVENT_WITH_TALKS_QUERY,
     {
-      type: DOCUMENT_TYPE,
-      slugs: [`events/${parsedSlug}`, `/events/${parsedSlug}`],
+      slugs: [parsedSlug, `events/${parsedSlug}`, `/events/${parsedSlug}`],
     },
     isDraftMode
   );

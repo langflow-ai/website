@@ -28,7 +28,7 @@ export const METADATA_BY_SLUG_QUERY = defineQuery(`
  */
 export const VALIDATE_DOCUMENT_BY_SLUG_QUERY = defineQuery(`
   count(*[
-    _type in ["page", "event", "post"] // Doing this to avoid timeout errors
+    _type in ["page", "event", "post", "talk", "author"] // Doing this to avoid timeout errors
     && defined(slug.current) && slug.current in $slugs
   ])
 `);
@@ -58,6 +58,7 @@ export const API_GET_UPCOMING_EVENTS_QUERY = defineQuery(`
     ] | order(dates[0].date asc, seo.title asc) [$start...$end] {
       "dates": dates,
       "description": excerpt,
+      "body": body,
       "slug": slug.current,
       "thumbnail": thumbnail,
       "title": title,
@@ -76,9 +77,10 @@ export const API_GET_ON_DEMAND_EVENTS_QUERY = defineQuery(`
       _type == "event"
       && !(_id in path("drafts.**"))
       && count((dates[].date)[@ <= $from]) > 0
-    ] | order(dates[0].date asc, seo.title asc) [$start...$end] {
+    ] | order(dates[0].date desc, seo.title asc) [$start...$end] {
       "dates": dates,
       "description": excerpt,
+      "body": body,
       "slug": slug.current,
       "thumbnail": thumbnail,
       "title": title,
@@ -188,5 +190,159 @@ export const PUBLISHED_PAGES_QUERY = defineQuery(`
     _id,
     "slug": slug.current,
     _updatedAt
+  }
+`);
+
+// TALK: Fetch all talk slugs for static generation
+export const TALK_SLUGS_QUERY = defineQuery(`
+  *[
+    _type == "talk" && defined(slug.current) && !(_id in path("drafts.**"))
+  ].slug.current
+`);
+
+// TALK: Fetch a single talk by slug
+export const TALK_BY_SLUG_QUERY = defineQuery(`
+  *[_type == "talk" && slug.current in $slugs][0] {
+    _id,
+    title,
+    slug,
+    description,
+    body,
+    date,
+    duration,
+    location,
+    "slides": slides.asset->url,
+    recording,
+    thumbnail,
+    resources[] {
+      _key,
+      _type,
+      label,
+      url
+    },
+    "speakers": speakers[]-> {
+      _id,
+      name,
+      slug,
+      avatar,
+      bio
+    },
+    "event": event-> {
+      _id,
+      title,
+      slug,
+      type,
+      dates,
+      location
+    },
+    tags[]-> {
+      _id,
+      title,
+      slug
+    },
+    seo
+  }
+`);
+
+// TALK: Fetch published talks with their slug and updated date
+export const PUBLISHED_TALKS_QUERY = defineQuery(`
+  *[_type == "talk" && defined(slug.current) && !(_id in path("drafts.**"))] {
+    _id,
+    "slug": slug.current,
+    _updatedAt
+  }
+`);
+
+// EVENT: Fetch event with talks
+export const EVENT_WITH_TALKS_QUERY = defineQuery(`
+  *[_type == "event" && slug.current in $slugs][0] {
+    _id,
+    ...,
+    "talks": *[_type == "talk" && references(^._id)] | order(date asc) {
+      _id,
+      title,
+      slug,
+      description,
+      date,
+      duration,
+      location,
+      thumbnail,
+      "speakers": speakers[]-> {
+        _id,
+        name,
+        slug,
+        avatar
+      }
+    }
+  }
+`);
+
+// AUTHOR: Fetch author by slug with posts, talks, and events
+export const AUTHOR_BY_SLUG_QUERY = defineQuery(`
+  *[_type == "author" && slug.current in $slugs][0] {
+    _id,
+    name,
+    slug,
+    bio,
+    avatar,
+    location,
+    twitter,
+    linkedin,
+    github,
+    website,
+    "posts": *[_type == "post" && (author._ref == ^._id || ^._id in authors[]._ref)] | order(publishedAt desc) {
+      _id,
+      title,
+      slug,
+      excerpt,
+      publishedAt,
+      featureImage
+    },
+    "talks": *[_type == "talk" && ^._id in speakers[]._ref] | order(date desc) {
+      _id,
+      title,
+      slug,
+      description,
+      date,
+      duration,
+      location,
+      thumbnail,
+      "event": event-> {
+        _id,
+        title,
+        slug,
+        type
+      }
+    },
+    "events": *[_type == "event" && ^._id in *[_type == "talk" && references(^._id)].speakers[]._ref] | order(dates[0].date desc) {
+      _id,
+      title,
+      slug,
+      type,
+      dates,
+      location,
+      thumbnail
+    }
+  }
+`);
+
+// AUTHOR: Fetch all author slugs for static generation
+export const AUTHOR_SLUGS_QUERY = defineQuery(`
+  *[
+    _type == "author" && defined(slug.current) && !(_id in path("drafts.**"))
+  ].slug.current
+`);
+
+// REVALIDATION: Fetch talk slugs for an event by event slug
+export const TALK_SLUGS_BY_EVENT_QUERY = defineQuery(`
+  *[_type == "event" && slug.current in $slugs][0] {
+    "talkSlugs": *[_type == "talk" && references(^._id) && defined(slug.current) && !(_id in path("drafts.**"))].slug.current | filter(!isNull(@))
+  }
+`);
+
+// REVALIDATION: Fetch author slugs for a talk by talk slug
+export const AUTHOR_SLUGS_BY_TALK_QUERY = defineQuery(`
+  *[_type == "talk" && slug.current in $slugs][0] {
+    "authorSlugs": speakers[]->[defined(slug.current) && !(_id in path("drafts.**"))].slug.current | filter(!isNull(@))
   }
 `);

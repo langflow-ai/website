@@ -7,7 +7,6 @@
   color: var(--primary-white);
 
   @include media-breakpoint-up(md) {
-    margin-bottom: var(--spacer-8);
     padding-top: calc(var(--spacer-5) + var(--announcement-height, 50px));
   }
 
@@ -172,13 +171,19 @@
     }
   }
 
-  img {
-    display: none;
+  .image {
+    width: 100%;
+    border-radius: var(--spacer-1);
+    overflow: hidden;
 
     @include media-breakpoint-up(lg) {
-      display: block;
+      width: 100%;
+    }
+
+    img {
       width: 100%;
       height: auto;
+      display: block;
     }
   }
 }
