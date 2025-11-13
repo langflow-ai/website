@@ -37,7 +37,14 @@ export async function GET(request: Request) {
   // Filter events based on type (upcoming or past)
   const filteredEvents = allEvents.filter((event) => {
     const eventDate = event.dates?.[0]?.date || "";
-    const eventDateTime = new Date(eventDate);
+    const eventTime = event.dates?.[0]?.time || "23:59";
+
+    // Parse event datetime in Pacific timezone
+    // Format: "2025-11-13T09:00:00-08:00" (PST) or "-07:00" (PDT)
+    // Using -08:00 for PST as a default
+    const eventDateTimeString = `${eventDate}T${eventTime}:00-08:00`;
+    const eventDateTime = new Date(eventDateTimeString);
+
     const isUpcoming = eventDateTime >= today;
     return type === "upcoming" ? isUpcoming : !isUpcoming;
   });
