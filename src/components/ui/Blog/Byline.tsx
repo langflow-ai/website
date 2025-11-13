@@ -19,7 +19,7 @@ export function Byline({ authors, publishedAt }: BylineProps) {
           {authors
             ?.filter((author) => !!author.avatar)
             .map((author, index) => (
-              <NextLink href={`/authors/${author.slug?.current}`} key={author.slug?.current || index}>
+              <NextLink href={`/people/${author.slug?.current}`} key={author.slug?.current || index}>
                 <SanityImage
                 image={author.avatar}
                 alt={author.name}
@@ -47,7 +47,7 @@ export function Byline({ authors, publishedAt }: BylineProps) {
             
             return (
               <span key={author.slug?.current || index}>
-                <NextLink href={`/authors/${author.slug?.current}`}>
+                <NextLink href={`/people/${author.slug?.current}`}>
                   {author.name}
                 </NextLink>
                 {!isLast && !isSecondToLast && ", "}

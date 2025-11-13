@@ -59,12 +59,12 @@ export async function generateStaticParams() {
  */
 export const generateMetadata = async ({ params: { slug } }: Props) => {
   const isDraftMode = draftMode().isEnabled;
-  const parsedSlug = parseSlugToString(slug).replace(/authors\//, "");
+  const parsedSlug = parseSlugToString(slug).replace(/people\//, "");
   const metadata = await sanityFetch<Seo>(
     METADATA_BY_SLUG_QUERY,
     {
       type: DOCUMENT_TYPE,
-      slugs: [parsedSlug, `authors/${parsedSlug}`, `/authors/${parsedSlug}`],
+      slugs: [parsedSlug, `people/${parsedSlug}`, `/people/${parsedSlug}`],
     },
     isDraftMode
   );
@@ -72,7 +72,7 @@ export const generateMetadata = async ({ params: { slug } }: Props) => {
   const author = await sanityFetch<any>(
     AUTHOR_BY_SLUG_QUERY,
     {
-      slugs: [parsedSlug, `authors/${parsedSlug}`, `/authors/${parsedSlug}`],
+      slugs: [parsedSlug, `people/${parsedSlug}`, `/people/${parsedSlug}`],
     },
     isDraftMode
   );
@@ -83,7 +83,7 @@ export const generateMetadata = async ({ params: { slug } }: Props) => {
     title: metadata?.title || author?.name,
     description: metadata?.description || author?.bio,
     openGraph: {
-      url: `https://www.langflow.org/authors/${parsedSlug}`,
+      url: `https://www.langflow.org/people/${parsedSlug}`,
       title: formatOpenGraphTitle(metadata?.title || author?.name),
       description: metadata?.description || author?.bio,
       siteName: "Langflow",
@@ -94,11 +94,11 @@ export const generateMetadata = async ({ params: { slug } }: Props) => {
 
 const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
   const isDraftMode = (await draftMode()).isEnabled;
-  const parsedSlug = parseSlugToString(slug).replace(/authors\//, "");
+  const parsedSlug = parseSlugToString(slug).replace(/people\//, "");
   const author = await sanityFetch<any>(
     AUTHOR_BY_SLUG_QUERY,
     {
-      slugs: [parsedSlug, `authors/${parsedSlug}`, `/authors/${parsedSlug}`],
+      slugs: [parsedSlug, `people/${parsedSlug}`, `/people/${parsedSlug}`],
     },
     isDraftMode
   );

@@ -52,7 +52,7 @@ const Speakers: FC<Props> = ({ speakers }) => {
                     <div className={styles.info}>
                       {speaker.slug?.current ? (
                         <Link
-                          href={`/authors/${speaker.slug.current}`}
+                          href={`/people/${speaker.slug.current}`}
                           className={styles.name}
                         >
                           {speaker.name}

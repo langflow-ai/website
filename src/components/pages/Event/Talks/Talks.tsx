@@ -107,7 +107,7 @@ const Talks: FC<Props> = ({ talks }) => {
                             <span key={speaker._id}>
                               {speaker.slug?.current ? (
                                 <Link
-                                  href={`/authors/${speaker.slug.current}`}
+                                  href={`/people/${speaker.slug.current}`}
                                   className={styles.speakerLink}
                                 >
                                   {speaker.name}

@@ -179,7 +179,7 @@ const Hero: FC<Props> = ({
                   return (
 
                     <NextLink
-                    href={`/authors/${speaker.slug!.current}`}
+                    href={`/people/${speaker.slug!.current}`}
                     className={styles.name}
                   >
                     <div key={speaker._id} className={styles.speaker}>
