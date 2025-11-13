@@ -24,13 +24,24 @@ const DownloadOptions = () => {
   };
   return (
     <div className={styles.list}>
+      <Display size={100} weight={600} className={styles.label}>
+        Release
+      </Display>
+      <select>
+        <option>Version 1.6 (latest)</option>
+      </select>
       {DOWNLOAD_OPTIONS.map((option) => (
         <div key={option.name} className={styles.listItem}>
           <div
             className={`${styles.detailsItem} ${option.isComingSoon ? styles.opacity : ""}`}
           >
             {option.icon}
-            <Display size={100} weight={600} className={styles.itemName}>
+            <Display
+              tagName="h3"
+              size={100}
+              weight={600}
+              className={styles.itemName}
+            >
               {option.name}
             </Display>
           </div>

@@ -1,25 +1,89 @@
 @import "/src/styles/variables";
 @import "~bootstrap/scss/mixins";
 
+.backgroundGradient {
+  @include media-breakpoint-up(lg) {
+    position: absolute;
+    inset: 0;
+    top: 25%;
+    background-image: url("/images/desktop-bg-gradient.webp");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: -1;
+
+    mask: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 20%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) 80%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    -webkit-mask: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 20%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) 80%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+}
+
+.backgroundNoise {
+  position: absolute;
+  inset: 0;
+  height: 65%;
+
+  @include media-breakpoint-down(lg) {
+    height: 100%;
+  }
+
+  background: transparent;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.8) 1px,
+    transparent 0
+  );
+  top: 20px;
+  background-size: 30px 30px;
+  opacity: 0.4;
+  z-index: -1;
+
+  mask: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.6) 30%,
+    rgba(0, 0, 0, 0.6) 60%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.6) 30%,
+    rgba(0, 0, 0, 0.6) 60%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+.scrolled {
+  margin-top: 94px !important;
+
+  @include media-breakpoint-down(lg) {
+    margin-top: 60px !important;
+  }
+
+  @include media-breakpoint-down(md) {
+    margin-top: var(--spacer-4) !important;
+  }
+}
+
 .template {
   display: flex;
   min-height: calc(100vh - 200px);
   flex-direction: column;
-  overflow-y: auto;
   position: relative;
-  background-color: var(--primary-black);
-  background-image:
-    linear-gradient(
-      to bottom,
-      transparent 40%,
-      rgba(0, 0, 0, 0) 40%,
-      rgba(0, 0, 0, 0) 80%,
-      transparent 80%
-    ),
-    url("/images/new-desktop.png");
-  background-size: 100% 80%;
-  background-position: top center;
-  background-repeat: no-repeat;
   @include media-breakpoint-down(lg) {
     min-height: calc(100vh - 240px);
     background: none;
@@ -42,39 +106,31 @@
     }
   }
 
-  :global(.country-container) {
-    min-width: 100% !important;
-    max-width: 100% !important;
-    width: 100% !important;
-  }
-
-  :global(.company-container) {
-    min-width: 100% !important;
-    max-width: 100% !important;
-    width: 100% !important;
-  }
-
   :global(.notice-choice) {
     margin-top: 0px !important;
   }
 }
 
+.margin {
+  margin-top: 184px !important;
+
+  @include media-breakpoint-down(lg) {
+    margin-top: 150px !important;
+  }
+
+  @include media-breakpoint-down(md) {
+    margin-top: 122px !important;
+  }
+}
+
 .container {
-  max-width: 1280px !important;
-  padding: 0px;
   display: flex;
   justify-content: space-between;
   gap: 24px;
-  margin-top: 126px;
-  margin-bottom: 40px;
-
-  @include media-breakpoint-down(xlg) {
-    padding: 0px 20px;
-  }
+  margin-bottom: var(--spacer-8) !important;
 
   @include media-breakpoint-down(lg) {
     flex-direction: column;
-    margin-top: 80px;
     padding: 0px 40px;
   }
 
@@ -87,6 +143,11 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding-right: var(--spacer-4);
+
+  @include media-breakpoint-down(lg) {
+    padding-right: 0px;
+  }
 }
 
 .heading {
@@ -105,22 +166,21 @@
 
 .imageContainer {
   @include media-breakpoint-down(lg) {
-    display: none;
+    display: flex;
+    justify-content: center;
   }
 }
 
 .imageHero {
-  margin-top: 48px;
   object-fit: contain;
   width: 100%;
   height: auto;
-  max-width: 680px;
-  max-height: 442px;
+  max-width: 648px;
+  max-height: 480px;
 }
 
 .right {
   max-width: 500px;
-  min-width: 500px;
   height: fit-content;
   padding: 40px;
   display: flex;
@@ -136,27 +196,10 @@
   }
 }
 
-.content {
-  height: 100%;
-  width: 100%;
-  display: flex;
-}
-
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
   height: fit-content;
   width: 100%;
-  h4 {
-    font-size: 32px !important;
-  }
-  h6 {
-    font-size: 18px !important;
-  }
-  @include media-breakpoint-down(md) {
-    h4 {
-      font-size: 24px !important;
-    }
-  }
 }
