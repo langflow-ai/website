@@ -85,6 +85,10 @@ export type Author = {
     _type: 'image'
   }
   location?: string
+  twitter?: string
+  linkedin?: string
+  github?: string
+  website?: string
 }
 
 export type Settings = {
@@ -383,6 +387,7 @@ export type DateWithTimeField = {
   _type: 'dateWithTimeField'
   date?: string
   time?: string
+  endTime?: string
   timezone?: string
 }
 

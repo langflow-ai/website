@@ -4,15 +4,10 @@
 .content {
   background-color: var(--primary-black);
   color: var(--primary-white);
-  padding-bottom: 100px;
   width: 100%;
 
   &:first-child:last-child {
     min-height: 100dvh;
-  }
-
-  &:first-child {
-    padding-top: 100px;
   }
 
   .heading {

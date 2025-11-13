@@ -20,6 +20,7 @@ export type EventCard = Required<
 > & {
   slug: string;
   description: string;
+  body?: string | any;
 };
 
 export type AuthorClip = {

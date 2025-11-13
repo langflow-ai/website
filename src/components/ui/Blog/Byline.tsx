@@ -4,6 +4,7 @@ import SanityImage from "../media/SanityImage";
 import Text from "../text";
 
 import styles from "./Byline.module.scss";
+import NextLink from "next/link";
 
 type BylineProps = {
   authors: AuthorClip[];
@@ -18,7 +19,8 @@ export function Byline({ authors, publishedAt }: BylineProps) {
           {authors
             ?.filter((author) => !!author.avatar)
             .map((author, index) => (
-              <SanityImage
+              <NextLink href={`/authors/${author.slug?.current}`} key={author.slug?.current || index}>
+                <SanityImage
                 image={author.avatar}
                 alt={author.name}
                 width={32}
@@ -27,6 +29,7 @@ export function Byline({ authors, publishedAt }: BylineProps) {
                 key={author.slug?.current || index}
                 title={author.name}
               />
+              </NextLink>
             ))}
         </div>
       )}
@@ -38,10 +41,20 @@ export function Byline({ authors, publishedAt }: BylineProps) {
           style={{ lineHeight: 1.2 }}
         >
           Written by{" "}
-          {authors
-            ?.map((author) => author.name)
-            .join(", ")
-            .replace(/, ([^,]*)$/, " & $1")}
+          {authors?.map((author, index) => {
+            const isLast = index === authors.length - 1;
+            const isSecondToLast = index === authors.length - 2;
+            
+            return (
+              <span key={author.slug?.current || index}>
+                <NextLink href={`/authors/${author.slug?.current}`}>
+                  {author.name}
+                </NextLink>
+                {!isLast && !isSecondToLast && ", "}
+                {isSecondToLast && authors.length > 1 && " and "}
+              </span>
+            );
+          })}
         </Text>
         <Text
           size={200}
