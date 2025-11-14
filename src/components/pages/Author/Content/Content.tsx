@@ -148,9 +148,6 @@ const Content: FC<Props> = ({ posts = [], talks = [], events = [] }) => {
       year: "numeric",
       month: "long",
       day: "numeric",
-      hour: "numeric",
-      minute: "2-digit",
-      timeZone: "America/Los_Angeles",
     });
   };
 
