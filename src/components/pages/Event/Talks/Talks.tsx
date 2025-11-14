@@ -88,10 +88,25 @@ const Talks: FC<Props> = ({ talks }) => {
                           {formatDate(talk.date)}
                         </Text>
                       )}
+                      {talk.duration && (
+                        <Text size={100} className={styles.duration}>
+                          {talk.duration} min
+                        </Text>
+                      )}
+                      {talk.location && (
+                        <Text size={100} className={styles.location}>
+                          {talk.location}
+                        </Text>
+                      )}
                     </div>
                     <Display size={300} tagName="h3" className={styles.title}>
                       {talk.title}
                     </Display>
+                    {talk.description && (
+                      <Text size={200} className={styles.description}>
+                        {talk.description}
+                      </Text>
+                    )}
                     {talk.speakers && talk.speakers.length > 0 && (
                       <div className={styles.speakers}>
                         <Text size={100} className={styles.speakersLabel}>
