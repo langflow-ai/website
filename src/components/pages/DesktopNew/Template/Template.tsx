@@ -65,7 +65,6 @@ const Template: FC<PropsWithChildren> = () => {
             <UrxForms
               formId="urx-54089"
               stageFormId="urx-t53109"
-              buttonText="Download Langflow"
               instanceId="urx-form-2"
               success={<DownloadOptions />}
               text="Fill out the form below to receive access to download the desktop app for Mac or Windows."
