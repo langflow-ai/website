@@ -42,6 +42,7 @@ const Talks: FC<Props> = ({ talks }) => {
       day: "numeric",
       hour: "numeric",
       minute: "2-digit",
+      timeZone: "America/Los_Angeles",
     });
   };
 
