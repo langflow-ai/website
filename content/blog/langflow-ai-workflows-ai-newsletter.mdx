@@ -1,0 +1,122 @@
+---
+title: "How we use Langflow AI workflows to gather content for the AI++ newsletter"
+slug: "langflow-ai-workflows-ai-newsletter"
+excerpt: "We built a custom AI workflow to automate the repetitive task of gathering content for our developer newsletter. This article details how the flow ingests any URL, uses an LLM to generate a summary and category, and then saves the result to a Notion page. To make it even more efficient, they share a simple bookmarklet that triggers the entire process from any webpage with a single click."
+publishedAt: "2025-11-14T00:00:00.000Z"
+featureImage: "/content/images/posts/8180a6c7575a05c8cd9cbfd2631130cc043626ff-1479x1121.png"
+authors:
+  - phil
+tags: []
+---
+
+The Langflow team has been publishing the [AI++ newsletter](/newsletter) since June (it's full of articles for developers on building with AI, [you should subscribe](/newsletter)) and naturally we have found ways to use AI to help out. I recently built a Langflow flow to help with collecting links for the edition; all I have to do is submit a link and it's summarized, categorized and saved in a [Notion](https://www.notion.so) document ready for curation.
+
+Let's take a look at how this AI workflow is put together in Langflow.
+
+![](/content/images/posts/8180a6c7575a05c8cd9cbfd2631130cc043626ff-1479x1121.png)
+
+## Summarizing and categorizing stories
+
+Much of the work of creating the newsletter is spending the two weeks between editions reading articles and tutorials to collect links that are worthy of sharing. I used to simply copy those links and paste them into a big list in a document. Then, when the time came to write the newsletter, I'd go back through all the links, remind myself what they were about, and choose the final set of articles to write short blurbs about, choose appropriate categories, and add them to the newsletter. The time consuming part was in reading and re-reading the articles.
+
+So, I opened up Langflow and set about creating a flow that could take a URL as input and summarize and categorize the contents, storing it in Notion and making it much easier to return to it on newsletter writing day.
+
+## Building a flow
+
+This is more of a workflow than some of the agentic use-cases we've seen on the blog, like building a [coding agent](/blog/ai-coding-agent-langflow) or a [deep-research agent](/blog/how-to-build-a-deep-research-multi-agent-system). This is the full flow:
+
+![](/content/images/posts/8180a6c7575a05c8cd9cbfd2631130cc043626ff-1479x1121.png)
+
+It starts with a [*Text Input* component](https://docs.langflow.org/components-io#text-input), which will receive the URL that I send to the flow.
+
+The URL is passed to the [*API Request* component](https://docs.langflow.org/components-data#api-request) which makes an HTTP GET request and returns the contents of the page. That is then parsed into a plain text response by the [*Parser* component](https://docs.langflow.org/components-processing#parser).
+
+The contents of the page are then passed to the [*Language Model* component](https://docs.langflow.org/components-models). This is where the AI magic happens. I used [OpenAI's gpt-5-nano](https://platform.openai.com/docs/models/gpt-5-nano) model as it's fast and very good at summarization and categorization. If you want to build something like this yourself, you can choose the provider and model that works for you.
+
+The instructions in the *System Message* define what the model should do with the page content. At the moment, mine read:
+
+> You are the editor of a developer email newsletter. You are interested in developer related content and you need to share short summaries of the content you are given.
+>
+>  You should return, as Markdown, the title of the piece of content you are given, then a short summary of the content. No more than 3 sentences. You should also tag the content as one of the following:
+>
+> * "Building with AI, Agents & MCP": this is for tutorials or other content that deals with building AI agents or working with MCP servers.
+> * "Other news": this is for content that is about AI or agents, but isn't a tutorial or other information on how to build.
+> * "Code & Libraries": this is for code or libraries specifically, normally this is a GitHub repo or HuggingFace space, but could be links to code stored elsewhere
+
+The output of the model is fed into a [*Prompt Template* component](https://docs.langflow.org/components-prompts) along with the original URL. We're not really building a prompt here, but using the template capabilities to combine the model response and the URL into one block that we can send to Notion.
+
+The final component is the [*Add Content to Page* component from the Notion bundle](https://docs.langflow.org/bundles-notion). This takes the content from the template component and appends it to a Notion page.
+
+To connect this component to Notion you need to create a [Notion Integration](https://www.notion.com/help/create-integrations-with-the-notion-api) which will get you an API key. You also need a page ID, which you can find in the URL of your page. There is some formatting you need to perform on the ID and there are [more details in the Notion documentation](https://developers.notion.com/docs/working-with-page-content).
+
+With a flow like this, you can enter a URL in the *Text Input* component then build the flow by pressing the play button on the Notion component. If everything is set up correctly you will find a summary of the URL in your Notion page.
+
+If you want to use this flow yourself, you can [download it here](https://gist.github.com/philnash/3d665cedee01dbc759d8f16f31283224#file-newsletter-helper-json) and import it into your own Langflow instance.
+
+## Building a bookmarklet
+
+The flow works, but it's a bit of a pain to open up Langflow and edit the *Text Input* component every time I want to save a link. So, to accompany the flow, I created a JavaScript bookmarklet that can submit URLs directly to the flow from any website from my browser's bookmarks.
+
+The bookmarklet is a JavaScript function that grabs the URL from the window object and then uses `fetch` to submit it to the [Langflow API](https://docs.langflow.org/api-reference-api-examples). Once the request is complete, it then shows either a success or failure message.
+
+The code for the bookmarklet is:
+
+```javascript
+javascript: (function () {
+  const endpoint = new URL(
+    "http://localhost:7860/api/v1/run/MY_LANGFLOW_FLOW_ID"
+  );
+  const body = {
+    input_value: globalThis.location.href,
+    input_type: "text",
+  };
+  fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": "MY_LANGFLOW_API_KEY",
+    },
+    body: JSON.stringify(body),
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error("Failed to bookmark");
+      return response.json();
+    })
+    .then(() => {
+      showMessage("Bookmark saved!", "success");
+    })
+    .catch((err) => {
+      showMessage("Error saving bookmark: " + err.message, "error");
+    });
+  function showMessage(msg, type) {
+    const div = globalThis.document.createElement("div");
+    div.textContent = msg;
+    div.style.position = "fixed";
+    div.style.top = "10px";
+    div.style.right = "10px";
+    div.style.padding = "10px 20px";
+    div.style.background = type === "success" ? "#4caf50" : "#f44336";
+    div.style.color = "#fff";
+    div.style.zIndex = 9999;
+    div.style.borderRadius = "4px";
+    globalThis.document.body.appendChild(div);
+    setTimeout(() => {
+      div.remove();
+    }, 5000);
+  }
+})();
+```
+
+This is working for me so far. Though sometimes a site has a [content security policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP) that prevents external JavaScript from running and the bookmarklet is rendered useless. If this happens too much, I might look into building a simple browser extension instead.
+
+You can find [the code for the bookmarklet with the JSON for the flow](https://gist.github.com/philnash/3d665cedee01dbc759d8f16f31283224#file-bookmarklet-js). Check out the bookmarklet and flow in action here:
+
+![Pressing the bookmarklet on an article summarizes it and injects it into the Notion document. Success!](/content/images/posts/f0e6454cef054f533d1e816429713c545c65e86d-628x540.gif)
+
+## Use AI to help you work better
+
+This Langflow workflow saves me time and helps me write better newsletters. That's the beauty of generative AI models and Langflow; you can whip up a quick flow that makes your life easier in just a few minutes.
+
+Check out [the flow JSON and bookmarklet code here](https://gist.github.com/philnash/3d665cedee01dbc759d8f16f31283224) and let us know how you're using AI to help you work better. You can drop us a note [on Twitter](https://x.com/langflow_ai), [on LinkedIn](https://www.linkedin.com/company/langflow), or by joining [the Discord](https://www.langflow.org/discord).
+
+Oh, and don't forget to subscribe to the [AI++ newsletter](/newsletter)!
