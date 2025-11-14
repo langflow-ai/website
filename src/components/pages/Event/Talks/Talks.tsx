@@ -1,7 +1,7 @@
 // Dependencies
 import { FC } from "react";
 import Link from "next/link";
-import { getImageUrl } from "@/lib/backend/sanity/client";
+import Image from "next/image";
 
 // Components
 import Display from "@/components/ui/Display";
@@ -17,10 +17,7 @@ type Props = {
     _id: string;
     title?: string;
     slug?: { current?: string };
-    description?: string;
     date?: string;
-    duration?: number;
-    location?: string;
     thumbnail?: any;
     speakers?: Array<{
       _id: string;
@@ -64,12 +61,24 @@ const Talks: FC<Props> = ({ talks }) => {
                   className={styles.talk}
                 >
                   {talk.speakers && talk.speakers.length > 0 && talk.speakers[0].avatar && (
-                    <SanityImage
-                      image={talk.speakers[0].avatar}
-                      alt={talk.speakers[0].name || talk.title || ""}
-                      className={styles.image}
-                      width={300}
-                    />
+                    <>
+                      {typeof talk.speakers[0].avatar === 'string' ? (
+                        <Image
+                          src={talk.speakers[0].avatar}
+                          alt={talk.speakers[0].name || talk.title || ""}
+                          className={styles.image}
+                          width={300}
+                          height={300}
+                        />
+                      ) : (
+                        <SanityImage
+                          image={talk.speakers[0].avatar}
+                          alt={talk.speakers[0].name || talk.title || ""}
+                          className={styles.image}
+                          width={300}
+                        />
+                      )}
+                    </>
                   )}
                   <div className={styles.content}>
                     <div className={styles.meta}>
@@ -78,25 +87,10 @@ const Talks: FC<Props> = ({ talks }) => {
                           {formatDate(talk.date)}
                         </Text>
                       )}
-                      {talk.duration && (
-                        <Text size={100} className={styles.duration}>
-                          {talk.duration} min
-                        </Text>
-                      )}
-                      {talk.location && (
-                        <Text size={100} className={styles.location}>
-                          {talk.location}
-                        </Text>
-                      )}
                     </div>
                     <Display size={300} tagName="h3" className={styles.title}>
                       {talk.title}
                     </Display>
-                    {talk.description && (
-                      <Text size={200} className={styles.description}>
-                        {talk.description}
-                      </Text>
-                    )}
                     {talk.speakers && talk.speakers.length > 0 && (
                       <div className={styles.speakers}>
                         <Text size={100} className={styles.speakersLabel}>

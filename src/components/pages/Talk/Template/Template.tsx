@@ -55,7 +55,6 @@ const Template: FC<Props> = ({ talk }) => {
     <>
       <Hero
         title={talk.title}
-        description={talk.description}
         date={talk.date}
         duration={talk.duration}
         location={talk.location}

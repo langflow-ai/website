@@ -16,10 +16,7 @@ type Props = {
       _id: string;
       title?: string;
       slug?: { current?: string };
-      description?: string;
       date?: string;
-      duration?: number;
-      location?: string;
       thumbnail?: any;
       speakers?: Array<{
         _id: string;

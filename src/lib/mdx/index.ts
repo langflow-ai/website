@@ -9,7 +9,8 @@ const CONTENT_DIR = path.join(process.cwd(), "content");
 const BLOG_DIR = path.join(CONTENT_DIR, "blog");
 const EVENTS_DIR = path.join(CONTENT_DIR, "events");
 const PAGES_DIR = path.join(CONTENT_DIR, "pages");
-const AUTHORS_DIR = path.join(CONTENT_DIR, "authors");
+const PEOPLE_DIR = path.join(CONTENT_DIR, "people");
+const TALKS_DIR = path.join(CONTENT_DIR, "talks");
 
 // Type definitions for frontmatter (internal use)
 interface BlogPostFrontmatter {
@@ -35,6 +36,7 @@ interface EventFrontmatter {
   }>;
   location?: string;
   thumbnail?: string;
+  talks?: string[];
 }
 
 interface PageFrontmatter {
@@ -43,9 +45,36 @@ interface PageFrontmatter {
   thumbnail?: string;
 }
 
+export interface Talk {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  description?: string;
+  date?: string;
+  time?: string;
+  duration?: number;
+  location?: string;
+  speakers?: Array<{
+    _id: string;
+    name: string;
+    slug?: { current: string };
+    avatar?: string;
+  }>;
+  event?: {
+    _id: string;
+    title?: string;
+    slug?: { current: string };
+    type?: "virtual" | "in-person";
+    dates?: any[];
+    location?: string;
+  };
+  thumbnail?: any;
+}
+
 export interface Author {
+  _id: string;
   name: string;
-  slug: string;
+  slug: { current: string };
   bio?: string;
   avatar?: string;
   location?: string;
@@ -55,6 +84,8 @@ export interface Author {
     twitter?: string | null;
     website?: string | null;
   };
+  talks?: Talk[];
+  events?: Event[];
 }
 
 /**
@@ -68,12 +99,12 @@ function getFileModTime(filePath: string): string {
 /**
  * Helper to load author data
  */
-async function loadAuthorClip(authorSlug: string): Promise<AuthorClip | null> {
-  const author = await getAuthorBySlug(authorSlug);
+function loadAuthorClip(authorSlug: string): AuthorClip | null {
+  const author = getAuthorBySlugBasic(authorSlug);
   if (author) {
     return {
       name: author.name || "Unknown",
-      slug: { current: author.slug },
+      slug: author.slug,
       avatar: author.avatar,
     };
   }
@@ -98,14 +129,14 @@ export async function getAllPosts(): Promise<BlogPost[]> {
         // Load author data
         let authors: AuthorClip[] = [];
         if (frontmatter.authors && Array.isArray(frontmatter.authors)) {
-          authors = await Promise.all(
-            frontmatter.authors.map((authorSlug) => loadAuthorClip(authorSlug))
-          ).then((results) => results.filter((a): a is AuthorClip => a !== null));
+          authors = frontmatter.authors
+            .map((authorSlug) => loadAuthorClip(authorSlug))
+            .filter((a): a is AuthorClip => a !== null);
         }
 
         // Support legacy single author field
         const authorResult = frontmatter.author
-          ? await loadAuthorClip(frontmatter.author)
+          ? loadAuthorClip(frontmatter.author)
           : undefined;
         const author = authorResult !== null ? authorResult : undefined;
 
@@ -149,14 +180,14 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   // Load author data
   let authors: AuthorClip[] = [];
   if (frontmatter.authors && Array.isArray(frontmatter.authors)) {
-    authors = await Promise.all(
-      frontmatter.authors.map((authorSlug) => loadAuthorClip(authorSlug))
-    ).then((results) => results.filter((a): a is AuthorClip => a !== null));
+    authors = frontmatter.authors
+      .map((authorSlug) => loadAuthorClip(authorSlug))
+      .filter((a): a is AuthorClip => a !== null);
   }
 
   // Support legacy single author field
   const authorResult = frontmatter.author
-    ? await loadAuthorClip(frontmatter.author)
+    ? loadAuthorClip(frontmatter.author)
     : undefined;
   const author = authorResult !== null ? authorResult : undefined;
 
@@ -256,7 +287,15 @@ export async function getEventBySlug(slug: string): Promise<Event | null> {
       }))
     : [];
 
-  const event: Event = {
+  // Load talks if specified
+  let talks: Talk[] = [];
+  if (frontmatter.talks && Array.isArray(frontmatter.talks)) {
+    talks = await Promise.all(
+      frontmatter.talks.map((talkSlug) => getTalkBySlug(talkSlug))
+    ).then((results) => results.filter((t): t is Talk => t !== null));
+  }
+
+  const event: Event & { talks?: Talk[] } = {
     _id: slug,
     _type: "event" as const,
     _createdAt: getFileModTime(filePath),
@@ -274,6 +313,7 @@ export async function getEventBySlug(slug: string): Promise<Event | null> {
     body: content,
     dates,
     location: frontmatter.location,
+    talks: talks.length > 0 ? talks : undefined,
   };
 
   return event;
@@ -349,25 +389,216 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
 }
 
 /**
- * Get all authors
+ * Get all authors (basic info only, no talks/events)
  */
-export async function getAllAuthors(): Promise<Author[]> {
-  const fileNames = fs.readdirSync(AUTHORS_DIR);
+function getAllAuthorsBasic(): Author[] {
+  const fileNames = fs.readdirSync(PEOPLE_DIR);
   const authors = fileNames
     .filter((fileName) => fileName.endsWith(".json"))
     .map((fileName) => {
-      const filePath = path.join(AUTHORS_DIR, fileName);
+      const filePath = path.join(PEOPLE_DIR, fileName);
       const fileContents = fs.readFileSync(filePath, "utf8");
-      return JSON.parse(fileContents) as Author;
+      const authorData = JSON.parse(fileContents) as {
+        name: string;
+        slug: string;
+        bio?: string;
+        avatar?: string;
+        location?: string;
+        social?: {
+          github?: string | null;
+          linkedin?: string | null;
+          twitter?: string | null;
+          website?: string | null;
+        };
+      };
+      return {
+        _id: authorData.slug,
+        name: authorData.name,
+        slug: { current: authorData.slug },
+        bio: authorData.bio,
+        avatar: authorData.avatar,
+        location: authorData.location,
+        social: authorData.social,
+      };
     });
 
   return authors;
 }
 
 /**
- * Get a single author by slug
+ * Get all authors
+ */
+export async function getAllAuthors(): Promise<Author[]> {
+  return getAllAuthorsBasic();
+}
+
+/**
+ * Get a single author by slug (basic info only, no talks/events)
+ */
+function getAuthorBySlugBasic(slug: string): Author | null {
+  const authors = getAllAuthorsBasic();
+  return authors.find((author) => author.slug.current === slug) || null;
+}
+
+/**
+ * Get a single author by slug (with talks and events)
  */
 export async function getAuthorBySlug(slug: string): Promise<Author | null> {
-  const authors = await getAllAuthors();
-  return authors.find((author) => author.slug === slug) || null;
+  const author = getAuthorBySlugBasic(slug);
+
+  if (!author) {
+    return null;
+  }
+
+  // Find all talks where this author is a speaker
+  const allTalks = await getAllTalks();
+  let authorTalks = allTalks.filter((talk) =>
+    talk.speakers?.some((speaker) => speaker.slug?.current === slug)
+  );
+
+  // Find events where this author's talks are featured
+  const allEvents = await getAllEvents();
+  const authorEventSlugs = new Set(
+    authorTalks
+      .map((talk) => talk.event?.slug?.current)
+      .filter((slug): slug is string => !!slug)
+  );
+
+  const authorEvents = allEvents.filter((event) =>
+    authorEventSlugs.has(event.slug?.current || "")
+  );
+
+  // Enrich talks with full event data
+  authorTalks = authorTalks.map((talk) => {
+    if (talk.event?.slug?.current) {
+      const fullEvent = authorEvents.find(
+        (e) => e.slug?.current === talk.event?.slug?.current
+      );
+      if (fullEvent && fullEvent.slug?.current) {
+        return {
+          ...talk,
+          event: {
+            _id: fullEvent._id,
+            title: fullEvent.title,
+            slug: { current: fullEvent.slug.current },
+            type: fullEvent.type,
+            dates: fullEvent.dates,
+            location: fullEvent.location,
+          },
+        };
+      }
+    }
+    return talk;
+  });
+
+  return {
+    ...author,
+    talks: authorTalks,
+    events: authorEvents,
+  } as any;
+}
+
+/**
+ * Talk-related types and functions
+ */
+interface TalkFrontmatter {
+  title: string;
+  slug: string;
+  description?: string;
+  date?: string;
+  time?: string;
+  duration?: number;
+  location?: string;
+  speakers?: string[];
+  event?: string;
+  thumbnail?: string;
+}
+
+/**
+ * Get all talks
+ */
+export async function getAllTalks(): Promise<Talk[]> {
+  if (!fs.existsSync(TALKS_DIR)) {
+    return [];
+  }
+
+  const fileNames = fs.readdirSync(TALKS_DIR);
+  const talks = await Promise.all(
+    fileNames
+      .filter((fileName) => fileName.endsWith(".mdx"))
+      .map(async (fileName) => {
+        const slug = fileName.replace(/\.mdx$/, "");
+        return getTalkBySlug(slug);
+      })
+  );
+
+  return talks.filter((talk): talk is Talk => talk !== null);
+}
+
+/**
+ * Get a single talk by slug
+ */
+export async function getTalkBySlug(slug: string): Promise<Talk | null> {
+  const filePath = path.join(TALKS_DIR, `${slug}.mdx`);
+
+  if (!fs.existsSync(filePath)) {
+    return null;
+  }
+
+  const fileContents = fs.readFileSync(filePath, "utf8");
+  const { data } = matter(fileContents);
+  const frontmatter = data as TalkFrontmatter;
+
+  // Load speaker data
+  let speakers: Array<{
+    _id: string;
+    name: string;
+    slug?: { current: string };
+    avatar?: string;
+  }> = [];
+
+  if (frontmatter.speakers && Array.isArray(frontmatter.speakers)) {
+    speakers = frontmatter.speakers.map((speakerSlug) => {
+      const author = getAuthorBySlugBasic(speakerSlug);
+      if (author) {
+        return {
+          _id: author.slug.current || speakerSlug,
+          name: author.name || "Unknown",
+          slug: author.slug,
+          avatar: author.avatar,
+        };
+      }
+      return {
+        _id: speakerSlug,
+        name: speakerSlug,
+        slug: { current: speakerSlug },
+      };
+    });
+  }
+
+  // Store event slug reference (don't load full event to avoid circular dependency)
+  let event: Talk["event"] = undefined;
+  if (frontmatter.event) {
+    // Just store a minimal reference - the full event can be loaded on the page if needed
+    event = {
+      _id: frontmatter.event,
+      slug: { current: frontmatter.event },
+    };
+  }
+
+  const talk: Talk = {
+    _id: slug,
+    title: frontmatter.title || "",
+    slug: { current: frontmatter.slug || slug },
+    description: frontmatter.description,
+    date: frontmatter.date,
+    time: frontmatter.time,
+    duration: frontmatter.duration,
+    location: frontmatter.location,
+    speakers,
+    event,
+    thumbnail: frontmatter.thumbnail,
+  };
+
+  return talk;
 }

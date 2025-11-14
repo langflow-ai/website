@@ -3,6 +3,7 @@
 // Dependencies
 import { FC, useState, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 // Components
 import Display from "@/components/ui/Display";
@@ -233,12 +234,24 @@ const Content: FC<Props> = ({ posts = [], talks = [], events = [] }) => {
                 {item.type === "post" ? "Blog" : item.type === "talk" ? "Talk" : "Event"}
               </div>
               {(item.featureImage || item.thumbnail) && (
-                <SanityImage
-                  image={item.featureImage || item.thumbnail}
-                  alt={item.title || ""}
-                  className={styles.image}
-                  width={300}
-                />
+                <>
+                  {typeof (item.featureImage || item.thumbnail) === 'string' ? (
+                    <Image
+                      src={item.featureImage || item.thumbnail}
+                      alt={item.title || ""}
+                      className={styles.image}
+                      width={300}
+                      height={300}
+                    />
+                  ) : (
+                    <SanityImage
+                      image={item.featureImage || item.thumbnail}
+                      alt={item.title || ""}
+                      className={styles.image}
+                      width={300}
+                    />
+                  )}
+                </>
               )}
               <div className={styles.itemContent}>
                 {item.type === "talk" && item.event && (
@@ -263,9 +276,9 @@ const Content: FC<Props> = ({ posts = [], talks = [], events = [] }) => {
                 <Display size={300} tagName="h3" className={styles.title}>
                   {item.title}
                 </Display>
-                {(item.excerpt || item.description) && (
+                {item.type === "post" && item.excerpt && (
                   <Text size={200} className={styles.description}>
-                    {item.excerpt || item.description}
+                    {item.excerpt}
                   </Text>
                 )}
                 <div className={styles.footer}>
@@ -274,19 +287,10 @@ const Content: FC<Props> = ({ posts = [], talks = [], events = [] }) => {
                       {formatDate(item.publishedAt)}
                     </Text>
                   )}
-                  {item.type === "talk" && (
-                    <div className={styles.meta}>
-                      {item.date && (
-                        <Text size={100} className={styles.date}>
-                          {formatDate(item.date)}
-                        </Text>
-                      )}
-                      {item.duration && (
-                        <Text size={100} className={styles.date}>
-                          {item.duration} min
-                        </Text>
-                      )}
-                    </div>
+                  {item.type === "talk" && item.date && (
+                    <Text size={100} className={styles.date}>
+                      {formatDate(item.date)}
+                    </Text>
                   )}
                   {item.type === "event" && item.location && (
                     <Text size={200} className={styles.location}>

@@ -1,18 +1,9 @@
 // Dependencies
 import { FC } from "react";
-import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 // Backend
-import { sanityFetch, getImageUrl } from "@/lib/backend/sanity/client";
-import {
-  METADATA_BY_SLUG_QUERY,
-  TALK_BY_SLUG_QUERY,
-  TALK_SLUGS_QUERY,
-} from "@/lib/backend/sanity/queries";
-
-// Types
-import type { Seo } from "@/lib/types/sanity";
+import { getAllTalks, getTalkBySlug, getEventBySlug } from "@/lib/mdx";
 
 // Utilities
 import { parseSlugToString } from "@/lib/utils/str";
@@ -34,82 +25,74 @@ type Props = {
  */
 export const dynamic = "force-static";
 export const dynamicParams = true;
-const DOCUMENT_TYPE = "talk";
 
 export async function generateStaticParams() {
-  // Data
-  const slugs = await sanityFetch<string[]>(TALK_SLUGS_QUERY);
+  const talks = await getAllTalks();
 
-  return (slugs || [])
-    .filter((slug) => Boolean(slug))
-    .map((s) => {
-      const slug = s
-        .split("/")
-        .filter(Boolean)
-        .map((s) => s.toLowerCase().trim());
-
-      return {
-        slug: slug,
-      };
-    });
+  return talks.map((talk) => ({
+    slug: [talk.slug.current],
+  }));
 }
 
 /**
  * Generate the Metadata settings for this page
  */
 export const generateMetadata = async ({ params: { slug } }: Props) => {
-  const isDraftMode = draftMode().isEnabled;
-  const parsedSlug = parseSlugToString(slug).replace(/talks\//, "");
-  const metadata = await sanityFetch<Seo>(
-    METADATA_BY_SLUG_QUERY,
-    {
-      type: DOCUMENT_TYPE,
-      slugs: [parsedSlug, `talks/${parsedSlug}`, `/talks/${parsedSlug}`],
-    },
-    isDraftMode
-  );
-  
-  const talk = await sanityFetch<any>(
-    TALK_BY_SLUG_QUERY,
-    {
-      slugs: [parsedSlug, `talks/${parsedSlug}`, `/talks/${parsedSlug}`],
-    },
-    isDraftMode
-  );
+  const parsedSlug = parseSlugToString(slug).replace(/^talks\//, "");
+  const talk = await getTalkBySlug(parsedSlug);
 
-  const thumbnailUrl = talk?.thumbnail ? getImageUrl(talk.thumbnail) : undefined;
+  if (!talk) {
+    return {
+      title: "Talk Not Found",
+      description: "",
+    };
+  }
+
+  const thumbnailUrl = talk.thumbnail || "/images/logo.png";
 
   return {
-    title: metadata?.title || talk?.title,
-    description: metadata?.description || talk?.description,
+    title: talk.title,
+    description: talk.description,
     openGraph: {
       url: `https://www.langflow.org/talks/${parsedSlug}`,
-      title: formatOpenGraphTitle(metadata?.title || talk?.title),
-      description: metadata?.description || talk?.description,
+      title: formatOpenGraphTitle(talk.title),
+      description: talk.description,
       siteName: "Langflow",
-      images: thumbnailUrl ? [thumbnailUrl] : ["/images/logo.png"],
+      images: [thumbnailUrl],
     },
   };
 };
 
 const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
-  const isDraftMode = (await draftMode()).isEnabled;
-  const parsedSlug = parseSlugToString(slug).replace(/talks\//, "");
-  const talk = await sanityFetch<any>(
-    TALK_BY_SLUG_QUERY,
-    {
-      slugs: [parsedSlug, `talks/${parsedSlug}`, `/talks/${parsedSlug}`],
-    },
-    isDraftMode
-  );
+  const parsedSlug = parseSlugToString(slug).replace(/^talks\//, "");
+  const talk = await getTalkBySlug(parsedSlug);
 
   if (!talk) {
     notFound();
   }
 
+  // Load full event data if event reference exists
+  let enrichedTalk = talk;
+  if (talk.event?.slug?.current) {
+    const fullEvent = await getEventBySlug(talk.event.slug.current);
+    if (fullEvent && fullEvent.slug?.current) {
+      enrichedTalk = {
+        ...talk,
+        event: {
+          _id: fullEvent._id,
+          title: fullEvent.title,
+          slug: { current: fullEvent.slug.current },
+          type: fullEvent.type,
+          dates: fullEvent.dates,
+          location: fullEvent.location,
+        },
+      };
+    }
+  }
+
   return (
     <PageLayout className="layout" type="normal">
-      <Template talk={talk} />
+      <Template talk={enrichedTalk} />
     </PageLayout>
   );
 };

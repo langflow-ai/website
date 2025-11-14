@@ -1,6 +1,7 @@
 // Types
 import { FC } from "react";
 import { parseISO } from "date-fns/parseISO";
+import Image from "next/image";
 
 // Types
 import type { CtaLink, DateWithTimeField } from "@/lib/types/sanity.types";
@@ -210,14 +211,34 @@ const Hero: FC<Props> = ({
             </Display>
             {thumbnail && (
               <div className={`d-lg-none ${styles.image}`}>
-                <SanityImage image={thumbnail} alt={title || "Event image"} />
+                {typeof thumbnail === 'string' ? (
+                  <Image
+                    src={thumbnail}
+                    alt={title || "Event image"}
+                    width={800}
+                    height={450}
+                    style={{ width: '100%', height: 'auto' }}
+                  />
+                ) : (
+                  <SanityImage image={thumbnail} alt={title || "Event image"} />
+                )}
               </div>
             )}
           </div>
           {thumbnail && (
             <div className="col-lg-3 d-none d-lg-block">
               <div className={styles.image}>
-                <SanityImage image={thumbnail} alt={title || "Event image"} />
+                {typeof thumbnail === 'string' ? (
+                  <Image
+                    src={thumbnail}
+                    alt={title || "Event image"}
+                    width={400}
+                    height={225}
+                    style={{ width: '100%', height: 'auto' }}
+                  />
+                ) : (
+                  <SanityImage image={thumbnail} alt={title || "Event image"} />
+                )}
               </div>
             </div>
           )}
