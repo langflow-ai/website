@@ -15,6 +15,7 @@ type Props = {
   resources?: Array<{
     _key?: string;
     _type?: string;
+    title?: string;
     label?: string;
     url?: string;
   }>;
@@ -53,9 +54,9 @@ const Links: FC<Props> = ({ slides, recording, resources }) => {
                     rel="noopener noreferrer"
                     className={styles.resourceLink}
                   >
-                    {resource.label && (
+                    {(resource.label || resource.title) && (
                       <span className={styles.resourceLabel}>
-                        {resource.label}
+                        {resource.label || resource.title}
                       </span>
                     )}
                   </Link>

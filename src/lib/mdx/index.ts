@@ -54,6 +54,13 @@ export interface Talk {
   time?: string;
   duration?: number;
   location?: string;
+  body?: string;
+  slides?: string;
+  recording?: string;
+  resources?: Array<{
+    title?: string;
+    url?: string;
+  }>;
   speakers?: Array<{
     _id: string;
     name: string;
@@ -512,6 +519,12 @@ interface TalkFrontmatter {
   speakers?: string[];
   event?: string;
   thumbnail?: string;
+  slides?: string;
+  recording?: string;
+  resources?: Array<{
+    title?: string;
+    url?: string;
+  }>;
 }
 
 /**
@@ -546,7 +559,7 @@ export async function getTalkBySlug(slug: string): Promise<Talk | null> {
   }
 
   const fileContents = fs.readFileSync(filePath, "utf8");
-  const { data } = matter(fileContents);
+  const { data, content } = matter(fileContents);
   const frontmatter = data as TalkFrontmatter;
 
   // Load speaker data
@@ -602,6 +615,10 @@ export async function getTalkBySlug(slug: string): Promise<Talk | null> {
     time: frontmatter.time,
     duration: frontmatter.duration,
     location: frontmatter.location,
+    body: content,
+    slides: frontmatter.slides,
+    recording: frontmatter.recording,
+    resources: frontmatter.resources,
     speakers,
     event,
     thumbnail: frontmatter.thumbnail,

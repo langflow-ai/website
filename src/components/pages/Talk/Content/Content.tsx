@@ -3,14 +3,13 @@ import { FC } from "react";
 
 // Components
 import Text from "@/components/ui/text";
-import PortableText from "@/components/external/PortableText";
 
 // Styles
 import styles from "./styles.module.scss";
 
 // Props types
 type Props = {
-  content: any;
+  content: string;
 };
 
 const Content: FC<Props> = ({ content }) => {
@@ -20,7 +19,7 @@ const Content: FC<Props> = ({ content }) => {
         <div className="row">
           <div className="col-lg-9">
             <Text className={styles.article} size={300} tagName="article">
-              <PortableText value={content} />
+              {content}
             </Text>
           </div>
         </div>
