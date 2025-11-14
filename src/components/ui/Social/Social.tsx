@@ -13,7 +13,7 @@ import { SOCIALS } from "@/utils/constants";
 
 const Social = () => {
   const [socialCounts, setSocialCounts] = useState({
-    github: "138k",
+    github: "84k",
     discord: "18k",
     youtube: "11k",
   });
@@ -46,10 +46,7 @@ const Social = () => {
 
         // Set state with fetched data
         setSocialCounts({
-          github:
-            githubStars !== "Unable to select next GitHub token from pool"
-              ? githubStars
-              : "138k",
+          github: githubStars,
           discord: formattedMembers,
           youtube: youtubeSubscribers,
         });

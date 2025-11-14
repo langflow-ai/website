@@ -1,3 +1,4 @@
+import React from "react";
 import Hero from "../Hero";
 import Quote from "../Quote";
 import GetStarted from "../GetStarted";

@@ -2,7 +2,8 @@
 @import "~bootstrap/scss/mixins";
 
 .header {
-  padding: 32px;
+  background: var(--primary-black);
+  padding: 24px 32px;
   color: var(--primary-white);
   font-family: var(--font-inter);
   transition:
@@ -18,10 +19,6 @@
     right: 0;
     z-index: 1000;
   }
-}
-
-.bg {
-  background: var(--primary-black) !important;
 }
 
 .container {
@@ -174,6 +171,18 @@
     width: 100%;
     background-color: #aaa;
     border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &.active {
+    span:nth-child(1) {
+      position: absolute;
+      transform: rotate(45deg);
+    }
+    span:nth-child(2) {
+      position: absolute;
+      transform: rotate(-45deg);
+    }
   }
 
   @include media-breakpoint-up(md) {
@@ -183,18 +192,20 @@
 
 .drawer {
   position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 120px;
+  inset: 120px 0 0 0;
+  height: calc(100vh - 120px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  left: 0;
+  width: 100%;
   background: var(--primary-black);
   z-index: 9999;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: var(--spacer-3) 0px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
+  padding-top: 20px;
   transition: all 0.4s ease-in-out;
 }
 
@@ -250,7 +261,7 @@
 .drawerSubItemContainer {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   max-width: 600px;
   gap: 16px;
   color: var(--primary-white);
@@ -280,4 +291,9 @@
   pointer-events: none;
   opacity: 0;
   transform: translateY(8px);
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
 }
