@@ -586,12 +586,19 @@ export async function getTalkBySlug(slug: string): Promise<Talk | null> {
     };
   }
 
+  // Combine date and time into a single datetime string
+  let combinedDate = frontmatter.date;
+  if (frontmatter.date && frontmatter.time) {
+    // Combine date (YYYY-MM-DD) with time (HH:MM) in Pacific timezone
+    combinedDate = `${frontmatter.date}T${frontmatter.time}:00-08:00`;
+  }
+
   const talk: Talk = {
     _id: slug,
     title: frontmatter.title || "",
     slug: { current: frontmatter.slug || slug },
     description: frontmatter.description,
-    date: frontmatter.date,
+    date: combinedDate,
     time: frontmatter.time,
     duration: frontmatter.duration,
     location: frontmatter.location,
