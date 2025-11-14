@@ -2,49 +2,8 @@
 @import "~bootstrap/scss/mixins";
 
 .template {
-  display: flex;
   min-height: calc(100vh - 200px);
-  flex-direction: column;
   overflow-y: auto;
-  position: relative;
-  background-color: var(--primary-black);
-  background-image:
-    linear-gradient(
-      to bottom,
-      transparent 40%,
-      rgba(0, 0, 0, 0) 40%,
-      rgba(0, 0, 0, 0) 80%,
-      transparent 80%
-    ),
-    url("/images/new-desktop.png");
-  background-size: 100% 80%;
-  background-position: top center;
-  background-repeat: no-repeat;
-  @include media-breakpoint-down(lg) {
-    min-height: calc(100vh - 240px);
-    background: none;
-  }
-
-  :global(.company-typeahead) {
-    input {
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      padding-right: 30% !important;
-
-      @media (max-width: 1055px) {
-        padding-right: 15% !important;
-      }
-
-      @include media-breakpoint-down(sm) {
-        padding-right: 20% !important;
-      }
-
-      @media (max-width: 420px) {
-        padding-right: 25% !important;
-      }
-    }
-  }
 
   :global(.notice-choice) {
     margin-top: var(--spacer-1) !important;
@@ -52,23 +11,35 @@
 }
 
 .container {
-  padding: 0px;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  margin-top: var(--spacer-6);
-  margin-bottom: var(--spacer-8);
+  margin-top: var(--spacer-7) !important;
+  margin-bottom: var(--spacer-8) !important;
 
-  @include media-breakpoint-down(xlg) {
-    padding: 0px 20px;
-    justify-content: space-between;
+  @media (max-width: 1150px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  img {
+    object-fit: contain;
+    max-width: 680px;
+    max-height: 419px;
+
+    @media (max-width: 1350px) {
+      width: 550px;
+      height: 350px;
+    }
+
+    @media (max-width: 1150px) {
+      width: 100%;
+      height: 100%;
+      margin-bottom: var(--spacer-6);
+    }
   }
 
   @include media-breakpoint-down(lg) {
-    min-width: 100%;
-    padding: 0px 40px;
-    margin: var(--spacer-6) 0px var(--spacer-8);
+    margin: var(--spacer-4) 0px var(--spacer-8) !important;
   }
 
   @include media-breakpoint-down(md) {
@@ -76,22 +47,27 @@
   }
 }
 
+.left {
+  padding-right: var(--spacer-4);
+
+  @media (max-width: 1150px) {
+    padding-right: 0px;
+  }
+}
+
 .right {
-  max-width: 537px;
-  padding: 28px var(--spacer-3);
+  max-width: 500px;
+  padding: 40px;
   display: flex;
   border-radius: 20px;
   border: 1px solid var(--color-gray-Gray-700, #4a4a4a);
   background: var(--color-brand-Black, #000);
+  height: fit-content;
 
-  @include media-breakpoint-down(lg) {
+  @media (max-width: 1150px) {
     width: 100%;
-    max-width: 100%;
-    min-width: 100%;
-  }
-
-  @include media-breakpoint-down(md) {
-    padding: 24px;
+    height: 100%;
+    max-width: 600px;
   }
 }
 
@@ -118,11 +94,10 @@
 
 .heading {
   color: var(--primary-white);
-  font-size: 48px !important;
   font-weight: 400 !important;
   line-height: 120% !important;
   letter-spacing: -0.48px !important;
-  margin-bottom: 12px !important;
+  margin-bottom: var(--spacer-3) !important;
 
   @include media-breakpoint-down(md) {
     font-size: 32px !important;
@@ -130,12 +105,11 @@
 }
 
 .subtitle {
-  max-width: 539px;
+  max-width: 620px;
   font-size: 18px !important;
   font-weight: 300 !important;
   line-height: 140% !important;
-  margin-bottom: 40px !important;
-  text-align: center;
+  margin-bottom: var(--spacer-3) !important;
 
   @include media-breakpoint-down(md) {
     max-width: 100%;

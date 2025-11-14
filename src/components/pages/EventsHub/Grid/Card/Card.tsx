@@ -108,6 +108,19 @@ const Card: FC<Props> = ({ event }) => {
 
     const bodyText = event.body ? getBodyTextForICS(event.body) : event.description;
 
+    // Determine end date/time strings
+    let endDateString: string | undefined;
+    let endTimeString: string | undefined;
+    
+    if (firstDate.endTime) {
+      endDateString = firstDate.date as string;
+      endTimeString = firstDate.endTime;
+    } else if (event.dates.length > 1) {
+      const lastDate = event.dates[event.dates.length - 1];
+      endDateString = lastDate.date as string;
+      endTimeString = lastDate.endTime || lastDate.time;
+    }
+
     return {
       title: event.title,
       description: bodyText,
@@ -115,6 +128,11 @@ const Card: FC<Props> = ({ event }) => {
       startDate,
       endDate,
       url,
+      timezone: firstDate.timezone,
+      startDateString: firstDate.date as string,
+      startTimeString: firstDate.time,
+      endDateString,
+      endTimeString,
     };
   };
 
