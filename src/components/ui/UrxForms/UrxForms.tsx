@@ -29,14 +29,12 @@ interface UrxFormsProps {
   text?: string;
   stageFormId?: string;
   className?: string;
-  buttonText?: string;
 }
 
 const UrxForms: React.FC<UrxFormsProps> = ({
   formId = "urx-54089",
   instanceId = "urx-form",
   success,
-  buttonText = "Send",
   text,
   className,
   stageFormId = "",
@@ -62,14 +60,6 @@ const UrxForms: React.FC<UrxFormsProps> = ({
       const label = document.querySelector('label[for="email"]');
       if (label && label.textContent === "Business email") {
         label.textContent = "Email";
-      }
-
-      const submitBtn = document.querySelector('button[type="submit"]');
-
-      if (submitBtn) {
-        if (submitBtn.textContent?.trim() !== "Send") {
-          submitBtn.textContent = buttonText;
-        }
       }
     });
 
@@ -161,11 +151,7 @@ const UrxForms: React.FC<UrxFormsProps> = ({
 
   return (
     <>
-      {text && (
-        <Text size={200} tagName="p">
-          {text}
-        </Text>
-      )}
+      {text && <Text size={200}>{text}</Text>}
       <div className={styles.urx}>
         <Script
           src={`https://www${isProduction === 1 ? "" : "stage"}.ibm.com/account/ibmidutil/widget/js/loader.js`}
