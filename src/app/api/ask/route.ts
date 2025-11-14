@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
-import { sanityFetch } from "@/lib/backend/sanity/client";
-import { BlogPost } from "@/lib/types/sanity";
+import { getAllPosts } from "@/lib/mdx";
 import OpenAI from "openai";
-import { BLOG_POSTS_QUERY } from "@/lib/backend/sanity/queries";
-import { getBodyText } from "@/lib/utils/getBodyText";
 import { searchPosts } from "@/lib/utils/searchPosts";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = process.env.OPENAI_API_KEY
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
 
 export async function POST(request: Request) {
   try {
@@ -16,15 +15,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid question" }, { status: 400 });
     }
 
-    // Fetch all posts (we'll score client-side)
-    const allPosts = await sanityFetch<BlogPost[]>(BLOG_POSTS_QUERY, {}, false);
+    if (!openai) {
+      return NextResponse.json(
+        { error: "OpenAI API key not configured" },
+        { status: 503 }
+      );
+    }
+
+    // Fetch all posts from MDX
+    const allPosts = await getAllPosts();
 
     const topPosts = searchPosts(allPosts, question, 3);
 
     const contextText = topPosts
       .map((p) => {
-        const bodyText = getBodyText(p.body);
-        const excerpt = p.excerpt ?? bodyText.slice(0, 400);
+        const excerpt = p.excerpt ?? "";
         return `Title: ${p.title}\nExcerpt: ${excerpt}`;
       })
       .join("\n---\n");
@@ -59,9 +64,9 @@ export async function POST(request: Request) {
 
         // After streaming tokens, send sentinel with references JSON
         const referencedPosts = posts.map((p) => ({
-          _id: p._id,
+          id: p.slug,
           title: p.title,
-          slug: p.slug?.current,
+          slug: p.slug,
         }));
 
         const payload = `###REFS###${JSON.stringify(referencedPosts)}`;

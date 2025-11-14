@@ -1,0 +1,291 @@
+---
+title: "Building an AI-powered Fashion Recommendation App"
+slug: "building-an-ai-powered-fashion-recommendation-app"
+excerpt: "In this guide, Melissa Herrera walks through the development process of creating an AI fashion recommendation app that takes user-provided images and/or text queries to deliver tailored clothing recommendations."
+publishedAt: "2025-05-15T23:04:41.000Z"
+featureImage: "/content/images/posts/a084f29c80b92ec0870f0431210886bc3c972915-1280x720.png"
+authors:
+  - melissa
+tags: []
+---
+
+In the rapidly evolving landscape of AI applications, fashion recommendation systems represent a perfect intersection of computer vision, natural language processing, and personalized user experience. In this guide, I'll walk through the development process of creating an AI fashion recommendation app that takes user-provided images and/or text queries to deliver tailored clothing recommendations.
+
+## **Introducing Fashion Buddy: AI-Powered Fashion Assistant**
+
+![Overview of Fashion Buddy App](/content/images/posts/163b36cf04cade3646d9b765a1a415b3edfd4b59-1272x720.gif)
+
+Fashion Buddy has a straight-forward but powerful premise: users can either upload an image of an outfit they like (ex. from scrolling on Instagram, picture of a magazine, etc) or enter a text description of what they're looking for (ie. I need a dress for a formal dinner). The app then:
+
+1.  Uses vision models to identify and describe clothing items in uploaded images
+2.  Processes natural language queries to understand user preferences
+3.  Searches for similar items through vector similarity searches
+4.  Presents relevant recommendations based on visual and textual inputs
+
+What makes this approach powerful is the multi-modal input system that accommodates different user preferences and search styles. Let's dive into how we built this using a stack of modern AI tools.
+
+## **Tech Stack Overview**
+
+Before getting into the details, here's a high-level view of our technology stack:
+
+*   **Langflow**: An AI builder platform for orchestrating the various AI workflows
+*   **Astra DB**: Vector database for similarity searches and data storage
+*   **Anthropic Claude 3.7 Sonnet**: For image recognition and description generation
+*   [**Tavily.ai**](http://tavily.ai): For AI enhanced web searching and retrieval
+*   **AgentQL:** For scraping metadata and information from websites
+*   **Cursor.ai**: For rapidly developing the front-end interface
+
+Now, let's explore the development process step by step.
+
+## **1\. Selecting the Appropriate Vision Model**
+
+The foundation of our image-based recommendation system relies on robust vision models. Not all vision models perform equally well for clothing recognition, so careful selection was critical.
+
+### **Key Selection Criteria**
+
+When evaluating vision models, we focused on these capabilities:
+
+*   **Accuracy in clothing recognition**: The model must correctly identify different clothing categories, styles, patterns, and colors
+*   **Descriptive output quality**: Beyond recognition, we needed detailed textual descriptions that capture nuances of fashion items
+*   **Prompt engineering flexibility**: The ability to fine-tune and guide the model through carefully crafted prompts
+*   **Integration capabilities**: Seamless API connections with our other components
+
+### **Model Exploration**
+
+We experimented with several models including:
+
+*   **Anthropic Claude 3.7 Sonnet**: Excellent at detailed descriptions and nuanced recognition
+*   **Google Gemini 2.5 Pro**: Strong overall performance with detailed descriptions, heavily worded
+*   **OpenAI's GPT-4o**: Good integration and access to models within Langflow. Promising results and clothing descriptions, not at as detailed as previous options
+
+```None
+You are a clothing identifier. 
+From the photo, you are only identifying pieces of clothing in the picture and describing the pieces that you identify in great detail. BE AS DESCRIPTIVE AS POSSIBLE!!!
+Ignore anything else in the image. 
+For example, if there is a model wearing the clothing, ignore them. If there is anything in the background of the photo, ignore that as well. Only focus on the clothing in the image. 
+Here are the categories that you should consider (nothing outside of these categories):
+  "TOPS",
+  "BOTTOMS",
+  "SHOES",
+  "ACCESSORIES",
+  "OUTERWEAR",
+  "ACTIVEWEAR",
+  "DRESSES_JUMPSUITS",
+Format the response like this (example):
+TOPS - White shirt with short sleeves...
+SHOES - Black loafers with leather..
+```
+
+We used Langflow and the built-in Playground to iterate through the different models and observe different responses with various images.
+
+![Prototyping different Anthropic, OpenAI, and Google Vision Models](/content/images/posts/a3a2153d7c32c4414acfce533c577165305ea31c-1496x720.gif)
+
+After testing across a diverse set of fashion images, we chose **Claude 3.7 Sonnet** for its ability to accurately describe fashion detail, ability to ignore irrelevant background elements, and consistent conciseness that is needed for search queries for the most accurate vector similarity search. 
+
+## **2\. Designing the App's Workflow Logic**
+
+With the vision model in place, we needed to create a coherent workflow that handles both image and text inputs while maintaining a consistent user experience.
+
+### **Dual-Flow Architecture**
+
+We created two flows to implement a dual-path architecture to handle both image and text inputs:
+
+![Image Processing and Vector Database Retrieval Flow Using Astra DB](/content/images/posts/42558385903dabb310993a13f6b355eceed8e9fc-1600x865.png)
+
+**Image Processing Flow:**
+
+1.  User uploads an image
+2.  Vision model processes the image and generates descriptive text
+3.  Descriptive text is converted to vector embeddings
+4.  Vector embedding sent as search query to vector database to  perform similarity search
+5.  Top matching results are set to LLM to general final natural language response
+6.  Natural language response with results are returned to user
+
+**Text Query Flow:**
+
+![Text Description Web Search Flow Using Tavily and AgentQL](/content/images/posts/6c5a89030e1cb8f12612a9b38dad6d0a0fd8ce30-1600x857.png)
+
+1.  User enters a natural language query
+2.  Query is processed by an Agent that has tools to extract key fashion attributes
+3.  Enhanced query is used for web search using Tavily AI API
+4.  Accurate websites are returned and scraped of important data using AgentQL
+5.  Relevant product names, website links, prices, along with reasoning for responses are returned to user
+
+## **3\. Implementing Core Functionalities**
+
+With our architecture defined, let’s walk through the different core functionalities of the AI workflows. 
+
+### **Vision Model Integration**
+
+With our selected vision model, **Claude 3.7 Sonnet,** and our targeted system prompt, we streamlined the detailed response returned from the “**Anthropic”** component to the “**Astra DB”** component and the **“Prompt”** component. The response from the model acted as both the search query to our vector database and additional context for the later “**Model”** component to form the final answer for the user.
+
+The final prompt looked like this: 
+
+```None
+{results}
+---
+You are a personal fashion assistant. Given the context above, you are to give your best recommendation to the users about what they are looking for and suggestions based on the results. Only base your answer on the results, do not give your own suggestions.
+{user_query}
+Important: 
+If there are no recommendations available for a certain category, do not include that category in input. 
+Prioritize only the categories that are returned in the results.
+Return the images of the items.
+```
+
+Notice how we have **{results}** and **{user\_query}** in curly brackets, which are the vector search results and the original Claude 3.7 Sonnet response respectively. In Langflow prompts, this is how you define variables which help build contextual prompts for model processing. 
+
+![Giving the prompt with the database results to OpenAI](/content/images/posts/598347bc77d24e894f10576bc1fba45802ca1888-750x575.png)
+
+This prompt was later given as input to the **OpenAI Model** Component with simple instructions to form the final recommendations response for the user. 
+
+### **Vector Database Implementation**
+
+For our vector database needs, we chose Astra DB for its scalability, performance characteristics, and metadata handling features. Here's how we structured our data:
+
+1.  **Product Catalog Vectorization**: We pre-processed a catalog of fashion items from [Kaggle](https://www.kaggle.com/datasets/abhinavtyagi2708/zara-dataset-men-and-women-clothing) using Python, generating vector embeddings for each product description
+2.  **Embedding Model**: We used Google’s **multimodalembedding** model to handle the embedding of both the image and the product description
+3.  **Metadata Storage**: Each vector was associated with rich metadata including product details, images, clothing category, and product links
+
+```Python
+# Example of vector store ingestion
+
+def load_to_astra(df, collection):
+ 
+ len_df = len(df)
+ f = IntProgress(min=0, max=len_df) # instantiate the bar
+ display(f) # display the bar
+ 
+ for i in range(len_df):
+   f.value += 1 # signal to increment the progress bar
+   f.description = str(f.value) + "/" + str(len_df)
+   # Store columns from pandas dataframe into Astra
+   product_name = df.loc[i, "product_name"]
+   link = df.loc[i, "link"]
+   product_images = df.loc[i,"product_images"]
+   price = df.loc[i, "price"]
+   details = df.loc[i, "details"]
+   category = df.loc[i, "category"]
+   gender = df.loc[i, "gender"]
+   embeddings = df.loc[i, "embeddings"]
+   
+   try:
+     # add to the Astra DB Vector Database using insert_one statement
+     collection.insert_one({
+         "_id": i,
+         "product_name": product_name,
+         "link": link,
+         "product_images": product_images,
+         "price": price,
+         "details": details,
+         "category": category,
+         "gender": gender,
+         "$vector": embeddings,
+       })
+   except Exception as error:
+     # if you've already added this record, skip the error message
+     error_info = json.loads(str(error))
+     if error_info[0]['errorCode'] == "DOCUMENT_ALREADY_EXISTS":
+       print("Document already exists in the database. Skipping.")
+
+load_to_astra(df, collection)
+```
+
+**AI Enhanced Search**
+
+Beyond vector similarity, we implemented an AI-enhanced web search capability for the text queries with the help of **Tavily AI**:
+
+1.  **Query Enhancement**: Using an LLM to expand and refine user queries 
+2.  **Web Search Integration**: Leveraging search APIs to find relevant products online for real-time accuracy
+3.  **Result Filtering**: Applying AI filtering and web-scraping to remove irrelevant information using AgentQL
+
+**Example for Original Query:**
+
+![Example of a user query](/content/images/posts/4b2cdf576bbeda2c5a8e05c7044ca6bc4036f3fd-718x106.png)
+
+**Refined Search by Agent:**
+
+![Agent optimized query](/content/images/posts/0f7d0c996b371e6b581d09dd822de4980ef18a57-697x217.png)
+
+
+**Search Results:**
+
+```JSON
+[
+  {
+    "text_key": "text",
+    "data": {
+      "text": "Spring floral print maxi dresses are available in various styles, from boho chic to elegant, suitable for festivals and garden parties. They feature bold floral prints and long, flowing designs. Popular brands include Selfie Leslie, ASTR the Label, and Petal & Pup."
+    },
+    "default_value": ""
+  },
+  {
+    "text_key": "text",
+    "data": {
+      "title": "Shop Floral Dresses | Flower Print Dress - Selfie Leslie",
+      "url": "https://www.selfieleslie.com/collections/floral-dresses?srsltid=AfmBOooOj0c-LEUZ8ZwslixJd6zWjtj7tPQz5LvAj-xvLPd2NXt1eCQg",
+      "content": "Our floral dresses for women are the perfect way to welcome spring and summer in style. From sassy minis to cute midis and maxi floral tiered dresses, you’re sure to find a floral sundress for every occasion this season. You can‘t go wrong with a flirty little floral dress, and they’re perfect for everything from the rooftop bar to the festival grounds! Choose from long sleeves, short sleeves, sleeveless, and even daring strapless options to perfectly complement your unique look. [...] These floral sundresses for women go beyond the basics, offering flattering cuts to add flair to your everyday attire. Ties, lace accents, dramatic open backs, and other unique details make these aesthetic floral dresses special pieces. At Selfie Leslie, we pride ourselves on offering the latest styles that are meant for women who love looking their best no matter the destination. Shop these trendy floral print dresses for parties, festivals, and more today! Join our email list and get 10% off",
+      "score": 0.8315952,
+      "text": "Our floral dresses for women are the perfect way to welcome spring and summer in style. From sassy minis to cute midis and maxi floral tiered dresses, you’re sure to find a floral sundress for every occasion this season. You can‘t go wrong with a flirty little floral dress, and they’re perfect for everything from the rooftop bar to the festival grounds! Choose from long sleeves, short sleeves, sleeveless, and even daring strapless options to perfectly complement your unique look. [...] These floral sundresses for women go beyond the basics, offering flattering cuts to add flair to your everyday attire. Ties, lace accents, dramatic open backs, and other unique details make these aesthetic floral dresses special pieces. At Selfie Leslie, we pride ourselves on offering the latest styles that are meant for women who love looking their best no matter the destination. Shop these trendy floral print dresses for parties, festivals, and more today! Join our email list and get 10% off"
+    },
+    "default_value": ""
+  },
+```
+
+Response from TavilyAI search
+
+AgentQL was then used to retrieve only the most important information from the result (product description, links, price) This hybrid approach allowed us to combine the benefits of vector search with dynamic web results.
+
+## **4\. Embracing Vibe Coding for Front-End Development**
+
+For the front end, we took an innovative approach using Cursor.ai to accelerate development through what the tech world calls "vibe coding" - a collaborative, AI-assisted development methodology.
+
+### **What is Vibe Coding?**
+
+Vibe coding represents a shift from traditional development to a more fluid, conversational approach where developers co-create with AI tools. Gone are the days of sifting through various Stack Overflow forums and buried Google searches. By using Cursor.ai, we were able to:
+
+1.  **Describe UI components conversationally**: Rather than writing all code from scratch, we described components and let the AI generate starter code, making adjustments as needed
+2.  **Rapid iteration**: Quickly experiment with different designs and interactions
+3.  **Real-time problem solving**: Address integration challenges through natural language discussions with the AI or in-line auto-complete suggestions
+
+### **Front-End Implementation**
+
+We built a clean and simple interface with these key features:
+
+*   **Drag-and-drop image upload**: Simple image input mechanism
+*   **Natural language search bar**: For text-based queries
+*   **Product detail views**: In-depth information about recommended items
+*   **Progress indicators:** Toast messages and loading screens while the AI is working its magic
+
+The front-end connects to our Langflow backend using the [Langflow API](https://docs.langflow.org/api-reference-api-examples) allowing us to easily bring our fully functional AI workflow from Langflow into our application. 
+
+## **Future Enhancements**
+
+As we continue to develop this application, there are several things that we have learned along the way that we will apply to future changes / new feature such as:
+
+1.  **Personalization**: Incorporating user preferences and history to tailor recommendations 
+2.  **Web Search for Images:** Currently the image search flow goes only to our vector database which is great for static datasets, but would be even more useful to attach real-time web search 
+3.  **Consolidating Image and Text Flow:** Currently, the experience is modularized by _either_ uploading an image OR searching by text. Eventually, we would like to combine this into one screen further simplifying the user experience
+4.  **“Agentifying” the Flow:** As we described, we have 2 separate Langflow workflows doing its magic here. Eventually we would like to experiment with a single agent that handles both flow capabilities as tools to a central agent (perhaps using MCP?) 
+5.  **Optimizing Performance:** Latency is a huge player here, we need to figure out how to get this lower
+
+## **Conclusion and Key Takeaways**
+
+Building a fashion recommendation app with AI involves careful integration of vision models, vector databases, and natural language processing, but this was all made easier and orchestrated through Langflow. By combining these technologies with innovative development approaches like vibe coding, we were able to create a fully functional, user-friendly application.
+
+The multi-modal input system, allowing both image and text queries, provides flexibility that caters to different user preferences and search scenarios. Meanwhile, every component included in between serves a purpose in the core functionalities of the recommendation process. 
+
+If you're embarking on a similar project, remember these key takeaways:
+
+1.  Invest time in selecting the right model for your use case
+2.  Design clear workflows that handle different input types consistently
+3.  Leverage vector databases for efficient similarity searches
+4.  Consider AI-assisted development tools to accelerate your front-end creation but don’t let it take too much control
+5.  Use orchestration platforms like Langflow to manage complex AI workflows
+
+## **Wrap Up - Try it yourself!** 🚀
+
+I hope this guide allowed you to not only consider fashion recommendation apps as a way to encapsulate several AI technologies and ideologies but also get the juices flowing for your future apps. 
+
+If you would like to try Fashion Buddy yourself, the Github repository is available [here.](https://github.com/melienherrera/fashion_buddy) 
+
+Happy building! 🛠️

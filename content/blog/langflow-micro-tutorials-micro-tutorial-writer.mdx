@@ -1,0 +1,60 @@
+---
+title: "Langflow Micro Tutorials — Micro Tutorial Writer"
+slug: "langflow-micro-tutorials-micro-tutorial-writer"
+excerpt: "Welcome back to our Langflow micro tutorials series! We’ll continue exploring simple Langflow examples, focusing on ideas and custom…"
+publishedAt: "2023-09-24T20:52:40.000Z"
+featureImage: "/content/images/posts/ba16743731df02203254c0fe4f1c65c7ea7a9a8f-800x439.png"
+authors:
+  - rodrigo
+tags: []
+---
+
+Welcome back to our Langflow micro tutorials series! We’ll continue exploring simple Langflow examples, focusing on ideas and custom component design.
+
+_This article provides a download link for the described flow. Use it to modify and understand the components in use._
+
+Today, we’ll focus on the flow I built for writing micro tutorial articles (yes, that’s what I’ve been using from the beginning of the series 😅). Hope you enjoy it!
+
+#### Main Features
+
+**LLM Runner:** Easily construct and execute a chain with no parameters.
+
+![](/content/images/posts/9f73910bdce2636ae05334f0806310f4271834a2-600x329.png)
+
+![](/content/images/posts/07b3f2a9f8955ca606185b20a5111f4518e4b428-600x329.png)
+
+#### Objective
+
+The objective of this flow is to streamline the tutorial writing process by generating a Micro Tutorial based on rough descriptions of each section.
+
+To explain it, let's start showing what we'll call the "Main Prompt Template":
+
+![](/content/images/posts/7c83299e401a484ed9a57bc1ea8ac2d22cb2a078-800x439.png)
+
+This prompt asks the model to revise a given text by correcting grammar, ensuring conciseness and non-repetition, maintaining the original topics, and using neutral language, which is what I expect to be done with a draft version of a Micro Tutorial.
+
+The flow utilizes custom components, such as _Topic_, _Features_, _Feature Description_, and _Objective_, as placeholders for plain text passing. They just receive the input text as parameters and return exactly the same text.
+
+![](/content/images/posts/cf9d88c6117b4e7089f8354922316e80f698a9e6-600x329.png)
+
+![](/content/images/posts/e1207dd8545fe8e91d2ab9b173c7f0dde2d778a8-600x329.png)
+
+The _Topic_ and _Feature_ texts are directly inputted into the main Prompt Template, while _Feature Description_ and _Objective_ values undergo processing by a precursive LLM before being sent to the main Prompt Template.
+
+![](/content/images/posts/8c73f57a985d4292bb885bc60044fb4751a57663-600x329.png)
+
+![](/content/images/posts/22194be4da910364a17c27ee9326cf70be57330c-600x329.png)
+
+The Prompt Template finally takes all these texts (both human and model-generated ones) and formats them into an article-like prompt to be once more reviewed by a GPT model through the LLM chain.
+
+![](/content/images/posts/2555f6ab70f749e65a3d262e8a9aeec6c7d867fd-800x439.png)
+
+By automating the writing process, this flow cleans up my rough and quickly written blogs and converts them into a bit more refined ones. This is the result:
+
+![](/content/images/posts/b94834286e98417c125a5ff94bc6276819cfd82e-800x439.png)
+
+There's typically some polishing and extra parts to be written for that to become a proper article, which indicates that those components can definitely be improved, but hopefully, this is enough to demonstrate a creative way for Langflow to help with your writing!
+
+* * *
+
+#### Download Flow (gist)

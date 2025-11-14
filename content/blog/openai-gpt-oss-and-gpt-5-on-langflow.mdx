@@ -1,0 +1,65 @@
+---
+title: "How to run OpenAI’s gpt-oss and GPT-5 models on Langflow "
+slug: "openai-gpt-oss-and-gpt-5-on-langflow"
+excerpt: "Learn how to enable access to the newest OpenAI models, GPT-5 and the open-source gpt-oss-20b and gpt-oss-120b, within Langflow. From running locally, to cloud services, and employing the models as agents, check out how to start using the latest models in Langflow."
+publishedAt: "2025-08-12T00:39:27.266Z"
+featureImage: "/content/images/posts/f6f80c78bcb8e1cf23c214f5b6f9de42c12d71e1-960x540.png"
+authors:
+  - phil
+tags:
+  - agents
+  - news
+---
+
+There’s nothing that gets the generative AI world as excited as a model launch, and last week OpenAI not only [launched the open-source, Apache 2.0 licensed, gpt-oss model family](https://openai.com/index/introducing-gpt-oss/) but also the long awaited [GPT-5](https://openai.com/index/introducing-gpt-5-for-developers/). As developers, that actually gives us five new models: gpt-oss-20b, gpt-oss-120b, gpt-5, gpt-5-mini, and gpt-5-nano. If you want to experiment with these new models in Langflow, read on, or check out [Melissa's video on using GPT-5 or gpt-oss-20b in Langflow on YouTube](https://www.youtube.com/watch?v=6WCEnv9OKFs), to find out how.
+
+## gpt-oss on your machine 
+There are options for running the open-source models locally. If you happen to have an 80 GB GPU to hand, you should be able to run gpt-oss-120b. If that’s not available, as long as you have 16 GB of RAM you can run gpt-oss-20b.
+
+Within Langflow, you can run local models via the [Ollama](https://docs.langflow.org/bundles-ollama#ollama-text-generation) and [LM Studio](https://docs.langflow.org/bundles-lmstudio#lm-studio-text-generation) components and either of them can run the gpt-oss models for you. For Ollama, you can install the model with the command line instruction `ollama pull oss-gpt-20b`. In LM Studio, you can search for “gpt-oss" in the model search, or hit up the [LM Studio model page for gpt-oss-20b](https://lmstudio.ai/models/openai/gpt-oss-20b), and install from there. Then make sure your service is running, drag an Ollama or LM Studio component onto the Langflow canvas and enter the base URL. The components will populate their model lists and you should see the new gpt-oss-20b ready to use.
+
+![The Ollama and LM Studio components on a Langflow canvas, they both have their API Base URL set, and the model name gpt-oss-20b selected.](/content/images/posts/2082c84cb929c8bd13ec2749223941d917d1e670-1394x1037.png)
+
+## gpt-oss as a service
+
+There are plenty of services out there that run models for you, and many have jumped on the opportunity to make the gpt-oss models available. These are the services that are running the gpt-oss models and have Langflow components that you can use: 
+
+* [IBM watsonx.ai](https://www.ibm.com/new/announcements/openai-s-open-source-models-available-on-ibm-watsonx-ai) ([gpt-oss-120b](https://www.ibm.com/docs/en/watsonx/saas?topic=models-third-party-foundation#gpt-oss-120b)) 
+* [NVIDIA NIM](https://blogs.nvidia.com/blog/openai-gpt-oss/) ([gpt-oss-20b](https://build.nvidia.com/openai/gpt-oss-20b/modelcard), [gpt-oss-120b](https://build.nvidia.com/openai/gpt-oss-120b/modelcard)) 
+* [Groq](https://groq.com/blog/day-zero-support-for-openai-open-models) ([gpt-oss-20b](https://console.groq.com/docs/model/openai/gpt-oss-20b), [gpt-oss-120b](https://console.groq.com/docs/model/openai/gpt-oss-120b)) 
+* [Azure AI Foundry](https://azure.microsoft.com/en-us/blog/openais-open%E2%80%91source-model-gpt%E2%80%91oss-on-azure-ai-foundry-and-windows-ai-foundry/) ([gpt-oss-20b](https://ai.azure.com/catalog/models/gpt-oss-20b), [gpt-oss-120b](https://ai.azure.com/catalog/models/gpt-oss-120b))
+* OpenRouter ([gpt-oss-20b](https://openrouter.ai/openai/gpt-oss-20b), [gpt-oss-120b](https://openrouter.ai/openai/gpt-oss-120b)) 
+* [Novita AI](https://blogs.novita.ai/gpt-oss-on-novita-ai/) ([gpt-oss-20b](https://novita.ai/models/llm/openai-gpt-oss-20b), [gpt-oss-120b](https://novita.ai/models/llm/openai-gpt-oss-120b)) 
+* AI/ML ([gpt-oss-20b](https://aimlapi.com/models/gpt-oss-20b), [gpt-oss-120b](https://aimlapi.com/models/gpt-oss-120b)) 
+
+For most of these services you can find the component, drag it onto the canvas, and add your API key. This will trigger the model list to load, and you will find the new open models. Some services, like Azure AI Foundry require a bit more work, but once you’ve deployed the model you can use it through Langflow like any other. 
+
+## GPT-5 in Langflow 
+
+You can also access OpenAI’s brand new GPT-5 models through Langflow. Though, as I write this, you will need to do a little editing to the [OpenAI component](https://docs.langflow.org/bundles-openai#openai-text-generation) (that is, until [this pull request](https://github.com/langflow-ai/langflow/pull/9336) is merged and released).  
+
+To use GPT-5 in Langflow today you need to: 
+
+* Drag an OpenAI component onto the canvas 
+* Open the component’s code editor 
+    ![The OpenAI component on the Langflow canvas. When you select the element, four buttons appear above the component, the first one is the one for the Code editor.](/content/images/posts/3b77022cc5b140425335586c9a53fc3d2ef69a62-1394x1037.png)
+* Add the following line after the imports and before the class definition: 
+```python
+OPENAI_REASONING_MODEL_NAMES = OPENAI_REASONING_MODEL_NAMES + ["gpt-5", "gpt-5-mini", "gpt-5-nano"]
+```
+		
+The new model names will appear at the bottom of the model drop down ready for you to use.
+
+## Other GPT-5 services
+
+You also can access GPT-5 through [Azure AI Foundry](https://azure.microsoft.com/en-us/blog/gpt-5-in-azure-ai-foundry-the-future-of-ai-apps-and-agents-starts-here/), [AI/ML API](https://aimlapi.com/models/gpt-5) or [OpenRouter](https://openrouter.ai/openai/gpt-5) and there are Langflow components for each. 
+
+## Using the models as agents 
+
+The announcements for both gpt-oss and GPT-5 praised the models for their excellent tool calling performance. This means that they should work well as agents. To use the models with the [Langflow agent component](https://docs.langflow.org/agents) you can set up the agent component to use a custom model. Then with whichever model component you use, set the output to Language model and connect the output to the agent component’s Language Model input. Then you can hook up your tools and MCP servers and try out the GPT-5 or gpt-oss models in your agentic workflows. 
+
+![The Langflow canvas with an Ollama component using gpt-oss-20b, with the output set to Language Model. It is connected to an agent component with the language model set to custom.](/content/images/posts/e9fa80566de402a4a957b6fe1361507d85d64739-1470x1052.png)
+
+## Build with the latest models in Langflow
+
+Whatever you’re building with Langflow you can use the latest OpenAI models. From open-source models running on your own machine to GPT-5 in the cloud, you can plug them into your flows and start experimenting or evaluating. 

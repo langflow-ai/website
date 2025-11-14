@@ -1,13 +1,7 @@
-import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextPage } from "next";
 
-import { sanityFetch, getImageUrl } from "@/lib/backend/sanity/client";
-import {
-  BLOG_POSTS_SLUGS_QUERY,
-  POST_BY_SLUG_QUERY,
-  BLOG_POSTS_QUERY,
-} from "@/lib/backend/sanity/queries";
+import { getAllPosts, getPostBySlug } from "@/lib/mdx";
 
 import PageLayout from "@/components/layout/page";
 import Display from "@/components/ui/Display";
@@ -23,10 +17,10 @@ import { HOST } from "@/utils/constants";
 import { KitForm } from "@/components/pages/Newsletter/KitForm/KitForm";
 
 export async function generateStaticParams() {
-  const slugs = await sanityFetch<string[]>(BLOG_POSTS_SLUGS_QUERY);
-  return (slugs || [])
-    .filter((slug) => Boolean(slug))
-    .map((slug) => ({ slug }));
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    slug: post.slug.current,
+  }));
 }
 
 export const generateMetadata = async ({
@@ -34,18 +28,14 @@ export const generateMetadata = async ({
 }: {
   params: { slug: string };
 }) => {
-  const isDraftMode = draftMode().isEnabled;
-  const post = await sanityFetch<BlogPost>(
-    POST_BY_SLUG_QUERY,
-    { slug: params.slug },
-    isDraftMode
-  );
+  const post = await getPostBySlug(params.slug);
 
   if (!post) {
     notFound();
   }
 
-  const featureImageUrl = getImageUrl(post.featureImage);
+  // For MDX, featureImage is already a string URL
+  const featureImageUrl = post.featureImage;
 
   return {
     title: post.title,
@@ -67,24 +57,22 @@ export const generateMetadata = async ({
 const BlogPostPage: NextPage<{ params: { slug: string } }> = async ({
   params,
 }) => {
-  const isDraftMode = draftMode().isEnabled;
-  const [post, otherPosts] = await Promise.all([
-    sanityFetch<BlogPost>(
-      POST_BY_SLUG_QUERY,
-      { slug: params.slug },
-      isDraftMode
-    ),
-    (await sanityFetch<BlogPost[]>(BLOG_POSTS_QUERY, {}, isDraftMode))
-      .filter(
-        (otherPost) =>
-          otherPost.excerpt && otherPost.slug?.current !== params.slug
-      )
-      .slice(0, 4),
+  const [post, allPosts] = await Promise.all([
+    getPostBySlug(params.slug),
+    getAllPosts(),
   ]);
 
   if (!post) {
     notFound();
   }
+
+  // Get other posts for "Similar Posts" section
+  const otherPosts = allPosts
+    .filter(
+      (otherPost) =>
+        otherPost.excerpt && otherPost.slug?.current !== params.slug
+    )
+    .slice(0, 4);
 
   const authors = [
     ...(post.author ? [post.author] : []),

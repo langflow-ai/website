@@ -20,6 +20,11 @@ type Props = {
   endDate: Date;
   url?: string;
   className?: string;
+  timezone?: string;
+  startDateString?: string;
+  startTimeString?: string;
+  endDateString?: string;
+  endTimeString?: string;
 };
 
 const AddToCalendar: FC<Props> = ({
@@ -30,6 +35,11 @@ const AddToCalendar: FC<Props> = ({
   endDate,
   url,
   className,
+  timezone,
+  startDateString,
+  startTimeString,
+  endDateString,
+  endTimeString,
 }) => {
   const handleClick = () => {
     const eventData: ICSEventData = {
@@ -39,6 +49,11 @@ const AddToCalendar: FC<Props> = ({
       startDate,
       endDate,
       url,
+      timezone,
+      startDateString,
+      startTimeString,
+      endDateString,
+      endTimeString,
     };
 
     const filename = `${title.replace(/[^a-z0-9]/gi, "_").toLowerCase()}.ics`;

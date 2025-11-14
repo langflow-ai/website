@@ -1,0 +1,55 @@
+---
+title: "Instantly Chat with Your PDFs Using Langflow"
+slug: "chat-with-pdf-langflow"
+excerpt: "Here’s a quick look at how Langflow makes it easy to build an app that enables you to chat with PDFs. 
+"
+publishedAt: "2024-12-12T05:22:00.000Z"
+featureImage: "/content/images/posts/799e936ad2f2b5982ab0e6a356c8340bebe7d8cb-1920x1273.jpg"
+authors:
+  - tejas
+tags: []
+---
+
+Langflow offers an intuitive, low-code approach to building PDF chatbots that can understand and answer questions about your documents. This powerful, open-source tool is accessible to both beginners and experienced developers. Here’s a quick look at how easy it is to build an app that enables you to chat with PDFs. 
+
+## Setting up your PDF chatbot
+
+[Download Langflow](https://www.langflow.org/desktop) and create a new project. Then, navigate to “All Templates”, and select the Document Q&A template to begin. The platform provides a visual workflow creator where you can assemble your chatbot's components without writing code.
+
+![Once you select the Document Q&A template, you will see a flow with a number of connected components.](/content/images/posts/bcad34bb4852adf3e452d5bb49a86e955b4b222f-950x561.gif)
+
+The **Document Q&A** flow contains the following components:
+
+*   **File -** Handles PDF document upload and processing
+*   **Parse Data** - Turns the PDF content into text for the next step
+*   **Prompt -** The prompt we send to the language model
+*   **Chat Input -** The question for the user
+*   **OpenAI (or any other LLM provider) -** The Language Model that generates the answers, and finally
+*   **Chat Output -** A component to render the answer
+
+Once you add your appropriate API keys to the flow, you can immediately start chatting with your PDF by clicking the Playground button.
+
+![The playground button is in the top right of the canvas](/content/images/posts/de4845dd6ee083e776e56ede509abeed211589d1-950x561.gif)
+
+## Key features
+
+While this flow works quite well for most PDFs, you could go even further using the [Docling Langflow component](https://docs.langflow.org/integrations-docling) and work with key elements within your PDF including titles, paragraphs, and tables. You can customize text extraction settings for complex documents containing images and varied formatting. 
+
+### Interaction capabilities
+
+Your chatbot can:
+
+*   Answer specific questions about PDF content
+*   Maintain context through Langflow’s powerful [conversation memory support](https://docs.langflow.org/guides-chat-memory)
+*   Be exposed over an API for any application user interface
+*   Function as an AI agent using context from your document
+
+## Next steps
+
+Once you’re happy with your flow, you can continue to chat with your PDF in the Langflow playground, or integrate it into an frontend user interface: this exact flow will run deterministically via an HTTP API. To use this feature, click the Share button, right next to the playground button, then the API button.
+
+## Taking it further
+
+Now that we’re familiar with a basic PDF chat setup with Langflow, we can take things further by [storing the contents of PDFs and other documents in a vector database, and retrieving only the portions of content that semantically match a user’s query using vector search](https://docs.langflow.org/chat-with-rag).
+
+Happy coding!

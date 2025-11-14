@@ -1,0 +1,135 @@
+---
+title: "Compare OpenAI's AgentKit and Langflow by building an agent"
+slug: "openai-agentkit-langflow-building-an-agent"
+excerpt: "The recent launch of OpenAI's AgentKit has sparked excitement among developers, but how does it stack up against existing solutions like Langflow? In this in-depth comparison, we'll dive into the strengths and weaknesses of each platform, exploring their capabilities and trade-offs through a real-world example. By building the same AI agent in both platforms, we'll help you make an informed decision about which tool is right for your next project."
+publishedAt: "2025-10-13T16:28:07.030Z"
+featureImage: "/content/images/posts/4ebcc1b0da043f48a9ade890ef347fb7dc4b3b45-960x540.jpg"
+authors:
+  - phil
+  - tejas
+tags: []
+---
+
+The team at OpenAI just [launched AgentKit](https://openai.com/index/introducing-agentkit/), a new suite of tools to help developers build AI agents. This is an incredible launch, and we want to congratulate them on their ever-expanding catalog of high-quality products that empower developers.
+
+A key part of AgentKit is [Agent Builder](https://platform.openai.com/docs/guides/agent-builder), a visual workflow tool for creating agents that shares some similarities with Langflow. In this post, we're going to take a closer look.
+
+Our goal isn't to declare one tool "better" than the other. As engineers, we know the real answer is always "it depends." Every tool comes with its own set of trade-offs. By building the same agent in both platforms, we can explore these trade-offs firsthand, helping you choose the right tool for your specific job.
+
+Let's dive in by building a simple agent in Langflow and then replicating it in OpenAI's Agent Builder.
+
+## The Use Case: A Simple Calendar Agent
+
+To keep things clear and concise, we'll build a simple agent that can manage a calendar. This is a great example because it's a practical task that requires integrating with an external tool (like Google Calendar). This showcases core agentic capabilities: if an agent can connect to a calendar, it can connect to any other enterprise tool you might need.
+
+## Building with Langflow
+
+First, let's build the agent in Langflow 1.6. Open up Langflow and follow these steps
+
+### Start from Scratch
+
+Begin with a blank flow to ensure a fair comparison, though both platforms offer templates to get you started faster.
+
+![Click on the new flow button, which shows you some templates. Click on blank flow and you will see an empty canvas.](/content/images/posts/42e69a4c5f2eee81db99e1fa4d0872c54255e187-600x450.gif)
+
+### Set up the Flow
+
+Add a **Chat Input** and a **Chat Output** component, which form the basic interface for our agent.
+
+![The first components you need are the chat input on the left and the chat output on the right.](/content/images/posts/e2dc5bc990bd52373729bbbc5084b0feeb7b76d1-922x715.png)
+
+### Add an Agent
+
+Add the **Agent** component and configure it to use GPT-5 to match Agent Builder. You will need an OpenAI API key for this step.
+
+![The Agent component requires you to choose the model provider and the model.](/content/images/posts/5683d1f38e0a8bb2c27f314c44af3950ee88d4fd-922x715.png)
+
+### Add Tools
+
+[Composio](https://composio.dev/) is one of Langflow’s available [bundles](https://docs.langflow.org/components-bundle-components) and provides a vast library of integrations. From the Composio bundle, select the **Google Calendar** component and enable all of its available actions (create, delete, search events, etc.). Connect the tool to the agent.
+
+![The Composio Google Calendar tool offers a number of tools for your agent.](/content/images/posts/5276162333d631d34ad0ed23b1cc424ad61d02d6-922x715.png)
+
+That's it. Our calendar agent is ready.
+
+Let's test it in the playground. Prompt it with something like:
+
+> "Create a lunch event for 1 PM, October 13th, 2025 in London for 30 minutes in my calendar."
+
+The agent processes the request, invokes the Google Calendar `create_event` tool, and a moment later, the "Lunch" event appears on my calendar. Success!
+
+![Chatting with the agent now allows you to add events to your calendar.](/content/images/posts/a63818c8f98b943a2d2d54eded1291ae94315026-600x450.gif)
+
+### The Power of Choice
+
+One of Langflow's core strengths is model flexibility. You can use any model from any provider. Let's swap out OpenAI's GPT-5 for Google's gemini-2.5-pro. It’s as simple as changing the model provider and model in the Agent component, and then adding a new API key.
+
+We can then continue the conversation with this new model.
+
+> "Actually, find that lunch event today and delete it."
+
+The agent, now powered by Gemini, correctly identifies the event we just created and successfully deletes it from the calendar.
+
+![Asking to delete the event runs a different tool and removes the event.](/content/images/posts/6645ac128a8bd1dc133f23f78a4f2fd69f056a29-600x450.gif)
+
+This flexibility extends to open-source and local models. Using Ollama, you could run a model like Llama 3 entirely on your own machine. Langflow itself is a self-hosted server—it offers [a Docker container you can deploy anywhere](https://docs.langflow.org/deployment-docker), which is a crucial point we'll return to.
+
+## Building with OpenAI's Agent Builder
+
+Now, let's try to follow the same steps to create this agent in Agent Builder.
+
+### Start from Scratch
+
+Creating a new workflow gives us a **Start** node and an **Agent** component. One immediate difference is that these nodes are configuration-based UI elements, not editable code like in Langflow.
+
+![The default canvas has a Start and Agent node.](/content/images/posts/de41ab00b5fd9e05b02292d05a9aa95ca0dea39c-920x713.png)
+
+### Add Tools
+
+There are a few built-in tools to the Agent component, but the majority of the integrations are connected through MCP servers. There is an OpenAI maintained Google Calendar MCP server which you can add to the agent. You’ll need to provide an access token too.
+
+![The Google Calendar MCP server pops up a modal to get your access token.](/content/images/posts/77c20a8f5dd1e0013f3e717b52148cc3ac48b2e8-920x713.png)
+
+Let’s test it in the Preview.
+
+> "Create a lunch event for 1 PM, October 13th, 2025 in Europe/London for 30 minutes in my calendar."
+
+The agent responds that it can't create events directly, though it does provide other options, like a link to the calendar to create an event. It appears that this MCP server does not provide write operations for the calendar. 
+
+![The OpenAI calendar integration doesn't offer a tool to create events, but it does suggest a list to click or an .ics file to download.](/content/images/posts/f1c3b186f6db71f37efbc6dc1b9eeaddd4414dba-920x713.png)
+
+Let’s try a read-only task:
+
+> "What events do I have on my calendar today?"
+
+The agent is capable of viewing the calendar, so it reads out the events to us.
+
+
+## The Trade-Offs: When to Use What?
+
+While our build in Agent Builder didn't succeed when trying to write events to the calendar, we were able to get both agents to interact with it. We were able to experience the differences between the platforms and understand some of the trade-offs.
+
+### Use OpenAI AgentKit when...
+
+* **You want a managed, hosted solution.** AgentKit is a cloud product. You sign up and start building. OpenAI handles the hosting, uptime, and maintenance. This is a massive plus for convenience and speed.
+* **You are deeply invested in the OpenAI ecosystem.** If you're already using OpenAI language models, vector stores, embedding models, and other services, Agent Builder provides a seamless, highly integrated experience with great guardrails and safety features.
+* **Convenience is your top priority.** You get an enterprise-ready platform out of the box without worrying about infrastructure.
+
+### Use Langflow when...
+
+* **You need full control over your data and infrastructure.** Langflow is self-hosted. You can [run it on-premise, in your own VPC, or in any environment](https://www.langflow.org/blog/how-to-host-langflow). This is critical for enterprises with strict data privacy requirements or zero-trust architectures.
+* **You require model flexibility.** You are not locked into a single model provider. You can choose the best model for the job, whether it's from OpenAI, Anthropic, Google, Cohere, or an open-source model running locally via Ollama.
+* **You need deep customization.** In Langflow, everything is code. This gives you the power to modify, fork, and extend any component to fit your exact needs.
+* **You value open-source.** Langflow is 100% open-source with an MIT license, giving you the freedom to use and adapt it however you see fit.
+
+### Conclusion
+
+Both OpenAI's AgentKit and Langflow are powerful tools designed to help you build the next generation of AI agents. The choice between them isn't about which is better, but which set of trade-offs aligns with your goals.
+
+* **OpenAI AgentKit** offers convenience, ecosystem integration, and a managed, enterprise-ready experience at the cost of flexibility and data control.
+
+* **Langflow** offers ultimate flexibility, control, and customization through its open-source, self-hosted, and model-agnostic architecture, at the cost of requiring you to manage your own infrastructure.
+
+We hope this comparison has been helpful. The right tool for the job depends on what you're building.
+
+If you found this useful, let us know your thoughts on [X](https://x.com/langflow_ai). For more discussions like this, be sure to join our [Discord community](https://discord.com/invite/EqksyE2EX9)!

@@ -2,6 +2,7 @@
 import { FC } from "react";
 import { parseISO } from "date-fns/parseISO";
 import { downloadICS } from "@/lib/utils/ics";
+import NextImage from "next/image";
 
 // Types
 import type { EventCard } from "@/lib/types/sanity";
@@ -9,7 +10,7 @@ import type { EventCard } from "@/lib/types/sanity";
 // Components
 import Display from "@/components/ui/Display";
 import Link from "@/components/ui/Link";
-import Image from "@/components/ui/media/SanityImage";
+import SanityImage from "@/components/ui/media/SanityImage";
 import Text from "@/components/ui/text";
 
 // Utilities
@@ -25,6 +26,9 @@ type Props = {
 };
 
 const Card: FC<Props> = ({ event }) => {
+  const eventUrl = `/events/${event.slug}`;
+  const isStringThumbnail = typeof event.thumbnail === 'string';
+
   const getCalendarData = () => {
     if (!event.dates || event.dates.length === 0 || !event.title) return null;
 
@@ -103,7 +107,7 @@ const Card: FC<Props> = ({ event }) => {
     }
 
     const url = event.slug
-      ? `https://www.langflow.org${event.slug.startsWith('/') ? '' : '/'}${event.slug}`
+      ? `https://www.langflow.org/events/${event.slug}`
       : undefined;
 
     const bodyText = event.body ? getBodyTextForICS(event.body) : event.description;
@@ -124,7 +128,7 @@ const Card: FC<Props> = ({ event }) => {
     return {
       title: event.title,
       description: bodyText,
-      location: undefined,
+      location: event.location,
       startDate,
       endDate,
       url,
@@ -141,8 +145,18 @@ const Card: FC<Props> = ({ event }) => {
   return (
     <div className={`row ${styles.card}`}>
       <div className="col-lg-4">
-        <Link href={event.slug}>
-          <Image image={event.thumbnail} alt={event.title} />
+        <Link href={eventUrl}>
+          {isStringThumbnail ? (
+            <NextImage
+              src={event.thumbnail as string}
+              alt={event.title}
+              width={400}
+              height={225}
+              style={{ width: '100%', height: 'auto' }}
+            />
+          ) : (
+            <SanityImage image={event.thumbnail} alt={event.title} />
+          )}
         </Link>
       </div>
       <div className="col-lg-8 d-flex flex-column align-items-start">
@@ -152,7 +166,7 @@ const Card: FC<Props> = ({ event }) => {
           <span>{getEventDate(event.dates)}</span>
         </Display>
 
-        <Link href={event.slug}>
+        <Link href={eventUrl}>
           <Display size={300} tagName="h4">
             {event.title}
           </Display>
@@ -161,7 +175,7 @@ const Card: FC<Props> = ({ event }) => {
           {event.description}
         </Text>
         <div className={`d-flex align-items-center ${styles.actions}`} style={{ gap: 'var(--spacer-3)' }}>
-          <Link href={event.slug}>
+          <Link href={eventUrl}>
             <span>Learn More</span>
             <svg
               width="6"

@@ -1,10 +1,7 @@
 export const dynamic = "force-static";
 export const revalidate = 60 * 60; // 1 hour
 
-import { sanityFetch } from "@/lib/backend/sanity/client";
-import { BLOG_POSTS_QUERY } from "@/lib/backend/sanity/queries";
-import { BlogPost } from "@/lib/types/sanity";
-import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
+import { getAllPosts } from "@/lib/mdx";
 import { HOST } from "@/utils/constants";
 import type { NextRequest } from "next/server";
 
@@ -14,8 +11,8 @@ import type { NextRequest } from "next/server";
  * and reason about the blog's content with minimal hallucination.
  */
 export async function GET(_req: NextRequest): Promise<Response> {
-  // We always fetch the published content here – draft posts are excluded.
-  const posts = await sanityFetch<BlogPost[]>(BLOG_POSTS_QUERY);
+  // Fetch all published posts
+  const posts = await getAllPosts();
 
   const fileHeader = `# Langflow Blog
   
@@ -23,24 +20,17 @@ Here are the latest insightful posts from the Langflow blog about how to build A
 
 `;
 
-  const records = (
-    await Promise.all(
-      posts.map(async (post) => {
-        const url = `${HOST}/blog/${post.slug?.current ?? ""}`;
+  const records = posts.map((post) => {
+    const url = `${HOST}/blog/${post.slug ?? ""}`;
+    const summary = post.excerpt?.trim() || "";
 
-        const summary =
-          post.excerpt?.trim() ||
-          (await generateBlogExcerpt(post.body))!.trim();
-
-        return `Post title: ${post.title ?? "Untitled"}
+    return `Post title: ${post.title ?? "Untitled"}
 Read it at: ${url}
 Summary: ${summary}
 
 ---
 `;
-      })
-    )
-  ).join("\n");
+  }).join("\n");
 
   const content = fileHeader + records + "\n";
 

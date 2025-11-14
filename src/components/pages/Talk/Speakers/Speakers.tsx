@@ -1,7 +1,7 @@
 // Dependencies
 import { FC } from "react";
 import Link from "next/link";
-import { getImageUrl } from "@/lib/backend/sanity/client";
+import Image from "next/image";
 
 // Components
 import Display from "@/components/ui/Display";
@@ -36,17 +36,18 @@ const Speakers: FC<Props> = ({ speakers }) => {
             </Display>
             <div className={styles.grid}>
               {speakers.map((speaker) => {
-                const avatarUrl = speaker.avatar
-                  ? getImageUrl(speaker.avatar)
-                  : null;
+                // Avatar is now a direct URL string
+                const avatarUrl = typeof speaker.avatar === 'string' ? speaker.avatar : null;
 
                 return (
                   <div key={speaker._id} className={styles.speaker}>
                     {avatarUrl && (
-                      <img
+                      <Image
                         src={avatarUrl}
                         alt={speaker.name || "Speaker"}
                         className={styles.avatar}
+                        width={80}
+                        height={80}
                       />
                     )}
                     <div className={styles.info}>

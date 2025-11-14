@@ -1,19 +1,12 @@
 // Dependencies
 import { FC } from "react";
-import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 // Backend
-import { sanityFetch } from "@/lib/backend/sanity/client";
-import {
-  METADATA_BY_SLUG_QUERY,
-  PAGE_BY_SLUG_QUERY,
-  PAGES_SLUGS_QUERY,
-} from "@/lib/backend/sanity/queries";
+import { getAllPages, getPageBySlug } from "@/lib/mdx";
 
 // Types
 import { Page as PageType } from "@/lib/types/sanity.types";
-import { Seo } from "@/lib/types/sanity";
 
 // Utilities
 import { parseSlugToString } from "@/lib/utils/str";
@@ -35,66 +28,54 @@ type Props = {
  */
 export const dynamic = "force-static";
 export const dynamicParams = true;
-const DOCUMENT_TYPE = "page";
 
 export async function generateStaticParams() {
-  // Data
-  const slugs = await sanityFetch<string[]>(PAGES_SLUGS_QUERY, {
-    type: DOCUMENT_TYPE,
+  const pages = await getAllPages();
+
+  return pages.map((page) => {
+    const slugParts = page.slug?.current
+      ? page.slug.current.split("/").filter(Boolean)
+      : [page._id];
+
+    return {
+      slug: slugParts,
+    };
   });
-
-  return (slugs || [])
-    .filter((slug) => Boolean(slug))
-    .map((s) => {
-      const slug = s
-        .split("/")
-        .filter(Boolean)
-        .map((s) => s.toLowerCase().trim());
-
-      return {
-        slug: slug,
-      };
-    });
 }
 
 /**
  * Generate the Metadata settings for this pages
  */
 export const generateMetadata = async ({ params: { slug } }: Props) => {
-  const isDraftMode = (await draftMode()).isEnabled;
   const parsedSlug = parseSlugToString(slug);
-  const metadata = await sanityFetch<Seo>(
-    METADATA_BY_SLUG_QUERY,
-    {
-      type: DOCUMENT_TYPE,
-      slugs: [parsedSlug, `/${parsedSlug}`],
-    },
-    isDraftMode
-  );
+  const page = await getPageBySlug(parsedSlug);
+
+  if (!page) {
+    return {
+      title: "Page Not Found",
+      description: "",
+    };
+  }
+
+  // For MDX, thumbnail is already a string URL
+  const thumbnailUrl = page.thumbnail ? (page.thumbnail as any) : "/images/logo.png";
+
   return {
-    title: metadata?.title,
-    description: metadata?.description || "",
+    title: page.title,
+    description: "",
     openGraph: {
-      url: `https://www.langflow.org/${metadata?.slug?.current?.replace(/^\//, "")}`,
-      title: formatOpenGraphTitle(metadata?.title),
-      description: metadata?.description || "",
+      url: `https://www.langflow.org/${page.slug?.current?.replace(/^\//, "")}`,
+      title: formatOpenGraphTitle(page.title),
+      description: "",
       siteName: "Langflow",
-      images: [metadata?.thumbnail ? metadata?.thumbnail : "/images/logo.png"],
+      images: [thumbnailUrl],
     },
   };
 };
 
 const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
-  const isDraftMode = (await draftMode()).isEnabled;
   const parsedSlug = parseSlugToString(slug);
-  const page = await sanityFetch<PageType>(
-    PAGE_BY_SLUG_QUERY,
-    {
-      type: DOCUMENT_TYPE,
-      slugs: [parsedSlug, `/${parsedSlug}`],
-    },
-    isDraftMode
-  );
+  const page = await getPageBySlug(parsedSlug);
 
   if (!page) {
     notFound();

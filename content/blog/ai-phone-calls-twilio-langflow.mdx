@@ -1,0 +1,340 @@
+---
+title: "Build AI powered phone calls with Twilio ConversationRelay and Langflow"
+slug: "ai-phone-calls-twilio-langflow"
+excerpt: "Connect your Langflow flows to phone calls using Twilio ConversationRelay and build AI-powered voice assistants. Learn to handle speech-to-text and text-to-speech, and how to stream responses for a more natural conversation."
+publishedAt: "2025-06-10T01:41:15.000Z"
+featureImage: "/content/images/posts/de7f072786bfc0de571b065d70d675a22052672b-960x540.png"
+authors:
+  - phil
+tags: []
+---
+
+The state of AI today means that we can replace awkward phone trees and automated phone responses with an AI assistant that can understand intent and respond to callers in real time using natural language. The combination of high quality speech-to-text and text-to-speech models with large language models (LLMs) that can generate human sounding responses result in natural conversations with automated systems.
+
+For phone calls, [Twilio's ConversationRelay](https://www.twilio.com/en-us/products/conversational-ai/conversationrelay) handles everything on the speech-to-text and text-to-speech side of things, you just need to provide your own application to generate responses. That's where [Langflow](https://www.langflow.org/) fits in.
+
+In this post we're going to explore how to connect a Langflow flow to a phone conversation powered by Twilio ConversationRelay.
+
+## Things you will need
+
+If you want to build this application, you're going to need a few things:
+
+*   An [installation of Langflow](https://docs.langflow.org/get-started-installation) and an API key for an LLM to use within Langflow
+*   A [free Twilio account](https://www.twilio.com/try-twilio) with [ConversationRelay enabled](https://www.twilio.com/docs/voice/twiml/connect/conversationrelay/onboarding#integrate-twilio-with-conversationrelay)
+*   A voice-capable Twilio phone number
+*   A tunnelling service, like [ngrok, Cloudflare Tunnel, or Tailscale](https://www.twilio.com/en-us/blog/expose-localhost-to-internet-with-tunnel), or even [VS Code](https://www.twilio.com/en-us/blog/test-twilio-webhooks-vscode-port-forwarding) 
+*   [Node.js](http://node.js) (I'll be using version 22, the latest LTS at time of writing)
+
+With all those bits ready, let's build an application that connects ConversationRelay to Langflow.
+
+## Set up your flow
+
+We'll start by creating a flow in Langflow. Create a new flow in the Langflow interface and search the templates for the Memory Chatbot.
+
+![This screenshot displays the Langflow web interface, showing a "Templates" pop-up window with a search bar at the top, currently displaying "memory". Below the search bar, six template options are visible as cards. The top-left card is "Memory Chatbot," described as "Create a chatbot that saves and references previous messages, enabling...". Other visible templates include "Meeting Summary," "Instagram Copywriter," "Invoice Summarizer," and "Financial Report Parser." At the bottom, there's a "Start from scratch" option and a "Blank Flow" button. The left sidebar shows navigation options such as "All templates," "Use Cases," "Assistants," "Classification," "Coding," "Content Generation," "Q&A," "Methodology," "Prompting," "RAG," and "Agents."](/content/images/posts/b8214d93d5bb38e98789580fdb9950675bec8dd5-1233x930.png)
+
+Choose the Memory Chatbot and your flow will open, looking like this:
+
+![This screenshot displays the Langflow canvas, showcasing the "Memory Chatbot" flow. On the left sidebar, labeled "Components," there's a search bar and a list of categories.
+The main canvas area shows a visual flow of interconnected components. Key components visible include:
+"Chat Input" at the top left, with a text box showing "what is my name".
+"OpenAI" at the top right, with settings for "Model Name" (gpt-4o-mini) and "Temperature" (0.10). An "OPENAI_API_KEY" field is present but obscured.
+"Chat Memory" at the bottom left, described as "Retrieves stored chat messages from Langflow tables or an external memory".
+"Prompt" in the middle, with a "Template" field containing a system message "You are a helpful assistant that answer questions...".
+"Chat Output" at the far right, with a text box labeled "Text".
+Lines connect these components, indicating the data flow. At the top right of the canvas, there are "Playground" and "Publish" buttons.
+](/content/images/posts/9fdff72fe0999fdab88ba8da9ddacf7067fa4115-1233x930.png)
+
+Add your OpenAI API key to the model component. Or pick a different model if you would prefer.
+
+The Prompt component feeds the system instruction for the model. Edit the prompt to give your flow some personality or a focus of conversation. Since the result of the flow is going to be translated to speech, you should also add some instructions to ensure the conversation sounds natural. For example:
+
+> "This conversation is being translated to voice, so answer carefully and concisely. When you respond, please spell out all numbers, for example twenty not 20. Do not include emojis in your responses. Do not include bullet points, asterisks, or special symbols."
+
+The Twilio documentation includes [some guidelines for prompt engineering for voice responses in ConversationRelay](https://www.twilio.com/docs/voice/twiml/connect/conversationrelay#prompt-engineering-for-voice-responses-in-conversationrelay) that might help.
+
+Build the flow, open the playground and test out holding a conversation with your flow. Once you are happy with it your flow is ready to connect to ConversationRelay.
+
+## Build an application to connect a voice call to Langflow
+
+To connect ConversationRelay to Langflow we need to build an application that can handle HTTP requests and WebSocket connections. When a call is made to a Twilio phone number, Twilio makes a webhook request to your application. For ConversationRelay your application needs to return an XML response (known as TwiML) that will direct ConversationRelay to set up a WebSocket connection to your application. From then, Twilio will connect to the WebSocket server and start sending events containing the transcription of whatever the person on the other end of the phone says.
+
+For this application we're going to build the server using Node.js and [Fastify](https://fastify.dev/) as it has great support for both HTTP and WebSocket connections. Start by creating a directory to build your application in and initializing the app with npm.
+
+```bash
+mkdir langflow-conversation-relay
+cd langflow-conversation-relay
+npm init --yes
+```
+
+Install the dependencies that you will need. These include the [Langflow Client](https://www.npmjs.com/package/@datastax/langflow-client) and [Twilio's API helper library](https://www.npmjs.com/package/twilio) as well as the Fastify dependencies that we need.
+
+`npm install fastify @fastify/websocket @fastify/formbody @datastax/langflow-client twilio`
+
+### Preparing the server
+
+Create a _.env_ file to store your credentials in and an _index.js_ file for the application.
+
+`touch index.js .env`
+
+In the _.env_ file, add the base URL at which you access Langflow, a Langflow API key (if you have authentication switched on), and the ID of your flow, which you can find in Langflow under _Publish -> API access_.
+
+```bash
+LANGFLOW_URL=http://localhost:7860
+LANGFLOW_API_KEY=YOUR_LANGFLOW_API_KEY
+LANGFLOW_FLOW_ID=YOUR_FLOW_ID
+```
+
+Open _index.js_ and let's get building the server. Start by importing all the dependencies:
+
+```javascript
+import Fastify from "fastify";
+import fastifyWs from "@fastify/websocket";
+import fastifyFormbody from "@fastify/formbody";
+import twilio from "twilio";
+import { LangflowClient } from "@datastax/langflow-client";
+```
+
+Next, set up Fastify by creating a new Fastify server and registering the WebSocket and form body plugins:
+
+```javascript
+const fastify = Fastify({
+  logger: true,
+});
+fastify.register(fastifyWs);
+fastify.register(fastifyFormbody);
+```
+
+Create a client for the Langflow API and use the flow ID to get a pointer to the flow:
+
+```javascript
+const langflowClient = new LangflowClient({
+  baseUrl: process.env.LANGFLOW_URL,
+  apiKey: process.env.LANGFLOW_API_KEY
+});
+const flow = langflowClient.flow(process.env.LANGFLOW_FLOW_ID);
+```
+
+### Handling Twilio Voice webhooks
+
+Now we'll define a route for the initial webhook that Twilio will make a request to when a phone call is received. By default the request is an HTTP POST request. We'll use the Twilio library to generate the TwiML response that we need using the [`<Connect>`](https://www.twilio.com/docs/voice/twiml/connect) verb with the [`<ConversationRelay>`](https://www.twilio.com/docs/voice/twiml/connect/conversationrelay) noun.
+
+On the `<ConversationRelay>` element, set a URL to the WebSocket endpoint that we'll define soon. Since Twilio needs to connect to the WebSocket endpoint, we'll need to use the external tunnel URL. We haven't defined that yet, but we'll come back to it. 
+
+We can also set the first thing our chat bot says using the `welcomeGreeting` property.
+
+```javascript
+fastify.post("/voice", (request, reply) => {
+  const twiml = new twilio.twiml.VoiceResponse();
+  const connect = twiml.connect();
+  connect.conversationRelay({
+    url: `wss://${tunnelUrl}/ws`,
+    welcomeGreeting: "Ahoy! How can I help?",
+  });
+  reply.type("text/xml").send(twiml.toString());
+});
+```
+
+When a call is received, Twilio will make a request to this endpoint and set up the ConversationRelay connection to the WebSocket. So next we need to set up that WebSocket endpoint.
+
+### Handling ConversationRelay WebSocket events
+
+This time we register a GET request, passing an object containing `{ websocket: true }` to create a socket endpoint instead of an HTTP endpoint.
+
+```javascript
+fastify.register(async function (fastify) {
+  fastify.get("/ws", { websocket: true }, (socket, request) => {
+    socket.on("message", async (data) => {
+      // Handle data over the socket
+    });
+
+    socket.on("close", () => {
+      fastify.log.info(`WebSocket connection closed: ${socket.callSid}`);
+    });
+  });
+});
+```
+
+A socket object is passed into the request handlers and we use this object to listen for events on the WebSocket connection. ConversationRelay sends messages that have different types, which we need to handle in different ways. For this application we are interested in the _setup_ and _prompt_ message types.
+
+The setup event sends a bunch of details including the `CallSid`, an identifier for the live phone call. We'll save that to the socket object so that we can use it to identify the session for subsequent events.
+
+The prompt event includes a `voicePrompt` property that contains the transcribed speech from the person on the phone. We'll use the `voicePrompt` as the input to our Langflow flow and we'll use the `CallSid` as the session ID.
+
+[Using a consistent session ID with the Langflow API](https://docs.langflow.org/session-id) means that the messages all form part of the same conversation. The session ID is used by the Chat Memory component to fetch the previous messages from the conversation. Check out this [video on session IDs in Langflow](https://www.youtube.com/watch?v=5ox4Q7Z_Zyo) to learn more.
+
+We need to parse the WebSocket messages and then handle the setup and prompt messages. In the following code we use a `switch/case` to handle the WebSocket messages, including handling errors and any unexpected messages via the default handler.
+
+```javascript
+fastify.register(async function (fastify) {
+  fastify.get("/ws", { websocket: true }, (socket, request) => {
+    socket.on("message", async (data) => {
+      const message = JSON.parse(data);
+
+      switch (message.type) {
+        case "setup":
+          fastify.log.info(`Conversation started: ${message.callSid}`);
+          socket.callSid = message.callSid;
+          break;
+        case "prompt": {
+          fastify.log.info(`Processing prompt: ${message.voicePrompt}`);
+          // pass the prompt to Langflow to get a response
+        }
+        case "error":          fastify.log.error(`ConversationRelay error: ${message.description}`);
+          break;
+        default:
+          fastify.log.error("Unknown message type:", message);
+      }
+    });
+
+    socket.on("close", () => {
+      fastify.log.info(`WebSocket connection closed: ${socket.callSid}`);
+    });
+  });
+});
+```
+
+All we need to do now is finish handling the prompt message by passing the prompt to Langflow and returning the response. We initialised a flow object earlier and we can now use that object to run the flow with the user input from the prompt and the `CallSid` as the session ID. We should also handle any errors from Langflow and politely hang up if that happens.
+
+To send messages back to the phone call, you need to send a JSON stringified object with three properties:
+
+*   **type**: the type of response, we'll be using "text", but you can also send audio and DTMF tones, check out the [Twilio documentation for messages from your application to ConversationRelay](https://www.twilio.com/docs/voice/twiml/connect/conversationrelay#messages-from-your-application-to-conversationrelay) for more details
+*   **token**: the response we are returning to the caller
+*   **last**: whether the response is complete, which we will set to true for now
+
+To end the call, as we will do in the case of an error, you can send an object with the type property set to "end".
+
+```javascript
+        case "prompt": {
+          fastify.log.info(`Processing prompt: ${message.voicePrompt}`);
+          try {
+            const response = await flow.run(message.voicePrompt, {
+              session_id: socket.callSid
+            });
+            socket.send(JSON.stringify({
+              type: "text",
+              token: response.chatOutputText(),
+              last: true
+            });
+          } catch (error) {
+            fastify.log.error(`Error processing prompt: ${error.message}`);
+            socket.send(JSON.stringify({
+              type: "text",
+              token: "I'm sorry, an application error has occurred.",
+              last: true
+            });
+            socket.send(JSON.stringify({ type: "end" }));
+          }
+        }
+```
+
+That's all we need to interface with ConversationRelay. Finish the application by adding the following lines at the bottom of the file to start the Fastify server.
+
+```javascript
+try {
+  await fastify.listen({ port });
+} catch (err) {
+  fastify.log.error(err);
+  process.exit(1);
+}
+```
+
+### Running the application
+
+We now need to run the application as well as a tunnel so that Twilio can connect to it. First, start up your tunnel application, you will need it to point to _localhost:3000_.
+
+As an example, if you're using ngrok run `ngrok http 3000`.
+
+Grab the domain of your tunnel and add it to the _.env_ file:
+
+`TUNNEL_DOMAIN="this-is-an-example.ngrok-free.app"`
+
+Start the application with the command:
+
+`node --env-file=.env ./index.js`
+
+Now your application is running, we need to configure Twilio to use it.
+
+### Configuring the Twilio number
+
+Log in to your Twilio account, if you don't already have a voice capable number, buy one now. Once you have a number ready, open its configuration page.
+
+Under the voice configuration, configure the number with a webhook when the call comes in. Set the webhook to your tunnel URL plus the _/voice_ endpoint. For example: _https://this-is-an-example.ngrok-free.app/voice_.
+
+![A screenshot of the Twilio Console's "Configure" tab for a phone number. The "Voice Configuration" section is visible. Under "Configure with", the "A call comes in" option is set to "Webhook", and a URL field, partially obscured but showing "https://...ngrok-free.app/voice", is highlighted with a red box. "HTTP POST" is selected as the method.](/content/images/posts/46071eaf119fb76395aef03dd0c242d4d04fcec3-1233x930.png)
+
+Save the configuration, dial your number, and you should be talking to your Langflow flow over the phone.
+
+## Streaming
+
+Interacting with the flow over the phone can be quick, but you might notice if the flow returns a long response you have to wait a while to hear it. This isn't a great experience in a synchronous voice conversation. To optimize for this, we can request a streaming response from Langflow and start sending tokens to the ConversationRelay as we receive them. Twilio can then decide when to convert the tokens to speech as they arrive.
+
+You'll need to open your flow in Langflow again. Select the model component and toggle streaming to on. You might need to open the controls for the model to find the streaming option.
+
+![An animation showing how to turn on streaming for the model component in the Langflow canvas. Start by clicking controls at the top of the component, then find the Stream setting and turn on both switches.](/content/images/posts/f032baa580b624c15484ca3f4a48d859acfe63d5-800x582.gif)
+
+Once you've done that, return to the code. We're going to replace the code that calls `flow.run` with the streaming function `flow.stream`. The stream function returns a ReadableStream of chunks from the Langflow API. Check out this blog post on [streaming content from Langflow](https://www.datastax.com/blog/how-to-stream-responses-from-langflow-api-in-node-js) for more details.
+
+We can send these chunks straight on to Twilio with the same method as before, but setting the last property to false until the stream is complete.
+
+```javascript
+        case "prompt": {
+          fastify.log.info(`Processing prompt: ${message.voicePrompt}`);
+          try {
+            const response = await flow.stream(message.voicePrompt, {
+              session_id: socket.callSid
+            });
+            for await (const chunk of response) {
+              if (chunk.event === "token") {
+                socket.send(JSON.stringify({
+                  type: "text",
+                  token: chunk.data.chunk,
+                  last: false
+                }));
+              } else if (chunk.event === "end") {
+                socket.send(JSON.stringify({
+                  type: "text",
+                  token: "",
+                  last: true
+                }));
+              }
+            }
+          } catch (error) {
+            fastify.log.error(`Error processing prompt: ${error.message}`);
+            socket.send(JSON.stringify({
+              type: "text",
+              token: "I'm sorry, an application error has occurred.",
+              last: true
+            });
+            socket.send(JSON.stringify({ type: "end" }));
+          }
+        }
+```
+
+Restart your application and call your phone again. Now, even if you get long responses from Langflow, the audio should start sooner as Twilio buffers and turns the stream into audio as it is received. There are some [pros and cons to consider when choosing between streaming and waiting for the full response](https://www.twilio.com/docs/voice/twiml/connect/conversationrelay#choosing-between-streaming-and-non-streaming-mode-for-llm-responses), but now you know how to build both with Langflow.
+
+## ConversationRelay and Langflow
+
+Building AI-enabled voice applications is nice and easy when you combine Twilio ConversationRelay with Langflow. There is more to learn about ConversationRelay, such as how to handle different languages, hand off to a human, deal with interrupts, and prompt your model for the best results. Check it all out in the [documentation for ConversationRelay](https://www.twilio.com/docs/voice/twiml/connect/conversationrelay).
+
+You can check out [the code for this application on GitHub](https://github.com/langflow-ai/langflow-twilio-voice).
+
+For more on building AI applications and agents with Langflow, check out [how to use web search in your flows](__GHOST_URL__/web-search-in-your-ai-agents-a-langflow-tutorial/), how to build a [fashion recommendation app in Langflow](__GHOST_URL__/building-an-ai-powered-fashion-recommendation-app/) or [how to generate personalized action figures with Next.js and Langflow](__GHOST_URL__/generate-personalized-action-figures-and-mythical-creatures-using-ai-with-langflow/).
+
+## FAQ
+
+### What is Twilio ConversationRelay?
+
+Twilio's ConversationRelay handles speech-to-text and text-to-speech processing for phone calls, allowing developers to focus on generating responses using their own applications.
+
+### What is Langflow?
+
+Langflow is an intuitive, visual low-code platform for building and deploying AI agents and applications, especially those leveraging Retrieval-Augmented Generation (RAG), with support for various large language models, vector databases, and AI tools.
+
+### What technologies power this application?
+
+Twilio ConversationRelay handles speech-to-text and text-to-speech, Langflow with an integrated LLM generates responses, and a Node.js server with Fastify acts as the intermediary, using a tunneling service to connect everything and create an AI-powered phone call experience. These technologies work together to translate spoken words to text, generate AI responses, and then convert those responses back to speech for the caller.
+
+### How are WebSockets used in this application?
+
+WebSockets facilitate real-time communication between the Twilio ConversationRelay and the Node.js server, enabling the server to receive transcribed speech and send AI-generated responses continuously during the phone call.

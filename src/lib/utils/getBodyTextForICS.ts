@@ -74,43 +74,61 @@ export function getBodyTextForICS(body: null | string | SerializedBlock[]): stri
  */
 function convertMarkdownToPlainText(markdown: string): string {
   let text = markdown;
-  
+
+  // Extract href from HTML anchor tags and button tags before removing them
+  // Convert <a href="url">text</a> to "text (url)"
+  text = text.replace(/<a\s+[^>]*href=["']([^"']+)["'][^>]*>([^<]*)<\/a>/gi, (match, url, linkText) => {
+    return linkText ? `${linkText} (${url})` : url;
+  });
+
+  // Convert <button href="url">text</button> to "text (url)"
+  text = text.replace(/<button\s+[^>]*href=["']([^"']+)["'][^>]*>([^<]*)<\/button>/gi, (match, url, linkText) => {
+    return linkText ? `${linkText} (${url})` : url;
+  });
+
   // Convert markdown links [text](url) to "text (url)"
   text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, linkText, url) => {
     return `${linkText} (${url})`;
   });
-  
+
+  // Remove all other HTML tags (including <br>, <br/>, etc.)
+  // Replace <br> and <br/> with newlines first
+  text = text.replace(/<br\s*\/?>/gi, "\n");
+
+  // Remove all remaining HTML tags
+  text = text.replace(/<[^>]+>/g, "");
+
   // Remove markdown formatting but keep the text
   // Remove bold **text** or __text__
   text = text.replace(/\*\*([^*]+)\*\*/g, "$1");
   text = text.replace(/__([^_]+)__/g, "$1");
-  
+
   // Remove italic *text* or _text_ (but be careful not to break links we just converted)
   text = text.replace(/(?<!\()\*([^*]+)\*(?!\))/g, "$1");
   text = text.replace(/(?<!\()_([^_]+)_(?!\))/g, "$1");
-  
+
   // Remove code blocks ```code```
   text = text.replace(/```[\s\S]*?```/g, "");
-  
+
   // Remove inline code `code`
   text = text.replace(/`([^`]+)`/g, "$1");
-  
+
   // Remove headers # ## ###
   text = text.replace(/^#{1,6}\s+(.+)$/gm, "$1");
-  
+
   // Remove list markers - * - etc.
   text = text.replace(/^[\*\-\+]\s+/gm, "");
   text = text.replace(/^\d+\.\s+/gm, "");
-  
+
   // Remove blockquotes >
   text = text.replace(/^>\s+/gm, "");
-  
+
   // Clean up multiple newlines
   text = text.replace(/\n{3,}/g, "\n\n");
-  
+
   // Trim whitespace
   text = text.trim();
-  
+
   return text;
 }
 

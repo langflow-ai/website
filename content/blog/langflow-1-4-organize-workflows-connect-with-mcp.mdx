@@ -1,0 +1,79 @@
+---
+title: "Langflow 1.4: Organize Workflows + Connect with MCP"
+slug: "langflow-1-4-organize-workflows-connect-with-mcp"
+excerpt: "TL;DR
+
+Langflow 1.4 introduces Projects to organize and scale workflows and makes it simple to expose them over MCP. With Langflow Desktop, your machine becomes a local A"
+publishedAt: "2025-05-07T14:00:15.000Z"
+featureImage: "/content/images/posts/80979ab05bf95a4ecab05809d6bccac32449209c-1600x900.png"
+authors:
+  - scott-2
+tags:
+  - mcp
+---
+
+### TL;DR
+
+Langflow 1.4 introduces Projects to organize and scale workflows and makes it simple to expose them over MCP. With [Langflow Desktop](https://www.langflow.org/desktop), your machine becomes a local AI agent factory, ready to build and serve powerful tools, data, and context to your favorite apps.
+
+## **Projects**
+
+Langflow 1.4 is now generally available! This release introduces **Projects**, a new way to organize, modularize, and expose your AI workflows.
+
+A Project is the space containing flows, and it enables you to:
+
+*   Modularize complex logic into smaller, reusable pieces.
+*   Keep large systems organized and scalable.
+*   Build flows that call each other cleanly through the _Run Flow_ component.
+
+The idea is to have a unified space where shared flows natively “talk” to each other and accomplish tasks, gradually adding functionality that turns a Project into the central hub for managing flows, execution, logs, and task orchestration—bringing modularity, visibility, and control to AI systems.
+
+## **Projects as MCP**
+
+Beyond organization, Projects are now also **MCP servers**!
+
+![](/content/images/posts/b6a0ce11e4dea5217c8182291a0a4d1eeda38a83-1600x1035.png)
+
+![](/content/images/posts/208ae6e653e55a9072f9b1d7de546bea181f0380-1600x972.png)
+
+MCP (Model Context Protocol) is an open standard from Anthropic designed to establish seamless interoperability between LLM applications and external tools, APIs, or data sources.
+
+When you expose a Project, each flow inside it becomes a callable **action** (or tool) in the MCP Server, so external apps such as **Cursor** and **Claude Desktop** will be able to discover and use your flows directly. 
+
+![](/content/images/posts/3c4ca0fa3d8bc5f595fcec234b30da73593a2c5f-1600x650.png)
+
+These actions can be enabled and configured on how they are presented to agents. Just set names and descriptions, choose which ones to expose and copy the MCP command to connect!
+
+![](/content/images/posts/4b543b42da1507ddd1f12bbb48d8fa6a3036f647-1600x746.png)
+
+## **Smarter tool configuration**
+
+We’ve also been making progress in improving how agents can access tools. 
+
+In the same way that you can configure an MCP action, tools are now easier to configure through the UI. 
+
+![](/content/images/posts/404d816f684e30db693fe19f14dfcbf9bffc8fd6-1600x828.png)
+
+Once you turn a component into Tool Mode – it will display its available **actions** to be enabled. Changing an action name or description can completely impact how and when agents will call it, so details can be valuable.
+
+The parameters controlled by the agent are also displayed for visibility. Some component fields may be manually filled while others will be decided by the calling agent. The goal is to let agents use your tools intelligently, while giving you fine-grained control over how each tool behaves.
+
+## **Your local AI agent factory**
+
+Langflow is now a first-class citizen in the MCP ecosystem—acting as both a builder and aggregator of MCP tools. 
+
+Use the MCP Connection component to bring in external tools, customize their behavior through flows, and re-expose them as new tools. Or compose a series of specialized agents inside a Project and instantly expose them to any MCP-compatible client. With Langflow, you don’t just connect tools—you create, adapt, and orchestrate them.
+
+![](/content/images/posts/5c7bb8c35fe80303af9f3901d458e077f1e15a39-964x1130.png)
+
+With [Langflow Desktop](https://www.langflow.org/desktop), this becomes your local AI agent factory. Build, test, and run flows entirely on your machine. Create specialized agents, wire them together, and expose them as MCP tools—all without relying on external infrastructure. It’s a full agent development environment, right on your desktop.
+
+![](/content/images/posts/3dcd55c56bc36ffca66a504eabb30357d90eeda2-700x544.png)
+
+* * *
+
+## **Try Langflow Today**
+
+Langflow is open-source and evolving fast, thanks to the support of our community. Join our [Discord](https://discord.com/invite/EqksyE2EX9) to connect with other builders, share feedback, and get support. Check out the [Langflow GitHub repository](https://github.com/langflow-ai/langflow) to explore, contribute, or star the project 🌟
+
+Your feedback and ideas help shape the future of Langflow!

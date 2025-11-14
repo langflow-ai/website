@@ -3,33 +3,23 @@
 // Dependencies
 import type { ImageProps } from "next/image";
 import BaseImage from "next/image";
-import {
-  useNextSanityImage,
-  UseNextSanityImageBuilder,
-} from "next-sanity-image";
-
-// Backend
-import { client } from "@/lib/backend/sanity/client";
-
-// Types
 
 // Props types
 type Props = Omit<ImageProps, "src"> & {
   /**
-   * The image from Sanity.
+   * The image path (now a static path instead of Sanity image).
    */
-  image: any;
-
-  imageBuilder?: UseNextSanityImageBuilder;
+  image: string | { src?: string; alt?: string };
 };
 
-const Image = ({ alt, image, imageBuilder, ...props }: Props): JSX.Element => {
-  // Variables
-  const imageProps: any = useNextSanityImage(client, image, { imageBuilder });
+const Image = ({ alt, image, ...props }: Props): JSX.Element => {
+  // Handle both string and object image formats
+  const imageSrc = typeof image === "string" ? image : image?.src || "";
+  const imageAlt = alt || (typeof image === "object" ? image?.alt : "") || "";
 
   const imgProps = {
-    ...imageProps,
-    alt: alt || image?.alt || "",
+    src: imageSrc,
+    alt: imageAlt,
     sizes:
       "(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1280px) 1280px, 1920px",
     ...props,

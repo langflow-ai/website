@@ -1,0 +1,53 @@
+---
+title: "Langflow Micro Tutorials — Enhanced Truncator"
+slug: "langflow-micro-tutorials-enhanced-truncator"
+excerpt: "Welcome back to our Langflow micro tutorials series! We’re continuing with simple Langflow examples, emphasizing the design of custom…"
+publishedAt: "2023-09-15T16:57:23.000Z"
+featureImage: "/content/images/posts/daedf85d765bd6711e97112fae5b8226da1884ab-800x441.png"
+authors:
+  - rodrigo
+tags: []
+---
+
+Welcome back to our Langflow micro tutorials series! We’re continuing with simple Langflow examples, emphasizing the design of custom components.
+
+_This article includes a link for downloading the described flow. Use it to modify and understand the components involved._
+
+Today, we’re focusing on an enhanced version of our Document Truncator, demonstrating how to add options to a custom component. Enjoy!
+
+#### Main Features
+
+**Enhanced Document Truncator:** This custom component enables document truncation while preserving either the initial or final characters as determined by the _truncate\_size_. The _build\_config_ method is used to customize the input fields, including the dropdown selection box.
+
+![](/content/images/posts/21b60eb26b7522b2dd7ef8a6180f9d03145c7caf-800x441.png)
+
+#### Objective
+
+The aim of this flow is to demonstrate the usefulness of field customization when creating custom components.
+
+In this updated version of our custom component, we not only let the user decide how many chars to truncate but also add a dropdown field to decide how this process will happen — pass either the first or last _truncate\_size_ characters to the prompt template — which can be done by using the _build\_config_ method.
+
+![](/content/images/posts/e77414b012e4f318d0611710e16a08867f6fc0ed-800x441.png)
+
+Here we created a _str_ input field and assigned it to have _options_ (meaning it is a dropdown selector) in the config dict. We also defined this field as _required_ and created an _info_ tooltip for it.
+
+![](/content/images/posts/096d405496235403fedc129dc30df7fa92be978c-800x441.png)
+
+Below is the corresponding _build\_config_ function:
+
+```python
+def build_config(self): 
+    return {"how": { "options": ["first", "last"],  
+            "required": True,  
+            "info": "Select whether to retain the first or last characters as specified by the 'truncate_size'." }}
+```
+
+Finally, we also set the _self.repr\_value_ variable, which determines the content to be displayed in the component status icon. Here I chose to display the truncated text.
+
+![](/content/images/posts/9b47bb0c512b815674064a52e29d1bf989155f36-800x441.png)
+
+This status will show completely different outputs depending on the _how_ field input_._
+
+* * *
+
+#### Download Flow (gist)

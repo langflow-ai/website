@@ -15,3 +15,5 @@ node_modules
 .env.sentry-build-plugin
 
 .DS_Store
+langflow-staging-export*/*
+sanity-export.ndjson

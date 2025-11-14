@@ -112,18 +112,7 @@ export type Page = {
     source?: string
     _type: 'seoSlug'
   }
-  thumbnail?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
+  thumbnail?: string
   body?: string
 }
 
@@ -140,18 +129,7 @@ export type Event = {
     source?: string
     _type: 'seoSlug'
   }
-  thumbnail?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
+  thumbnail?: string
   excerpt?: string
   body?: string
   dates?: Array<
@@ -280,18 +258,7 @@ export type Seo = {
 
 export type CardPreview = {
   _type: 'card.preview'
-  thumbnail?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
+  thumbnail?: string
   title?: string
   description?: string
 }

@@ -1,7 +1,7 @@
 // Dependencies
 import { FC } from "react";
 import Link from "next/link";
-import { getImageUrl } from "@/lib/backend/sanity/client";
+import Image from "next/image";
 
 // Components
 import Display from "@/components/ui/Display";

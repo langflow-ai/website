@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
-import { BLOG_POSTS_PAGINATED_QUERY } from "@/lib/backend/sanity/queries";
-import { sanityFetch } from "@/lib/backend/sanity/client";
-import { BlogPost } from "@/lib/types/sanity";
-import { generateBlogExcerpt } from "@/lib/utils/generateBlogExcerpt";
+import { getAllPosts } from "@/lib/mdx";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -12,20 +9,23 @@ export async function GET(request: Request) {
   const start = offset;
   const end = offset + limit;
 
-  const posts = await sanityFetch<BlogPost[]>(
-    BLOG_POSTS_PAGINATED_QUERY,
-    { start, end },
-    false
-  );
+  // Get all posts from MDX files
+  const allPosts = await getAllPosts();
 
-  // Ensure each post has an excerpt
-  const postsWithExcerpts = await Promise.all(
-    posts.map(async (post) => ({
-      ...post,
-      excerpt:
-        post.excerpt ?? (await generateBlogExcerpt(post.body)) ?? undefined,
-    }))
-  );
+  // Apply pagination
+  const posts = allPosts.slice(start, end);
+
+  // Transform to match the expected API response format
+  const postsWithExcerpts = posts.map((post) => ({
+    title: post.title,
+    slug: post.slug,
+    excerpt: post.excerpt || post.body.substring(0, 200) + "...",
+    publishedAt: post.publishedAt,
+    featureImage: post.featureImage,
+    authors: post.authors,
+    author: post.author,
+    _id: post._id,
+  }));
 
   return NextResponse.json(postsWithExcerpts);
 }

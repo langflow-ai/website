@@ -1,0 +1,107 @@
+---
+title: "Unlocking Local AI: Using Ollama with Agents"
+slug: "local-ai-using-ollama-with-agents"
+excerpt: "Learn how Ollama is a more secure and cheaper way to run agents without exposing data to public model providers. "
+publishedAt: "2025-03-26T07:10:00.000Z"
+featureImage: "/content/images/posts/1ec91678d268c072fd301af7473f4dd28fdd51f6-1920x1273.heif"
+authors:
+  - david
+tags: []
+---
+
+# Unlocking Local AI: Using Ollama with Agents
+
+By now, there’s a good chance you’ve heard about generative AI or agentic flows (If you’re not familiar with agents and how they work watch [this video](https://www.youtube.com/watch?v=NuxsHifAQa4) to get up to speed). There’s plenty of information out there about building agents with providers like OpenAI or Anthropic. However, not everyone is comfortable with exposing their data to public model providers. We get a consistent drum of questions from folks wondering if there’s a more secure and cheaper way to run agents. [Ollama](https://ollama.com/) is the answer.
+
+If you've ever wondered how to run AI models securely on your own machine without sharing your data with external providers, well, here you go!
+
+If you’d rather watch this content, [here’s a video](https://www.youtube.com/watch?v=bZDk5sgMLsk) covering the same topic.
+
+## Why use Ollama?
+
+[Ollama](https://ollama.com/) enables you to run models locally, ensuring that your data remains private and secure. Not only that, it won’t cost you any tokens. With Ollama, you can confidently run models on your hardware, knowing that your data is safe.
+
+## Getting started with Ollama
+
+### Step 1: Install the model
+
+If you haven’t used Ollama before, you’ll need to install it locally first. Download and install the version needed for your operating system. It takes about five minutes.
+
+![Download and install Ollama](/content/images/posts/5d13812b4259ab898cd15d8d15d745b43d6fefad-1999x1212.png)
+
+Then, navigate to the models section and select tools. It's crucial to choose models that support tool calling when you want to build an agent.
+
+![Choose "models" in the menu](/content/images/posts/7d371b96f7cb252c736e9f4c24f04970d179af9d-1999x1212.png)
+
+![Choose "Tools" from the model filter at the top of the page](/content/images/posts/1807b913fc6d84ad88cc1e93e6c626a5f59c0684-1999x1208.png)
+
+For this post, we'll use [Alibaba's Qwen 2.5 7 billion parameter model](https://ollama.com/library/qwen2.5), which is a great choice for local tool calling and agent interactions. It's only a 4.7GB download (Llama 3.1 405b is 243GB!) and is suitable to run on most machines.
+
+![Copy the "ollama run qwen2.5" command](/content/images/posts/5be8d1ee468f853ad48d9518695171c1ee3127c2-1999x1250.png)
+
+Copy the installation command and paste it into your terminal after installing Ollama. Once the download is complete, you're ready to start working with the model!
+
+![Execute "ollama run qwen2.5" in your terminal to download and install the model in Ollama](/content/images/posts/34e533b1b4f84833cd9625059415e0c0cdc07b6d-1953x320.png)
+
+### Step 2: Setting up Langflow
+
+Next, we'll use Langflow to build an agent.
+
+1. Install Langflow: you can either [download the desktop application](https://www.langflow.org/desktop) or [follow the installation instructions in the docs](https://docs.langflow.org/get-started-installation).
+2. Create a New Flow: Choose the “Simple Agent” template.
+
+![Choose the "Simple Agent" template from the provided options](/content/images/posts/61027d6915dbd9f116dfadc6d513da8d643f0895-1999x1037.png)
+
+Once opened, you’ll see a ready-made simple agentic flow complete with an agent (defaulting to OpenAI’s gpt-4o-mini LLM), both URL and calculator tools, and chat input and output components.
+
+![The Simple Agent flow defaults to using OpenAI's gpt-4o-mini](/content/images/posts/4b12a239236744b7083a7d9736b58547d67d602a-1999x1121.png)
+
+## Transitioning to Ollama
+
+Now, let's switch from OpenAI to Ollama:
+
+1. **Select custom model** - In the model provider list, choose the custom option.
+
+   Since our goal is to use Ollama and not OpenAI, click the “Model Provider” dropdown in the agent component and choose “Custom.”
+
+   ![Choose "Custom" from the Language Model dropdown](/content/images/posts/523059d71067a7dd66a3e6ac0a8a97163b09b5a7-1820x1754.gif)
+
+2. **Add Ollama component** - Drag and drop the Ollama model into your flow and connect the “Language Model” nodes.
+
+   ![Pull the Ollama model component over from the left hand side menu and connect the "Language Model" nodes](/content/images/posts/0a15a8bd73a28e918c17d6aaf6c308b002c5ae52-3438x1930.gif)
+
+3. **Refresh the model list and choose qwen2.5** - Make sure to refresh the model name dropdown to populate the available models. It's essential to have Ollama running locally for this setup to work.
+
+   *To use an Ollama model with your agent, it must support tool calling. In Langflow, enable the “Tool Model Enabled” radio button to filter models that have this capability. Once enabled, select qwen2.5 for your operations.*
+
+   ![Ensure the enable the "Tool Model Enabled" radio button to filter on tool enabled models only](/content/images/posts/80768427fa98f6fa03677796099f9813270f7af1-932x1856.gif)
+
+### Running your query
+
+Now, let's run a query using the Ollama model. Open the “Playground” and try typing in an example like “convert 200 USD to INR”. If everything is wired up correctly, the model will attempt to answer your query using the tools at its disposal.
+
+![Open the Playground using the top right hand corner menu](/content/images/posts/6874e8669c3d2f9d69cc0c1b209e9b10d9c92b51-1999x1394.png)
+
+![Try an example like "convert 200 USD to INR"](/content/images/posts/90296474b0ecb6dc8e1464a4b505fa7868c4fa6a-1999x1005.png)
+
+*Keep in mind that local models may take longer to process, especially larger ones. However, Qwen 2.5 is optimized for smaller machines, making it pretty solid for local use.*
+
+## Experimenting with inputs
+
+When working with smaller local models, you may need to experiment with your inputs. Sometimes, you might have to explicitly instruct the model to do something, like use the web to find the latest exchange rates. Adjusting the model's temperature settings can also help; starting with a conservative value (like 0.10) is a good practice, but feel free to increase it for more creative responses.
+
+![The smaller model didn't quite get it right the first time. Give it a nudge with an extra instruction like "use the web to get the latest exchange rates"](/content/images/posts/151ae4037ef980454b6cfb79c054ee723059e1e6-1660x1780.png)
+
+Notice how the agent updated its approach when I told it to “use the web to get the latest exchange rates” and gave the correct answer. This time, it used the URL tool to grab the latest exchange rate from the web as compared to relying solely on the knowledge it was trained on.
+
+![Now we can see it properly used the URL tool to fetch exchange rates](/content/images/posts/c5aa7b6cecf505c3c2ff85f8ce58e27ed2607f60-1618x1816.png)
+
+## Conclusion
+
+Finally, once your Ollama agent is set up within Langflow, you can integrate it into your applications via API, allowing you to enable your apps with full agentic capability.
+
+![Use the API option to connect AI flows to your applications](/content/images/posts/5ed4775e78502e4082b1c3b27d006263dd47a281-818x240.png)
+
+That's all it takes to harness the power of local models securely with Ollama and your agents. If you have any questions or need further assistance, feel free to reach out on our [Discord](https://discord.com/invite/EqksyE2EX9).
+
+Happy coding!

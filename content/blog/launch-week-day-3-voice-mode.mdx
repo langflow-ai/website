@@ -1,0 +1,126 @@
+---
+title: "Launch Week Day 3 - Voice Mode 🎙️"
+slug: "launch-week-day-3-voice-mode"
+excerpt: "Today, we’re thrilled to introduce a cool new feature in Langflow: Voice Mode! 🎤 This new addition allows you to engage in natural, voice-based conversations with any of your Langflow flows."
+publishedAt: "2025-04-02T13:13:44.000Z"
+featureImage: "/content/images/posts/36da26bf45ce1241614aa6484a84506614785e6b-960x540.png"
+authors:
+  - david
+tags:
+  - launch-week
+---
+
+Today, we’re thrilled to introduce a cool new feature in Langflow: Voice Mode! 🎤
+
+This new addition allows you to engage in natural, voice-based conversations with any of your Langflow flows. This feature is still under active development, and we're eager for you to try it out and share your insights.
+
+Let’s dive in and see how to do it.
+
+{%youtube bEl0BVZ4Lm8 %}
+
+# How It Works
+
+First, head over to the Playground in Langflow’s interface. You’ll find this in the top-right hand corner of your Langflow UI within any flow.
+
+![](/content/images/posts/af36c2533c11e5e1560cf93a0b6accd1c2246b58-400x95.png)
+
+In the bottom right corner of your chat, you’ll find a shiny new microphone icon.🎙️
+
+![](/content/images/posts/6bfdf241152d086e11fa22d2ae4f5aa83bb0acac-400x111.png)
+
+Click the microphone icon, and you’ll be prompted to enter your OpenAI API key. Enter your key and click _Save_.
+
+![](/content/images/posts/49528f23639273c8a553a479f9c2bedb216b1f7e-400x370.png)
+
+_(This feature is powered by OpenAI’s voice chat technology. Once your key is entered and saved, it becomes a global variable in Langflow, accessible from any component or flow)_
+
+# Setting Up Your Voice Chat
+
+After activation, a configuration dialog appears.
+
+![](/content/images/posts/05a95f4a740b3df996a745984a12c41395e6f4af-400x670.png)
+
+## Here, you can:
+
+### Choose a Voice
+
+Voice chat comes with a default set of voices from OpenAI, but you can expand this list using [ElevenLabs](https://elevenlabs.io/app/home) by entering an [ElevenLabs API key](https://elevenlabs.io/app/settings/api-keys). _(similar to entering your OpenAI key above, when you enter your ElevenLabs key and click away, it will be stored in a global variable)_
+
+### Select Your Audio Input
+
+Choose your preferred audio input. Note that a higher-quality microphone will improve OpenAI’s voice chat understanding.
+
+### Pick Your Language
+
+Select from English, Italian, French, Spanish, or German for enhanced speech recognition. You can also ask your agent to speak to you in various languages.
+
+# Start Chatting
+
+Once configured, just start talking. Your voice agent can do anything your normal agent can do. However, in this initial version there are some considerations you should be aware of.
+
+1.  When using voice mode in agentic flows, use very descriptive tool names and descriptions. This is key to ensure the agent knows exactly what a tool is and what it can do directly from the tool itself, which ties into #2. _(you should arguably be doing this anyway for the best agentic experience)_
+2.  The voice agent does not use the same agent instructions as defined in your flow which is one reason why #1 above is important. If you have custom agent instructions, don’t expect it will follow those.
+3.  Voice mode only keeps context within the conversation session you are in. If you exit out of the conversation and close the playground, it won’t remember your conversation the next time you start chatting.
+
+# Use Voice Mode in Your Apps
+
+It’s one thing to be able to chat with your agent from the playground, but it’s even better to chat directly with your own apps. The new voice mode comes with a websocket endpoint at /api/v1/voice/ws/flow\_tts that allows you to interface directly with any langflow flow.
+
+Below is an example using [OpenAI’s realtime console](https://github.com/openai/openai-realtime-console/tree/websockets) websocket implementation.
+
+![](/content/images/posts/3bb7adf4985307567342184770c8947003a75c17-1600x992.png)
+
+On the left is Langflow, on the right is the console. You speak to the console, your voice is then transcribed using OpenAI’s TTS (text-to-speech) service, and then processed by your Langflow workflow flow\_tts endpoint.
+
+Here’s an example of a fully built websocket endpoint for access to Langflow:
+
+`ws://127.0.0.1:7860/api/v1/voice/ws/flow_tts/cc624f50-c695-4e25-bd83-e4497f5cbd1a/relay-session`
+
+_(In the example above, `cc624f50-c695-4e25-bd83-e4497f5cbd1a` is the flow ID for our Langflow agent)_
+
+OpenAI’s realtime console comes with a [relay](https://github.com/openai/openai-realtime-console/tree/websockets?tab=readme-ov-file#using-a-relay-server) that you can modify to use your own server.
+
+Here’s a snippet from a basic implementation configured to talk to a Langflow flow:
+
+```javascript
+/ relay.js - WebSocket relay server for text-to-speech functionality
+import { WebSocketServer, WebSocket as NodeWebSocket } from 'ws';
+import { v4 as uuidv4 } from 'uuid';
+/**
+ * RealtimeRelay - Manages WebSocket connections between a frontend client and Langflow backend
+ * Primarily handles text-to-speech (TTS) functionality with message queueing and audio response handling
+ */
+export class RealtimeRelay {
+  constructor({
+    flowId = 'cc624f50-c695-4e25-bd83-e4497f5cbd1a',
+    sessionId = 'relay-session',
+    host = '127.0.0.1',
+    port = 7860,
+    path = '/api/v1/voice/ws/flow_tts',
+    pingInterval = 30000,
+    maxQueueSize = 100
+  } = {}) {
+    // Connection details
+    this.flowId = flowId;
+    this.sessionId = sessionId;
+    this.path = path;
+    
+    // Construct backend URL with protocol detection
+    const protocol = host.includes('localhost') || host.includes('127.0.0.1') ? 'ws:' : 'wss:';
+    this.backendUrl = `${protocol}//${host}:${port}${path}/${this.flowId}/${this.sessionId}`;
+    console.log('🔌 Connecting to backend at:', this.backendUrl);
+```
+
+[Full relay.js example](https://gist.github.com/SonicDMG/2ce15db0b2a63e0ef23f35da485f590e)
+
+To use this example, clone [OpenAI’s realtime console](https://github.com/openai/openai-realtime-console/tree/websockets), follow the setup instructions, and replace the default [relay.js with this one](https://gist.github.com/SonicDMG/2ce15db0b2a63e0ef23f35da485f590e) above using one your flow IDs.
+
+# Conclusion
+
+Ready to talk to your flows? Dive into Langflow’s new voice mode today and experience the future of interactive AI.
+
+Now that you know how these new features work, here are some next steps:
+
+*   Join the [Langflow Discord](https://discord.com/invite/EqksyE2EX9) and let us know what you're building!
+*   Register for our [Launch Week Livestream](https://dtsx.io/langflow_launch) to hear more about the `1.3` release and a **HUGE** surprise we're announcing on Thursday.
+*   Check out our [project on Github](https://github.com/langflow-ai/langflow) and give us a star if you like what you see!

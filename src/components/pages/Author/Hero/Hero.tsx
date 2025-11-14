@@ -1,7 +1,7 @@
 // Dependencies
 import { FC } from "react";
 import Link from "next/link";
-import { getImageUrl } from "@/lib/backend/sanity/client";
+import Image from "next/image";
 
 // Components
 import Display from "@/components/ui/Display";
@@ -32,7 +32,8 @@ const Hero: FC<Props> = ({
   github,
   website,
 }) => {
-  const avatarUrl = avatar ? getImageUrl(avatar) : null;
+  // Avatar is now a direct URL string
+  const avatarUrl = typeof avatar === 'string' ? avatar : null;
 
   return (
     <section className={styles.hero}>
@@ -41,10 +42,12 @@ const Hero: FC<Props> = ({
           <div className="col-lg-9">
             <div className={styles.content}>
               {avatarUrl && (
-                <img
+                <Image
                   src={avatarUrl}
                   alt={name || "Author"}
                   className={styles.avatar}
+                  width={120}
+                  height={120}
                 />
               )}
               <div className={styles.info}>

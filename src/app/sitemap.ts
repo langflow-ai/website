@@ -1,11 +1,5 @@
 import { MetadataRoute } from "next";
-import { sanityFetch } from "@/lib/backend/sanity/client";
-import { PageForSiteMap } from "@/lib/types/sanity";
-import {
-  PUBLISHED_BLOG_POSTS_QUERY,
-  PUBLISHED_EVENTS_QUERY,
-  PUBLISHED_PAGES_QUERY,
-} from "@/lib/backend/sanity/queries";
+import { getAllPosts, getAllEvents, getAllPages } from "@/lib/mdx";
 
 const CHANGE_FREQUENCIES = {
   ALWAYS: "always",
@@ -56,29 +50,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const blogPosts = await sanityFetch<PageForSiteMap[]>(
-    PUBLISHED_BLOG_POSTS_QUERY
-  );
+  // Get blog posts from MDX files
+  const blogPosts = await getAllPosts();
   const blogPostsUrls = blogPosts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post._updatedAt,
+    url: `${baseUrl}/blog/${post.slug.current}`,
+    lastModified: new Date(post.publishedAt),
     changeFrequency: CHANGE_FREQUENCIES.MONTHLY,
     priority: 0.7,
   }));
 
-  const events = await sanityFetch<PageForSiteMap[]>(PUBLISHED_EVENTS_QUERY);
+  // Get events from MDX files
+  const events = await getAllEvents();
   const eventUrls = events.map((event) => ({
-    url: `${baseUrl}${event.slug}`,
-    lastModified: event._updatedAt,
+    url: `${baseUrl}/events/${event.slug?.current || event._id}`,
+    lastModified: new Date(event._updatedAt),
     changeFrequency: CHANGE_FREQUENCIES.MONTHLY,
     priority: 0.7,
   }));
 
-  const pages = await sanityFetch<PageForSiteMap[]>(PUBLISHED_PAGES_QUERY);
+  // Get pages from MDX files
+  const pages = await getAllPages();
   const pageUrls = pages.map((page) => ({
-    // slug already contains the leading slash
-    url: `${baseUrl}${page.slug}`,
-    lastModified: page._updatedAt,
+    // Add leading slash if not present
+    url: `${baseUrl}${page.slug?.current?.startsWith("/") ? "" : "/"}${page.slug?.current || page._id}`,
+    lastModified: new Date(page._updatedAt),
     changeFrequency: CHANGE_FREQUENCIES.MONTHLY,
     priority: 0.6,
   }));

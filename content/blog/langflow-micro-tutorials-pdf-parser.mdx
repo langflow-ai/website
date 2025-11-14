@@ -1,0 +1,46 @@
+---
+title: "Langflow Micro Tutorials — PDF Parser"
+slug: "langflow-micro-tutorials-pdf-parser"
+excerpt: "Welcome back to our Langflow micro tutorials series! We’re continuing with simple Langflow examples, showcasing custom component designs."
+publishedAt: "2023-09-13T18:19:34.000Z"
+featureImage: "/content/images/posts/2a83aa0c6e6a67ff1a7c4d1ea3804d6b9f5693ed-800x439.png"
+authors:
+  - rodrigo
+tags: []
+---
+
+Welcome back to our Langflow micro tutorials series! We’re continuing with simple Langflow examples, showcasing custom component designs.
+
+_This article includes a link for downloading the discussed flow. Use this to modify and study the components in use._
+
+Today, we’re focusing on a PDF parser that automatically extracts and structures information. Enjoy!
+
+#### Main Features
+
+**Output Parser:** This component serves as a detailed instruction set for the model’s response, ensuring it’s systematically structured in JSON format. The guidelines are conveyed through _ResponseSchema_ components, which precisely define the construction of each key/field and its values.
+
+![](/content/images/posts/b69602ac381d3822647fef96109c65ad4cde9be9-800x439.png)
+
+#### Objective
+
+The primary goal of this flow is to enable consistent extraction of data from the PDF document displayed below (in Portuguese).
+
+![](/content/images/posts/58f6e6857629d22164fb9e72c4ff69c9813ca3f0-1200x689.png)
+
+The process involves creating a _ResponseSchema_ for each targeted piece of information, which will then be represented as a field in our JSON file. These schemas allow you to specify the field name, the description (which directs the model on what to search for), and the format of the extracted data (like _string_ or _integer_).
+
+![](/content/images/posts/f4e93daab3a5b1ba1eb875c4d4f330ecc65b029e-800x439.png)
+
+They are turned into instructions that are combined with the document and a simple prompt message, such as _“Extract data from the document below”,_ which is then processed by the language model.
+
+![](/content/images/posts/7a57115d71e02bb48811e77db95c9482a0abd7b0-800x439.png)
+
+The extracted information is displayed in the chat modal, as shown below.
+
+![](/content/images/posts/9c231d95d7abb4fd9ffd68e686f1b18622a5259a-800x439.png)
+
+Note that, despite allowing you to open the chat interface, this is a "chatless" flow, since it needs no input message to run. The flow is designed to execute a straightforward pipeline based on the initial inputs (in this case, just the PDF file).
+
+* * *
+
+#### Download Flow and PDF (gist)

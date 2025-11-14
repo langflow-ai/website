@@ -1,8 +1,5 @@
-import { draftMode } from "next/headers";
-
 // Backend
-import { sanityFetch } from "@/lib/backend/sanity/client";
-import { BLOG_POSTS_PAGINATED_QUERY } from "@/lib/backend/sanity/queries";
+import { getAllPosts } from "@/lib/mdx";
 
 // Components
 import PageLayout from "@/components/layout/page";
@@ -19,20 +16,16 @@ import { LatestPost } from "@/components/ui/Blog/LatestPost";
 export const dynamic = "force-static";
 
 const BlogIndex: NextPage = async () => {
-  // Check for draft mode to fetch preview content
-  const isDraftMode = draftMode().isEnabled;
-
   // Pagination settings
   const LIMIT = 7;
 
-  // Fetch first batch of posts
-  const posts = await sanityFetch<BlogPost[]>(
-    BLOG_POSTS_PAGINATED_QUERY,
-    { start: 0, end: LIMIT },
-    isDraftMode
-  );
+  // Fetch all posts from MDX
+  const allPosts = await getAllPosts();
 
-  // Generate excerpts
+  // Take first batch for initial render
+  const posts = allPosts.slice(0, LIMIT);
+
+  // Generate excerpts if missing
   const postsWithExcerpts = await Promise.all(
     posts.map(async (post) => ({
       ...post,

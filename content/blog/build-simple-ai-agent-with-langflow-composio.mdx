@@ -1,0 +1,93 @@
+---
+title: "How to Build a Simple AI Agent with Langflow and Composio"
+slug: "build-simple-ai-agent-with-langflow-composio"
+excerpt: "In this tutorial, you’ll learn how to create a simple agent in Langflow using Composio as a tool to connect to your Google calendar.
+"
+publishedAt: "2025-03-07T04:42:00.000Z"
+featureImage: "/content/images/posts/f9f0953a983b359bccfd6f5ad1afeee77a74773a-1460x968.jpg"
+authors:
+  - melissa
+tags: []
+---
+
+Are you trying to understand AI agents? Or perhaps you’ve started building agents, but are still struggling with tools and how to connect them to app integrations. Langflow and Composio are a great combination to help you understand these concepts. 
+
+Langflow is a visual low-code AI application builder that allows you to build agents quickly for rapid development, and [Composio](https://composio.dev/) is an integration platform that gives developers access to hundreds of tools like GitHub, Salesforce, and Google. 
+
+In this tutorial, you’ll learn how to create a simple agent in Langflow using Composio as a tool to connect to your Google calendar. Let’s get started! 
+
+## Set up
+
+For this tutorial, you’ll need:
+
+*   [Langflow installed](https://www.langflow.org/desktop)
+*   A [Composio account](https://app.composio.dev/apps) for connecting your tools and integrations
+*   An [OpenAI account and API key](https://platform.openai.com/docs/quickstart)
+
+Once those two accounts are created, proceed to the following steps to get started on building an AI agent with Composio.
+
+### Start with Composio
+
+Composio is an application integration platform that gives you access to many different tools that you could use within your AI application. This means that you no longer have to manage APIs for performing actions like creating, deleting, or updating a Google Calendar event; you just need to go through Composio and the work is done for you. We’ll walk through this here. 
+
+Once you’ve created your Composio account, you should be dropped into their dashboard. Copy your API key on the top right hand corner. Save this in your clipboard or preferred notes application for later. 
+
+Once you have obtained your API key, head over to the “Apps” tab on the left side navigation bar.
+
+![The API key can be found at the top right of the dashboard, apps are then in the left sidebar](/content/images/posts/a20cd3ade74fd742f0bb1575556aaf72816a079c-1999x982.png)
+
+Here, you’ll see all of the available tools and integrations that you can connect with through Composio (283 and counting at the time of writing this blogpost!). Use the “Googlecalendar” integration.  
+
+![The available tools and integrations that you can connect with through Composio, the “Googlecalendar” integration is  highlighted.](/content/images/posts/5fa1840f2885d09cf824e93de97e749f47eab617-1999x1056.png)
+
+Then go to “Setup Googlecalendar integration.”
+
+![The Setup Googlecalendar integration highlighted](/content/images/posts/2fbf5395ec55c8157acebf78555172ce4dc0da82-1999x473.png)
+
+Follow the steps to complete the integration with your preferred method. They offer options through code with Python or JavaScript—or simply go through authentication via Google sign-on. Once this is completed, you should receive an “Integration Successful” message, which means that you have successfully connected to Google through Composio.
+
+You’ll be dropped into Step 3/3, “Execute tools,” where you can  play around with each individual action in a playground with natural language, test out different parameters, and connect with JS and Python via various frameworks.
+
+![An image showing the "execute tools" step in Composio](/content/images/posts/80aa75187673282ca3d0bb567372dc2261d8733d-1999x1162.png)
+
+Now that you have your Google Calendar integration set up and your API key handy, you'll start building a simple AI agent with Langflow using Composio as a tool.
+
+### Langflow
+
+Open Langflow Desktop and create a new flow by clicking the “Create Flow” button, which will bring up the start up menu below. You’’ll be using the “Simple Agent” flow on the “Get started” menu.
+
+![The Langflow start menu, it has three highlighted templates and many more to choose from](/content/images/posts/cf501f474feeb8d58deb0ba4b1d1959e7fe8ba7c-1999x1047.png)
+
+You’ll be dropped into the visual editor where you’ll notice that there’s already a flow built out. Each of the blocks that you see are called “Components.” Each component represents a functional step in the end-to-end AI flow. The “Agent” component defaults to using the gpt-4o-mini model from OpenAI, but you can choose to use other models if you prefer. This is where you’ll need to put your OpenAI API key.
+
+![Enter your OpenAI API key in the Agent model's OpenAI API Key input](/content/images/posts/d60f0ec01ac70c5bca7e26625715067c0738f2b6-1999x1059.png)
+
+Next, on the left-side navigation, you can scroll down to “Bundles” and find the Composio bundle. Drag and drop this to the flow and connect it to the “Agent” component” using the “Tool” linking points. 
+
+![An image showing you where to find the Composio bundle in Langflow and how to drag and drop this to the flow and connect it to the “Agent” component” using the “Tool” linking points. ](/content/images/posts/f1f90078d5ad6f09e82afffd09239080d5da3da6-1999x1071.png)
+
+Refer back to the API key you got from the Composio dashboard and put it in the “Composio” component. Select the “GOOGLECALENDAR” app name, and press the “refresh” button. You’ll know that the connection with the integration has been successful when you see “GOOGLECALENDAR CONNECTED” appear under “Auth Status.” 
+
+For the purpose of this demo, select from the dropdown under “Actions to use” select all of them. This will allow you to Create, Update, Delete, and Retrieve events!
+
+![How to select from the dropdown under “Actions to use” ](/content/images/posts/0d99c1397195f8c44b19f153e1174083518455d6-498x816.png)
+
+You've now set up all the components you need for your agent with Composio. It’s time to run the flow.
+
+## Run the flow
+
+To test the flow, go to the “Playground” located in the top right corner. You can use the chat interface to give example queries to your agent flow and see how the agent makes decisions between tools.
+
+![The Langflow "Playground" button is in the top right corner.](/content/images/posts/4bba9a8c32afbad912cc8f72265816d585edd1e3-1999x1073.png)
+
+For example, try typing in the chat input: “Add 1+1” and you’ll notice that the agent determines that it needs to use the Calculator tool to perform the query. You can inspect this by clicking the drop down menu in the agent logs where it says “AI gpt-4o-mini”.
+
+![When you type “Add one plus one” in the Langflow playground you can see the agent's thoughts and final output](/content/images/posts/7d5524de881f8a3a8e7816c41a372bcfb4e0ff7f-1999x1095.png)
+
+![an image showing the results of typing add one plus one in the playground chat input](/content/images/posts/584e0d8fb92db8bf2fd8f99f5a12ef6f59628286-1236x1414.png)
+
+Next, try giving it a query such as “Can you check if I have availability for January 28, 2025 at 3pm? If it's free, schedule a meeting with Bob.” Observe the response here and what decisions the agent had to make using Composio. What actions do you see it calling? What was the final response? Navigate to your Google calendar and see the created event appear on your calendar. 
+
+## Wrapping up 
+
+You’ve officially set up a simple AI agent using Composio as a tool! You were able to easily connect with your Google Calendar and perform actions without having to configure the API yourself, thanks to the power of the Composio integration and Langflow’s component-based visual app-building interface. But the exploration doesn’t end here. As you saw, there are over LOTS of  integrations to try within Composio—and you can easily test them all using Langflow! [Download Langflow and give it a try!](https://www.langflow.org/desktop)!

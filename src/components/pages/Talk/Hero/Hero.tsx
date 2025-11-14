@@ -1,7 +1,7 @@
 // Dependencies
 import { FC } from "react";
 import NextLink from "next/link";
-import { getImageUrl } from "@/lib/backend/sanity/client";
+import Image from "next/image";
 
 // Components
 import Display from "@/components/ui/Display";
@@ -16,7 +16,6 @@ import styles from "./styles.module.scss";
 // Props types
 type Props = {
   title?: string;
-  description?: string;
   date?: string;
   duration?: number;
   location?: string;
@@ -38,7 +37,6 @@ type Props = {
 
 const Hero: FC<Props> = ({
   title,
-  description,
   date,
   duration,
   location,
@@ -55,6 +53,7 @@ const Hero: FC<Props> = ({
       day: "numeric",
       hour: "numeric",
       minute: "2-digit",
+      timeZone: "America/Los_Angeles",
     });
   };
 
@@ -72,7 +71,6 @@ const Hero: FC<Props> = ({
 
     return {
       title,
-      description,
       location,
       startDate,
       endDate,
@@ -127,42 +125,6 @@ const Hero: FC<Props> = ({
                   </span>
                 </div>
               )}
-              {duration && (
-                <div className={styles.details__item}>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10 1.66667C5.4 1.66667 1.66667 5.4 1.66667 10C1.66667 14.6 5.4 18.3333 10 18.3333C14.6 18.3333 18.3333 14.6 18.3333 10C18.3333 5.4 14.6 1.66667 10 1.66667ZM10 16.6667C6.325 16.6667 3.33333 13.675 3.33333 10C3.33333 6.325 6.325 3.33333 10 3.33333C13.675 3.33333 16.6667 6.325 16.6667 10C16.6667 13.675 13.675 16.6667 10 16.6667ZM10.8333 10.8333V5.83333H9.16667V10.8333H10.8333Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                  <span className={styles.details__item__data}>
-                    {duration} minutes
-                  </span>
-                </div>
-              )}
-              {location && (
-                <div className={styles.details__item}>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10 0C6.5 0 3.66667 2.83333 3.66667 6.33333C3.66667 11.5833 10 20 10 20C10 20 16.3333 11.5833 16.3333 6.33333C16.3333 2.83333 13.5 0 10 0ZM10 8.5C8.625 8.5 7.5 7.375 7.5 6C7.5 4.625 8.625 3.5 10 3.5C11.375 3.5 12.5 4.625 12.5 6C12.5 7.375 11.375 8.5 10 8.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                  <span className={styles.details__item__data}>{location}</span>
-                </div>
-              )}
               {calendarData && (
                 <AddToCalendarLink calendarData={calendarData} />
               )}
@@ -172,9 +134,8 @@ const Hero: FC<Props> = ({
             {speakers && speakers.length > 0 && (
               <div className={styles.speakers}>
                 {speakers.map((speaker) => {
-                  const avatarUrl = speaker.avatar
-                    ? getImageUrl(speaker.avatar)
-                    : null;
+                  // Avatar is now a direct URL string
+                  const avatarUrl = typeof speaker.avatar === 'string' ? speaker.avatar : null;
 
                   return (
 
@@ -184,10 +145,12 @@ const Hero: FC<Props> = ({
                   >
                     <div key={speaker._id} className={styles.speaker}>
                       {avatarUrl && (
-                        <img
+                        <Image
                           src={avatarUrl}
                           alt={speaker.name || "Speaker"}
                           className={styles.avatar}
+                          width={48}
+                          height={48}
                         />
                       )}
                       {speaker.slug?.current ? (
@@ -202,12 +165,6 @@ const Hero: FC<Props> = ({
                   );
                 })}
               </div>
-            )}
-            
-            {description && (
-              <Text className={styles.description} size={300}>
-                {description}
-              </Text>
             )}
           </div>
         </div>

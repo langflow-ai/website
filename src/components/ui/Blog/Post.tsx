@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import SanityImage from "../media/SanityImage";
 import Display from "@/components/ui/Display";
 import { Byline } from "@/components/ui/Blog/Byline";
@@ -7,7 +8,11 @@ import Button from "@/components/ui/button";
 import { ButtonTypes } from "@/components/ui/button/types";
 import { BlogPost } from "@/lib/types/sanity";
 
-export function Post({ post }: { post: BlogPost }) {
+type MDXBlogPost = Omit<BlogPost, "featureImage"> & {
+  featureImage?: string | BlogPost["featureImage"];
+};
+
+export function Post({ post }: { post: BlogPost | MDXBlogPost }) {
   const authors = [
     ...(post.author ? [post.author] : []),
     ...(post.authors || []),
@@ -17,19 +22,33 @@ export function Post({ post }: { post: BlogPost }) {
     authors.push({ name: "Unknown" });
   }
 
+  // Check if featureImage is a string (MDX) or Sanity image
+  const isStringImage = typeof post.featureImage === "string";
+
   return (
     <Link
-      href={`/blog/${post.slug?.current}`}
+      href={`/blog/${post.slug?.current || (post as any).slug}`}
       className="text-reset text-decoration-none"
     >
       <div className="card post-card p-4 d-grid gap-4 bg-black text-white shadow border-2 border-dark">
         {post.featureImage && (
-          <SanityImage
-            image={post.featureImage}
-            alt={post.title || ""}
-            className="card-img-top w-100 h-auto rounded-3"
-            width={300}
-          />
+          isStringImage ? (
+            <Image
+              src={post.featureImage as string}
+              alt={post.title || ""}
+              className="card-img-top w-100 h-auto rounded-3"
+              width={300}
+              height={200}
+              style={{ objectFit: "cover" }}
+            />
+          ) : (
+            <SanityImage
+              image={post.featureImage as any}
+              alt={post.title || ""}
+              className="card-img-top w-100 h-auto rounded-3"
+              width={300}
+            />
+          )
         )}
         <div className="card-body d-flex flex-column justify-content-between gap-4 p-0">
           <Display

@@ -1,7 +1,7 @@
 // Dependencies
 import { FC } from "react";
 import Link from "next/link";
-import { getImageUrl } from "@/lib/backend/sanity/client";
+import Image from "next/image";
 
 // Components
 import Display from "@/components/ui/Display";
@@ -45,6 +45,7 @@ const Talks: FC<Props> = ({ talks }) => {
       day: "numeric",
       hour: "numeric",
       minute: "2-digit",
+      timeZone: "America/Los_Angeles",
     });
   };
 
@@ -64,12 +65,24 @@ const Talks: FC<Props> = ({ talks }) => {
                   className={styles.talk}
                 >
                   {talk.speakers && talk.speakers.length > 0 && talk.speakers[0].avatar && (
-                    <SanityImage
-                      image={talk.speakers[0].avatar}
-                      alt={talk.speakers[0].name || talk.title || ""}
-                      className={styles.image}
-                      width={300}
-                    />
+                    <>
+                      {typeof talk.speakers[0].avatar === 'string' ? (
+                        <Image
+                          src={talk.speakers[0].avatar}
+                          alt={talk.speakers[0].name || talk.title || ""}
+                          className={styles.image}
+                          width={300}
+                          height={300}
+                        />
+                      ) : (
+                        <SanityImage
+                          image={talk.speakers[0].avatar}
+                          alt={talk.speakers[0].name || talk.title || ""}
+                          className={styles.image}
+                          width={300}
+                        />
+                      )}
+                    </>
                   )}
                   <div className={styles.content}>
                     <div className={styles.meta}>

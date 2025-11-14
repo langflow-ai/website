@@ -1,0 +1,152 @@
+---
+title: "Launch Week Day 1 - MCP ⚡️"
+slug: "launch-week-day-1-mcp"
+excerpt: "Langflow can now be used as both an MCP client and MCP server. As a client, you can use a built-in MCP component to interact with external MCP servers within your agentic flows. As a server, you can turn your existing Langflow workflows into tools that other MCP clients can access and orchestrate."
+publishedAt: "2025-03-31T22:00:08.000Z"
+featureImage: "/content/images/posts/016f4194862940d9eca0918021eb38b15eba9873-960x540.png"
+authors:
+  - david
+tags:
+  - launch-week
+  - mcp
+---
+
+Kicking off Launch Week, we are excited to share a major update to Langflow's MCP (model context protocol) capabilities.
+
+This update allows you to use Langflow as both an MCP client and MCP server. As a client, you can use our built-in MCP component to interact with external MCP servers within your agentic flows. As a server, you can turn your existing Langflow workflows into tools that other MCP clients can access and orchestrate.
+
+## What is MCP?
+
+If you're not already familiar, MCP is like the USB-C of agentic tools. Imagine a universal interface that simplifies your interactions with a myriad of tools. [Anthropic](https://www.anthropic.com/news/model-context-protocol) introduced this protocol months ago, and it has significantly expanded the toolbox available to Langflow users. Let’s explore how this works!
+
+{%youtube pEjsaVVPjdI %}
+
+## Getting Started with MCP in Langflow
+
+Langflow [just shipped](https://github.com/langflow-ai/langflow/releases/tag/1.3.0) its `1.3` release, so you'll need to install or update your version of Langflow:
+
+`uv pip install langflow`
+
+Once you have `1.3`, adding an MCP tool in any flow is easy. Just search for “mcp” in the left navigation search bar and drag the “MCP Server” component into your flow.
+
+![](/content/images/posts/34a7bdbfc442534e3c5ce8a2af398091696151cd-1600x1053.png)
+
+The “MCP Server” component can be used either as a standalone component or as an agentic tool. In either case, just enter in an MCP command or SSE server URL and click refresh.
+
+Here’s an example of using the [_fetch()_](https://github.com/modelcontextprotocol/servers/tree/main/src/fetch) MCP tool.
+
+### Standalone mode
+
+When used as a standalone component, click the _refresh_ button after entering the command, then choose the tool you wish to use.
+
+![](/content/images/posts/78156fd103a6f245245bccee97ccc5c16cae853d-400x531.png)
+
+Once a tool is selected, you’ll be presented with a set of parameters to fill out.
+
+![](/content/images/posts/14ece411245e9964e803575d7aa3bb55a7c6791d-400x827.png)
+
+Hover over the tooltip icons to get a description of any parameter
+
+### Tool mode
+
+You can also use MCP components directly as agentic tools.
+
+To do so, click on the component, then switch the _Tool Mode_ radio toggle at the top.
+
+![](/content/images/posts/3e5a3f407d619b482308bb0c65490572b24d8f4a-400x343.png)
+
+A cool feature of tool mode is you don’t have to fill out any parameters yourself. Your agent will determine which parameters and what values to use based on your input to the agent itself. You can view and modify tools and their descriptions by clicking on the “hammer” icon.
+
+![](/content/images/posts/36550c34e7eb31eb0d627ae5803329fba5f0c7ef-400x479.png)
+
+_Note: Different models are better than others at handling this task. Some can easily determine which parameters and values are needed. Others may need a little direction in your prompt. In either case, it’s good to know what parameters a particular tool expects for the best experience._
+
+## Tools with Environment Variables
+
+You may find some tools require you to use an environment variable to work. [EverArt](https://github.com/modelcontextprotocol/servers/tree/main/src/everart) is an example of this. If that’s the case, just set the variables before you execute the tool command (uvx, npx, docker, etc…) directly in the _MCP Command_ section of the component itself.
+
+Here’s an example of setting an env before the command:
+
+`env EVERART_API_KEY=everart-****************** npx -y @modelcontextprotocol/server-everart`
+
+![](/content/images/posts/112827fcf803e0ebebf376085efd3307a732bc83-400x486.png)
+
+Now, using the EvertArt MCP tool, we can generate images directly in our agentic flows without needing to code up a vision model API in our application.
+
+## Langflow as an MCP Server 
+
+One of the most exciting aspects is that Langflow itself is an MCP server. Imagine chaining complex actions together or easily exposing your Langflow flows as tools to other platforms. You don’t need to configure anything in Langflow itself, just point those platforms to your Langflow instance using the `/api/v1/mcp/sse` endpoint.
+
+Let’s take a look at some examples to see how to do this using Langflow locally at `http://127.0.0.1:7860`.
+
+### Cursor
+
+In Cursor, go to Cursor Settings -> MCP. Click “_\+ Add new global MCP server_”, update the mcp.json like you see below, and save the file.
+
+```json
+{
+  "mcpServers": {
+    "Langflow": {
+      "url": "http://127.0.0.1:7860/api/v1/mcp/sse"
+    }
+  }
+}
+```
+
+Once complete your MCP section should look like this. Refresh the connection.
+
+![](/content/images/posts/03bbe895f39c428e30b3ac0c92744b6c7393cefd-1164x440.png)
+
+Now, your Cursor agents should be able to use any of your Langflow flows as tools.
+
+![](/content/images/posts/c6bbbce314826bd68c2c4e13996bc82eb631dc6c-1051x616.png)
+
+### Claude Desktop
+
+While Claude needs a bit more config than Cursor, it still uses the same SSE URL. Watch [this video tutorial](https://youtu.be/vi40dn79Zgw?si=AN4-Ciyeg1B20Bbu) on how to set it up.
+
+```json
+{
+  "mcpServers": {
+    "Langflow": {
+      "command": "/bin/sh",
+      "args": [
+        "-c",
+        "/Users/david.gilardi/.langflow/uv/uvx --python /usr/bin/python3 mcp-sse-shim@latest"
+      ],
+      "env": {
+        "MCP_HOST": "http://127.0.0.1:7860",
+        "DEBUG": "true"
+      }
+    }
+  }
+}
+```
+
+### MCP Inspector
+
+Finally, an application you should definitely have in your MCP toolbelt is [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector). The MCP Inspector allows you to inspect and experiment with any MCP tool. This is great for troubleshooting if you’re having trouble with a given tool. 
+
+Again, to connect it to Langflow paste in your Langflow mcp endpoint _URL_ field and click _Connect_.
+
+![](/content/images/posts/c25673fc8324bac1440ef5d7be687d880aaa4091-1600x489.png)
+
+From here you can list and execute any of your Langflow flows as MCP tools.
+
+## Tips for Success
+
+MCP significantly increases the landscape of tools you have at your disposal. However, it’s still somewhat new and hasn’t fully matured yet as a protocol. With that, here are some considerations you should keep in mind when using it.
+
+*   Ensure tool names don't contain spaces or special characters
+*   Be explicit with input/output parameters for clarity
+*   Use [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) to explore and understand tool parameters
+
+## Final Thoughts
+
+So, what does this all mean? With Langflow now supporting MCP tools and acting as an MCP server, you have a much wider range of tools at your disposal. This makes it easier to connect different systems, automate complex tasks, and build powerful GenAI and agentic solutions. By combining MCP with Langflow's existing features and tools, you can streamline your development process and achieve more with less effort.
+
+Now that you know what you can build with MCP, here are some next steps:
+
+*   Join the [Langflow Discord](https://discord.com/invite/EqksyE2EX9) and let us know what you're building!
+*   Register for our [Launch Week Livestream](https://dtsx.io/langflow_launch) to hear more about the `1.3` and a **HUGE** surprise we're announcing on Thursday.
+*   Check out our [project on Github](https://github.com/langflow-ai/langflow) and give us a star if you like what you see!

@@ -14,10 +14,12 @@ type Props = {
     bio?: string;
     avatar?: any;
     location?: string;
-    twitter?: string;
-    linkedin?: string;
-    github?: string;
-    website?: string;
+    social?: {
+      github?: string | null;
+      linkedin?: string | null;
+      twitter?: string | null;
+      website?: string | null;
+    };
     posts?: Array<{
       _id: string;
       title?: string;
@@ -63,10 +65,10 @@ const Template: FC<Props> = ({ author }) => {
         bio={author.bio}
         avatar={author.avatar}
         location={author.location}
-        twitter={author.twitter}
-        linkedin={author.linkedin}
-        github={author.github}
-        website={author.website}
+        twitter={author.social?.twitter || undefined}
+        linkedin={author.social?.linkedin || undefined}
+        github={author.social?.github || undefined}
+        website={author.social?.website || undefined}
       />
 
       <Content

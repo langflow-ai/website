@@ -1,0 +1,82 @@
+---
+title: "How to Create Your First AI Agent"
+slug: "create-your-first-ai-agent"
+excerpt: "Learn what AI agents are and how you can create your own with Langflow.
+"
+publishedAt: "2025-01-22T04:57:00.000Z"
+featureImage: "/content/images/posts/62330d8b7f4203564b4883c7750b778c2ca4f2a9-1460x968.jpg"
+authors:
+  - tejas
+tags: []
+---
+
+# How to Create Your First AI Agent
+
+2025 is the year of AI agents. In this post, you’ll get a better understanding of what an agent is and how you can get started working with them.
+
+## What is an agent?
+
+
+According to an [October 2024 paper from Google](https://ppc.land/content/files/2025/01/Newwhitepaper_Agents2.pdf), an [AI agent](https://www.ibm.com/think/tutorials/using-langchain-tools-to-build-an-ai-agent) is software that composes over 3 tiers:
+
+1.  A [large language model (LLM)](https://www.ibm.com/think/topics/large-language-models)
+2.  A set of tools that it can invoke with agency
+3.  An orchestration layer that manages the cyclical process of information intake, reasoning, and action execution
+
+It’s characterized by this diagram:
+
+![](/content/images/posts/50809f470824fe9f68b18d9b331f2a30b9751f48-1999x923.png)_Source: [Google](https://ppc.land/content/files/2025/01/Newwhitepaper_Agents2.pdf)_
+
+Given an input query from a user, the agent runtime works to come up with the best possible answer and then returns it to the user. 
+
+For the sake of brevity, we won’t go into the details of agentic architecture in this post; instead, we’ll provide a hands-on guide on how to implement this architecture to create a simple agent.
+
+## Creating an agent
+
+
+Langflow is a low-code, visual development environment that treats agents as first-class citizens. To get started with agents in Langflow, [download and run Langflow Desktop](https://www.langflow.org/desktop), and create a flow using the “Simple Agent” template.
+
+![](/content/images/posts/8c8300f5f1ac272462d1ab167dd15c017095159c-3600x2044.gif)
+
+This should give you the beginnings of an agent. Let’s explore how this tracks with the definition of an agent above:
+
+*   The flow contains an “agent” that serves as the agent runtime in the diagram and contains the orchestration layer
+*   You can connect tools to the agent using tool inputs and outputs in Langflow, represented by cyan dots
+*   The agent component in Langflow enables a choice of language model and language model vendor in its settings
+
+The default “Simple Agent” template comes with a calculator and a web browser (URL component) plugged in. To use this, you’ll have to plug in an API key for your language model vendor.
+
+![](/content/images/posts/fc8cd7e718533abd3298789395f613decd868960-3600x2044.gif)
+
+When all relevant components are connected and with the API key in place, your agent comes alive. 
+
+## Solving real problems with agents
+
+Given that the default template (Simple Agent) comes with a calculator and a URL attached, you can solve the real problem of in-time currency conversion. Specifically, your agent can:
+
+*   Take an input query from a user like “convert 200 USD to INR”
+*   Look up the current exchange rate using the URL component as a tool
+*   Perform the currency conversion using the calculator tool
+*   Check if the conversion was successful
+*   Return the output to the user
+
+Let’s give this a try in the playground.
+
+![](/content/images/posts/bb7aee79bc15ea9a3343304126a5cf5b11096955-3600x2044.gif)
+
+In under two seconds, your agent can solve real-world problems with real world data.
+
+## Using an agent in your applications
+
+Langflow flows are exposed via API and can be consumed by any other application: like web or mobile applications. To use this flow in your application, click on the API button.
+
+![](/content/images/posts/ab62de2dc260b76a807e8f23ec7ace2031c69460-1999x1186.png)
+
+You’ll have to generate an API key if you don’t already have one. Once you do, this flow can be run from any application via a network request.
+
+Wrapping up
+-----------
+
+You just created our first AI agent—and you’re just getting started! There are many new questions and features to explore: how do we extend an agent’s knowledge? How might we perform tasks on behalf of users? Can we run agents locally?
+
+Tune in on [𝕏](https://x.com/langflow_ai) and [Discord](https://discord.com/invite/EqksyE2EX9) to continue the conversation.

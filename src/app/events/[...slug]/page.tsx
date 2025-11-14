@@ -1,18 +1,12 @@
 // Dependencies
 import { FC } from "react";
-import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 // Backend
-import { sanityFetch } from "@/lib/backend/sanity/client";
-import {
-  METADATA_BY_SLUG_QUERY,
-  EVENT_WITH_TALKS_QUERY,
-  PAGES_SLUGS_QUERY,
-} from "@/lib/backend/sanity/queries";
+import { getAllEvents, getEventBySlug } from "@/lib/mdx";
 
 // Types
-import type { Seo } from "@/lib/types/sanity";
+import type { Event as PageType } from "@/lib/types/sanity.types";
 
 // Utilities
 import { parseSlugToString } from "@/lib/utils/str";
@@ -34,65 +28,54 @@ type Props = {
  */
 export const dynamic = "force-static";
 export const dynamicParams = true;
-const DOCUMENT_TYPE = "event";
 
 export async function generateStaticParams() {
-  // Data
-  const slugs = await sanityFetch<string[]>(PAGES_SLUGS_QUERY, {
-    type: DOCUMENT_TYPE,
+  const events = await getAllEvents();
+
+  return events.map((event) => {
+    const slugParts = event.slug?.current
+      ? event.slug.current.split("/").filter(Boolean)
+      : [event._id];
+
+    return {
+      slug: slugParts,
+    };
   });
-
-  return (slugs || [])
-    .filter((slug) => Boolean(slug))
-    .map((s) => {
-      const slug = s
-        .split("/")
-        .filter(Boolean)
-        .map((s) => s.toLowerCase().trim());
-
-      return {
-        slug: slug,
-      };
-    });
 }
 
 /**
  * Generate the Metadata settings for this pages
  */
 export const generateMetadata = async ({ params: { slug } }: Props) => {
-  const isDraftMode = (await draftMode()).isEnabled;
-  const parsedSlug = parseSlugToString(slug).replace(/events\//, "");
-  const metadata = await sanityFetch<Seo>(
-    METADATA_BY_SLUG_QUERY,
-    {
-      type: DOCUMENT_TYPE,
-      slugs: [`events/${parsedSlug}`, `/events/${parsedSlug}`],
-    },
-    isDraftMode
-  );
+  const parsedSlug = parseSlugToString(slug).replace(/^events\//, "");
+  const event = await getEventBySlug(parsedSlug);
+
+  if (!event) {
+    return {
+      title: "Event Not Found",
+      description: "",
+    };
+  }
+
+  // For MDX, thumbnail is already a string URL
+  const thumbnailUrl = event.thumbnail ? (event.thumbnail as any) : "/images/logo.png";
+
   return {
-    title: metadata?.title,
-    description: metadata?.description,
+    title: event.title,
+    description: event.excerpt,
     openGraph: {
-      url: `https://www.langflow.org/${metadata?.slug?.current?.replace(/^\//, "")}`,
-      title: formatOpenGraphTitle(metadata?.title),
-      description: metadata?.description,
+      url: `https://www.langflow.org/events/${event.slug?.current?.replace(/^\//, "")}`,
+      title: formatOpenGraphTitle(event.title),
+      description: event.excerpt,
       siteName: "Langflow",
-      images: [metadata?.thumbnail ? metadata?.thumbnail : "/images/logo.png"],
+      images: [thumbnailUrl],
     },
   };
 };
 
 const DynamicPage: FC<Props> = async ({ params: { slug } }) => {
-  const isDraftMode = draftMode().isEnabled;
-  const parsedSlug = parseSlugToString(slug).replace(/events\//, "");
-  const page = await sanityFetch<any>(
-    EVENT_WITH_TALKS_QUERY,
-    {
-      slugs: [parsedSlug, `events/${parsedSlug}`, `/events/${parsedSlug}`],
-    },
-    isDraftMode
-  );
+  const parsedSlug = parseSlugToString(slug).replace(/^events\//, "");
+  const page = await getEventBySlug(parsedSlug);
 
   if (!page) {
     notFound();
