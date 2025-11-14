@@ -91,6 +91,7 @@ export interface Author {
     twitter?: string | null;
     website?: string | null;
   };
+  posts?: BlogPost[];
   talks?: Talk[];
   events?: Event[];
 }
@@ -457,6 +458,13 @@ export async function getAuthorBySlug(slug: string): Promise<Author | null> {
     return null;
   }
 
+  // Find all blog posts by this author
+  const allPosts = await getAllPosts();
+  const authorPosts = allPosts.filter((post) =>
+    post.authors?.some((author) => author.slug?.current === slug) ||
+    post.author?.slug?.current === slug
+  );
+
   // Find all talks where this author is a speaker
   const allTalks = await getAllTalks();
   let authorTalks = allTalks.filter((talk) =>
@@ -500,6 +508,7 @@ export async function getAuthorBySlug(slug: string): Promise<Author | null> {
 
   return {
     ...author,
+    posts: authorPosts,
     talks: authorTalks,
     events: authorEvents,
   } as any;
