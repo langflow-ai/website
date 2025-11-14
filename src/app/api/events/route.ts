@@ -61,6 +61,7 @@ export async function GET(request: Request) {
     dates: event.dates,
     location: event.location,
     thumbnail: event.thumbnail,
+    body: event.body,
     _updatedAt: event._updatedAt,
   }));
 

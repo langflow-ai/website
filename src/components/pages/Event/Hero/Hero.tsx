@@ -278,6 +278,11 @@ const Hero: FC<Props> = ({
                 startDate={calendarData.startDate}
                 endDate={calendarData.endDate}
                 url={calendarData.url}
+                timezone={calendarData.timezone}
+                startDateString={calendarData.startDateString}
+                startTimeString={calendarData.startTimeString}
+                endDateString={calendarData.endDateString}
+                endTimeString={calendarData.endTimeString}
               />
             )}
             {title && <SocialShare className={styles.share} title={title} />}

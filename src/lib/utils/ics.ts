@@ -2,12 +2,12 @@
 
 /**
  * Extract IANA timezone ID from Sanity timezone string
- * Format: "Region (UTC-offset) [Country|TimezoneId]"
+ * Format: "Region (UTC-offset) [Country|TimezoneId]" or "EST (UTC-05)" or "America/New_York"
  * Returns the TimezoneId if found, otherwise null
  */
 function extractTimezoneId(timezone: string): string | null {
   if (!timezone) return null;
-  
+
   // Try to extract timezone ID from brackets: [Country|TimezoneId]
   const bracketMatch = timezone.match(/\[([^\]]+)\]/);
   if (bracketMatch) {
@@ -19,7 +19,37 @@ function extractTimezoneId(timezone: string): string | null {
     }
     return content.trim();
   }
-  
+
+  // Check if it's already an IANA timezone (contains /)
+  if (timezone.includes("/")) {
+    return timezone.trim();
+  }
+
+  // Map common timezone abbreviations to IANA timezone IDs
+  const timezoneMap: Record<string, string> = {
+    "EST": "America/New_York",
+    "EDT": "America/New_York",
+    "CST": "America/Chicago",
+    "CDT": "America/Chicago",
+    "MST": "America/Denver",
+    "MDT": "America/Denver",
+    "PST": "America/Los_Angeles",
+    "PDT": "America/Los_Angeles",
+    "GMT": "Europe/London",
+    "UTC": "UTC",
+    "CET": "Europe/Paris",
+    "CEST": "Europe/Paris",
+  };
+
+  // Extract timezone abbreviation (like "EST" from "EST (UTC-05)")
+  const abbrevMatch = timezone.match(/^([A-Z]{3,4})/);
+  if (abbrevMatch) {
+    const abbrev = abbrevMatch[1];
+    if (timezoneMap[abbrev]) {
+      return timezoneMap[abbrev];
+    }
+  }
+
   return null;
 }
 

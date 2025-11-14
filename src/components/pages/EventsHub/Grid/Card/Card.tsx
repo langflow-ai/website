@@ -107,7 +107,7 @@ const Card: FC<Props> = ({ event }) => {
     }
 
     const url = event.slug
-      ? `https://www.langflow.org${event.slug.startsWith('/') ? '' : '/'}${event.slug}`
+      ? `https://www.langflow.org/events/${event.slug}`
       : undefined;
 
     const bodyText = event.body ? getBodyTextForICS(event.body) : event.description;
@@ -128,7 +128,7 @@ const Card: FC<Props> = ({ event }) => {
     return {
       title: event.title,
       description: bodyText,
-      location: undefined,
+      location: event.location,
       startDate,
       endDate,
       url,

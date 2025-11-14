@@ -20,6 +20,7 @@ export type EventCard = Required<
   slug: string;
   description: string;
   body?: string | any;
+  location?: string;
 };
 
 export type AuthorClip = {
